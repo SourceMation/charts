@@ -11,7 +11,7 @@ Our repository contains set of helm charts which allow you to install desired se
 
 ## Table of content
 - [Before you begin](PREREQUISITES.md)
-- [Installation](charts/INSTALLATION.md)
+- [Installation](charts/README.md)
 
 
 ## Getting Started

@@ -1,0 +1,5 @@
+securityContext: []
+webhook:
+  securityContext: []
+certController:
+  securityContext: []
