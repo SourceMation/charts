@@ -1,0 +1,3 @@
+query:
+  ingress:
+    enabled: true
