@@ -1,0 +1,76 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "elastic.fullname" . }}-apm-agent
+  namespace: {{ include "elastic.namespace" . }}
+  labels:
+    agent.k8s.elastic.co/name: {{ include "elastic.fullname" . }}-service
+    common.k8s.elastic.co/type: agent
+spec:
+  type: LoadBalancer
+  selector:
+    agent.k8s.elastic.co/name: {{ include "elastic.fullname" . }}-service
+  ports:
+  - protocol: TCP
+    port: 8200
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "elastic.fullname" . }}-apm-agent-http
+  namespace: {{ include "elastic.namespace" . }}
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  labels:
+    apm.k8s.elastic.co/name: {{ include "elastic.fullname" . }}
+spec:
+  rules:
+  - host: {{ .Values.apm.urlHttp }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "elastic.fullname" . }}-apm-agent
+            port:
+              number: 8200
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - {{ .Values.apm.urlHttp }}
+    secretName: {{ include "elastic.fullname" . }}-kb-http-certs-internal
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "elastic.fullname" . }}-apm-agent-grpc
+  namespace: {{ include "elastic.namespace" . }}
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPCS"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  labels:
+    apm.k8s.elastic.co/name: {{ include "elastic.fullname" . }}
+spec:
+  rules:
+  - host: {{ .Values.apm.urlGrpc }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "elastic.fullname" . }}-apm-agent
+            port:
+              number: 8200
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - {{ .Values.apm.urlGrpc }}
+    secretName: {{ include "elastic.fullname" . }}-kb-http-certs-internal
+
