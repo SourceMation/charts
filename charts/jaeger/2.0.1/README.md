@@ -22,7 +22,7 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 helm upgrade --install jaeger \
  -n ${CHART_NAMESPACE}
  --set "query.ingress.hosts[0]=${INGRESS_ADDRESS}" \ 
- -f https://raw.githubusercontent.com/linuxpolska/charts/main/charts/jaeger/${CHART_VERSION}/values \
+ -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/jaeger/${CHART_VERSION}/values \
  jaeger \ 
  --repo https://jaegertracing.github.io/helm-charts --version ${CHART_VERSION}
 ```

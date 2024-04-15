@@ -19,7 +19,7 @@ kubectl config set-context --current --namespace=${ARGOCD_NAMESPACE}
 ```bash
 helm upgrade --install argocd \
  -n ${ARGOCD_NAMESPACE} \
- -f https://raw.githubusercontent.com/linuxpolska/charts/main/charts/argocd/${CHART_VERSION}/values \
+ -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/argocd/${CHART_VERSION}/values \
  --set "global.domain=${DOMAIN_ADDRESS}" \
  --repo https://argoproj.github.io/argo-helm argo-cd --version ${CHART_VERSION} 
 ```

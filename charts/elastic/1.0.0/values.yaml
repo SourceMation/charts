@@ -4,26 +4,26 @@
 
 elasticsearch:
   deploy: true
-  url: "es-tst.apps.rke2.lab.linuxpolska.pl"
+  url: "es-tst.apps.rke2.lab.sourcemation.pl"
   storageClass: "vsphere-ext4-rwo"
 
 repo:
   deploy: true
-  url: "repo-tst.apps.rke2.lab.linuxpolska.pl"
+  url: "repo-tst.apps.rke2.lab.sourcemation.pl"
 
 kb:
   deploy: true
-  url: "kb-tst.apps.rke2.lab.linuxpolska.pl"
+  url: "kb-tst.apps.rke2.lab.sourcemation.pl"
 
 apm:
   deploy: true
-  urlHttp: "apm-http-tst.apps.rke2.lab.linuxpolska.pl"
-  urlGrpc: "apm-grpc-tst.apps.rke2.lab.linuxpolska.pl"
+  urlHttp: "apm-http-tst.apps.rke2.lab.sourcemation.pl"
+  urlGrpc: "apm-grpc-tst.apps.rke2.lab.sourcemation.pl"
   token: "E2D3ytLiaI236F62x2n6Rvt4"
 
 fleet:
   deploy: true
-  url: "fleet-tst.apps.rke2.lab.linuxpolska.pl"
+  url: "fleet-tst.apps.rke2.lab.sourcemation.pl"
 
 replicaCount: 1
 

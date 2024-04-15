@@ -18,7 +18,7 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 ```bash
 helm upgrade --install sealed-secrets \
  -n ${CHART_NAMESPACE} \
- -f https://raw.githubusercontent.com/linuxpolska/charts/main/charts/sealed-secrets/${CHART_VERSION}/values \
+ -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/sealed-secrets/${CHART_VERSION}/values \
  --set server.ingress.hosts[0].host=${INGRESS_HOST} \
  --repo https://bitnami-labs.github.io/sealed-secrets sealed-secrets --version ${CHART_VERSION}
 ```

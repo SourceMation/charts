@@ -14,7 +14,7 @@ body:
     attributes:
       label: Name and Version
       description: Name and version of the affected chart
-      placeholder: 'for example: linuxpolska/istio 1.0.0'
+      placeholder: 'for example: sourcemation/istio 1.0.0'
     validations:
       required: true
   - type: textarea

@@ -33,6 +33,6 @@ helm upgrade --install -n ${CHART_NAMESPACE} base --set defaultRevision=default 
 helm upgrade --install istiod \ 
 -n ${CHART_NAMESPACE} \
 --set "meshConfig.defaultConfig.tracking.zipkin.address=${JAEGER_COLLECTOR_ADDRESS}:9411" \
--f https://raw.githubusercontent.com/linuxpolska/charts/main/charts/istio/${CHART_VERSION}/values \
+-f https://raw.githubusercontent.com/sourcemation/charts/main/charts/istio/${CHART_VERSION}/values \
 --repo https://istio-release.storage.googleapis.com/charts base --version ${CHART_VERSION}
 ```

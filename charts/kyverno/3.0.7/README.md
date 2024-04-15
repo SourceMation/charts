@@ -17,6 +17,6 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 ```bash
 helm upgrade --install kyverno \
  -n ${CHART_NAMESPACE} \
- -f https://raw.githubusercontent.com/linuxpolska/charts/main/charts/kyverno/${CHART_VERSION}/values \
+ -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/kyverno/${CHART_VERSION}/values \
  --repo https://kyverno.github.io/kyverno/  kyverno --version ${CHART_VERSION}
 ```

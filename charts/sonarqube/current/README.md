@@ -18,7 +18,7 @@ kubectl config set-context --current --namespace=${SONAR_NAMESPACE}
 ```bash
 helm upgrade --install ${SONAR_NAME} \
  -n ${SONAR_NAMESPACE} \
- -f https://raw.githubusercontent.com/linuxpolska/charts/main/charts/sonarqube/10.4.1+2389/values \
+ -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/sonarqube/10.4.1+2389/values \
  --set "persistence.enabled=true" \
  --repo https://SonarSource.github.io/helm-chart-sonarqube ${SONAR_NAME} --version ${CHART_VERSION}
 ```

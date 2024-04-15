@@ -9,14 +9,14 @@ body:
     attributes:
       value: |
         Thank you for reporting an issue. Before you open the bug report please review our README guide:
-          - [README](https://github.com/linuxpolska/charts/blob/main/README.md)
+          - [README](https://github.com/sourcemation/charts/blob/main/README.md)
 
         Please fill in as much of the following form as you're able.
   - type: input
     attributes:
       label: Name and Version
       description: Name and version of the affected chart
-      placeholder: 'for examlple: linuxpolska/istio 1.0.0'
+      placeholder: 'for examlple: sourcemation/istio 1.0.0'
     validations:
       required: true
   - type: dropdown

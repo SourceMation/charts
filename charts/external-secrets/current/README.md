@@ -15,6 +15,6 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 ```bash
 helm upgrade --install external-secrets \
  -n ${CHART_NAMESPACE} \
- -f https://raw.githubusercontent.com/linuxpolska/charts/main/charts/external-secrets/${CHART_VERSION}/values
+ -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/external-secrets/${CHART_VERSION}/values
  --repo https://charts.external-secrets.io external-secrets --version ${CHART_VERSION}
 ```

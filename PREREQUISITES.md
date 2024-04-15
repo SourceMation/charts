@@ -20,8 +20,8 @@ Please refer to the [Quick Start guide](https://helm.sh/docs/intro/quickstart/) 
 
 Useful Helm Client Commands:
 
-- Install a chart: `helm install my-release linuxpolska/<chart>`
-- Upgrade your application: `helm upgrade my-release linuxpolska/<chart>`
+- Install a chart: `helm install my-release sourcemation/<chart>`
+- Upgrade your application: `helm upgrade my-release sourcemation/<chart>`
 
 # Install PV Provisioner
 You must install solution which support RWX and RWO PVCs

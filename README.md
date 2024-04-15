@@ -4,7 +4,7 @@
 Our repository contains set of helm charts which allow you to install desired services on Kubernetes using [Helm](https://github.com/helm/helm).
 
 <h1 align="center" style="border-bottom: none">
-    <a href="https://linuxpolska.com/pl/" target="_blank"><img alt="Longhorn" width="200px" src="https://github.com/linuxpolska/ezd-rp/blob/release/1.0.0/docs/LinuxPolska-icon.png""></a>
+    <a href="https://linuxpolskia.com/pl/" target="_blank"><img alt="Longhorn" width="200px" src="https://github.com/linuxpolska/ezd-rp/blob/release/1.0.0/docs/LinuxPolska-icon.png""></a>
 </h1>
 
 
@@ -43,7 +43,7 @@ Example versioning `0.15.0-el-9-r1`:
 Please use the following to reach members of the community:
 
 
-- GitHub:  If you have any questions start a [discussion](https://github.com/linuxpolska/charts/discussions) or if you want make changes open an [issue](https://github.com/linuxpolska/charts/issues)  
+- GitHub:  If you have any questions start a [discussion](https://github.com/sourcemation/charts/discussions) or if you want make changes open an [issue](https://github.com/sourcemation/charts/issues)  
 - Web Page: If you need commercial support [contact with us](https://linuxpolska.com/pl/kontakt/)
 
 We are supporting polish and english language.

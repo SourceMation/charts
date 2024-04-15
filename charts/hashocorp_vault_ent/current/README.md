@@ -25,7 +25,7 @@ kubectl create secret generic vault-ent-license --from-literal="license=${CHART_
 helm upgrade --install vault \
 -n ${CHART_NAMESPACE}
 --set server.ingress.hosts[0].host="$INGRESS_HOST" \
--f  https://raw.githubusercontent.com/linuxpolska/charts/main/charts/hashocorp_vault_ent/${CHART_VERSION}/values \
+-f  https://raw.githubusercontent.com/sourcemation/charts/main/charts/hashocorp_vault_ent/${CHART_VERSION}/values \
 vault \
 --repo https://helm.releases.hashicorp.com --version ${CHART_VERSION}
 ```

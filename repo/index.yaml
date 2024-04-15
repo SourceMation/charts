@@ -3,12 +3,12 @@ entries:
   elastic:
   - apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-04-12T09:54:05.769537356+02:00"
+    created: "2024-04-15T09:45:26.678936213+02:00"
     description: A Helm chart for Kubernetes
-    digest: fad295d57fc484bc9fc8c85d515fd80e616044779f5f5ce4cc1f5787498156ae
+    digest: 25dbb17cb708cfa08b7440dc2251a9f26c3d4181b7b4688893397299f3a995a7
     name: elastic
     type: application
     urls:
     - elastic/elastic-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-12T09:54:05.768807987+02:00"
+generated: "2024-04-15T09:45:26.678407881+02:00"

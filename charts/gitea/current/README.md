@@ -36,6 +36,6 @@ helm upgrade --install  $APP_NAME \
 --set "gitea.admin.username=${GITEA_USER}" \
 --set "gitea.admin.password=${GITEA_PASSWD}" \
 --set "gitea.admin.email=${GITEA_EMAIL}"  \
--f https://raw.githubusercontent.com/linuxpolska/charts/main/charts/gitea/${CHART_VERSION}/values \
+-f https://raw.githubusercontent.com/sourcemation/charts/main/charts/gitea/${CHART_VERSION}/values \
 --repo https://dl.gitea.io/charts/  $APP_NAME --version ${CHART_VERSION} 
 ```
