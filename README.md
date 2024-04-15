@@ -16,7 +16,7 @@ Our repository contains set of helm charts which allow you to install desired se
 
 ## Getting Started
 
-The best way to get started is with the  ["Before you begin"](PREREQUISITES.md), ["Installation"](INSTALLATION.md) 
+The best way to get started is with the  ["Before you begin"](PREREQUISITES.md), ["Installation"](charts/README.md) 
 section in the documentation.
 
 
