@@ -28,4 +28,5 @@
 - [tekton-operator](https://github.com/sourcemation/charts/tree/main/charts/tekton-operator/current/README.md)
 - [trivy](https://github.com/sourcemation/charts/tree/main/charts/trivy/current/README.md)
 - [elastic](https://github.com/sourcemation/charts/tree/main/charts/elastic/current/README.md)
-
+- [cloudnativepg](https://github.com/sourcemation/charts/tree/main/charts/cloudnativepg/current/README.md)
+cloudnativepg
