@@ -1,0 +1,8 @@
+securityContext: []
+webhook:
+  securityContext: []
+cainjector:
+  securityContext: []
+startupapicheck:
+  securityContext: []
+

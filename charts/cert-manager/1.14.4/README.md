@@ -16,5 +16,9 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 ## Installation via helm / Instalacja przy użyciu helm
 ```bash
 kubectl -n ${CHART_NAMESPACE} apply -f https://github.com/cert-manager/cert-manager/releases/download/v${CHART_VERSION}/cert-manager.crds.yaml
-helm upgrade --install -n ${CHART_NAMESPACE} cert-manager --repo https://charts.jetstack.io cert-manager --version ${CHART_VERSION}
+
+helm upgrade --install cert-manager \
+ -n ${CHART_NAMESPACE} \
+ -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/cert-manager/${CHART_VERSION}/values \
+ --repo https://charts.jetstack.io cert-manager --version ${CHART_VERSION}
 ```
