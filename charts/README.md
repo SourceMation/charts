@@ -29,4 +29,6 @@
 - [trivy](https://github.com/sourcemation/charts/tree/main/charts/trivy/current/README.md)
 - [elastic](https://github.com/sourcemation/charts/tree/main/charts/elastic/current/README.md)
 - [cloudnativepg](https://github.com/sourcemation/charts/tree/main/charts/cloudnativepg/current/README.md)
-cloudnativepg
+- [harbor](https://github.com/sourcemation/charts/tree/main/charts/harbor/current/README.md)
+- [forgejo](https://github.com/sourcemation/charts/tree/main/charts/forgejo/current/README.md)
+- [coder](https://github.com/sourcemation/charts/tree/main/charts/coder/current/README.md)

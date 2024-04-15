@@ -1,11 +1,11 @@
-# Useful links
+# Useful links / Przydatne linki
 - https://www.jaegertracing.io
 - https://github.com/jaegertracing/jaeger
 - https://github.com/jaegertracing/helm-charts
 - https://jaegertracing.github.io/helm-charts
 
-# Installation
-## Preparation
+# Installation / Instalacja
+## Preparation / Przygotowanie
 ```bash
 
 
@@ -17,10 +17,10 @@ kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 
 ```
-## Installation via helm
+## Installation via helm / Instalacja przy użyciu helm
 ``` bash
 helm upgrade --install jaeger \
- -n ${CHART_NAMESPACE}
+ -n ${CHART_NAMESPACE} \
  --set "query.ingress.hosts[0]=${INGRESS_ADDRESS}" \ 
  -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/jaeger/${CHART_VERSION}/values \
  jaeger \ 
