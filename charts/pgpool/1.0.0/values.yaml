@@ -1,0 +1,13 @@
+image:
+  tag: "4.4.2"
+
+env:
+- name: PGPOOL_PARAMS_BACKEND_HOSTNAME0
+  value: "primary"
+- name: PGPOOL_PARAMS_BACKEND_HOSTNAME1
+  value: "replica"
+- name: PGPOOL_PARAMS_BACKEND_FLAG0
+  value: "ALWAYS_PRIMARY|DISALLOW_TO_FAILOVER"
+- name: PGPOOL_PARAMS_BACKEND_FLAG1
+  value: "DISALLOW_TO_FAILOVER"
+
