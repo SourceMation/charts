@@ -20,7 +20,8 @@ helm upgrade --install rancher-monitoring-crd \
  -n ${CHART_NAMESPACE} \
  --set "global.cattle.clusterName=${CLUSTER_NAME}" \
  --set "global.cattle.url=url=${RANCHER_URL}" \
- --repo https://charts.rancher.io rancher-monitoring-crd --version ${CHART_VERSION} \
+ -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/rancher-monitoring/${CHART_VERSION}/values \
+ --repo https://charts.rancher.io rancher-monitoring-crd --version ${CHART_VERSION} 
 
 helm install rancher-monitoring \
  -n ${CHART_NAMESPACE} \
