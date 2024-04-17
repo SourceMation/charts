@@ -21,7 +21,7 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 
 ## Installation via helm / Instalacja przy użyciu helm
 ```bash
-helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace pgpool 1.0.0/ \
+helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace pgpool charts/pgpool/1.0.0/ \
 --set env.PGPOOL_PARAMS_BACKEND_HOSTNAME0=${PGPOOL_PARAMS_BACKEND_HOSTNAME0} \
 --set env.PGPOOL_PARAMS_BACKEND_HOSTNAME1=${PGPOOL_PARAMS_BACKEND_HOSTNAME1} \
 --set env.PGPOOL_PARAMS_BACKEND_FLAG0=${PGPOOL_PARAMS_BACKEND_FLAG0} \
