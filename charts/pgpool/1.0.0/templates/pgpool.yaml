@@ -29,7 +29,18 @@ spec:
               containerPort: 80
               protocol: TCP
           env:
-            {{- toYaml .Values.env | nindent 12 }}
+            - name: PGPOOL_PARAMS_BACKEND_HOSTNAME0
+              value: {{ .Values.env.PGPOOL_PARAMS_BACKEND_HOSTNAME0 | quote}}
+            - name: PGPOOL_PARAMS_BACKEND_HOSTNAME1
+              value: {{ .Values.env.PGPOOL_PARAMS_BACKEND_HOSTNAME1 | quote}}
+            - name: PGPOOL_PARAMS_BACKEND_FLAG0
+              value: {{ .Values.env.PGPOOL_PARAMS_BACKEND_FLAG0 | quote}}
+            - name: PGPOOL_PARAMS_BACKEND_FLAG1
+              value: {{ .Values.env.PGPOOL_PARAMS_BACKEND_FLAG1 | quote}}
+            - name: POSTGRES_USERNAME
+              value: {{ .Values.env.POSTGRES_USERNAME | quote }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.env.POSTGRES_PASSWORD | quote}}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
