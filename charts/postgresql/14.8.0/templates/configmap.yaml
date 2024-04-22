@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "postgresql.fullname" . }}-config
+data:
+  POSTGRES_DB: {{ .Values.postgresql.postgresDB | quote }}
+  POSTGRES_USER: {{ .Values.postgresql.postgresUser | quote }}
+  POSTGRES_INITDB_ARGS: {{ .Values.postgresql.initdbArgs | quote }}
+  POSTGRES_MAX_CONNECTIONS: {{ .Values.postgresql.maxConnections | quote }}
+  POSTGRES_SHARED_BUFFERS: {{ .Values.postgresql.sharedBuffers | quote }}
+  POSTGRES_EFFECTIVE_CACHE_SIZE: {{ .Values.postgresql.effectiveCacheSize | quote }}
+  POSTGRES_MAINTENANCE_WORK_MEM: {{ .Values.postgresql.maintenanceWorkMem | quote }}
+  POSTGRES_WAL_BUFFERS: {{ .Values.postgresql.walBuffers | quote }}
+  POSTGRES_SSLMODE: {{ .Values.postgresql.sslMode | quote }}
