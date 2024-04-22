@@ -1,0 +1,10 @@
+image:
+  tag: "latest"
+
+env:
+  MYDB_HOSTNAME: ""
+  PGDB_HOSTNAME: ""
+  MYDB_USER: ""
+  PGDB_USER: ""
+  MYDB_PASSWORD: ""
+  PGDB_PASSWORD: ""

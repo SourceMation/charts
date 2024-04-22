@@ -3,7 +3,7 @@ entries:
   elastic:
   - apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-04-18T12:43:23.572914192+02:00"
+    created: "2024-04-22T12:54:46.763772363+02:00"
     description: A Helm chart for Kubernetes
     digest: 1c56f1e282625fb45b37b1a4cd179e7e578c48242a47ed9ea2baaa5b88fb5fa8
     name: elastic
@@ -14,7 +14,7 @@ entries:
   pgadmin:
   - apiVersion: v2
     appVersion: 8.5.0
-    created: "2024-04-18T12:43:23.577189792+02:00"
+    created: "2024-04-22T12:54:46.768012964+02:00"
     description: A Helm chart for Kubernetes
     digest: 2a7400e8b397ae2fa068a9e1a6f265bbbb854c354ad61cbd8e106bb041741fd7
     name: pgadmin
@@ -22,10 +22,21 @@ entries:
     urls:
     - pgadmin/pgadmin-1.0.0.tgz
     version: 1.0.0
+  pgloader:
+  - apiVersion: v2
+    appVersion: 3.6.7
+    created: "2024-04-22T12:54:46.771635165+02:00"
+    description: A Helm chart for Kubernetes
+    digest: 3fefcd25827a760059cc30f95dafb94dac5e00a55f4075dfe0766d27f438f8c9
+    name: pgloader
+    type: application
+    urls:
+    - pgloader/pgloader-1.0.0.tgz
+    version: 1.0.0
   pgpool:
   - apiVersion: v2
     appVersion: 4.4.0
-    created: "2024-04-18T12:43:23.581539692+02:00"
+    created: "2024-04-22T12:54:46.775927565+02:00"
     description: A Helm chart for Kubernetes
     digest: 4076de8d80582436d8dd5523aa8b435094a76ff0ea17e2c4ab59b691236bb9b0
     name: pgpool
@@ -33,4 +44,4 @@ entries:
     urls:
     - pgpool/pgpool-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-18T12:43:23.568073692+02:00"
+generated: "2024-04-22T12:54:46.759453163+02:00"
