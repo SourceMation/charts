@@ -3,7 +3,7 @@ entries:
   elastic:
   - apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-04-18T12:43:23.572914192+02:00"
+    created: "2024-04-24T09:08:13.159632536+02:00"
     description: A Helm chart for Kubernetes
     digest: 1c56f1e282625fb45b37b1a4cd179e7e578c48242a47ed9ea2baaa5b88fb5fa8
     name: elastic
@@ -11,10 +11,21 @@ entries:
     urls:
     - elastic/elastic-1.0.0.tgz
     version: 1.0.0
+  mongodb:
+  - apiVersion: v2
+    appVersion: 7.0.3
+    created: "2024-04-24T09:08:13.159871172+02:00"
+    description: A Helm chart for MongoDB on EuroLinux 9
+    digest: cc70ea7f2d0fac635d56f0485874e2bbafd3f28fd7fa0bf39ca7165071d20289
+    name: mongodb
+    type: application
+    urls:
+    - mongodb/mongodb-7.0.3.tgz
+    version: 7.0.3
   pgadmin:
   - apiVersion: v2
     appVersion: 8.5.0
-    created: "2024-04-18T12:43:23.577189792+02:00"
+    created: "2024-04-24T09:08:13.160051672+02:00"
     description: A Helm chart for Kubernetes
     digest: 2a7400e8b397ae2fa068a9e1a6f265bbbb854c354ad61cbd8e106bb041741fd7
     name: pgadmin
@@ -25,7 +36,7 @@ entries:
   pgpool:
   - apiVersion: v2
     appVersion: 4.4.0
-    created: "2024-04-18T12:43:23.581539692+02:00"
+    created: "2024-04-24T09:08:13.160225335+02:00"
     description: A Helm chart for Kubernetes
     digest: 4076de8d80582436d8dd5523aa8b435094a76ff0ea17e2c4ab59b691236bb9b0
     name: pgpool
@@ -33,4 +44,4 @@ entries:
     urls:
     - pgpool/pgpool-1.0.0.tgz
     version: 1.0.0
-generated: "2024-04-18T12:43:23.568073692+02:00"
+generated: "2024-04-24T09:08:13.159056924+02:00"

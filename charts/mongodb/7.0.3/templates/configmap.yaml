@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mongodb.fullname" . }}-config
+data:
+  MONGODB_DEFAULT_USERNAME: {{ .Values.mongodb.username | quote }}
+  MONGO_INITDB_DATABASE: {{ .Values.mongodb.database | quote }}
+  MONGO_REPLICA_SET_NAME: {{ .Values.mongodb.replicaSetName | quote }}
+  MONGO_SHARDING_KEY: {{ .Values.mongodb.shardingKey | quote }}
+  MONGO_WIRED_TIGER_CACHE_SIZE: {{ .Values.mongodb.wiredTigerCacheSize | quote }}
+  MONGO_MAX_CONNECTIONS: {{ .Values.mongodb.maxConnections | quote }}
+  MONGO_OPLOG_SIZE: {{ .Values.mongodb.oplogSize | quote }}
+  MONGO_LOG_LEVEL: {{ .Values.mongodb.logLevel | quote }}
+  MONGODB_DEFAULT_LOG_PATH: {{ .Values.mongodb.logPath | quote }}
+  MONGO_DISABLE_JOURNAL: {{ .Values.mongodb.disableJournal | quote }}
+  MONGO_EXTRA_FLAGS: {{ .Values.mongodb.extraFlags | quote }}
