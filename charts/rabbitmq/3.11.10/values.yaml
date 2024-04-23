@@ -1,0 +1,49 @@
+replicaCount: 1
+
+imagePullSecrets:
+  - name: quay-creds
+
+image:
+  repository: quay.io/eurolinux/eurolinux-9-rabbitmq
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 27017
+  managementPort: 15672
+
+affinity: {}
+nodeSelector: {}
+
+persistence:
+  enabled: true
+  accessMode: "ReadWriteOnce"
+  size: 10Gi
+  storageClass: default
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+healthcheck:
+  initialDelaySeconds: 45
+  periodSeconds: 10
+  timeoutSeconds: 30
+  successThreshold: 1
+  failureThreshold: 3
+
+rabbitmq:
+  username: admin
+  password: admin
+  listeners:
+    tcp:
+      default: 5672
+  management:
+    listener:
+      port: 15672
+      ssl: false
