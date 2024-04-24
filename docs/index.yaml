@@ -3,7 +3,7 @@ entries:
   elastic:
   - apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-04-24T08:22:05.464475403+02:00"
+    created: "2024-04-24T09:28:11.290669291+02:00"
     description: A Helm chart for Kubernetes
     digest: 1c56f1e282625fb45b37b1a4cd179e7e578c48242a47ed9ea2baaa5b88fb5fa8
     name: elastic
@@ -14,7 +14,7 @@ entries:
   pgadmin:
   - apiVersion: v2
     appVersion: 8.5.0
-    created: "2024-04-24T08:22:05.464664903+02:00"
+    created: "2024-04-24T09:28:11.290847437+02:00"
     description: A Helm chart for Kubernetes
     digest: 2a7400e8b397ae2fa068a9e1a6f265bbbb854c354ad61cbd8e106bb041741fd7
     name: pgadmin
@@ -25,7 +25,7 @@ entries:
   pgpool:
   - apiVersion: v2
     appVersion: 4.4.0
-    created: "2024-04-24T08:22:05.464820417+02:00"
+    created: "2024-04-24T09:28:11.291016638+02:00"
     description: A Helm chart for Kubernetes
     digest: 4076de8d80582436d8dd5523aa8b435094a76ff0ea17e2c4ab59b691236bb9b0
     name: pgpool
@@ -36,12 +36,12 @@ entries:
   rabbitmq:
   - apiVersion: v2
     appVersion: 3.11.10
-    created: "2024-04-24T08:22:05.465041385+02:00"
+    created: "2024-04-24T09:28:11.291265083+02:00"
     description: A Helm chart for RabbitMQ on EuroLinux 9
-    digest: 60eec38b2149f7ccd82bbd2346637b2fefc94b1ee6fedefbe49ad913a15e58e4
+    digest: 5786bda63a017352c3d87d3651e9f47ce2bad627d66d34e62db02be993781a6c
     name: rabbitmq
     type: application
     urls:
     - rabbitmq/rabbitmq-3.11.10.tgz
     version: 3.11.10
-generated: "2024-04-24T08:22:05.463951543+02:00"
+generated: "2024-04-24T09:28:11.28995651+02:00"
