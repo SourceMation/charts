@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "redis.fullname" . }}
+spec:
+  serviceName: "{{ include "redis.fullname" . }}"
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "redis.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "redis.name" . }}
+    spec:
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: redis
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        envFrom:
+        - configMapRef:
+            name: {{ include "redis.fullname" . }}-envs
+        env:
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "redis.fullname" . }}-secret
+              key: redis-password
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config-volume
+          mountPath: /etc/redis
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+        livenessProbe:
+          exec:
+            command: ["redis-cli", "ping"]
+          initialDelaySeconds: {{ .Values.healthcheck.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthcheck.periodSeconds }}
+          timeoutSeconds: {{ .Values.healthcheck.timeoutSeconds }}
+          successThreshold: {{ .Values.healthcheck.successThreshold }}
+          failureThreshold: {{ .Values.healthcheck.failureThreshold }}
+        readinessProbe:
+          exec:
+            command: ["redis-cli", "ping"]
+          initialDelaySeconds: {{ .Values.healthcheck.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthcheck.periodSeconds }}
+          timeoutSeconds: {{ .Values.healthcheck.timeoutSeconds }}
+          successThreshold: {{ .Values.healthcheck.successThreshold }}
+          failureThreshold: {{ .Values.healthcheck.failureThreshold }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ include "redis.fullname" . }}
+      - name: config-volume
+        configMap:
+          name: {{ include "redis.fullname" . }}-config
