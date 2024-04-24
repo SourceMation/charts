@@ -38,8 +38,6 @@ healthcheck:
   failureThreshold: 3
 
 rabbitmq:
-  username: admin
-  password: admin
   listeners:
     tcp:
       default: 5672
