@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "postgresql.fullname" . }}
+spec:
+  serviceName: "{{ include "postgresql.fullname" . }}"
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "postgresql.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "postgresql.name" . }}
+    spec:
+      affinity:
+        {{- toYaml .Values.affinity | nindent 8 }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- if .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: postgres
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        envFrom:
+        - configMapRef:
+            name: {{ include "postgresql.fullname" . }}-config
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "postgresql.fullname" . }}
+              key: postgres-password
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/postgresql/data
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
+        livenessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - {{ .Values.postgresql.postgresUser }}
+          initialDelaySeconds: {{ .Values.healthcheck.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthcheck.periodSeconds }}
+          timeoutSeconds: {{ .Values.healthcheck.timeoutSeconds }}
+          successThreshold: {{ .Values.healthcheck.successThreshold }}
+          failureThreshold: {{ .Values.healthcheck.failureThreshold }}
+        readinessProbe:
+          exec:
+            command:
+            - pg_isready
+            - -U
+            - {{ .Values.postgresql.postgresUser }}
+          initialDelaySeconds: {{ .Values.healthcheck.initialDelaySeconds }}
+          periodSeconds: {{ .Values.healthcheck.periodSeconds }}
+          timeoutSeconds: {{ .Values.healthcheck.timeoutSeconds }}
+          successThreshold: {{ .Values.healthcheck.successThreshold }}
+          failureThreshold: {{ .Values.healthcheck.failureThreshold }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ include "postgresql.fullname" . }}
