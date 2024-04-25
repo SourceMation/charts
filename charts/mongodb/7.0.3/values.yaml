@@ -1,0 +1,48 @@
+replicaCount: 1
+
+imagePullSecrets:
+  - name: quay-creds
+
+image:
+  repository: quay.io/eurolinux/eurolinux-9-mongodb
+  tag: "eurolinux-9-mongodb-7.0.3-amd64"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 27017
+
+affinity: {}
+nodeSelector: {}
+
+persistence:
+  enabled: true
+  accessMode: "ReadWriteOnce"
+  size: 10Gi
+  storageClass: default
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+healthcheck:
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 15
+  successThreshold: 1
+  failureThreshold: 3
+
+mongodb:
+  replicaSetName: myReplicaSet
+  shardingKey: ""
+  wiredTigerCacheSize: "1G"
+  maxConnections: "500"
+  oplogSize: "128"
+  logLevel: "2"
+  logPath: "/var/log/mongodb/mongod.log"
+  disableJournal: "false"
+  extraFlags: "--quiet"
