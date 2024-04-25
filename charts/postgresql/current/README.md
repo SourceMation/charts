@@ -29,27 +29,6 @@ helm upgrade --install ${POSTGRESQL_NAME}\
  --repo https://sourcemation.github.io/charts/ ${POSTGRESQL_NAME} --version ${CHART_VERSION}
 ```
 
-## Create test database / Stwórz baze testową
-
-```bash
-kubectl apply -f - <<EOF
-apiVersion: v1
-kind: Cluster
-metadata:
-  name: postgresql-test
-  namespace: ${K8S_NAMESPACE}
-spec:
-  instances: 3
-  storage:
-    size: 1Gi
-EOF
-
-kubectl -n ${K8S_NAMESPACE} get po # check if pods are up / sprawdź czy pody działają
-  
-kubectl -n ${K8S_NAMESPACE} get cluster # check if cluster is present / sprawdź czy cluster został zainstalowany
-
-```
-
 ## Check database connection \ Sprawdź czy można połączyć się z bazą
 
 ```bash
