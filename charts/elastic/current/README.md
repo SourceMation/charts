@@ -1,5 +1,3 @@
-<!-- START doctoc -->
-<!-- END doctoc -->
 
 # Elastic stack installation
 
