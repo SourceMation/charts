@@ -1,11 +1,19 @@
-# What is LP CHARTS repository?
+<p align="center">
+    <img width="400px" height=auto src="https://github.com/linuxpolska/ezd-rp/blob/release/1.0.0/docs/LinuxPolska-icon.png" />
+</p>
+
+
+<p align="center">
+    <a href="https://github.com/bitnami/charts"><img src="https://badgen.net/github/stars/SourceMation/charts?icon=github" /></a>
+    <a href="https://github.com/bitnami/charts"><img src="https://badgen.net/github/forks/SourceMation/charts?icon=github" /></a>
+</p>
+
+
+# The Linux Polska Charts for Kubernetes
 
 
 Our repository contains set of helm charts which allow you to install desired services on Kubernetes using [Helm](https://github.com/helm/helm).
 
-<h1 align="center" style="border-bottom: none">
-    <a href="https://linuxpolskia.com/pl/" target="_blank"><img alt="Longhorn" width="200px" src="https://github.com/linuxpolska/ezd-rp/blob/release/1.0.0/docs/LinuxPolska-icon.png""></a>
-</h1>
 
 
 

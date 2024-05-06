@@ -30,14 +30,14 @@ More information available [here](https://www.elastic.co/guide/en/cloud-on-k8s/c
 
 
 export ECK_VER=2.11.1
-export K8S_NAMESPACE=elastic
-export ELASTICSEARCH_URL=example.com
-export ELASTICSEARCH_STORAGE=example.com
-export REPO_URL=example.com
-export KB_URL=example.com
-export APM_URL_HTTP=example.com
-export APM_URL_GRPC=example.com
-export FLEET_URL=example.com
+export K8S_NAMESPACE=elastic-tst
+#export ELASTICSEARCH_URL=example.com
+#export ELASTICSEARCH_STORAGE=example.com
+#export REPO_URL=example.com
+#export KB_URL=example.com
+#export APM_URL_HTTP=example.com
+#export APM_URL_GRPC=example.com
+#export FLEET_URL=example.com
 
 helm -n default install elastic-operator-crds elastic/eck-operator-crds --version ${ECK_VER}
 
@@ -149,5 +149,17 @@ helm -n ${K8S_NAMESPACE} uninstall elastic-operator-crds
 helm -n ${K8S_NAMESPACE} uninstall elastic-operator
 kubectl -n ${K8S_NAMESPACE} delete secret repo-auth
 
+```
+
+
+# For developers
+
+
+```bash 
+kubectl config set-context --current --namespace ${K8S_NAMESPACE}
+
+helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace elka .
+
+helm -n ${K8S_NAMESPACE} uninstall elka 
 
 ```

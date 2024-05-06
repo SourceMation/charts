@@ -1,0 +1,64 @@
+---
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: {{ include "common.names.fullname" . }}-service
+  namespace: {{ include "common.names.namespace" . }}
+spec:
+  version: {{ default .Chart.AppVersion }}
+  image: docker.elastic.co/beats/elastic-agent:{{ default .Chart.AppVersion }}
+  kibanaRef:
+    name: {{ include "common.names.fullname" . }}
+  fleetServerRef:
+    name: {{ include "common.names.fullname" . }}-fleet
+  mode: fleet
+  policyID: eck-agent-service
+#  daemonSet:
+  deployment:
+    replicas: 3
+    podTemplate:
+      metadata:
+        labels:
+          scrape: agent
+      spec:
+#        hostNetwork: true
+#        dnsPolicy: ClusterFirstWithHostNet
+        serviceAccountName: elastic-agent
+        automountServiceAccountToken: true
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+#                  - all
+        containers:
+        - name: agent
+          resources:
+            requests:
+              memory: 800Mi
+              cpu: 1500m
+            limits:
+              memory: 800Mi
+              cpu: 1500m
+          volumeMounts:
+          - mountPath: /mnt/elastic-internal/http-certs
+            name: elastic-internal-http-certificates
+            readOnly: true
+        securityContext:
+          runAsUser: 0
+        volumes:
+        - name: agent-data
+          emptyDir: {}
+        - name: elastic-internal-http-certificates
+          secret:
+            defaultMode: 420
+            optional: false
+            secretName: {{ include "common.names.fullname" . }}-kb-http-certs-internal
+
