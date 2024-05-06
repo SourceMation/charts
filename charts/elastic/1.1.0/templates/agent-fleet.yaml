@@ -42,7 +42,8 @@ spec:
 #                - key: elastic
 #                  operator: In
 #                  values:
-#                  - all
+#                  - all  
+
         containers:
         - name: agent
           resources:

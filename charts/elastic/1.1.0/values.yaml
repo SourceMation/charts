@@ -110,6 +110,19 @@ eckKibana:
       enabled: true
       ingressClassName: ""
       hostname: kb-tst.apps.example.com
+      annotations:
+#        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+#        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+#        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+
 
 eckApm:
   enabled: true
@@ -150,6 +163,4 @@ imagePullSecrets: []
 #- name: repo-auth
 
 
-nameOverride: ""
-fullnameOverride: ""
 

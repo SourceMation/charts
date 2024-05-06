@@ -171,14 +171,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "common.names.fullname" $ -}}-kb-http
-  namespace: {{ include "common.names.namespace" $ }} 
+  namespace: {{ include "common.names.namespace" $ }}
+  {{- with $.Values.eckKibana.params.ingress.annotations }}
   annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
     kibana.k8s.elastic.co/name: {{ include "common.names.fullname" $ }}
+
 spec:
   rules:
   - host: {{ .ingress.hostname }}
