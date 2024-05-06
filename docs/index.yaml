@@ -1,9 +1,38 @@
 apiVersion: v1
 entries:
   elastic:
+  - annotations:
+      catalog.cattle.io/display-name: Elastic stack for k8s
+      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/release-name: elastic
+    apiVersion: v2
+    appVersion: 8.12.2
+    created: "2024-05-06T14:25:11.619343254+02:00"
+    dependencies:
+    - name: common
+      repository: file://./charts/common
+      version: 0.x.x
+    description: Elastic stack deployment
+    digest: d9db41233cabe5427a11ff5281fcd4d48442a2caf2f585e9c5a1105deb9d4572
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - elastic
+    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+    maintainers:
+    - email: biuro@linuxpolska.com
+      name: Linux Polska
+    name: elastic
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - elastic/elastic-1.1.0.tgz
+    version: 1.1.0
   - apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-04-25T10:58:52.882065734+02:00"
+    created: "2024-05-06T14:25:11.618323233+02:00"
     description: A Helm chart for Kubernetes
     digest: 1c56f1e282625fb45b37b1a4cd179e7e578c48242a47ed9ea2baaa5b88fb5fa8
     name: elastic
@@ -14,7 +43,7 @@ entries:
   mongodb:
   - apiVersion: v2
     appVersion: 7.0.3
-    created: "2024-04-25T10:58:52.886642234+02:00"
+    created: "2024-05-06T14:25:11.619550065+02:00"
     description: A Helm chart for MongoDB on EuroLinux 9
     digest: cc70ea7f2d0fac635d56f0485874e2bbafd3f28fd7fa0bf39ca7165071d20289
     name: mongodb
@@ -25,7 +54,7 @@ entries:
   pgadmin:
   - apiVersion: v2
     appVersion: 8.5.0
-    created: "2024-04-25T10:58:52.891307634+02:00"
+    created: "2024-05-06T14:25:11.619679239+02:00"
     description: A Helm chart for Kubernetes
     digest: 2a7400e8b397ae2fa068a9e1a6f265bbbb854c354ad61cbd8e106bb041741fd7
     name: pgadmin
@@ -36,7 +65,7 @@ entries:
   pgbadger:
   - apiVersion: v2
     appVersion: "11.1"
-    created: "2024-04-25T10:58:52.896436434+02:00"
+    created: "2024-05-06T14:25:11.619800006+02:00"
     description: A Helm chart for Kubernetes
     digest: 002bd9e0c0998cb850187723b23ec3233c277399e55290cb60f9b58731d82002
     name: pgbadger
@@ -47,7 +76,7 @@ entries:
   pgbouncer:
   - apiVersion: v2
     appVersion: 1.22.1
-    created: "2024-04-25T10:58:52.901770434+02:00"
+    created: "2024-05-06T14:25:11.620083418+02:00"
     description: A Helm chart for Kubernetes
     digest: 835b36e512313e97bea09644e35afef12d8afa510e217c401ed7fb126d6e43cc
     name: pgbouncer
@@ -58,7 +87,7 @@ entries:
   pgloader:
   - apiVersion: v2
     appVersion: 3.6.7
-    created: "2024-04-25T10:58:52.906485234+02:00"
+    created: "2024-05-06T14:25:11.620246415+02:00"
     description: A Helm chart for Kubernetes
     digest: 3fefcd25827a760059cc30f95dafb94dac5e00a55f4075dfe0766d27f438f8c9
     name: pgloader
@@ -69,7 +98,7 @@ entries:
   pgpool:
   - apiVersion: v2
     appVersion: 4.4.0
-    created: "2024-04-25T10:58:52.910930834+02:00"
+    created: "2024-05-06T14:25:11.620384243+02:00"
     description: A Helm chart for Kubernetes
     digest: 4076de8d80582436d8dd5523aa8b435094a76ff0ea17e2c4ab59b691236bb9b0
     name: pgpool
@@ -80,7 +109,7 @@ entries:
   postgresql:
   - apiVersion: v2
     appVersion: 14.8.0
-    created: "2024-04-25T10:58:52.915620334+02:00"
+    created: "2024-05-06T14:25:11.620585465+02:00"
     description: A Helm chart for PostgreSQL on EuroLinux 9
     digest: af0f82a51b3cd16d308c9506e16943daff845b4a9a5a0b27ec0908f57ae30010
     name: postgresql
@@ -91,7 +120,7 @@ entries:
   rabbitmq:
   - apiVersion: v2
     appVersion: 3.11.10
-    created: "2024-04-25T10:58:52.920813234+02:00"
+    created: "2024-05-06T14:25:11.620777675+02:00"
     description: A Helm chart for RabbitMQ on EuroLinux 9
     digest: 5786bda63a017352c3d87d3651e9f47ce2bad627d66d34e62db02be993781a6c
     name: rabbitmq
@@ -102,7 +131,7 @@ entries:
   redis:
   - apiVersion: v2
     appVersion: 6.2.7
-    created: "2024-04-25T10:58:52.926199534+02:00"
+    created: "2024-05-06T14:25:11.62095465+02:00"
     description: A Helm chart for Redis on EuroLinux 9
     digest: 9be5e726c3ad27f65188db150b5081c17014b1d419ac5cff8e8ad8de1c789353
     name: redis
@@ -110,4 +139,4 @@ entries:
     urls:
     - redis/redis-6.2.7.tgz
     version: 6.2.7
-generated: "2024-04-25T10:58:52.876482935+02:00"
+generated: "2024-05-06T14:25:11.617189661+02:00"
