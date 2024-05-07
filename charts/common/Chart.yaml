@@ -1,0 +1,31 @@
+apiVersion: v2
+name: common
+description: A Library Helm Chart for grouping common logic between charts.
+
+annotations:
+  catalog.cattle.io/display-name: Commons librares
+  catalog.cattle.io/namespace: default
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/release-name: commons
+  catalog.cattle.io/hidden: "true"
+
+maintainers:
+- email: biuro@linuxpolska.com
+  name: Linux Polska
+
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+
+
+keywords:
+- common
+
+kubeVersion: '>=1.19.0-0'
+
+type: library
+
+version: 0.1.0
+
+appVersion: "0.1.0"
+
+
