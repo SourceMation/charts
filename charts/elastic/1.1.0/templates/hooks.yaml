@@ -1,26 +1,27 @@
+{{/*
 ---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
     common.k8s.elastic.co/type: mods
-    repo.k8s.elastic.co/name: {{ include "common.names.fullname" $ | quote }}
+    repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade,pre-rollback
     "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
-  name: {{ include "common.names.fullname" $ -}}-mods
+  name: {{ $.Release.Name -}}-mods
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   selector:
     matchLabels:
       common.k8s.elastic.co/type: mods
-      repo.k8s.elastic.co/name: {{ include "common.names.fullname" $ | quote }}
+      repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
   template:
     metadata:
       labels:
         common.k8s.elastic.co/type: mods
-        repo.k8s.elastic.co/name: {{ include "common.names.fullname" $ | quote }}
+        repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
     spec:
       tolerations:
         - key: node-role.kubernetes.io/control-plane
@@ -57,23 +58,23 @@ kind: DaemonSet
 metadata:
   labels:
     common.k8s.elastic.co/type: selinux
-    repo.k8s.elastic.co/name: {{ include "common.names.fullname" $ | quote }}
+    repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
   annotations:
-    "helm.sh/hook": pre-install
+    "helm.sh/hook": pre-install,pre-upgrade,pre-rollback
     "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
-  name: {{ include "common.names.fullname" $ -}}-selinux
+  name: {{ $.Release.Name -}}-selinux
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   selector:
     matchLabels:
       common.k8s.elastic.co/type: selinux
-      repo.k8s.elastic.co/name: {{ include "common.names.fullname" $ | quote }}
+      repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
   template:
     metadata:
       labels:
         common.k8s.elastic.co/type: selinux
-        repo.k8s.elastic.co/name: {{ include "common.names.fullname" $ | quote }}
+        repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
     spec:
       tolerations:
         - key: node-role.kubernetes.io/control-plane
@@ -102,6 +103,9 @@ spec:
            dirs=(
               "/hostfs/var/lib/elastic-agent/{{- include "common.names.namespace" $ }}"
               "/hostfs/var/lib/{{- include "common.names.namespace" $ }}"
+              "/hostfs/var/lib/rancher/rke2/agent/containerd/io.containerd.grpc.v1.cri/containers"
+              "/hostfs/var/log/containers"
+              "/hostfs/var/log/pods"
               )
             for dir in ${dirs[@]}; do
               mkdir -p "${dir}"
@@ -119,30 +123,30 @@ spec:
         - name: hostfs
           hostPath:
             path: /
-
+*/}}
 ---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
     common.k8s.elastic.co/type: clean
-    repo.k8s.elastic.co/name: {{ include "common.names.fullname" $ | quote }}
+    repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
   annotations:
     "helm.sh/hook": post-delete
     "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
-  name: {{ include "common.names.fullname" $ -}}-clean
+  name: {{ $.Release.Name -}}-clean
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   selector:
     matchLabels:
       common.k8s.elastic.co/type: clean
-      repo.k8s.elastic.co/name: {{ include "common.names.fullname" $ | quote }}
+      repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
   template:
     metadata:
       labels:
         common.k8s.elastic.co/type: clean
-        repo.k8s.elastic.co/name: {{ include "common.names.fullname" $ | quote }}
+        repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
     spec:
       tolerations:
         - key: node-role.kubernetes.io/control-plane

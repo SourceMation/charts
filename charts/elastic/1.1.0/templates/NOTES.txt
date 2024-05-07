@@ -25,15 +25,18 @@ custom-columns='NAME:.metadata.name,TYPE:.spec.type,IP:..status.loadBalancer.ing
 
 4. Get self-signed CA Elasticsearch
 
-kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.fullname" . }}-es-http-certs-public \
--o go-template='{{`{{ index .data "tls.crt" | base64decode `}} }}'
+kubectl -n {{ .Release.Namespace }} get secret {{ $.Release.Name }}-es-http-certs-public \
+-o go-template='{{`{{ index .data "ca.crt" | base64decode `}} }}'
 
-5. Get self-signed CA of Kibana
+5. Get self-signed CA Kibana and APM
 
-kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.fullname" . }}-kb-http-certs-public \
--o go-template='{{`{{ index .data "tls.crt" | base64decode `}} }}'
+kubectl -n {{ .Release.Namespace }} get secret {{ $.Release.Name }}-kb-http-certs-public \
+-o go-template='{{`{{ index .data "ca.crt" | base64decode `}} }}'
 
 6. Get default password for elastic user
 
-kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.fullname" . }}-es-elastic-user -o go-template='{{`{{ .data.elastic | base64decode `}} }}'
+kubectl -n {{ .Release.Namespace }} get secret {{ $.Release.Name }}-es-elastic-user -o go-template='{{`{{ .data.elastic | base64decode `}} }}'
+
+
+
 

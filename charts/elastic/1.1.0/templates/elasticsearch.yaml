@@ -3,7 +3,7 @@
 apiVersion: {{ include "common.capabilities.elasticsearch.apiVersion" .}}
 kind: Elasticsearch
 metadata:
-  name: {{ include "common.names.fullname" . }}
+  name: {{ $.Release.Name }}
   labels:
     {{- include "common.labels.labels" . | nindent 4 }}
   namespace: {{ include "common.names.namespace" . }}
@@ -15,15 +15,18 @@ spec:
       spec:
         type: LoadBalancer
         selector:
-          elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.fullname" $ | quote }}
+          elasticsearch.k8s.elastic.co/cluster-name: {{ $.Release.Name | quote }}
           elasticsearch.k8s.elastic.co/node-master: "false"
     tls:
+      {{- if and .ingress.enabled ( not $.Values.tlsSecretName ) }}
       selfSignedCertificate:
         disabled: false
-        {{- if .ingress.enabled }}
         subjectAltNames:
         - dns: {{ .ingress.hostname }}
-        {{- end }}
+      {{- else }}
+      certificate:
+        secretName: {{ $.Values.tlsSecretName | quote }}   
+      {{- end }}
   {{- with .pdb }}
   podDisruptionBudget:
     spec:
@@ -38,7 +41,7 @@ spec:
     count: {{ $v.count }}
     config:
       node.roles: {{ $v.roles }}
-      node.store.allow_mmap: false
+#      node.store.allow_mmap: false
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
@@ -63,6 +66,42 @@ spec:
         imagePullSecrets:
           {{- toYaml . | nindent 8 }}
         {{- end }}
+        initContainers:
+        - name: max-map-count
+          image: quay.io/eurolinux/eurolinux-9:latest
+          resources:
+            limits:
+              cpu: 100m
+              memory: 32Mi
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /hostfs/
+              name: hostfs
+          command:
+          - 'bash'
+          - '-e'
+          - '-c'
+          - |-
+            echo 262144 > /hostfs/proc/sys/vm/max_map_count
+        - name: max-map-count-check
+          image: quay.io/eurolinux/eurolinux-9:latest
+          resources:
+            limits:
+              cpu: 100m
+              memory: 32Mi
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /hostfs/
+              name: hostfs
+          command: ['sh', '-c', "while true; do mmc=$(cat /hostfs/proc/sys/vm/max_map_count); if [ ${mmc} -eq 262144 ]; then exit 0; else echo 'vm.max_map_count not equal l262144'; fi; sleep 1; done"]
+        volumes:
+        - name: hostfs
+          hostPath:
+            path: /
         containers:
         - name: elasticsearch
           resources:
@@ -172,7 +211,7 @@ spec:
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: {{ include "common.names.fullname" . -}}-es-http
+  name: {{ $.Release.Name -}}-es-http
   namespace: {{ include "common.names.namespace" . }}
   {{- with .Values.eckElasticsearch.params.ingress.annotations }}
   annotations:
@@ -180,7 +219,7 @@ metadata:
   {{- end }}
   labels:
     {{- include "common.labels.labels" . | nindent 4 }}  
-    elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.fullname" . }}
+    elasticsearch.k8s.elastic.co/cluster-name: {{ $.Release.Name }}
 spec:
   {{- if .Values.eckElasticsearch.params.ingress.ingressClassName }}
   ingressClassName: {{ .Values.eckElasticsearch.params.ingress.ingressClassName | quote }}
@@ -192,7 +231,7 @@ spec:
       paths:
       - backend:
           service:
-            name: {{ include "common.names.fullname" . -}}-es-http
+            name: {{ $.Release.Name -}}-es-http
             port:
               number: 9200
         path: /
@@ -202,7 +241,7 @@ spec:
   tls:
   - hosts:
     - {{ .Values.eckElasticsearch.params.ingress.hostname | quote }}
-    secretName: {{ include "common.names.fullname" . -}}-es-http-certs-internal  
+    secretName: {{ $.Release.Name -}}-es-http-certs-internal  
 
 {{- end }}
 
@@ -217,7 +256,7 @@ spec:
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: {{ include "common.names.fullname" . }}
+  name: {{ $.Release.Name }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels:
     {{- include "common.labels.labels" . | nindent 4 }}  
@@ -239,7 +278,7 @@ spec:
             {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
             pathType: {{ .Values.eckElasticsearch.params.ingress.pathType }}
             {{- end }}
-            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" .) "servicePort" "http" "context" $)  | nindent 14 }}
+            backend: {{- include "common.ingress.backend" (dict "serviceName" ($.Release.Name) "servicePort" "http" "context" $)  | nindent 14 }}
     {{- end }}
     {{- range .Values.eckElasticsearch.params.ingress.extraHosts }}
     - host: {{ tpl .name $ | quote }}
@@ -249,7 +288,7 @@ spec:
             {{- if eq "true" (include "common.ingress.supportsPathType" $) }}
             pathType: {{ default "ImplementationSpecific" .pathType }}
             {{- end }}
-            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" $) "servicePort" "http" "context" $) | nindent 14 }}
+            backend: {{- include "common.ingress.backend" (dict "serviceName" ($.Release.Name) "servicePort" "http" "context" $) | nindent 14 }}
     {{- end }}
     {{- if .Values.eckElasticsearch.params.ingress.extraRules }}
     {{- include "common.tplvalues.render" (dict "value" .Values.eckElasticsearch.params.ingress.extraRules "context" $) | nindent 4 }}

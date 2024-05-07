@@ -3,7 +3,7 @@
 apiVersion: kibana.k8s.elastic.co/v1
 kind: Kibana
 metadata:
-  name: {{ include "common.names.fullname" . }}
+  name: {{ $.Release.Name }}
   namespace: {{ include "common.names.namespace" . }} 
 spec:
   {{- with .Values.eckKibana.params }}
@@ -36,7 +36,7 @@ spec:
         - -c
         - >
           set -x;
-          until wget -q --spider --no-check-certificate http://{{ include "common.names.fullname" $ -}}-repo:8080; do sleep 2; done
+          until wget -q --spider --no-check-certificate http://{{ $.Release.Name -}}-repo:8080; do sleep 2; done
       containers:
       - name: kibana
         resources:
@@ -49,16 +49,20 @@ spec:
       spec:
         type: LoadBalancer
     tls:
+      {{- if and .ingress.enabled ( not $.Values.tlsSecretName ) }}
       selfSignedCertificate:
         disabled: false
         subjectAltNames:
         - dns: {{ .ingress.hostname | quote }}
-        - dns: "{{ include "common.names.fullname" $ -}}-repo"
+        - dns: "{{ $.Release.Name -}}-repo"
         - dns: {{ $.Values.eckPackageRegistry.params.ingress.hostname | quote }}
         - dns: {{ $.Values.eckApm.params.ingress.hostname | quote }}
-        - dns: {{ $.Values.eckApm.params.ingress.hostname | quote }}
+      {{- else }}
+      certificate:
+        secretName: {{ $.Values.tlsSecretName | quote }}
+      {{- end }}
   elasticsearchRef:
-    name: {{ include "common.names.fullname" $ }}
+    name: {{ $.Release.Name }}
   config:
     monitoring.kibana.collection.enabled: 'true'
     monitoring.ui.ccs.enabled: 'true'
@@ -69,9 +73,9 @@ spec:
     xpack.reporting.kibanaServer.port: "443"
     xpack.reporting.roles.enabled: "false"
     server.publicBaseUrl: "https://{{- .ingress.hostname -}}:443"
-    xpack.fleet.registryUrl: "http://{{- include "common.names.fullname" $ -}}-repo:8080"
+    xpack.fleet.registryUrl: "http://{{- $.Release.Name -}}-repo:8080"
     xpack.fleet.agents.fleet_server.hosts:
-    - "https://{{- include "common.names.fullname" $ -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
+    - "https://{{- $.Release.Name -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
     - "https://{{- $.Values.eckFleet.params.ingress.hostname -}}:443"
     - "https://{{- $.Values.eckFleet.params.ingress.hostname -}}:8220"
     xpack.fleet.outputs:
@@ -81,12 +85,12 @@ spec:
       name: elastic
       type: elasticsearch
       hosts:
-      - "https://{{ include "common.names.fullname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
+      - "https://{{ $.Release.Name -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
       - "https://{{ $.Values.eckElasticsearch.params.ingress.hostname -}}:443"
       - "https://{{ $.Values.eckElasticsearch.params.ingress.hostname -}}:9200"
       ssl:
         certificate_authorities: 
-        - "/mnt/elastic-internal/elasticsearch-association/{{ include "common.names.namespace" $ -}}/{{ include "common.names.fullname" $ -}}/certs/ca.crt"
+        - "/mnt/elastic-internal/elasticsearch-association/{{ include "common.names.namespace" $ -}}/{{ $.Release.Name -}}/certs/ca.crt"
     xpack.fleet.packages:
       - name: system
         version: latest
@@ -170,7 +174,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "common.names.fullname" $ -}}-kb-http
+  name: {{ $.Release.Name -}}-kb-http
   namespace: {{ include "common.names.namespace" $ }}
   {{- with $.Values.eckKibana.params.ingress.annotations }}
   annotations:
@@ -178,7 +182,7 @@ metadata:
   {{- end }}
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
-    kibana.k8s.elastic.co/name: {{ include "common.names.fullname" $ }}
+    kibana.k8s.elastic.co/name: {{ $.Release.Name }}
 
 spec:
   rules:
@@ -187,7 +191,7 @@ spec:
       paths:
       - backend:
           service:
-            name: {{ include "common.names.fullname" $ -}}-kb-http
+            name: {{ $.Release.Name -}}-kb-http
             port:
               number: 5601
         path: /
@@ -195,7 +199,7 @@ spec:
   tls:
   - hosts:
     - {{ .ingress.hostname }}
-#    secretName: {{ include "common.names.fullname" $ -}}-kb-http-certs-internal
+#    secretName: {{ $.Release.Name -}}-kb-http-certs-internal
 {{- end }}
 
 {{- end }}

@@ -3,7 +3,7 @@
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
 metadata:
-  name: {{ include "common.names.fullname" . }}-fleet
+  name: {{ $.Release.Name }}-fleet
   namespace: {{ include "common.names.namespace" . }}
 spec:
   http:
@@ -13,9 +13,9 @@ spec:
   version: {{ default .Chart.AppVersion }}
   image: docker.elastic.co/beats/elastic-agent:{{ default .Chart.AppVersion }}
   kibanaRef:
-    name: {{ include "common.names.fullname" . }}
+    name: {{ $.Release.Name }}
   elasticsearchRefs:
-  - name: {{ include "common.names.fullname" . }}
+  - name: {{ $.Release.Name }}
   mode: fleet
   fleetServerEnabled: true
   policyID: eck-agent-fleet
@@ -43,6 +43,43 @@ spec:
 #                  operator: In
 #                  values:
 #                  - all  
+        initContainers:
+        - name: selinux
+          image: quay.io/eurolinux/eurolinux-9:latest
+          resources:
+            limits:
+              cpu: 100m
+              memory: 32Mi
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /hostfs/
+              name: hostfs
+          command:
+          - 'bash'
+          - '-e'
+          - '-c'
+          - |-
+           dirs=(
+             "/hostfs/var/lib/elastic-agent/{{- include "common.names.namespace" $ }}"
+              )
+            for dir in ${dirs[@]}; do
+              mkdir -p "${dir}"
+              chcon -Rt svirt_sandbox_file_t "${dir}"
+              chmod g+rw "${dir}"
+              chgrp 0 "${dir}"
+              if [ -n "$(ls -A ${dir} 2>/dev/null)" ]
+              then
+                chgrp 0 "${dir}"/*
+                chmod g+rw "${dir}"/*
+              fi
+            done
+        volumes:
+        - name: hostfs
+          hostPath:
+            path: /
+
 
         containers:
         - name: agent
@@ -58,7 +95,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "common.names.fullname" . }}-fleet-agent-http
+  name: {{ $.Release.Name }}-fleet-agent-http
   namespace: {{ include "common.names.namespace" . }}
   {{- with .Values.eckFleet.params.ingress.annotations }}
   annotations:
@@ -66,7 +103,7 @@ metadata:
   {{- end }}
   labels:
     {{- include "common.labels.labels" . | nindent 4 }}
-    agent.k8s.elastic.co/name: {{ include "common.names.fullname" . }}-fleet
+    agent.k8s.elastic.co/name: {{ $.Release.Name }}-fleet
 
 spec:
   rules:
@@ -75,7 +112,7 @@ spec:
       paths:
       - backend:
           service:
-            name: {{ include "common.names.fullname" . -}}-fleet-agent-http
+            name: {{ $.Release.Name -}}-fleet-agent-http
             port:
               number: 8220
         path: /
@@ -83,7 +120,7 @@ spec:
   tls:
   - hosts:
     - {{ .Values.eckFleet.params.ingress.hostname }}
-    secretName: {{ include "common.names.fullname" . }}-fleet-agent-http-certs-internal
+    secretName: {{ $.Release.Name }}-fleet-agent-http-certs-internal
 
 {{- end }}
 {{- end }}
