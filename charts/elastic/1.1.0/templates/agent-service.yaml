@@ -2,15 +2,15 @@
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
 metadata:
-  name: {{ $.Release.Name }}-service
+  name: {{ include "common.names.shortname" $ }}-service
   namespace: {{ include "common.names.namespace" . }}
 spec:
   version: {{ default .Chart.AppVersion }}
   image: docker.elastic.co/beats/elastic-agent:{{ default .Chart.AppVersion }}
   kibanaRef:
-    name: {{ $.Release.Name }}
+    name: {{ include "common.names.shortname" $ }}
   fleetServerRef:
-    name: {{ $.Release.Name }}-fleet
+    name: {{ include "common.names.shortname" $ }}-fleet
   mode: fleet
   policyID: eck-agent-service
 #  daemonSet:
@@ -46,7 +46,7 @@ spec:
           - -c
           - >
             set -x;
-            until curl -f -k -L https://{{ $.Release.Name -}}-fleet-agent-http:8220/api/status; do sleep 2; done
+            until curl -f -k -L https://{{ include "common.names.shortname" $ -}}-fleet-agent-http:8220/api/status; do sleep 2; done
 
         containers:
         - name: agent
@@ -70,5 +70,5 @@ spec:
           secret:
             defaultMode: 420
             optional: false
-            secretName: {{ $.Release.Name }}-kb-http-certs-internal
+            secretName: {{ include "common.names.shortname" $ }}-es-http-certs-internal
 

@@ -8,7 +8,7 @@ appVersion: "8.12.2"
 
 dependencies:
 - name: common
-  repository: file://./charts/common
+  repository: https://sourcemation.github.io/charts/
   version: 0.x.x
 description: Elastic stack deployment
 home: https://linuxpolska.com

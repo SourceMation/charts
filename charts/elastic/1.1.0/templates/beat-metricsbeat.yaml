@@ -2,14 +2,14 @@
 apiVersion: beat.k8s.elastic.co/v1beta1
 kind: Beat
 metadata:
-  name: {{ $.Release.Name }}-metric-mon
+  name: {{ include "common.names.shortname" $ }}-metric-mon
   namespace: {{ include "common.names.namespace" . }}
 spec:
   type: metricbeat
   version: {{ default .Chart.AppVersion }}
   image: docker.elastic.co/beats/metricbeat:{{ default .Chart.AppVersion }}
   elasticsearchRef:
-    name: {{ $.Release.Name }}
+    name: {{ include "common.names.shortname" $ }}
   config:
     metricbeat:
       autodiscover:
@@ -113,7 +113,7 @@ spec:
           - -c
           - >
             set -x;
-            until wget -q --spider --no-check-certificate https://{{ $.Release.Name -}}-kb-http:5601; do sleep 2; done
+            until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
         containers:
         - name: metricbeat
           env:
@@ -123,7 +123,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 key: elastic
-                name: {{ $.Release.Name }}-es-elastic-user
+                name: {{ include "common.names.shortname" $ }}-es-elastic-user
           resources:
             requests:
               cpu: 100m

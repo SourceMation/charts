@@ -3,7 +3,7 @@
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
 metadata:
-  name: {{ $.Release.Name }}-fleet
+  name: {{ include "common.names.shortname" $ }}-fleet
   namespace: {{ include "common.names.namespace" . }}
 spec:
   http:
@@ -13,9 +13,9 @@ spec:
   version: {{ default .Chart.AppVersion }}
   image: docker.elastic.co/beats/elastic-agent:{{ default .Chart.AppVersion }}
   kibanaRef:
-    name: {{ $.Release.Name }}
+    name: {{ include "common.names.shortname" $ }}
   elasticsearchRefs:
-  - name: {{ $.Release.Name }}
+  - name: {{ include "common.names.shortname" $ }}
   mode: fleet
   fleetServerEnabled: true
   policyID: eck-agent-fleet
@@ -95,7 +95,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ $.Release.Name }}-fleet-agent-http
+  name: {{ include "common.names.shortname" $ }}-fleet-agent-http
   namespace: {{ include "common.names.namespace" . }}
   {{- with .Values.eckFleet.params.ingress.annotations }}
   annotations:
@@ -103,7 +103,7 @@ metadata:
   {{- end }}
   labels:
     {{- include "common.labels.labels" . | nindent 4 }}
-    agent.k8s.elastic.co/name: {{ $.Release.Name }}-fleet
+    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-fleet
 
 spec:
   rules:
@@ -112,7 +112,7 @@ spec:
       paths:
       - backend:
           service:
-            name: {{ $.Release.Name -}}-fleet-agent-http
+            name: {{ include "common.names.shortname" $ -}}-fleet-agent-http
             port:
               number: 8220
         path: /
@@ -120,7 +120,7 @@ spec:
   tls:
   - hosts:
     - {{ .Values.eckFleet.params.ingress.hostname }}
-    secretName: {{ $.Release.Name }}-fleet-agent-http-certs-internal
+    secretName: {{ include "common.names.shortname" $ }}-fleet-agent-http-certs-internal
 
 {{- end }}
 {{- end }}

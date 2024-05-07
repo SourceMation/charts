@@ -6,22 +6,22 @@ kind: Deployment
 metadata:
   labels:
     common.k8s.elastic.co/type: repo
-    repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
-  name: {{ $.Release.Name -}}-repo
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+  name: {{ include "common.names.shortname" $ -}}-repo
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   replicas: 2
   selector:
     matchLabels:
       common.k8s.elastic.co/type: repo
-      repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+      repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         common.k8s.elastic.co/type: repo
-        repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+        repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
     spec:
       affinity:
         nodeAffinity:
@@ -71,15 +71,15 @@ spec:
 #        secret:
 #          defaultMode: 420
 #          optional: false
-#          secretName: {{ $.Release.Name -}}-kb-http-certs-internal
+#          secretName: {{ include "common.names.shortname" $ -}}-kb-http-certs-internal
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
     common.k8s.elastic.co/type: repo
-    repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
-  name: {{ $.Release.Name -}}-repo
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+  name: {{ include "common.names.shortname" $ -}}-repo
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   type: LoadBalancer
@@ -89,13 +89,13 @@ spec:
     targetPort: 8080
   selector:
     common.k8s.elastic.co/type: repo
-    repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
 {{- if .ingress.enabled }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ $.Release.Name -}}-repo
+  name: {{ include "common.names.shortname" $ -}}-repo
   namespace: {{ include "common.names.namespace" $ }}
   annotations:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
@@ -104,7 +104,7 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
   labels:
     common.k8s.elastic.co/type: repo
-    repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
 spec:
   rules:
   - host: {{ .ingress.hostname | quote }}
@@ -112,7 +112,7 @@ spec:
       paths:
       - backend:
           service:
-            name: {{ $.Release.Name -}}-repo
+            name: {{ include "common.names.shortname" $ -}}-repo
             port:
               number: 8080
         path: /
@@ -120,7 +120,7 @@ spec:
   tls:
   - hosts:
     - {{ .ingress.hostname | quote }}
-    secretName: {{ $.Release.Name -}}-kb-http-certs-internal
+    secretName: {{ include "common.names.shortname" $ -}}-kb-http-certs-internal
 
 {{- end }} 
 {{- end }} 

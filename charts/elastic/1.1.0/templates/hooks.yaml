@@ -5,23 +5,23 @@ kind: DaemonSet
 metadata:
   labels:
     common.k8s.elastic.co/type: mods
-    repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade,pre-rollback
     "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
-  name: {{ $.Release.Name -}}-mods
+  name: {{ include "common.names.shortname" $ -}}-mods
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   selector:
     matchLabels:
       common.k8s.elastic.co/type: mods
-      repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+      repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
   template:
     metadata:
       labels:
         common.k8s.elastic.co/type: mods
-        repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+        repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
     spec:
       tolerations:
         - key: node-role.kubernetes.io/control-plane
@@ -58,23 +58,23 @@ kind: DaemonSet
 metadata:
   labels:
     common.k8s.elastic.co/type: selinux
-    repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
   annotations:
     "helm.sh/hook": pre-install,pre-upgrade,pre-rollback
     "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
-  name: {{ $.Release.Name -}}-selinux
+  name: {{ include "common.names.shortname" $ -}}-selinux
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   selector:
     matchLabels:
       common.k8s.elastic.co/type: selinux
-      repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+      repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
   template:
     metadata:
       labels:
         common.k8s.elastic.co/type: selinux
-        repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+        repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
     spec:
       tolerations:
         - key: node-role.kubernetes.io/control-plane
@@ -130,23 +130,23 @@ kind: DaemonSet
 metadata:
   labels:
     common.k8s.elastic.co/type: clean
-    repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
   annotations:
     "helm.sh/hook": post-delete
     "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
-  name: {{ $.Release.Name -}}-clean
+  name: {{ include "common.names.shortname" $ -}}-clean
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   selector:
     matchLabels:
       common.k8s.elastic.co/type: clean
-      repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+      repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
   template:
     metadata:
       labels:
         common.k8s.elastic.co/type: clean
-        repo.k8s.elastic.co/name: {{ $.Release.Name | quote }}
+        repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
     spec:
       tolerations:
         - key: node-role.kubernetes.io/control-plane

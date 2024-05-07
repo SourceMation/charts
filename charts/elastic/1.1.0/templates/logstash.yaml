@@ -2,7 +2,7 @@
 apiVersion: {{ include "common.capabilities.logstash.apiVersion" . }}
 kind: Logstash
 metadata:
-  name:  {{ $.Release.Name }}
+  name:  {{ include "common.names.shortname" $ }}
   namespace: {{ include "common.names.namespace" . }}
   labels:
     scrape: ls
@@ -12,11 +12,11 @@ spec:
   image: docker.elastic.co/logstash/logstash:{{ default .Chart.AppVersion }}
   elasticsearchRefs:
   - clusterName:  eck
-    name: {{ $.Release.Name }}
+    name: {{ include "common.names.shortname" $ }}
   monitoring:
     metrics:
       elasticsearchRefs:
-        - name: {{ $.Release.Name }}
+        - name: {{ include "common.names.shortname" $ }}
   pipelines:
     - pipeline.id: main
       config.string: |
@@ -40,7 +40,7 @@ spec:
         type: LoadBalancer
         selector:
           common.k8s.elastic.co/type: logstash
-          logstash.k8s.elastic.co/name: {{ $.Release.Name }}
+          logstash.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}
         ports:
           - port: 5044
             name: "filebeat"
@@ -76,7 +76,7 @@ spec:
       volumes:
       - name: logstash-data
 #        persistentVolumeClaim:
-#          claimName: logstash-data-{{- $.Release.Name -}}-ls-0
+#          claimName: logstash-data-{{- include "common.names.shortname" $ -}}-ls-0
         emptyDir: {}
 #  volumeClaimTemplates:
 #    - metadata:
@@ -96,7 +96,7 @@ spec:
 #    common.k8s.elastic.co/type: elasticsearch
 #    elasticsearch.k8s.elastic.co/cluster-name: elka-elastic
 #    elasticsearch.k8s.elastic.co/statefulset-name: elka-elastic-es-master
-#  name: logstash-data-{{- $.Release.Name -}}-ls-0
+#  name: logstash-data-{{- include "common.names.shortname" $ -}}-ls-0
 #  namespace: elastic-tst
 #spec:
 #  accessModes:

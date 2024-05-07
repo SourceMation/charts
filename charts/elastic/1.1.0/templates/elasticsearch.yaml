@@ -3,7 +3,7 @@
 apiVersion: {{ include "common.capabilities.elasticsearch.apiVersion" .}}
 kind: Elasticsearch
 metadata:
-  name: {{ $.Release.Name }}
+  name: {{ include "common.names.shortname" $ }}
   labels:
     {{- include "common.labels.labels" . | nindent 4 }}
   namespace: {{ include "common.names.namespace" . }}
@@ -15,7 +15,7 @@ spec:
       spec:
         type: LoadBalancer
         selector:
-          elasticsearch.k8s.elastic.co/cluster-name: {{ $.Release.Name | quote }}
+          elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.shortname" $ | quote }}
           elasticsearch.k8s.elastic.co/node-master: "false"
     tls:
       {{- if and .ingress.enabled ( not $.Values.tlsSecretName ) }}
@@ -211,7 +211,7 @@ spec:
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: {{ $.Release.Name -}}-es-http
+  name: {{ include "common.names.shortname" $ -}}-es-http
   namespace: {{ include "common.names.namespace" . }}
   {{- with .Values.eckElasticsearch.params.ingress.annotations }}
   annotations:
@@ -219,7 +219,7 @@ metadata:
   {{- end }}
   labels:
     {{- include "common.labels.labels" . | nindent 4 }}  
-    elasticsearch.k8s.elastic.co/cluster-name: {{ $.Release.Name }}
+    elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.shortname" $ }}
 spec:
   {{- if .Values.eckElasticsearch.params.ingress.ingressClassName }}
   ingressClassName: {{ .Values.eckElasticsearch.params.ingress.ingressClassName | quote }}
@@ -231,7 +231,7 @@ spec:
       paths:
       - backend:
           service:
-            name: {{ $.Release.Name -}}-es-http
+            name: {{ include "common.names.shortname" $ -}}-es-http
             port:
               number: 9200
         path: /
@@ -241,7 +241,7 @@ spec:
   tls:
   - hosts:
     - {{ .Values.eckElasticsearch.params.ingress.hostname | quote }}
-    secretName: {{ $.Release.Name -}}-es-http-certs-internal  
+    secretName: {{ include "common.names.shortname" $ -}}-es-http-certs-internal  
 
 {{- end }}
 
@@ -256,7 +256,7 @@ spec:
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: {{ $.Release.Name }}
+  name: {{ include "common.names.shortname" $ }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels:
     {{- include "common.labels.labels" . | nindent 4 }}  
@@ -278,7 +278,7 @@ spec:
             {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
             pathType: {{ .Values.eckElasticsearch.params.ingress.pathType }}
             {{- end }}
-            backend: {{- include "common.ingress.backend" (dict "serviceName" ($.Release.Name) "servicePort" "http" "context" $)  | nindent 14 }}
+            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.shortname" $) "servicePort" "http" "context" $)  | nindent 14 }}
     {{- end }}
     {{- range .Values.eckElasticsearch.params.ingress.extraHosts }}
     - host: {{ tpl .name $ | quote }}
@@ -288,7 +288,7 @@ spec:
             {{- if eq "true" (include "common.ingress.supportsPathType" $) }}
             pathType: {{ default "ImplementationSpecific" .pathType }}
             {{- end }}
-            backend: {{- include "common.ingress.backend" (dict "serviceName" ($.Release.Name) "servicePort" "http" "context" $) | nindent 14 }}
+            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.shortname" $) "servicePort" "http" "context" $) | nindent 14 }}
     {{- end }}
     {{- if .Values.eckElasticsearch.params.ingress.extraRules }}
     {{- include "common.tplvalues.render" (dict "value" .Values.eckElasticsearch.params.ingress.extraRules "context" $) | nindent 4 }}
