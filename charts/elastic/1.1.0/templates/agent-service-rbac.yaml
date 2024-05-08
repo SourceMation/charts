@@ -63,16 +63,16 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: elastic-agent
-  namespace: {{ include "common.names.namespace" . }}
+  namespace: {{ include "common.names.namespace" $ }}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: elastic-agent-{{ include "common.names.namespace" . }}
+  name: elastic-agent-{{ include "common.names.namespace" $ }}
 subjects:
 - kind: ServiceAccount
   name: elastic-agent
-  namespace: {{ include "common.names.namespace" . }}
+  namespace: {{ include "common.names.namespace" $ }}
 roleRef:
   kind: ClusterRole
   name: elastic-agent-{{ include "common.names.namespace" $ }}
