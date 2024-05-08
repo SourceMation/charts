@@ -2,7 +2,7 @@
 Shortname provides a 24 char truncated version of the release name.
 */}}
 {{- define "common.names.shortname" -}}
-{{ .Release.Name | trunc 24 }}
+{{ default .Release.Name .Values.nameOverride | trunc 24 }}
 {{- end -}}
 
 
