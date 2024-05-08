@@ -31,11 +31,11 @@ quay.io:TCP/443
 export ECK_VER=2.11.1
 export ELASTIC_VER=1.1.0
 export K8S_NAMESPACE=elastic-tst
-export ELASTICSEARCH_URL=elastic-tst.svc0.ipa.health.local
-export REPO_URL=repo-tst.svc0.ipa.health.local
-export KB_URL=kibana-tst.svc0.ipa.health.local
-export APM_URL=apm-tst.svc0.ipa.health.local
-export FLEET_URL=fleet-tst.svc0.ipa.health.local
+export ELASTICSEARCH_URL=elastic-tst.apps.example.com
+export REPO_URL=repo-tst.apps.exmpale.com
+export KB_URL=kibana-tst.apps.example.com
+export APM_URL=apm-tst.apps.example.com
+export FLEET_URL=fleet-tst.apps.example.com
 
 
 helm -n lp-operators upgrade --install --create-namespace \

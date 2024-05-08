@@ -172,6 +172,6 @@ imagePullSecrets: []
 tlsSecretName: ""
 
 
-nameOverride: ""
+nameOverride: "elastic"
 fullnameOverride: ""
 
