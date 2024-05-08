@@ -172,6 +172,7 @@ imagePullSecrets: []
 tlsSecretName: ""
 
 
-nameOverride: "elastic"
+nameOverride: "elka"
+namespaceOverride: ""
 fullnameOverride: ""
 

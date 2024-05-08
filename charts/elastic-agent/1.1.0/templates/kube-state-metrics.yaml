@@ -239,3 +239,6 @@ spec:
     targetPort: telemetry
   selector:
     app.kubernetes.io/name: kube-state-metrics
+
+{{- end }}
+{{- end }}

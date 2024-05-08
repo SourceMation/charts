@@ -39,6 +39,7 @@ imagePullSecrets: []
 #- name: repo-auth
 
 
-nameOverride: "elastic"
+nameOverride: "elka"
+namespaceOverride: ""
 fullnameOverride: ""
 

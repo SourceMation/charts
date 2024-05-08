@@ -29,8 +29,8 @@ export FLEET_ENROLLMENT_TOKEN='VU04YVZvOEJ1b2RyOVZtSERkZDM6cjltOHRGN3hSUDJhb1BvU
 
 helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
 --set "elasticAgent.params.fleetEnrollmentToken=${FLEET_ENROLLMENT_TOKEN}" \
---set "elasticAgent.params.fleetUrl=${FLEET_URL}"
---set "additionalTrustedCASecret=elastic-agent-ca"
+--set "elasticAgent.params.fleetUrl=${FLEET_URL}" \
+--set "additionalTrustedCASecret=elastic-agent-ca" \
 --repo https://sourcemation.github.io/charts/ \
 --version ${ELASTIC_VER} \
 elka-agent elastic-agent
@@ -48,7 +48,10 @@ cd charts/charts/elastic-agent/1.1.0
 
 kubectl config set-context --current --namespace kube-system
 
-helm -n kube-system  upgrade --install elka-agent .
+helm -n kube-system  upgrade --install elka-agent . \
+--set "elasticAgent.params.fleetEnrollmentToken=${FLEET_ENROLLMENT_TOKEN}" \
+--set "elasticAgent.params.fleetUrl=${FLEET_URL}" \
+--set "additionalTrustedCASecret=elastic-agent-ca"
 
 ```
 
