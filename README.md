@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="400px" height=auto src="https://github.com/linuxpolska/ezd-rp/blob/release/1.0.0/docs/LinuxPolska-icon.png" />
+    <img width="300px" height=auto src="https://github.com/linuxpolska/ezd-rp/blob/release/1.0.0/docs/LinuxPolska-icon.png" />
 </p>
 
 
