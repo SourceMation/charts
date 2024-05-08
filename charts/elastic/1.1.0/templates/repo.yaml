@@ -120,7 +120,12 @@ spec:
   tls:
   - hosts:
     - {{ .ingress.hostname | quote }}
+    {{- if  not $.Values.tlsSecretName  }}
     secretName: {{ include "common.names.shortname" $ -}}-kb-http-certs-internal
+    {{- else }}
+    secretName: {{ $.Values.tlsSecretName | quote }}
+    {{- end }}
+
 
 {{- end }} 
 {{- end }} 

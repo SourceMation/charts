@@ -46,7 +46,12 @@ spec:
   tls:
   - hosts:
     - {{ .Values.eckApm.params.ingress.hostname }}
-    secretName: {{ include "common.names.shortname" $ }}-kb-http-certs-internal
+    {{- if  not $.Values.tlsSecretName  }}
+    secretName: {{ include "common.names.shortname" $ -}}-es-http-certs-internal
+    {{- else }}
+    secretName: {{ $.Values.tlsSecretName | quote }}
+    {{- end }}
+
 
 {{- end }}
 

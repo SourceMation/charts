@@ -120,7 +120,11 @@ spec:
   tls:
   - hosts:
     - {{ .Values.eckFleet.params.ingress.hostname }}
+    {{- if  not $.Values.tlsSecretName  }}
     secretName: {{ include "common.names.shortname" $ }}-fleet-agent-http-certs-internal
+    {{- else }}
+    secretName: {{ $.Values.tlsSecretName | quote }}
+    {{- end }}
 
 {{- end }}
 {{- end }}

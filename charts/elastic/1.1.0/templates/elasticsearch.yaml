@@ -22,7 +22,8 @@ spec:
       selfSignedCertificate:
         disabled: false
         subjectAltNames:
-        - dns: {{ .ingress.hostname }}
+        - dns: {{ .ingress.hostname | quote }}
+        - dns: {{ $.Values.eckApm.params.ingress.hostname | quote }}
       {{- else }}
       certificate:
         secretName: {{ $.Values.tlsSecretName | quote }}   
@@ -241,7 +242,13 @@ spec:
   tls:
   - hosts:
     - {{ .Values.eckElasticsearch.params.ingress.hostname | quote }}
+    {{- if  not $.Values.tlsSecretName  }}
     secretName: {{ include "common.names.shortname" $ -}}-es-http-certs-internal  
+    {{- else }}
+    secretName: {{ $.Values.tlsSecretName | quote }}
+    {{- end }}
+
+
 
 {{- end }}
 
@@ -251,62 +258,3 @@ spec:
 
 
 
-{{- /*
-{{- if .Values.eckElasticsearch.params.ingress.enabled }}
-apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
-kind: Ingress
-metadata:
-  name: {{ include "common.names.shortname" $ }}
-  namespace: {{ include "common.names.namespace" . | quote }}
-  labels:
-    {{- include "common.labels.labels" . | nindent 4 }}  
-  annotations: 
-    {{- include "common.tplvalues.render" ( dict "value" $annotations "context" $) | nindent 5 }}
-spec:
-  {{- if and .Values.eckElasticsearch.params.ingress.ingressClassName (eq "true" (include "common.ingress.supportsIngressClassname" .)) }}
-  ingressClassName: {{ .Values.eckElasticsearch.params.ingress.ingressClassName | quote }}
-  {{- end }}
-  rules:
-    {{- if .Values.eckElasticsearch.params.ingress.hostname }}
-    - host: {{ tpl .Values.eckElasticsearch.params.ingress.hostname $ | quote }}
-      http:
-        paths:
-          {{- if .Values.eckElasticsearch.params.ingress.extraPaths }}
-          {{- toYaml .Values.eckElasticsearch.params.ingress.extraPaths | nindent 10 }}
-          {{- end }}
-          - path: {{ .Values.eckElasticsearch.params.ingress.path }}
-            {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
-            pathType: {{ .Values.eckElasticsearch.params.ingress.pathType }}
-            {{- end }}
-            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.shortname" $) "servicePort" "http" "context" $)  | nindent 14 }}
-    {{- end }}
-    {{- range .Values.eckElasticsearch.params.ingress.extraHosts }}
-    - host: {{ tpl .name $ | quote }}
-      http:
-        paths:
-          - path: {{ default "/" .path }}
-            {{- if eq "true" (include "common.ingress.supportsPathType" $) }}
-            pathType: {{ default "ImplementationSpecific" .pathType }}
-            {{- end }}
-            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.shortname" $) "servicePort" "http" "context" $) | nindent 14 }}
-    {{- end }}
-    {{- if .Values.eckElasticsearch.params.ingress.extraRules }}
-    {{- include "common.tplvalues.render" (dict "value" .Values.eckElasticsearch.params.ingress.extraRules "context" $) | nindent 4 }}
-    {{- end }}
-  {{- if or (and .Values.eckElasticsearch.params.ingress.tls (or (include "common.ingress.certManagerRequest" ( dict "annotations" .Values.eckElasticsearch.params.ingress.annotations )) .Values.eckElasticsearch.params.ingress.selfSigned)) .Values.eckElasticsearch.params.ingress.extraTls }}
-  tls:
-    {{- if and .Values.eckElasticsearch.params.ingress.tls (or (include "common.ingress.certManagerRequest" ( dict "annotations" .Values.eckElasticsearch.params.ingress.annotations )) .Values.eckElasticsearch.params.ingress.selfSigned) }}
-    - hosts:
-        - {{ tpl .Values.eckElasticsearch.params.ingress.hostname $ | quote }}
-        {{- if or (.Values.eckElasticsearch.params.ingress.tlsWwwPrefix) (eq (index .Values.eckElasticsearch.params.ingress.annotations "nginx.ingress.kubernetes.io/from-to-www-redirect") "true" ) }}
-        - {{ printf "www.%s" (tpl .Values.eckElasticsearch.params.ingress.hostname $) | quote }}
-        {{- end }}
-      secretName: {{ printf "%s-tls" (tpl .Values.eckElasticsearch.params.ingress.hostname $) }}
-    {{- end }}
-    {{- if .Values.eckElasticsearch.params.ingress.extraTls }}
-    {{- include "common.tplvalues.render" (dict "value" .Values.eckElasticsearch.params.ingress.extraTls "context" $) | nindent 4 }}
-    {{- end }}
-  {{- end }}
-{{- end }}
-
-*/}}
