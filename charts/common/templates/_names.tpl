@@ -20,7 +20,7 @@ Expand the name of the chart.
 Namespace where the chart will be installed.
 */}}
 {{- define "common.names.namespace" -}}
-{{ .Release.Namespace }}
+{{ default .Release.Namespace .Values.namespaceOverride }}
 {{- end }}
 
 
