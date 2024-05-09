@@ -1,0 +1,40 @@
+annotations:
+  catalog.cattle.io/display-name:  Charts for monitoring provided by LP
+  catalog.cattle.io/namespace: default
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/release-name: monitoring-stack-app 
+  catalog.cattle.io/auto-install: monitoring-stack-crd=match
+  catalog.cattle.io/hidden: "false"
+apiVersion: v2
+appVersion: 1.2024-1.0.0
+dependencies:
+- condition: global.elastic.enabled
+  name: elastic
+  repository: https://github.com/SourceMation/charts 
+  version: 1.1.0
+- condition: global.istiod.enabled
+  name: istiod
+  repository: https://istio-release.storage.googleapis.com/charts 
+  version: 1.21.1
+- condition: global.jaeger.enabled
+  name: jaeger
+  repository: https://jaegertracing.github.io/helm-charts 
+  version: 3.0.6
+description: Set of charts for monitoring
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+keywords:
+- elastic
+- kibana
+- prometheus
+- istio
+- jaeger
+kubeVersion: '>=1.19.0-0'
+maintainers:
+- email: biuro@linuxpolska.com
+  name: Linux Polska
+name: monitoring-stack-app
+sources:
+- https://github.com/SourceMation/charts.git
+type: application
+version: 1.0.0

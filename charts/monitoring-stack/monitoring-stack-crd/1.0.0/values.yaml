@@ -1,0 +1,11 @@
+global:
+  eck-operator-crds:
+    enabled: true 
+  eck-operator:
+    enabled: true
+  base:
+    enabled: true
+  rancher-monitoring-crd:
+    enabled: false
+  jaeger-operator:
+    enabled: true
