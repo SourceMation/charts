@@ -1,0 +1,84 @@
+---
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: {{ include "common.names.shortname" $ }}-service
+  namespace: {{ include "common.names.namespace" . }}
+spec:
+  version: {{ default .Chart.AppVersion }}
+  image: docker.elastic.co/beats/elastic-agent:{{ default .Chart.AppVersion }}
+  kibanaRef:
+    name: {{ include "common.names.shortname" $ }}
+  fleetServerRef:
+    name: {{ include "common.names.shortname" $ }}-fleet
+  mode: fleet
+  policyID: eck-agent-service
+  http:
+    service:
+      {{- with .service.annotations }}
+      metadata:
+        annotations:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      spec:
+        type: LoadBalancer
+
+#  daemonSet:
+  deployment:
+    replicas: 3
+    podTemplate:
+      metadata:
+        labels:
+          scrape: agent
+      spec:
+#        hostNetwork: true
+#        dnsPolicy: ClusterFirstWithHostNet
+        serviceAccountName: elastic-agent
+        automountServiceAccountToken: true
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+#                  - all
+        initContainers:
+        - name: wait-for
+          image: quay.io/eurolinux/eurolinux-9:latest
+          command:
+          - /bin/sh
+          - -c
+          - >
+            set -x;
+            until curl -f -k -L https://{{ include "common.names.shortname" $ -}}-fleet-agent-http:8220/api/status; do sleep 2; done
+
+        containers:
+        - name: agent
+          resources:
+            requests:
+              memory: 800Mi
+              cpu: 1500m
+            limits:
+              memory: 800Mi
+              cpu: 1500m
+          volumeMounts:
+          - mountPath: /mnt/elastic-internal/http-certs
+            name: elastic-internal-http-certificates
+            readOnly: true
+        securityContext:
+          runAsUser: 0
+        volumes:
+        - name: agent-data
+          emptyDir: {}
+        - name: elastic-internal-http-certificates
+          secret:
+            defaultMode: 420
+            optional: false
+            secretName: {{ include "common.names.shortname" $ }}-es-http-certs-internal
+

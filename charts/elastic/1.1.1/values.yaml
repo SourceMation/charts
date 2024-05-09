@@ -1,0 +1,182 @@
+# Default values for elastic.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+eckElasticsearch:
+  enabled: true
+  params:
+    pdb: 2
+    roles:
+      master:
+        count: 3
+        cpu: 2000m
+        memory: 4Gi
+        storage: 2Gi
+        roles: '["master"]'
+        labels:
+          elasticsearch.type: master
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    elasticsearch.type: master
+                topologyKey: kubernetes.io/hostname
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+        tolerations: []
+      data:
+        count: 3
+        cpu: 4000m
+        memory: 8Gi
+        storage: 200Gi
+        roles: '["data", "ingest", "ml", "transform", "remote_cluster_client"]'
+        labels:
+          elasticsearch.type: data
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    elasticsearch.type: data
+                topologyKey: kubernetes.io/hostname
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+        tolerations: []
+    storageClass: ""
+    image:
+      registry: docker.elastic.co
+      repository: elasticsearch/elasticsearch
+      tag: ""
+    
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: es-tst.apps.example.com
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+
+
+eckPackageRegistry:
+  enabled: true
+  params:
+    image:
+      registry: docker.elastic.co
+      repository: package-registry/distribution
+      tag: ""
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: repo-tst.apps.example.com
+      annotations: {}
+
+eckKibana:
+  enabled: true
+  params:
+    image:
+      registry: docker.elastic.co
+      repository: package-registry/distribution
+      tag: ""
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: kb-tst.apps.example.com
+      annotations:
+#        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+#        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+#        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    service:
+      annotations:  
+        kube-vip.io/loadbalancerIPs: 10.10.48.160
+
+
+
+eckAgentApm:
+  enabled: true
+  params:
+    token: "E2D3ytLiaI236F62x2n6Rvt4"
+    image:
+      registry: docker.elastic.co
+      repository: package-registry/distribution
+      tag: ""
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: apm-http-tst.apps.example.com
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+
+
+eckAgentFleet:
+  enabled: true
+  params:
+    image:
+      registry: docker.elastic.co
+      repository: package-registry/distribution
+      tag: ""
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: fleet-tst.apps.example.com
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+
+imagePullSecrets: []
+#- name: repo-auth
+
+tlsSecretName: ""
+
+
+nameOverride: "elk"
+namespaceOverride: ""
+fullnameOverride: ""
+
