@@ -18,7 +18,7 @@ spec:
           elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.shortname" $ | quote }}
           elasticsearch.k8s.elastic.co/node-master: "false"
     tls:
-      {{- if and .ingress.enabled ( not $.Values.tlsSecretName ) }}
+      {{- if not $.Values.tlsSecretName }}
       selfSignedCertificate:
         disabled: false
         subjectAltNames:

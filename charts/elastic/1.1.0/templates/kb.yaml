@@ -49,12 +49,12 @@ spec:
       spec:
         type: LoadBalancer
     tls:
-      {{- if and .ingress.enabled ( not $.Values.tlsSecretName ) }}
+      {{- if not $.Values.tlsSecretName }}
       selfSignedCertificate:
         disabled: false
         subjectAltNames:
         - dns: {{ .ingress.hostname | quote }}
-        - dns: "{{ include "common.names.shortname" $ -}}-repo | quote"
+        - dns: {{ include "common.names.shortname" $ -}}-repo | quote }}
         - dns: {{ $.Values.eckPackageRegistry.params.ingress.hostname | quote }}
       {{- else }}
       certificate:

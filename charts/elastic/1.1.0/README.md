@@ -55,7 +55,7 @@ elastic-operator-crds eck-operator-crds
 
 helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
 --set "eckElasticsearch.params.ingress.hostname=${ELASTICSEARCH_URL}" \
---set "eckPackageRegistry.params.ingress.hostname=repo-${REPO_URL}" \
+--set "eckPackageRegistry.params.ingress.hostname=${REPO_URL}" \
 --set "eckKibana.params.ingress.hostname=${KB_URL}" \
 --set "eckApm.params.ingress.hostname=${APM_URL}" \
 --set "eckFleet.params.ingress.hostname=${FLEET_URL}" \
