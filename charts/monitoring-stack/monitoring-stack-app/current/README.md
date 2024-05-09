@@ -44,5 +44,6 @@ helm -n ${CHART_NAMESPACE} upgrade --install monitoring-stack-app \
  --set "elastic.eckFleet.params.ingress.hostname=${FLEET_URL}" \
  --set "istiod.meshConfig.defaultConfig.tracing.zipkin.address=${COLLECTOR_ADDRESS}:9411" \
  --set "jaeger.query.ingress.hosts[0]=${JAEGER_INGRESS_ADDRESS}" \
+ -f /tmp/jaeger.yaml \
  --repo https://sourcemation.github.io/charts/ monitoring-stack-app
 ```
