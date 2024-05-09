@@ -1,5 +1,3 @@
-categories:
-- applications
 questions:
 - variable: global.elastic.enabled
   default: "true"
@@ -50,11 +48,11 @@ questions:
   type: boolean
   group: "Components"
   show_subquestion_if: true
-  - variable: jaeger.query.ingress.hosts[0]
-    label: Jaeger Ingress
-    type: string
-    group: "Jaeger"
-    required: true
+  #  - variable: jaeger.query.ingress.hosts[0]
+  #  label: Jaeger Ingress
+  #  type: string
+  #  group: "Jaeger"
+  #  required: true
 - variable: global.rancher-monitoring.enabled
   default: "false"
   label: Deploy Prometheus Stack
