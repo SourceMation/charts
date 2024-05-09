@@ -87,7 +87,7 @@ spec:
 #        resources:
 #          requests:
 #            storage: 2Gi
-#        storageClassName: {{ .Values.eckElasticsearch.storageClass }}
+#        storageClassName: {{ .Values.elasticsearch.storageClass }}
 #---
 #apiVersion: v1
 #kind: PersistentVolumeClaim

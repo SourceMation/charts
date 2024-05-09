@@ -1,5 +1,5 @@
-{{- if .Values.eckPackageRegistry.enabled }}
-{{- with .Values.eckPackageRegistry.params }}
+{{- if .Values.packageRegistry.enabled }}
+{{- with .Values.packageRegistry.params }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -79,7 +79,7 @@ metadata:
   labels:
     common.k8s.elastic.co/type: repo
     repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
-  {{- with .Values.eckApm.params.service.annotations }}
+  {{- with .service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}

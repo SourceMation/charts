@@ -1,15 +1,15 @@
 annotations:
-  catalog.cattle.io/display-name: Elastic stack for k8s
+  catalog.cattle.io/display-name: Elastic Stack 
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: elastic
-  catalog.cattle.io/hidden: "true"
+  catalog.cattle.io/hidden: "false"
 apiVersion: v2
 appVersion: "8.12.2"
 
 dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/
-  version: 0.x.x
+  version: 0.1.x
 description: Elastic stack deployment
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
@@ -23,4 +23,4 @@ name: elastic
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 1.1.0
+version: 1.1.1

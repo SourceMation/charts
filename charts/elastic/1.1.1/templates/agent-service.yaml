@@ -1,31 +1,27 @@
+{{- /*
+*/}}
+
+{{- if .Values.agentServices.enabled }}
+
+{{- with .Values.agentServices.params }}
 ---
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
 metadata:
   name: {{ include "common.names.shortname" $ }}-service
-  namespace: {{ include "common.names.namespace" . }}
+  namespace: {{ include "common.names.namespace" $ }}
 spec:
-  version: {{ default .Chart.AppVersion }}
-  image: docker.elastic.co/beats/elastic-agent:{{ default .Chart.AppVersion }}
+  version: {{ default $.Chart.AppVersion }}
+  image: docker.elastic.co/beats/elastic-agent:{{ default $.Chart.AppVersion }}
   kibanaRef:
     name: {{ include "common.names.shortname" $ }}
   fleetServerRef:
     name: {{ include "common.names.shortname" $ }}-fleet
   mode: fleet
   policyID: eck-agent-service
-  http:
-    service:
-      {{- with .service.annotations }}
-      metadata:
-        annotations:
-          {{- toYaml . | nindent 10 }}
-      {{- end }}
-      spec:
-        type: LoadBalancer
-
 #  daemonSet:
   deployment:
-    replicas: 3
+    replicas: {{ .count }}
     podTemplate:
       metadata:
         labels:
@@ -65,8 +61,8 @@ spec:
               memory: 800Mi
               cpu: 1500m
             limits:
-              memory: 800Mi
-              cpu: 1500m
+              memory: {{ .memory | quote }}
+              cpu: {{ .cpu | quote }}
           volumeMounts:
           - mountPath: /mnt/elastic-internal/http-certs
             name: elastic-internal-http-certificates
@@ -82,3 +78,27 @@ spec:
             optional: false
             secretName: {{ include "common.names.shortname" $ }}-es-http-certs-internal
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "common.names.shortname" $ }}-service-agent
+  namespace: {{ include "common.names.namespace" $ }}
+  {{- with .service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service-agent
+    common.k8s.elastic.co/type: agent
+spec:
+  type: LoadBalancer
+  selector:
+    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service-agent
+  ports:
+  - protocol: TCP
+    port: 8200
+
+{{- end }}
+
+{{- end }}
