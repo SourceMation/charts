@@ -6,6 +6,10 @@ kind: Service
 metadata:
   name: {{ include "common.names.shortname" $ }}-apm-agent
   namespace: {{ include "common.names.namespace" . }}
+  {{- with .Values.eckApm.params.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   labels:
     agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service
     common.k8s.elastic.co/type: agent

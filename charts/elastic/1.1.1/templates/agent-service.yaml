@@ -12,7 +12,7 @@ metadata:
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   version: {{ default $.Chart.AppVersion }}
-  image: docker.elastic.co/beats/elastic-agent:{{ default $.Chart.AppVersion }}
+  image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
   kibanaRef:
     name: {{ include "common.names.shortname" $ }}
   fleetServerRef:

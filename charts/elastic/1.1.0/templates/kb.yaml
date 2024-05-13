@@ -46,6 +46,11 @@ spec:
             memory: 2Gi
   http:
     service:
+      {{- with .service.annotations }}
+      metadata:
+        annotations:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
       spec:
         type: LoadBalancer
     tls:

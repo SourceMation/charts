@@ -8,6 +8,11 @@ metadata:
 spec:
   http:
     service:
+      {{- with .Values.eckFleet.params.service.annotations }}
+      metadata:
+        annotations:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
       spec:
         type: LoadBalancer
   version: {{ default .Chart.AppVersion }}

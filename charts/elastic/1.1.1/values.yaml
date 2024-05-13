@@ -133,6 +133,10 @@ kibana:
 agentServices:
   enabled: true
   params:
+    image:
+      registry: docker.elastic.co
+      repository: beats/elastic-agent
+      tag: ""
     count: 3
     cpu: "1500m"
     memory: "800Mi"
@@ -141,10 +145,6 @@ agentServices:
     roles:
       apm:
         token: "E2D3ytLiaI236F62x2n6Rvt4"
-        image:
-          registry: docker.elastic.co
-          repository: package-registry/distribution
-          tag: ""
         ingress:
           enabled: true
           ingressClassName: ""
@@ -164,7 +164,7 @@ agentFleet:
   params:
     image:
       registry: docker.elastic.co
-      repository: package-registry/distribution
+      repository: beats/elastic-agent
       tag: ""
     ingress:
       enabled: true
@@ -181,13 +181,27 @@ agentFleet:
     service:
       annotations: {}
 
+
+logstash:
+  enabled: true
+  params:
+    image:
+      registry: docker.elastic.co
+      repository: logstash/logstash
+      tag: ""
+    service:
+      annotations: {}
+    pipelines: []
+
+
+
 imagePullSecrets: []
 #- name: repo-auth
 
 tlsSecretName: ""
 
 
-nameOverride: ""
+nameOverride: "elk"
 namespaceOverride: ""
 fullnameOverride: ""
 

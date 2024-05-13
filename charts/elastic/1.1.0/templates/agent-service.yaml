@@ -13,6 +13,16 @@ spec:
     name: {{ include "common.names.shortname" $ }}-fleet
   mode: fleet
   policyID: eck-agent-service
+  http:
+    service:
+      {{- with .service.annotations }}
+      metadata:
+        annotations:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      spec:
+        type: LoadBalancer
+
 #  daemonSet:
   deployment:
     replicas: 3

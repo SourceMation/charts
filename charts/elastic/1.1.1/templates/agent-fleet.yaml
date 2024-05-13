@@ -1,22 +1,25 @@
 {{- if .Values.agentFleet.enabled }}
+
+
+{{- with .Values.agentFleet.params }}
 ---
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
 metadata:
   name: {{ include "common.names.shortname" $ }}-fleet
-  namespace: {{ include "common.names.namespace" . }}
+  namespace: {{ include "common.names.namespace" $ }}
 spec:
   http:
     service:
-      {{- with .Values.agentFleet.params.service.annotations }}
+      {{- with .service.annotations }}
       metadata:
         annotations:
           {{- toYaml . | nindent 10 }}
       {{- end }}
       spec:
         type: LoadBalancer
-  version: {{ default .Chart.AppVersion }}
-  image: docker.elastic.co/beats/elastic-agent:{{ default .Chart.AppVersion }}
+  version: {{ default $.Chart.AppVersion }}
+  image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
   kibanaRef:
     name: {{ include "common.names.shortname" $ }}
   elasticsearchRefs:
@@ -95,24 +98,24 @@ spec:
             limits:
               cpu: 300m
               memory: 1Gi
-{{- if .Values.agentFleet.params.ingress.enabled }}
+{{- if .ingress.enabled }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ include "common.names.shortname" $ }}-fleet-agent-http
-  namespace: {{ include "common.names.namespace" . }}
-  {{- with .Values.agentFleet.params.ingress.annotations }}
+  namespace: {{ include "common.names.namespace" $ }}
+  {{- with .ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   labels:
-    {{- include "common.labels.labels" . | nindent 4 }}
+    {{- include "common.labels.labels" $ | nindent 4 }}
     agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-fleet
 
 spec:
   rules:
-  - host: {{ .Values.agentFleet.params.ingress.hostname }}
+  - host: {{ .ingress.hostname }}
     http:
       paths:
       - backend:
@@ -124,13 +127,14 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - {{ .Values.agentFleet.params.ingress.hostname }}
+    - {{ .ingress.hostname }}
     {{- if  not $.Values.tlsSecretName  }}
     secretName: {{ include "common.names.shortname" $ }}-fleet-agent-http-certs-internal
     {{- else }}
     secretName: {{ $.Values.tlsSecretName | quote }}
     {{- end }}
 
+{{- end }}
 {{- end }}
 {{- end }}
 

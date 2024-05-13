@@ -1,15 +1,19 @@
+{{- if .Values.logstash.enabled }}
+
+
+{{- with .Values.logstash.params }}
 ---
-apiVersion: {{ include "common.capabilities.logstash.apiVersion" . }}
+apiVersion: {{ include "common.capabilities.logstash.apiVersion" $ }}
 kind: Logstash
 metadata:
   name:  {{ include "common.names.shortname" $ }}
-  namespace: {{ include "common.names.namespace" . }}
+  namespace: {{ include "common.names.namespace" $ }}
   labels:
     scrape: ls
 spec:
   count: 1
-  version: {{ default .Chart.AppVersion }}
-  image: docker.elastic.co/logstash/logstash:{{ default .Chart.AppVersion }}
+  version: {{ default $.Chart.AppVersion }}
+  image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
   elasticsearchRefs:
   - clusterName:  eck
     name: {{ include "common.names.shortname" $ }}
@@ -18,6 +22,9 @@ spec:
       elasticsearchRefs:
         - name: {{ include "common.names.shortname" $ }}
   pipelines:
+  {{- with .pipelines }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
     - pipeline.id: main
       config.string: |
         input {
@@ -36,6 +43,11 @@ spec:
   services:
   - name: beats
     service:
+      {{- with .service.annotations }}
+      metadata:
+        annotations:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
       spec:
         type: LoadBalancer
         selector:
@@ -87,7 +99,7 @@ spec:
 #        resources:
 #          requests:
 #            storage: 2Gi
-#        storageClassName: {{ .Values.elasticsearch.storageClass }}
+#        storageClassName: {{ $.Values.elasticsearch.storageClass }}
 #---
 #apiVersion: v1
 #kind: PersistentVolumeClaim
@@ -105,4 +117,6 @@ spec:
 #    requests:
 #      storage: 2Gi
 #  storageClassName: cephrbd-csi
-#
+
+{{- end }}
+{{- end }}

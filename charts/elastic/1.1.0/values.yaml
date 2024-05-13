@@ -122,9 +122,13 @@ eckKibana:
         nginx.ingress.kubernetes.io/proxy-body-size: "0"
         nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    service:
+      annotations:  
+        kube-vip.io/loadbalancerIPs: 10.10.48.160
 
 
-eckApm:
+
+eckAgentApm:
   enabled: true
   params:
     token: "E2D3ytLiaI236F62x2n6Rvt4"
@@ -146,7 +150,7 @@ eckApm:
         nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
 
 
-eckFleet:
+eckAgentFleet:
   enabled: true
   params:
     image:

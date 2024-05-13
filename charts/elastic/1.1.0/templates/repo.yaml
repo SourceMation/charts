@@ -79,6 +79,10 @@ metadata:
   labels:
     common.k8s.elastic.co/type: repo
     repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+  {{- with .Values.eckApm.params.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   name: {{ include "common.names.shortname" $ -}}-repo
   namespace: {{ include "common.names.namespace" $ }}
 spec:
