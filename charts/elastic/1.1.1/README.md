@@ -54,11 +54,11 @@ elastic-operator-crds eck-operator-crds
 
 
 helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
---set "eckElasticsearch.params.ingress.hostname=${ELASTICSEARCH_URL}" \
---set "eckPackageRegistry.params.ingress.hostname=${REPO_URL}" \
---set "eckKibana.params.ingress.hostname=${KB_URL}" \
---set "eckAgentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
---set "eckAgentFleet.params.ingress.hostname=${FLEET_URL}" \
+--set "elasticsearch.params.ingress.hostname=${ELASTICSEARCH_URL}" \
+--set "packageRegistry.params.ingress.hostname=${REPO_URL}" \
+--set "kibana.params.ingress.hostname=${KB_URL}" \
+--set "agentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
+--set "agentFleet.params.ingress.hostname=${FLEET_URL}" \
 --repo https://sourcemation.github.io/charts/ \
 --version ${ELASTIC_VER} \
 elka elastic
@@ -93,10 +93,10 @@ cd charts/charts/elastic/1.1.0
 kubectl config set-context --current --namespace ${K8S_NAMESPACE}
 
 helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace elk . \
---set "eckElasticsearch.params.ingress.hostname=${ELASTICSEARCH_URL}" \
---set "eckPackageRegistry.params.ingress.hostname=${REPO_URL}" \
---set "eckKibana.params.ingress.hostname=${KB_URL}" \
---set "eckAgentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
---set "eckAgentFleet.params.ingress.hostname=${FLEET_URL}"
+--set "elasticsearch.params.ingress.hostname=${ELASTICSEARCH_URL}" \
+--set "packageRegistry.params.ingress.hostname=${REPO_URL}" \
+--set "kibana.params.ingress.hostname=${KB_URL}" \
+--set "agentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
+--set "agentFleet.params.ingress.hostname=${FLEET_URL}"
 
 ```

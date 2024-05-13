@@ -1,5 +1,3 @@
-categories:
-- applications
 questions:
 - variable: global.elastic.enabled
   default: "true"
@@ -39,6 +37,7 @@ questions:
   type: boolean
   group: "Components"
   show_subquestion_if: true
+  subquestions:
   - variable: istiod.meshConfig.defaultConfig.tracing.zipkin.address
     label: Istiod Zipkin Address
     type: string
@@ -50,7 +49,8 @@ questions:
   type: boolean
   group: "Components"
   show_subquestion_if: true
-  - variable: jaeger.query.ingress.hosts[0]
+  subquestions:
+  - variable: jaeger.query.ingress.hosts
     label: Jaeger Ingress
     type: string
     group: "Jaeger"

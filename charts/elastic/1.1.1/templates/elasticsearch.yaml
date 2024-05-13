@@ -1,4 +1,4 @@
-{{- if .Values.eckElasticsearch.enabled }}
+{{- if .Values.elasticsearch.enabled }}
 ---
 apiVersion: {{ include "common.capabilities.elasticsearch.apiVersion" .}}
 kind: Elasticsearch
@@ -8,7 +8,7 @@ metadata:
     {{- include "common.labels.labels" . | nindent 4 }}
   namespace: {{ include "common.names.namespace" . }}
 spec:
-  {{- with .Values.eckElasticsearch.params }}
+  {{- with .Values.elasticsearch.params }}
   image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
   http:
     service:
@@ -28,7 +28,7 @@ spec:
         disabled: false
         subjectAltNames:
         - dns: {{ .ingress.hostname | quote }}
-        - dns: {{ $.Values.eckApm.params.ingress.hostname | quote }}
+        - dns: {{ $.Values.agentServices.params.roles.apm.ingress.hostname | quote }}
       {{- else }}
       certificate:
         secretName: {{ $.Values.tlsSecretName | quote }}   
@@ -57,8 +57,8 @@ spec:
         resources:
           requests:
             storage: {{ $v.storage }}
-        {{- if $.Values.eckElasticsearch.params.storageClass }}
-        storageClassName: {{ $.Values.eckElasticsearch.params.storageClass }}
+        {{- if $.Values.elasticsearch.params.storageClass }}
+        storageClassName: {{ $.Values.elasticsearch.params.storageClass }}
         {{- end }}
     podTemplate:
       metadata:
@@ -128,44 +128,44 @@ spec:
   {{- end }}
 
 
-  {{- with .Values.eckElasticsearch.auth }}
+  {{- with .Values.elasticsearch.auth }}
   auth:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
-  {{- with .Values.eckElasticsearch.updateStrategy }}
+  {{- with .Values.elasticsearch.updateStrategy }}
   updateStrategy:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
-  {{- with .Values.eckElasticsearch.secureSettings }}
+  {{- with .Values.elasticsearch.secureSettings }}
   secureSettings:
     {{- toYaml . | nindent 2 }}
   {{- end }}
 
-  {{- with .Values.eckElasticsearch.transport }}
+  {{- with .Values.elasticsearch.transport }}
   transport:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
-  {{- with .Values.eckElasticsearch.http }}
+  {{- with .Values.elasticsearch.http }}
   http:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
-  version: {{  default .Chart.AppVersion .Values.eckElasticsearch.version }}
+  version: {{  default .Chart.AppVersion .Values.elasticsearch.version }}
 
-  {{- with .Values.eckElasticsearch.monitoring }}
+  {{- with .Values.elasticsearch.monitoring }}
   monitoring:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
-  {{- with .Values.eckElasticsearch.remoteClusters }}
+  {{- with .Values.elasticsearch.remoteClusters }}
   remoteClusters:
     {{- toYaml . | nindent 2 }}
   {{- end }}
 
-  {{- with .Values.eckElasticsearch.volumeClaimDeletePolicy }}
+  {{- with .Values.elasticsearch.volumeClaimDeletePolicy }}
   volumeClaimDeletePolicy:
     {{- if and (not (eq . "DeleteOnScaledownOnly")) (not (eq . "DeleteOnScaledownAndClusterDeletion")) }}
     {{ fail "volumeClaimDeletePolicy can only be one of 'DeleteOnScaledownOnly' or 'DeleteOnScaledownAndClusterDeletion'" }}
@@ -174,23 +174,23 @@ spec:
   {{- end }}
 
 {{- /*
-  {{- if not (hasKey .Values.eckElasticsearch "nodeSets") }}
+  {{- if not (hasKey .Values.elasticsearch "nodeSets") }}
     {{ fail "nodeSets directive  must by defined" }}
-  {{- else if eq (len .Values.eckElasticsearch.nodeSets) 0 }}
+  {{- else if eq (len .Values.elasticsearch.nodeSets) 0 }}
     {{ fail "At least one nodeSet is required" }}
   {{- end }}
 */}}
 
-  {{- with .Values.eckElasticsearch.nodeSets }}
+  {{- with .Values.elasticsearch.nodeSets }}
   nodeSets:
       {{- toYaml . | nindent 4 }}
   {{- end }}
 
-  {{- with .Values.eckElasticsearch.image }}
+  {{- with .Values.elasticsearch.image }}
   image: {{ . }}
   {{- end }}
 
-  {{- with .Values.eckElasticsearch.podDisruptionBudget }}
+  {{- with .Values.elasticsearch.podDisruptionBudget }}
     {{- if .disabled }}
   podDisruptionBudget: {}
     {{- else }}
@@ -202,24 +202,24 @@ spec:
     {{- end }}
   {{- end }}
 
-  {{- with .Values.eckElasticsearch.serviceAccountName }}
+  {{- with .Values.elasticsearch.serviceAccountName }}
   serviceAccountName: {{ . }}
   {{- end }}
 
-  {{- with .Values.eckElasticsearch.revisionHistoryLimit }}
+  {{- with .Values.elasticsearch.revisionHistoryLimit }}
   revisionHistoryLimit: {{ . }}
   {{- end }}
 
 
 
-{{- if .Values.eckElasticsearch.params.ingress.enabled }}
+{{- if .Values.elasticsearch.params.ingress.enabled }}
 ---
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
   name: {{ include "common.names.shortname" $ -}}-es-http
   namespace: {{ include "common.names.namespace" . }}
-  {{- with .Values.eckElasticsearch.params.ingress.annotations }}
+  {{- with .Values.elasticsearch.params.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
@@ -227,12 +227,12 @@ metadata:
     {{- include "common.labels.labels" . | nindent 4 }}  
     elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.shortname" $ }}
 spec:
-  {{- if .Values.eckElasticsearch.params.ingress.ingressClassName }}
-  ingressClassName: {{ .Values.eckElasticsearch.params.ingress.ingressClassName | quote }}
+  {{- if .Values.elasticsearch.params.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.elasticsearch.params.ingress.ingressClassName | quote }}
   {{- end }}
   rules:
-  {{- if .Values.eckElasticsearch.params.ingress.hostname }}
-  - host: {{ .Values.eckElasticsearch.params.ingress.hostname | quote }}
+  {{- if .Values.elasticsearch.params.ingress.hostname }}
+  - host: {{ .Values.elasticsearch.params.ingress.hostname | quote }}
     http:
       paths:
       - backend:
@@ -246,7 +246,7 @@ spec:
 
   tls:
   - hosts:
-    - {{ .Values.eckElasticsearch.params.ingress.hostname | quote }}
+    - {{ .Values.elasticsearch.params.ingress.hostname | quote }}
     {{- if  not $.Values.tlsSecretName  }}
     secretName: {{ include "common.names.shortname" $ -}}-es-http-certs-internal  
     {{- else }}
