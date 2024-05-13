@@ -38,6 +38,11 @@ questions:
   group: "Components"
   show_subquestion_if: true
   subquestions:
+  - variable: istiod.istioNamespace
+    label: Namespace where istio is installed
+    type: string
+    group: "Istiod"
+    required: true 
   - variable: istiod.meshConfig.defaultConfig.tracing.zipkin.address
     label: Istiod Zipkin Address
     type: string
