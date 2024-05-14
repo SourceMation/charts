@@ -39,7 +39,7 @@ kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortnam
 
 4. Get own-generated CA
 
-kubectl -n {{ $.Release.Namespace }} get secret {{ $.Values.tlsSecretName }}\
+kubectl -n {{ $.Release.Namespace }} get secret {{ $.Values.tlsSecretName }} \
 -o go-template='{{`{{ index .data "ca.crt" | base64decode `}} }}'
 
 {{- end }}
@@ -50,4 +50,4 @@ kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortnam
 
 
 
-
+#
