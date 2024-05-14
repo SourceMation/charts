@@ -18,7 +18,7 @@ spec:
   fleetServerRef:
     name: {{ include "common.names.shortname" $ }}-fleet
   mode: fleet
-  policyID: eck-agent-service
+  policyID: eck-services
 #  daemonSet:
   deployment:
     replicas: {{ .count }}
