@@ -29,7 +29,7 @@ quay.io:TCP/443
 
 
 export ECK_VER=2.11.1
-export ELASTIC_VER=1.1.0
+export ELASTIC_VER=1.1.1
 export K8S_NAMESPACE=elastic-tst
 export ELASTICSEARCH_URL=elastic-tst.apps.example.com
 export REPO_URL=repo-tst.apps.exmpale.com
@@ -61,7 +61,7 @@ helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
 --set "agentFleet.params.ingress.hostname=${FLEET_URL}" \
 --repo https://sourcemation.github.io/charts/ \
 --version ${ELASTIC_VER} \
-elka elastic
+elk elastic
 
 
 
@@ -73,7 +73,7 @@ elka elastic
 ```bash
 
 
-helm -n ${K8S_NAMESPACE} uninstall elka
+helm -n ${K8S_NAMESPACE} uninstall elk
 
 helm -n lp-operators uninstall elastic-operator-crds
 helm -n lp-operators uninstall elastic-operator
@@ -88,7 +88,7 @@ helm -n lp-operators uninstall elastic-operator
 
 git clone git@github.com:SourceMation/charts.git
 
-cd charts/charts/elastic/1.1.0
+cd charts/charts/elastic/${ELASTIC_VER}
 
 kubectl config set-context --current --namespace ${K8S_NAMESPACE}
 

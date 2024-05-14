@@ -2,7 +2,7 @@
 apiVersion: beat.k8s.elastic.co/v1beta1
 kind: Beat
 metadata:
-  name: {{ include "common.names.shortname" $ }}-metric-mon
+  name: {{ include "common.names.shortname" $ }}-mon-metric
   namespace: {{ include "common.names.namespace" . }}
 spec:
   type: metricbeat
