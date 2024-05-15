@@ -89,9 +89,13 @@ spec:
       name: elastic
       type: elasticsearch
       hosts:
-      - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
+      {{- if $.Values.kibana.params.ingress.enabled }}  
       - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
+      {{- else if  $.Values.kibana.params.ingress.annotations }}
       - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
+      {{- else }}
+      - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
+      {{- end }}
       ssl:
         certificate_authorities: 
         - "/mnt/elastic-internal/elasticsearch-association/{{ include "common.names.namespace" $ -}}/{{ include "common.names.shortname" $ -}}/certs/ca.crt"
