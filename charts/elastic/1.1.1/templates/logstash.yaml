@@ -9,7 +9,7 @@ metadata:
   name:  {{ include "common.names.shortname" $ }}
   namespace: {{ include "common.names.namespace" $ }}
   labels:
-    scrape: ls
+    scrape: ls-{{ include "common.names.namespace" $ }}
 spec:
   count: 1
   version: {{ default $.Chart.AppVersion }}

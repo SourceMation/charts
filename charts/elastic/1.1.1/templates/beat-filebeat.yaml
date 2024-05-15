@@ -32,7 +32,7 @@ spec:
     podTemplate:
       metadata:
         labels:
-          scrape: beat
+          scrape: beat-{{ include "common.names.namespace" $ }}
       spec:
         serviceAccountName: filebeat
         automountServiceAccountToken: true
