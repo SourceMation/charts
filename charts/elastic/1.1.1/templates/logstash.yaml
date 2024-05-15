@@ -60,6 +60,15 @@ spec:
             targetPort: 5044
   podTemplate:
     spec:
+    initContainers:
+    - name: wait-for
+      image: busybox:latest
+      command:
+      - /bin/sh
+      - -c
+      - >
+        set -x;
+        until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
       containers:
       - name: logstash
         env:
