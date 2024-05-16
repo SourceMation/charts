@@ -1,5 +1,7 @@
+# Elastic Agent Client
 
-# Elastic agent installation
+
+## Elastic agent - installation
 
 1. Prepare CAs for elastic and kibana
 2. Add CAs to /tmp/remote.ca.crt file
@@ -23,35 +25,64 @@ kubectl -n kube-system create secret generic elastic-agent-ca \
 
 ```bash
 
-export ELASTIC_VER=1.1.0
-export FLEET_URL=fleet-tst.apps.example.com
-export FLEET_ENROLLMENT_TOKEN='VU04YVZvOEJ1b2RyOVZtSERkZDM6cjltOHRGN3hSUDJhb1BvU2pnelBBUQ=='
+export ELASTIC_VER=1.1.1
+export CLUSTER_NAME=elk
+export K8S_NAMESPACE=elastic-tst
+export FLEET_URL=https://fleet-tst.apps.example.com:443
+export FLEET_ENROLLMENT_TOKEN=''
+
+kubectl create ns ${K8S_NAMESPACE}
 
 helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
 --set "elasticAgent.params.fleetEnrollmentToken=${FLEET_ENROLLMENT_TOKEN}" \
 --set "elasticAgent.params.fleetUrl=${FLEET_URL}" \
 --set "additionalTrustedCASecret=elastic-agent-ca" \
+--set "nameOverride=${CLUSTER_NAME}" \
 --repo https://sourcemation.github.io/charts/ \
 --version ${ELASTIC_VER} \
-elka-agent elastic-agent
+${CLUSTER_NAME}-agent elastic-agent
+
+
+kubectl -n kube-system get po -o wide -l app=elastic-agent
+kubectl -n kube-system get po -o wide -l app.kubernetes.io/name=kube-state-metrics
+
+kubectl -n kube-system logs deploy/kube-state-metrics
+kubectl -n kube-system logs ds/elastic-agent
 
 ```
 
-# For developers
+
+## Elastic agent - remove
+
+
+```bash
+
+helm -n ${K8S_NAMESPACE} uninstall ${CLUSTER_NAME}-agent
+
+kubectl -n ${K8S_NAMESPACE} get po 
+
+```
+
+
+## For developers
 
 
 ```bash
 
 git clone git@github.com:SourceMation/charts.git
 
-cd charts/charts/elastic-agent/1.1.0
+cd charts/charts/elastic-agent/${ELASTIC_VER}
+
+kubectl create ns ${K8S_NAMESPACE}
 
 kubectl config set-context --current --namespace kube-system
 
-helm -n kube-system  upgrade --install elka-agent . \
+helm -n ${K8S_NAMESPACE} upgrade --install ${CLUSTER_NAME}-agent . \
 --set "elasticAgent.params.fleetEnrollmentToken=${FLEET_ENROLLMENT_TOKEN}" \
 --set "elasticAgent.params.fleetUrl=${FLEET_URL}" \
---set "additionalTrustedCASecret=elastic-agent-ca"
+--set "additionalTrustedCASecret=elastic-agent-ca" \
+--set "nameOverride=${CLUSTER_NAME}"
+
 
 ```
 
