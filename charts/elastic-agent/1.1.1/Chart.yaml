@@ -23,4 +23,4 @@ name: elastic-agent
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 1.1.0
+version: 1.1.1

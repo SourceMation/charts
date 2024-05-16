@@ -18,7 +18,7 @@ elasticAgent:
   enabled: true
   params:
     cpu: "1500m"
-    memory: "700Mi"
+    memory: "1000Mi"
     fleetUrl: ""
     fleetEnrollmentToken: ""
     kibanaUrl: "http://kibana:5601"

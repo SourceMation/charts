@@ -100,7 +100,8 @@ spec:
           - '-e'
           - '-c'
           - |-
-           dirs=(
+            set -e; 
+            dirs=(
               "/hostfs/var/lib/elastic-agent/{{- include "common.names.namespace" $ }}"
               "/hostfs/var/lib/{{- include "common.names.namespace" $ }}"
               "/hostfs/var/lib/rancher/rke2/agent/containerd/io.containerd.grpc.v1.cri/containers"
@@ -172,14 +173,17 @@ spec:
           - '-e'
           - '-c'
           - |-
+            set -e;
             dirs=(
               "/hostfs/var/lib/elastic-agent/{{- include "common.names.namespace" $ }}"
               "/hostfs/var/lib/{{- include "common.names.namespace" $ }}"
               "/hostfs/var/lib/elastic-agent-managed"
               )
             for dir in ${dirs[@]}; do
-              chcon -Rt svirt_sandbox_file_t "${dir}"
-              rm -rf "${dir}"
+              if [ -d ${dir} ]; then
+                chcon -Rt svirt_sandbox_file_t "${dir}"
+                rm -rf "${dir}"
+              fi
             done
       volumes:
         - name: hostfs

@@ -61,6 +61,7 @@ spec:
           - '-e'
           - '-c'
           - |-
+           set -e;
            dirs=(
            #  "/hostfs/var/lib/elastic-agent/{{- include "common.names.namespace" $ }}"
               "/hostfs/var/lib/{{- include "common.names.namespace" $ }}"
@@ -69,15 +70,15 @@ spec:
               "/hostfs/var/log/pods"
               )
             for dir in ${dirs[@]}; do
-              # mkdir -p "${dir}"
-              chcon -Rt svirt_sandbox_file_t "${dir}"
-              chmod g+rw "${dir}"
-              chgrp 0 "${dir}"
-              if [ -n "$(ls -A ${dir} 2>/dev/null)" ]
-              then
-                chgrp 0 "${dir}"/*
-                chmod g+rw "${dir}"/*
-              fi
+                # mkdir -p "${dir}"
+                chcon -Rt svirt_sandbox_file_t "${dir}"
+                chmod g+rw "${dir}"
+                chgrp 0 "${dir}"
+                if [ -n "$(ls -A ${dir} 2>/dev/null)" ]
+                then
+                  chgrp 0 "${dir}"/*
+                  chmod g+rw "${dir}"/*
+                fi
             done
         - name: wait-for
           image: busybox:latest
