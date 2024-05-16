@@ -9,7 +9,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2024-05-15T09:31:59.03504009+02:00"
+    created: "2024-05-16T16:12:36.999412631+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: 41d4e6815af8fca6d885a045beccec4b9496f5ad54968318b16184ec29ea9433
     home: https://linuxpolska.com
@@ -33,7 +33,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-15T09:31:59.034793176+02:00"
+    created: "2024-05-16T16:12:36.999127665+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: a28e0fc27bdbd329975818848d14a9c0eb830a9e906f066d083a462d3284bfb9
     home: https://linuxpolska.com
@@ -57,7 +57,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-05-15T09:31:59.035279932+02:00"
+    created: "2024-05-16T16:12:36.999614494+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: a47d2e5894cfcc9b3baec58fc24353200bdd83059be67c117d03acb93f65e9e1
     home: https://linuxpolska.com
@@ -81,13 +81,13 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-05-15T09:31:59.0400093+02:00"
+    created: "2024-05-16T16:12:37.003316673+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
     description: Elastic stack deployment
-    digest: 4b6aaeb327183cef4720ed5ec3e1721b3a09d959bb508ab27d2645ba0ce2df6c
+    digest: d7d2a5791ca781f5ec7ce42402260dc856a07dacbb6a2621e92bfe046a9f032d
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -110,7 +110,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-05-15T09:31:59.037688086+02:00"
+    created: "2024-05-16T16:12:37.001615839+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -134,7 +134,7 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-05-15T09:31:59.036242014+02:00"
+    created: "2024-05-16T16:12:37.000172948+02:00"
     description: A Helm chart for Kubernetes
     digest: 1c56f1e282625fb45b37b1a4cd179e7e578c48242a47ed9ea2baaa5b88fb5fa8
     name: elastic
@@ -150,7 +150,36 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-05-15T09:31:59.041062141+02:00"
+    created: "2024-05-16T16:12:37.004698478+02:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.x.x
+    description: Elastic agent for kubernetes which colecting logs, metrics.
+    digest: eeffad325efd33018322256a38d3e9d7e75eabc8b344e497a9c764e0bd1356c8
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - elastic
+    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+    maintainers:
+    - email: biuro@linuxpolska.com
+      name: Linux Polska
+    name: elastic-agent
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - elastic-agent/elastic-agent-1.1.1.tgz
+    version: 1.1.1
+  - annotations:
+      catalog.cattle.io/display-name: Elastic agent client
+      catalog.cattle.io/hidden: "false"
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/release-name: elastic-agent
+    apiVersion: v2
+    appVersion: 8.12.2
+    created: "2024-05-16T16:12:37.003996329+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -175,7 +204,7 @@ entries:
   mongodb:
   - apiVersion: v2
     appVersion: 7.0.3
-    created: "2024-05-15T09:31:59.041390744+02:00"
+    created: "2024-05-16T16:12:37.005029206+02:00"
     description: A Helm chart for MongoDB on EuroLinux 9
     digest: cc70ea7f2d0fac635d56f0485874e2bbafd3f28fd7fa0bf39ca7165071d20289
     name: mongodb
@@ -186,7 +215,7 @@ entries:
   pgadmin:
   - apiVersion: v2
     appVersion: 8.5.0
-    created: "2024-05-15T09:31:59.041596284+02:00"
+    created: "2024-05-16T16:12:37.005434588+02:00"
     description: A Helm chart for Kubernetes
     digest: 2a7400e8b397ae2fa068a9e1a6f265bbbb854c354ad61cbd8e106bb041741fd7
     name: pgadmin
@@ -197,7 +226,7 @@ entries:
   pgbadger:
   - apiVersion: v2
     appVersion: "11.1"
-    created: "2024-05-15T09:31:59.041782785+02:00"
+    created: "2024-05-16T16:12:37.006057821+02:00"
     description: A Helm chart for Kubernetes
     digest: 002bd9e0c0998cb850187723b23ec3233c277399e55290cb60f9b58731d82002
     name: pgbadger
@@ -208,7 +237,7 @@ entries:
   pgbouncer:
   - apiVersion: v2
     appVersion: 1.22.1
-    created: "2024-05-15T09:31:59.042272261+02:00"
+    created: "2024-05-16T16:12:37.006537373+02:00"
     description: A Helm chart for Kubernetes
     digest: 835b36e512313e97bea09644e35afef12d8afa510e217c401ed7fb126d6e43cc
     name: pgbouncer
@@ -219,7 +248,7 @@ entries:
   pgloader:
   - apiVersion: v2
     appVersion: 3.6.7
-    created: "2024-05-15T09:31:59.042482516+02:00"
+    created: "2024-05-16T16:12:37.006740605+02:00"
     description: A Helm chart for Kubernetes
     digest: 3fefcd25827a760059cc30f95dafb94dac5e00a55f4075dfe0766d27f438f8c9
     name: pgloader
@@ -230,7 +259,7 @@ entries:
   pgpool:
   - apiVersion: v2
     appVersion: 4.4.0
-    created: "2024-05-15T09:31:59.04270047+02:00"
+    created: "2024-05-16T16:12:37.006955507+02:00"
     description: A Helm chart for Kubernetes
     digest: 4076de8d80582436d8dd5523aa8b435094a76ff0ea17e2c4ab59b691236bb9b0
     name: pgpool
@@ -241,7 +270,7 @@ entries:
   postgresql:
   - apiVersion: v2
     appVersion: 14.8.0
-    created: "2024-05-15T09:31:59.043094457+02:00"
+    created: "2024-05-16T16:12:37.007247645+02:00"
     description: A Helm chart for PostgreSQL on EuroLinux 9
     digest: af0f82a51b3cd16d308c9506e16943daff845b4a9a5a0b27ec0908f57ae30010
     name: postgresql
@@ -252,7 +281,7 @@ entries:
   rabbitmq:
   - apiVersion: v2
     appVersion: 3.11.10
-    created: "2024-05-15T09:31:59.043592076+02:00"
+    created: "2024-05-16T16:12:37.007552935+02:00"
     description: A Helm chart for RabbitMQ on EuroLinux 9
     digest: 5786bda63a017352c3d87d3651e9f47ce2bad627d66d34e62db02be993781a6c
     name: rabbitmq
@@ -263,7 +292,7 @@ entries:
   redis:
   - apiVersion: v2
     appVersion: 6.2.7
-    created: "2024-05-15T09:31:59.04399555+02:00"
+    created: "2024-05-16T16:12:37.007838226+02:00"
     description: A Helm chart for Redis on EuroLinux 9
     digest: 9be5e726c3ad27f65188db150b5081c17014b1d419ac5cff8e8ad8de1c789353
     name: redis
@@ -271,4 +300,4 @@ entries:
     urls:
     - redis/redis-6.2.7.tgz
     version: 6.2.7
-generated: "2024-05-15T09:31:59.034375588+02:00"
+generated: "2024-05-16T16:12:36.998788234+02:00"
