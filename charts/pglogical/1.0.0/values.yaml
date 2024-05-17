@@ -1,0 +1,55 @@
+# Default values for pglogical.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 2
+image:
+  tag: "16.2"
+
+podSecurityContext:
+  fsGroup: 999
+
+securityContext:
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 999
+  runAsGroup: 999
+
+
+autoscaling:
+  enabled: false
+
+volumes:
+  - name: config
+    configMap:
+      name: postgres-conf
+      optional: false
+  - name: hba-conf
+    configMap:
+      name: postgres-hba-conf
+      optional: false
+
+volumeClaimTemplates:
+  storageClassName: vsphere-csi
+  storageSize: 8Gi
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts:
+  - name: config
+    mountPath: /usr/share/postgresql/postgresql.conf
+    subPath: postgresql.conf
+    readOnly: true
+  - name: hba-conf
+    mountPath: /usr/share/postgresql/pg_hba.conf
+    subPath: pg_hba.conf
+    readOnly: true
+  - name: data
+    mountPath: /data
+    subPath: postgresql
+
+env:
+  POSTGRES_PASSWORD: password
+  DB_USER: testowy
+  DB_PASS: testowehaslo
+  DB_NAME: testowabaza
+  SUBSCRIPTION_NAME: "sub01"

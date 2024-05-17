@@ -1,0 +1,21 @@
+{{- $serviceName := "pglogical" }} # Nazwa serwisu
+{{- $replicaCount := .Values.replicaCount }} # Pobranie liczby replik
+
+{{- if eq (printf "%T" $replicaCount) "float64" }} # Sprawdzenie typu wartości .Values.replicas
+  {{- $replicaCount = int $replicaCount }} # Jeśli jest to float64, konwertuj na int
+{{- end }}
+
+{{- range $index := until $replicaCount }} # Pętla iterująca przez liczbę podów
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ printf "%s-%d" $serviceName $index }} # Tworzenie unikalnej nazwy serwisu dla każdego poda
+spec:
+  selector:
+    statefulset.kubernetes.io/pod-name: {{ printf "%s-%d" $serviceName $index }} # Ustawienie selektora na nazwę poda
+  ports:
+    - protocol: TCP
+      port: 5432 # Przykładowy port serwisu
+      targetPort: 5432 # Przykładowy port docelowy poda
+{{- end }}
