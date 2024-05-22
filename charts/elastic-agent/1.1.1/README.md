@@ -28,14 +28,14 @@ kubectl -n kube-system create secret generic elastic-agent-ca \
 export ELASTIC_VER=1.1.1
 export CLUSTER_NAME=elk
 export K8S_NAMESPACE=elastic-tst
-export FLEET_URL=https://fleet-tst.apps.example.com:443
-export FLEET_ENROLLMENT_TOKEN=''
+export AGENT_FLEET_URL=https://fleet-tst.apps.example.com:443
+export AGENT_FLEET_ENROLLMENT_TOKEN=''
 
 kubectl create ns ${K8S_NAMESPACE}
 
 helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
---set "elasticAgent.params.fleetEnrollmentToken=${FLEET_ENROLLMENT_TOKEN}" \
---set "elasticAgent.params.fleetUrl=${FLEET_URL}" \
+--set "elasticAgent.params.fleetEnrollmentToken=${AGENT_FLEET_ENROLLMENT_TOKEN}" \
+--set "elasticAgent.params.fleetUrl=${AGENT_FLEET_URL}" \
 --set "additionalTrustedCASecret=elastic-agent-ca" \
 --set "nameOverride=${CLUSTER_NAME}" \
 --repo https://sourcemation.github.io/charts/ \
@@ -78,8 +78,8 @@ kubectl create ns ${K8S_NAMESPACE}
 kubectl config set-context --current --namespace kube-system
 
 helm -n ${K8S_NAMESPACE} upgrade --install ${CLUSTER_NAME}-agent . \
---set "elasticAgent.params.fleetEnrollmentToken=${FLEET_ENROLLMENT_TOKEN}" \
---set "elasticAgent.params.fleetUrl=${FLEET_URL}" \
+--set "elasticAgent.params.fleetEnrollmentToken=${AGENT_FLEET_ENROLLMENT_TOKEN}" \
+--set "elasticAgent.params.fleetUrl=${AGENT_FLEET_URL}" \
 --set "additionalTrustedCASecret=elastic-agent-ca" \
 --set "nameOverride=${CLUSTER_NAME}"
 
