@@ -59,7 +59,7 @@ spec:
         disabled: false
         subjectAltNames:
         - dns: {{ .ingress.hostname | quote }}
-        - dns: {{ include "common.names.shortname" $ -}}-repo | quote }}
+        - dns: "{{ include "common.names.shortname" $ -}}-repo"
         - dns: {{ $.Values.packageRegistry.params.ingress.hostname | quote }}
       {{- else }}
       certificate:
@@ -77,7 +77,16 @@ spec:
     xpack.reporting.kibanaServer.port: "443"
     xpack.reporting.roles.enabled: "false"
     server.publicBaseUrl: "https://{{- .ingress.hostname -}}:443"
+
+    {{- if $.Values.kibana.params.ingress.enabled }}  
     xpack.fleet.registryUrl: "http://{{- include "common.names.shortname" $ -}}-repo:8080"
+    #xpack.fleet.registryUrl: "https://{{- $.Values.packageRegistry.params.ingress.hostname -}}:443"
+    {{- else if  $.Values.kibana.params.ingress.annotations }}
+    xpack.fleet.registryUrl: "http://{{- include "common.names.shortname" $ -}}-repo:8080"
+    #xpack.fleet.registryUrl: "https://{{- $.Values.packageRegistry.params.ingress.hostname -}}:8080"
+    {{- else }}
+    xpack.fleet.registryUrl: "http://{{- include "common.names.shortname" $ -}}-repo:8080"
+    {{- end }}
     xpack.fleet.agents.fleet_server.hosts:
     {{- if $.Values.kibana.params.ingress.enabled }}  
     - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:443"
