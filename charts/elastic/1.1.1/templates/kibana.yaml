@@ -13,7 +13,7 @@ spec:
   podTemplate:
     metadata:
       labels:
-        scrape: kb
+        scrape: kb-{{ include "common.names.namespace" $ }}
     spec:
       affinity:
         nodeAffinity:
@@ -59,7 +59,7 @@ spec:
         disabled: false
         subjectAltNames:
         - dns: {{ .ingress.hostname | quote }}
-        - dns: {{ include "common.names.shortname" $ -}}-repo | quote }}
+        - dns: "{{ include "common.names.shortname" $ -}}-repo"
         - dns: {{ $.Values.packageRegistry.params.ingress.hostname | quote }}
       {{- else }}
       certificate:
@@ -77,11 +77,30 @@ spec:
     xpack.reporting.kibanaServer.port: "443"
     xpack.reporting.roles.enabled: "false"
     server.publicBaseUrl: "https://{{- .ingress.hostname -}}:443"
+
+    {{- if $.Values.kibana.params.ingress.enabled }}  
     xpack.fleet.registryUrl: "http://{{- include "common.names.shortname" $ -}}-repo:8080"
+    #xpack.fleet.registryUrl: "https://{{- $.Values.packageRegistry.params.ingress.hostname -}}:443"
+    {{- else if  $.Values.kibana.params.ingress.annotations }}
+    xpack.fleet.registryUrl: "http://{{- include "common.names.shortname" $ -}}-repo:8080"
+    #xpack.fleet.registryUrl: "https://{{- $.Values.packageRegistry.params.ingress.hostname -}}:8080"
+    {{- else }}
+    xpack.fleet.registryUrl: "http://{{- include "common.names.shortname" $ -}}-repo:8080"
+    {{- end }}
     xpack.fleet.agents.fleet_server.hosts:
-    - "https://{{- include "common.names.shortname" $ -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
+    {{- if $.Values.kibana.params.ingress.enabled }}  
     - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:443"
     - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:8220"
+    - "https://{{- include "common.names.shortname" $ -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
+    {{- else if  $.Values.kibana.params.ingress.annotations }}
+    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:8220"
+    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:443"
+    - "https://{{- include "common.names.shortname" $ -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
+    {{- else }}
+    - "https://{{- include "common.names.shortname" $ -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
+    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:8220"
+    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:443"
+    {{- end }}
     xpack.fleet.outputs:
     - id: elastic
       is_default: true
@@ -89,9 +108,19 @@ spec:
       name: elastic
       type: elasticsearch
       hosts:
-      - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
+      {{- if $.Values.kibana.params.ingress.enabled }}  
       - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
       - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
+      - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
+      {{- else if  $.Values.kibana.params.ingress.annotations }}
+      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
+      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
+      - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
+      {{- else }}
+      - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
+      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
+      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
+      {{- end }}
       ssl:
         certificate_authorities: 
         - "/mnt/elastic-internal/elasticsearch-association/{{ include "common.names.namespace" $ -}}/{{ include "common.names.shortname" $ -}}/certs/ca.crt"
@@ -108,35 +137,35 @@ spec:
         version: latest
     xpack.fleet.agentPolicies:
       - name: Agent Fleet Policy on ECK
-        id: eck-agent-fleet
+        id: eck-fleet
         namespace: default
         monitoring_enabled:
           - logs
           - metrics
         unenroll_timeout: 900
         package_policies:
-        - name: agent-fleet-1
-          id: agent-fleet-1
+        - name: eck-fleet-server
+          id: eck-fleet-server
           package:
             name: fleet_server
-        - name: system-1
-          id: system-1
+        - name: eck-fleet-system
+          id: eck-fleet-system
           package:
             name: system
       - name: Agent Service Policy on ECK
-        id: eck-agent-service
+        id: eck-services
         namespace: default
         monitoring_enabled:
           - logs
           - metrics
         unenroll_timeout: 900
         package_policies:
-        - name: system-2
-          id: system-2
+        - name: eck-services-system
+          id: eck-services-system
           package:
             name: system
-        - name: apm-1
-          id: apm-1
+        - name: eck-services-apm
+          id: eck-services-apm
           package:
             name: apm
           inputs:
@@ -157,20 +186,20 @@ spec:
               value: "/mnt/elastic-internal/http-certs/tls.crt"
             - name: tls_key
               value: "/mnt/elastic-internal/http-certs/tls.key"
-      - name: Agent Kubernetes Policy on RKE2 
-        id: rke2-agent-kubernetes
+      - name: Default Kubernetes Policy 
+        id: eck-k8s
         namespace: default
         monitoring_enabled:
           - logs
           - metrics
         unenroll_timeout: 900
         package_policies:
-        - name: system-2
-          id: system-3
+        - name: eck-k8s-system
+          id: eck-k8s-system
           package:
             name: system
-        - name: rke2-1
-          id: rke2-1
+        - name: eck-k8s-default
+          id: eck-k8s-default
           package:
             name: kubernetes
 {{- if $.Values.kibana.params.ingress.enabled }}

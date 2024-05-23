@@ -2,7 +2,7 @@
 apiVersion: beat.k8s.elastic.co/v1beta1
 kind: Beat
 metadata:
-  name: {{ include "common.names.shortname" $ }}-metric-mon
+  name: {{ include "common.names.shortname" $ }}-mon-metric
   namespace: {{ include "common.names.namespace" . }}
 spec:
   type: metricbeat
@@ -20,7 +20,7 @@ spec:
             templates:
               - condition:
                   contains:
-                    kubernetes.labels.scrape: es
+                    kubernetes.labels.scrape: es-{{ include "common.names.namespace" $ }}
                 config:
                   - module: elasticsearch
                     metricsets:
@@ -43,7 +43,7 @@ spec:
                     xpack.enabled: true
               - condition:
                   contains:
-                    kubernetes.labels.scrape: kb
+                    kubernetes.labels.scrape: kb-{{ include "common.names.namespace" $ }}
                 config:
                   - module: kibana
                     metricsets:
@@ -64,7 +64,7 @@ spec:
                     xpack.enabled: true
               - condition:
                   contains:
-                    kubernetes.labels.scrape: ls
+                    kubernetes.labels.scrape: ls-{{ include "common.names.namespace" $ }}
                 config:
                   - module: logstash
                     metricsets:
@@ -79,7 +79,7 @@ spec:
 
               - condition:
                   contains:
-                    kubernetes.labels.scrape: beat
+                    kubernetes.labels.scrape: beat-{{ include "common.names.namespace" $ }}
                 config:
                   - module: beat
                     metricsets:

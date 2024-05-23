@@ -9,7 +9,7 @@ metadata:
   name:  {{ include "common.names.shortname" $ }}
   namespace: {{ include "common.names.namespace" $ }}
   labels:
-    scrape: ls
+    scrape: ls-{{ include "common.names.namespace" $ }}
 spec:
   count: 1
   version: {{ default $.Chart.AppVersion }}
@@ -60,6 +60,15 @@ spec:
             targetPort: 5044
   podTemplate:
     spec:
+      initContainers:
+      - name: wait-for
+        image: busybox:latest
+        command:
+        - /bin/sh
+        - -c
+        - >
+          set -x;
+          until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
       containers:
       - name: logstash
         env:

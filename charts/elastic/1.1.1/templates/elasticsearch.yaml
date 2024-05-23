@@ -5,8 +5,8 @@ kind: Elasticsearch
 metadata:
   name: {{ include "common.names.shortname" $ }}
   labels:
-    {{- include "common.labels.labels" . | nindent 4 }}
-  namespace: {{ include "common.names.namespace" . }}
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  namespace: {{ include "common.names.namespace" $ }}
 spec:
   {{- with .Values.elasticsearch.params }}
   image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
@@ -63,7 +63,7 @@ spec:
     podTemplate:
       metadata:
         labels:
-          scrape: es
+          scrape: es-{{ include "common.names.namespace" $ }}
           {{- with $v.labels }}
           {{- toYaml . | nindent 10 }}
           {{- end }}

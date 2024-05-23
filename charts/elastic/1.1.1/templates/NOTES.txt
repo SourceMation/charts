@@ -14,11 +14,9 @@ kubectl -n {{ .Release.Namespace }} get po
 
 kubectl -n {{ .Release.Namespace }} get elastic
 
-
 2. Get the application URLs by running these commands:
 
 kubectl -n {{ .Release.Namespace }} get ingress
-
 
 3. Get the application VIPs by running these commands (if kube-vip configured):
 
@@ -26,6 +24,7 @@ kubectl -n {{ .Release.Namespace }} get svc -o \
 custom-columns='NAME:.metadata.name,TYPE:.spec.type,IP:..status.loadBalancer.ingress[0].ip,PORT:.status.loadBalancer.ingress[0].ports[0].port' | grep -v 'none'
 
 {{- if  not $.Values.tlsSecretName  }}
+
 4. Get self-signed CA Elasticsearch and APM
 
 kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortname" $ }}-es-http-certs-public \
@@ -35,11 +34,12 @@ kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortnam
 
 kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortname" $ }}-kb-http-certs-public \
 -o go-template='{{`{{ index .data "ca.crt" | base64decode `}} }}'
+
 {{- else }}
 
 4. Get own-generated CA
 
-kubectl -n {{ $.Release.Namespace }} get secret {{ $.Values.tlsSecretName }}\
+kubectl -n {{ $.Release.Namespace }} get secret {{ $.Values.tlsSecretName }} \
 -o go-template='{{`{{ index .data "ca.crt" | base64decode `}} }}'
 
 {{- end }}
@@ -48,6 +48,4 @@ kubectl -n {{ $.Release.Namespace }} get secret {{ $.Values.tlsSecretName }}\
 
 kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortname" $ }}-es-elastic-user -o go-template='{{`{{ .data.elastic | base64decode `}} }}'
 
-
-
-
+#
