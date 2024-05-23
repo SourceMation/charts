@@ -143,3 +143,9 @@ spec:
         pathType: Prefix
 EOF
 ```
+
+# Admin password retrieval / Uzyskanie hasla administratora
+
+```bash
+kubectl get secret ${JENKINS_NAME}-jenkins -n ${JENKINS_NAMESPACE} -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode
+```
