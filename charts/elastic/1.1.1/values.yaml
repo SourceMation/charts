@@ -42,7 +42,7 @@ elasticsearch:
         cpu: 4000m
         memory: 8Gi
         storage: 200Gi
-        roles: '["data", "ingest", "ml", "transform", "remote_cluster_client"]'
+        roles: '["data", "ingest", "ml", "transform" ]'
         labels:
           elasticsearch.type: data
         affinity:
