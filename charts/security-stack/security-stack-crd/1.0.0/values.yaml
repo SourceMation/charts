@@ -1,0 +1,23 @@
+
+global:
+  crd:
+    enabled: true 
+  kubearmor-operator:
+    enabled: true
+  kubewarden-crds:
+    enabled: true
+  kubewarden-controller:
+    enabled: true
+  cert-manager-crd:
+    enabled: true
+  cert-manager:
+    enabled: true
+
+cert-manager:
+  securityContext: []
+  webhook:
+    securityContext: []
+  cainjector:
+    securityContext: []
+  startupapicheck:
+    securityContext: []

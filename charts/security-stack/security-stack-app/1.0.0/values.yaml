@@ -1,0 +1,40 @@
+
+global:
+  conjur-oss:
+    enabled: true
+  sealed-secrets:
+    enabled: true
+  external-secrets:
+    enabled: true
+  kyverno:
+    enabled: true 
+  kubearmor:
+    enabled: true
+  kubewarden-defaults:
+    enabled: true
+
+conjur-oss:
+  dataKey: "docker run --rm cyberark/conjur data-key generate"
+kyverno:
+  test:
+    securityContext: []
+  webhooksCleanup:
+    securityContext: []
+  policyReportsCleanup:
+    securityContext: []
+  cleanupJobs:
+    admissionReports:
+      securityContext: []
+    clusterAdmissionReports:
+      securityContext: []
+  admissionController:	
+    initContainer:
+      securityContext: []
+    container:
+      securityContext: []
+  backgroundController:
+    securityContext: []
+  cleanupController:
+    securityContext: []
+  reportsController:
+    securityContext: []

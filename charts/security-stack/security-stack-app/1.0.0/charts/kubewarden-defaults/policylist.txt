@@ -1,0 +1,6 @@
+registry://ghcr.io/kubewarden/policies/allow-privilege-escalation-psp:v0.2.6
+registry://ghcr.io/kubewarden/policies/capabilities-psp:v0.1.15
+registry://ghcr.io/kubewarden/policies/host-namespaces-psp:v0.1.6
+registry://ghcr.io/kubewarden/policies/hostpaths-psp:v0.1.10
+registry://ghcr.io/kubewarden/policies/pod-privileged:v0.3.2
+registry://ghcr.io/kubewarden/policies/user-group-psp:v0.5.0
