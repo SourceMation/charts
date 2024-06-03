@@ -38,11 +38,52 @@ elasticsearch:
 #                  values:
         tolerations: []
       data:
+        autoscaling:
+          enabled: false
+          max_nodes: 4
+          max_cpu: 4000m
+          max_memory: 8Gi
+          max_storage: 200Gi
         count: 3
         cpu: 4000m
         memory: 8Gi
         storage: 200Gi
-        roles: '["data", "ingest", "ml", "transform", "remote_cluster_client"]'
+        roles: '["data", "ingest", "transform", "remote_cluster_client"]'
+        labels:
+          elasticsearch.type: data
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    elasticsearch.type: data
+                topologyKey: kubernetes.io/hostname
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+        tolerations: []
+      ml:
+        autoscaling:
+          enabled: true
+          max_nodes: 2
+          max_cpu: 4000m
+          max_memory: 6Gi
+          max_storage: 50Gi
+        count: 1
+        cpu: 2000m
+        memory: 4Gi
+        storage: 20Gi
+        roles: '["ml"]'
         labels:
           elasticsearch.type: data
         affinity:
@@ -105,6 +146,10 @@ packageRegistry:
 kibana:
   enabled: true
   params:
+    autoscaling:
+      enabled: false
+      maxReplicas: 2
+      CPUaverageUtilization: 50
     image:
       registry: docker.elastic.co
       repository: package-registry/distribution

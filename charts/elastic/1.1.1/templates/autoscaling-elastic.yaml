@@ -1,0 +1,52 @@
+{{- if .Values.elasticsearch.enabled }}
+---
+apiVersion: autoscaling.k8s.elastic.co/v1alpha1
+kind: ElasticsearchAutoscaler
+metadata:
+  name: {{ include "common.names.shortname" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  namespace: {{ include "common.names.namespace" $ }}
+spec:
+  {{- with .Values.elasticsearch.params }}
+  ## The name of the Elasticsearch cluster to be scaled automatically.
+  elasticsearchRef:
+    name: {{ include "common.names.shortname" $ }}
+  ## The autoscaling policies.
+  policies:
+    {{- if .roles.data.autoscaling.enabled }}
+    - name: data
+      roles: {{ .roles.data.roles }}
+      resources:
+        nodeCount:
+          min: {{ .roles.data.count }}
+          max: {{ .roles.data.autoscaling.max_nodes }}
+        cpu:
+          min: {{ .roles.data.cpu }}
+          max: {{ .roles.data.autoscaling.max_cpu }}
+        memory:
+          min: {{ .roles.data.memory }}
+          max: {{ .roles.data.autoscaling.max_memory }}
+        storage:
+          min: {{ .roles.data.storage }}
+          max: {{ .roles.data.autoscaling.max_storage }}
+    {{- end }}
+    {{- if .roles.ml.autoscaling.enabled }}
+    - name: ml
+      roles: {{ .roles.ml.roles }}
+      resources:
+        nodeCount:
+          min: {{ .roles.ml.count }}
+          max: {{ .roles.ml.autoscaling.max_nodes }}
+        cpu:
+          min: {{ .roles.ml.cpu }}
+          max: {{ .roles.ml.autoscaling.max_cpu }}
+        memory:
+          min: {{ .roles.ml.memory }}
+          max: {{ .roles.ml.autoscaling.max_memory }}
+        storage:
+          min: {{ .roles.ml.storage }}
+          max: {{ .roles.ml.autoscaling.max_storage }}
+    {{- end }}
+  {{- end }}
+{{- end }}
