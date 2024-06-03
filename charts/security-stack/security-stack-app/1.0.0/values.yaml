@@ -38,3 +38,14 @@ kyverno:
     securityContext: []
   reportsController:
     securityContext: []
+external-secrets:
+  securityContext: []
+  webhook:
+    securityContext: []
+  certController:
+    securityContext: []
+sealed-secrets:
+  server:
+    ingress:
+      enabled: true
+
