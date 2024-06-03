@@ -32,18 +32,10 @@ spec:
           command: ["pgloader","mysql://$(MYDB_USER):$(MYDB_PASSWORD)@$(MYDB_HOSTNAME)/","postgresql://$(PGDB_USER):$(PGDB_PASSWORD)@$(PGDB_HOSTNAME)/postgres"]
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: MYDB_HOSTNAME
-              value: {{ .Values.env.MYDB_HOSTNAME | quote}}
-            - name: PGDB_HOSTNAME
-              value: {{ .Values.env.PGDB_HOSTNAME | quote}}
-            - name: MYDB_USER
-              value: {{ .Values.env.MYDB_USER | quote}}
-            - name: PGDB_USER
-              value: {{ .Values.env.PGDB_USER | quote}}
-            - name: MYDB_PASSWORD
-              value: {{ .Values.env.MYDB_PASSWORD | quote }}
-            - name: PGDB_PASSWORD
-              value: {{ .Values.env.PGDB_PASSWORD | quote}}
+          {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ quote $value }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
