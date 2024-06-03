@@ -35,10 +35,10 @@ spec:
               containerPort: 80
               protocol: TCP
           env:
-            - name: PGADMIN_DEFAULT_EMAIL
-              value: {{ .Values.env.PGADMIN_DEFAULT_EMAIL | quote}}
-            - name: PGADMIN_DEFAULT_PASSWORD
-              value: {{ .Values.env.PGADMIN_DEFAULT_PASSWORD | quote}}
+          {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ quote $value }}
+          {{- end }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
