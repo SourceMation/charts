@@ -24,6 +24,7 @@ jaeger:
       zipkin:
         port: 9411
   query:
+    basePath: /jaeger
     service:
       port: 16686
     ingress:

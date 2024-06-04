@@ -3,7 +3,7 @@
 
 This chart is based off of the some upstream charts. The chart deploys set of crds and apps, which are neccessery to configure monitoring,.
 
-For more information on how to use the feature, refer to our [docs](https://github.com/linuxpolska/ezd-rp).
+For more information on how to use the feature, refer to our [docs](https://github.com/sourcemation/charts).
 
 
 ## Prerequisites
