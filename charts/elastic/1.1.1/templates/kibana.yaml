@@ -69,7 +69,7 @@ spec:
     name: {{ include "common.names.shortname" $ }}
   config:
     monitoring.kibana.collection.enabled: 'true'
-    monitoring.ui.ccs.enabled: 'true'
+    monitoring.ui.ccs.enabled: 'false'
     monitoring.ui.container.elasticsearch.enabled: 'true'
     monitoring.ui.container.logstash.enabled: 'true'
     xpack.reporting.kibanaServer.hostname: {{ .ingress.hostname | quote }}
