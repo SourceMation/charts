@@ -4,6 +4,16 @@ questions:
   label: Deploy conjur-oss
   type: boolean
   group: "Components"
+- variable: global.core.enabled
+  default: "true"
+  label: Deploy neuvector core
+  type: boolean
+  group: "Components"
+- variable: global.external-secrets.enabled
+  default: "true"
+  label: Deploy external-secrets
+  type: boolean
+  group: "Components"
 - variable: global.sealed-secrets.enabled
   default: "true"
   label: Deploy sealed-secrets
@@ -11,7 +21,7 @@ questions:
   group: "Components"
   show_subquestion_if: true
   subquestions:
-  - variable: sealed-secrets.query.ingress.hosts
+  - variable: sealed-secrets.ingress.hostname
     label: sealed-secrets host
     type: string
     group: sealed-secrets

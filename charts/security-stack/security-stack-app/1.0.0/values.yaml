@@ -12,6 +12,8 @@ global:
     enabled: true
   kubewarden-defaults:
     enabled: true
+  neuvector:
+    enabled: true
 
 conjur-oss:
   dataKey: "docker run --rm cyberark/conjur data-key generate"
