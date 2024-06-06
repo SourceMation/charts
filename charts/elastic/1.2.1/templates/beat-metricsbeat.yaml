@@ -1,0 +1,148 @@
+---
+apiVersion: beat.k8s.elastic.co/v1beta1
+kind: Beat
+metadata:
+  name: {{ include "common.names.shortname" $ }}-mon-metric
+  namespace: {{ include "common.names.namespace" . }}
+spec:
+  type: metricbeat
+  version: {{ default .Chart.AppVersion }}
+  image: docker.elastic.co/beats/metricbeat:{{ default .Chart.AppVersion }}
+  elasticsearchRef:
+    name: {{ include "common.names.shortname" $ }}
+  config:
+    metricbeat:
+      autodiscover:
+        providers:
+          - type: kubernetes
+            scope: cluster
+            hints.enabled: true
+            templates:
+              - condition:
+                  contains:
+                    kubernetes.labels.scrape: es-{{ include "common.names.namespace" $ }}
+                config:
+                  - module: elasticsearch
+                    metricsets:
+                      - ccr
+                      - cluster_stats
+                      - enrich
+                      - index
+                      - index_recovery
+                      - index_summary
+                      - ml_job
+                      - node_stats
+                      - shard
+                    period: 10s
+                    hosts: "https://${data.host}:${data.ports.https}"
+                    username: ${MONITORED_ES_USERNAME}
+                    password: ${MONITORED_ES_PASSWORD}
+                    # WARNING: disables TLS as the default certificate is not valid for the pod FQDN
+                    # TODO: switch this to "certificate" when available: https://github.com/elastic/beats/issues/8164
+                    ssl.verification_mode: "none"
+                    xpack.enabled: true
+              - condition:
+                  contains:
+                    kubernetes.labels.scrape: kb-{{ include "common.names.namespace" $ }}
+                config:
+                  - module: kibana
+                    metricsets:
+                      - stats
+#                      - status
+#                      - settings
+#                      - cluster_actions
+#                      - cluster_rules
+#                      - node_actions
+#                      - node_rules
+                    period: 10s
+                    hosts: "https://${data.host}:${data.ports.https}"
+                    username: ${MONITORED_ES_USERNAME}
+                    password: ${MONITORED_ES_PASSWORD}
+                    # WARNING: disables TLS as the default certificate is not valid for the pod FQDN
+                    # TODO: switch this to "certificate" when available: https://github.com/elastic/beats/issues/8164
+                    ssl.verification_mode: "none"
+                    xpack.enabled: true
+              - condition:
+                  contains:
+                    kubernetes.labels.scrape: ls-{{ include "common.names.namespace" $ }}
+                config:
+                  - module: logstash
+                    metricsets:
+                      - node
+                      - node_stats
+                    period: 10s
+                    hosts: "http://${data.host}:9600"
+                    username: ${MONITORED_ES_USERNAME}
+                    password: ${MONITORED_ES_PASSWORD}
+                    ssl.verification_mode: "none"
+                    xpack.enabled: true
+
+              - condition:
+                  contains:
+                    kubernetes.labels.scrape: beat-{{ include "common.names.namespace" $ }}
+                config:
+                  - module: beat
+                    metricsets:
+                      - state
+                      - stats
+                    period: 10s
+                    hosts: "http://${data.host}:9600"
+                    username: ${MONITORED_ES_USERNAME}
+                    password: ${MONITORED_ES_PASSWORD}
+                    ssl.verification_mode: "none"
+                    xpack.enabled: true
+    processors:
+    - add_cloud_metadata: {}
+    logging.json: true
+  deployment:
+    podTemplate:
+      metadata:
+        labels:
+          scrape: beat
+      spec:
+        serviceAccountName: metricbeat
+        automountServiceAccountToken: true
+        # required to read /etc/beat.yml
+        securityContext:
+          runAsUser: 0
+        initContainers:
+        - name: wait-for
+          image: busybox:latest
+          command:
+          - /bin/sh
+          - -c
+          - >
+            set -x;
+            until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
+        containers:
+        - name: metricbeat
+          env:
+          - name: MONITORED_ES_USERNAME
+            value: elastic
+          - name: MONITORED_ES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: elastic
+                name: {{ include "common.names.shortname" $ }}-es-elastic-user
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+            limits:
+              cpu: 100m
+              memory: 300Mi
+
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+#                  - all
+
