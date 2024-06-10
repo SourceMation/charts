@@ -16,7 +16,7 @@ spec:
   policies:
   {{- range $k, $v := .roles }}
     {{- if $v.autoscaling.enabled }}
-    - name: $k
+    - name: {{ $k }}
       roles: {{ $v.roles }}
       resources:
         nodeCount:

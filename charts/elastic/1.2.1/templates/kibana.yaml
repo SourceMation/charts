@@ -78,6 +78,9 @@ spec:
     xpack.reporting.kibanaServer.protocol: "https"
     xpack.reporting.kibanaServer.port: "443"
     xpack.reporting.roles.enabled: "false"
+    xpack.security.encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
+    xpack.reporting.encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
+    xpack.encryptedSavedObjects.encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
     server.publicBaseUrl: "https://{{- .ingress.hostname -}}:443"
 
     {{- if $.Values.kibana.params.ingress.enabled }}  
@@ -123,9 +126,9 @@ spec:
       - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
       - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
       {{- end }}
-      ssl:
-        certificate_authorities: 
-        - "/mnt/elastic-internal/elasticsearch-association/{{ include "common.names.namespace" $ -}}/{{ include "common.names.shortname" $ -}}/certs/ca.crt"
+      # ssl:
+      #   certificate_authorities: 
+      #   - "/mnt/elastic-internal/elasticsearch-association/{{ include "common.names.namespace" $ -}}/{{ include "common.names.shortname" $ -}}/certs/ca.crt"
     xpack.fleet.packages:
       - name: system
         version: latest
