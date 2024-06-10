@@ -126,9 +126,9 @@ spec:
       - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
       - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
       {{- end }}
-      # ssl:
-      #   certificate_authorities: 
-      #   - "/mnt/elastic-internal/elasticsearch-association/{{ include "common.names.namespace" $ -}}/{{ include "common.names.shortname" $ -}}/certs/ca.crt"
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/elasticsearch-association/{{ include "common.names.namespace" $ -}}/{{ include "common.names.shortname" $ -}}/certs/ca.crt"
     xpack.fleet.packages:
       - name: system
         version: latest
