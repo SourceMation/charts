@@ -76,11 +76,11 @@ spec:
     monitoring.ui.container.logstash.enabled: 'true'
     xpack.reporting.kibanaServer.hostname: {{ .ingress.hostname | quote }}
     xpack.reporting.kibanaServer.protocol: "https"
-    xpack.reporting.kibanaServer.port: "443"
+    xpack.reporting.kibanaServer.port: {{ .config.xpack.reporting.kibanaServer.port | quote }}
     xpack.reporting.roles.enabled: "false"
-    xpack.security.encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
-    xpack.reporting.encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
-    xpack.encryptedSavedObjects.encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
+    xpack.security.encryptionKey: {{ .config.xpack.security.encryptionKey | quote }}
+    xpack.reporting.encryptionKey: {{ .config.xpack.reporting.encryptionKey | quote }}
+    xpack.encryptedSavedObjects.encryptionKey: {{ .config.xpack.encryptedSavedObjects.encryptionKey | quote }}
     server.publicBaseUrl: "https://{{- .ingress.hostname -}}:443"
 
     {{- if $.Values.kibana.params.ingress.enabled }}  
