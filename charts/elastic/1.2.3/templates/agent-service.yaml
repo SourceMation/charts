@@ -1,0 +1,104 @@
+{{- /*
+*/}}
+
+{{- if .Values.agentServices.enabled }}
+
+{{- with .Values.agentServices.params }}
+---
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: {{ include "common.names.shortname" $ }}-service
+  namespace: {{ include "common.names.namespace" $ }}
+spec:
+  version: {{ default $.Chart.AppVersion }}
+  image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
+  kibanaRef:
+    name: {{ include "common.names.shortname" $ }}
+  fleetServerRef:
+    name: {{ include "common.names.shortname" $ }}-fleet
+  mode: fleet
+  policyID: eck-services
+#  daemonSet:
+  deployment:
+    replicas: {{ .count }}
+    podTemplate:
+      metadata:
+        labels:
+          scrape: agent
+      spec:
+#        hostNetwork: true
+#        dnsPolicy: ClusterFirstWithHostNet
+        serviceAccountName: elastic-agent
+        automountServiceAccountToken: true
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+#                  - all
+        initContainers:
+        - name: wait-for
+          image: quay.io/eurolinux/eurolinux-9:latest
+          command:
+          - /bin/sh
+          - -c
+          - >
+            set -x;
+            until curl -f -k -L https://{{ include "common.names.shortname" $ -}}-fleet-agent-http:8220/api/status; do sleep 2; done
+
+        containers:
+        - name: agent
+          resources:
+            requests:
+              memory: 800Mi
+              cpu: 1500m
+            limits:
+              memory: {{ .memory | quote }}
+              cpu: {{ .cpu | quote }}
+          volumeMounts:
+          - mountPath: /mnt/elastic-internal/http-certs
+            name: elastic-internal-http-certificates
+            readOnly: true
+        securityContext:
+          runAsUser: 0
+        volumes:
+        - name: agent-data
+          emptyDir: {}
+        - name: elastic-internal-http-certificates
+          secret:
+            defaultMode: 420
+            optional: false
+            secretName: {{ include "common.names.shortname" $ }}-es-http-certs-internal
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "common.names.shortname" $ }}-service-agent
+  namespace: {{ include "common.names.namespace" $ }}
+  {{- with .service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service-agent
+    common.k8s.elastic.co/type: agent
+spec:
+  type: LoadBalancer
+  selector:
+    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service-agent
+  ports:
+  - protocol: TCP
+    port: 8200
+
+{{- end }}
+
+{{- end }}

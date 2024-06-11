@@ -1,0 +1,84 @@
+{{- if .Values.enterprise_search.enabled }}
+{{- if .Values.kibana.enabled }}
+apiVersion: enterprisesearch.k8s.elastic.co/v1
+kind: EnterpriseSearch
+metadata:
+  name: {{ include "common.names.shortname" $ }}-enterprise-search
+  namespace: {{ include "common.names.namespace" . }} 
+spec:
+  version: {{ default $.Chart.AppVersion }}
+  image: docker.elastic.co/enterprise-search/enterprise-search:{{  default $.Chart.AppVersion }}
+  count: {{ .Values.enterprise_search.params.count }}
+  elasticsearchRef:
+    name: {{ include "common.names.shortname" $ }}
+  kibanaRef:
+    name: {{ include "common.names.shortname" $ }}
+  podTemplate:
+    metadata:
+      labels:
+        scrape: entsearch-{{ include "common.names.namespace" $ }}
+    spec:
+      containers:
+      - name: enterprise-search
+        resources:
+          requests:
+            cpu: 1
+            memory: 8Gi
+          limits:
+            memory: 8Gi
+        env:
+          - name: JAVA_OPTS
+            value: -Xms7500m -Xmx7500m
+  config:
+    # define the exposed URL at which users will reach Enterprise Search
+    ent_search.external_url: https://{{ .Values.enterprise_search.params.ingress.hostname }}
+    # define the exposed URL at which users will reach Kibana
+    elasticsearch.username: {{ .Values.enterprise_search.params.elasticsearch.username }}
+    elasticsearch.password: {{ .Values.enterprise_search.params.elasticsearch.password }}
+    elasticsearch.ssl.verify: {{ .Values.enterprise_search.params.elasticsearch.ssl.verify }}
+    allow_es_settings_modification: true
+    kibana.external_url: https://{{ .Values.kibana.params.ingress.hostname }}
+    kibana.host: https://{{ include "common.names.shortname" $ -}}-kb-http:5601
+    # configure app search document size limit
+    app_search.engine.document_size.limit: 1000kb
+    monitoring.reporting_enabled: true
+    log_level: info
+
+{{- if $.Values.enterprise_search.params.ingress.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "common.names.shortname" $ -}}-entsearch-http
+  namespace: {{ include "common.names.namespace" $ }}
+  {{- with $.Values.enterprise_search.params.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+    enterprisesearch.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}
+
+spec:
+  rules:
+  - host: {{ .Values.enterprise_search.params.ingress.hostname }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "common.names.shortname" $ -}}-enterprise-search-ent-http
+            port:
+              number: 3002
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - {{ .Values.enterprise_search.params.ingress.hostname }}
+    {{- if  not $.Values.tlsSecretName  }}
+    secretName: {{ include "common.names.shortname" $ -}}-kb-http-certs-internal
+    {{- else }}
+    secretName: {{ $.Values.tlsSecretName | quote }}
+    {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
