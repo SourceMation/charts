@@ -1,0 +1,131 @@
+{{- if .Values.logstash.enabled }}
+
+
+{{- with .Values.logstash.params }}
+---
+apiVersion: {{ include "common.capabilities.logstash.apiVersion" $ }}
+kind: Logstash
+metadata:
+  name:  {{ include "common.names.shortname" $ }}
+  namespace: {{ include "common.names.namespace" $ }}
+  labels:
+    scrape: ls-{{ include "common.names.namespace" $ }}
+spec:
+  count: 1
+  version: {{ default $.Chart.AppVersion }}
+  image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
+  elasticsearchRefs:
+  - clusterName:  eck
+    name: {{ include "common.names.shortname" $ }}
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+        - name: {{ include "common.names.shortname" $ }}
+  pipelines:
+  {{- with .pipelines }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+    - pipeline.id: main
+      config.string: |
+        input {
+          beats {
+            port => 5044
+          }
+        }
+        output {
+          elasticsearch {
+            hosts => [ "${ECK_ES_HOSTS}" ]
+            user => "${ECK_ES_USER}"
+            password => "${ECK_ES_PASSWORD}"
+            ssl_certificate_authorities => "${ECK_ES_SSL_CERTIFICATE_AUTHORITY}"
+          }
+        }
+  services:
+  - name: beats
+    service:
+      {{- with .service.annotations }}
+      metadata:
+        annotations:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      spec:
+        type: LoadBalancer
+        selector:
+          common.k8s.elastic.co/type: logstash
+          logstash.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}
+        ports:
+          - port: 5044
+            name: "filebeat"
+            protocol: TCP
+            targetPort: 5044
+  podTemplate:
+    spec:
+      initContainers:
+      - name: wait-for
+        image: busybox:latest
+        command:
+        - /bin/sh
+        - -c
+        - >
+          set -x;
+          until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
+      containers:
+      - name: logstash
+        env:
+        - name: LS_JAVA_OPTS   
+          value: "-Xmx2g -Xms2g"
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+          limits:
+            cpu: 2
+            memory: 2Gi
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+#              - key: elastic
+#                operator: In
+#                values:
+#                - all
+      volumes:
+      - name: logstash-data
+#        persistentVolumeClaim:
+#          claimName: logstash-data-{{- include "common.names.shortname" $ -}}-ls-0
+        emptyDir: {}
+#  volumeClaimTemplates:
+#    - metadata:
+#        name: logstash-data
+#      spec:
+#        accessModes:
+#          - ReadWriteOnce
+#        resources:
+#          requests:
+#            storage: 2Gi
+#        storageClassName: {{ $.Values.elasticsearch.storageClass }}
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  labels:
+#    common.k8s.elastic.co/type: elasticsearch
+#    elasticsearch.k8s.elastic.co/cluster-name: elka-elastic
+#    elasticsearch.k8s.elastic.co/statefulset-name: elka-elastic-es-master
+#  name: logstash-data-{{- include "common.names.shortname" $ -}}-ls-0
+#  namespace: elastic-tst
+#spec:
+#  accessModes:
+#  - ReadWriteOnce
+#  resources:
+#    requests:
+#      storage: 2Gi
+#  storageClassName: cephrbd-csi
+
+{{- end }}
+{{- end }}

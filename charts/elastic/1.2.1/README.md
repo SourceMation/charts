@@ -51,7 +51,7 @@ elastic-operator-crds eck-operator-crds
 ```bash
 
 
-export ELASTIC_VER=1.1.1
+export ELASTIC_VER=1.2.1
 export CLUSTER_NAME=elk
 export K8S_NAMESPACE=elastic-tst
 export ELASTICSEARCH_URL=elastic-tst.apps.example.com

@@ -1,0 +1,26 @@
+annotations:
+  catalog.cattle.io/display-name: Elastic Stack 
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/release-name: elastic
+  catalog.cattle.io/hidden: "false"
+apiVersion: v2
+appVersion: "8.13.4"
+
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.x
+description: Elastic stack deployment
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+keywords:
+- elastic
+kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+maintainers:
+- email: biuro@linuxpolska.com
+  name: Linux Polska
+name: elastic
+sources:
+- https://github.com/SourceMation/charts.git
+type: application
+version: 1.2.2

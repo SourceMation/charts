@@ -1,0 +1,138 @@
+---
+apiVersion: beat.k8s.elastic.co/v1beta1
+kind: Beat
+metadata:
+  name: {{ include "common.names.shortname" $ }}-mon-file
+  namespace: {{ include "common.names.namespace" . }}
+spec:
+  type: filebeat
+  version: {{ default .Chart.AppVersion }}
+  image: docker.elastic.co/beats/filebeat:{{ default .Chart.AppVersion }}
+  elasticsearchRef:
+    name: {{ include "common.names.shortname" $ }}
+  kibanaRef:
+    name: {{ include "common.names.shortname" $ }}
+  config:
+    filebeat:
+      autodiscover:
+        providers:
+        - type: kubernetes
+          node: ${NODE_NAME}
+          hints:
+            enabled: true
+            default_config:
+              type: container
+              paths:
+              - /var/log/containers/*${data.kubernetes.container.id}.log
+    processors:
+    - add_cloud_metadata: {}
+    - add_host_metadata: {}
+    logging.json: true
+  daemonSet:
+    podTemplate:
+      metadata:
+        labels:
+          scrape: beat-{{ include "common.names.namespace" $ }}
+      spec:
+        serviceAccountName: filebeat
+        automountServiceAccountToken: true
+        terminationGracePeriodSeconds: 30
+        dnsPolicy: ClusterFirstWithHostNet
+        hostNetwork: true # Allows to provide richer host metadata
+        securityContext:
+          runAsUser: 0
+          # If using Red Hat OpenShift uncomment this:
+          privileged: true
+        initContainers:
+        - name: selinux
+          image: quay.io/eurolinux/eurolinux-9:latest
+          resources:
+            limits:
+              cpu: 100m
+              memory: 32Mi
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /hostfs/
+              name: hostfs
+          command:
+          - 'bash'
+          - '-e'
+          - '-c'
+          - |-
+           set -e;
+           dirs=(
+           #  "/hostfs/var/lib/elastic-agent/{{- include "common.names.namespace" $ }}"
+              "/hostfs/var/lib/{{- include "common.names.namespace" $ }}"
+              "/hostfs/var/lib/rancher/rke2/agent/containerd/io.containerd.grpc.v1.cri/containers"
+              "/hostfs/var/log/containers"
+              "/hostfs/var/log/pods"
+              )
+            for dir in ${dirs[@]}; do
+                # mkdir -p "${dir}"
+                chcon -Rt svirt_sandbox_file_t "${dir}"
+                chmod g+rw "${dir}"
+                chgrp 0 "${dir}"
+                if [ -n "$(ls -A ${dir} 2>/dev/null)" ]
+                then
+                  chgrp 0 "${dir}"/*
+                  chmod g+rw "${dir}"/*
+                fi
+            done
+        - name: wait-for
+          image: busybox:latest
+          command:
+          - /bin/sh
+          - -c
+          - >
+            set -x;
+            until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
+        containers:
+        - name: filebeat
+          volumeMounts:
+          - name: varlogcontainers
+            mountPath: /var/log/containers
+          - name: varlogpods
+            mountPath: /var/log/pods
+          - name: varlibdockercontainers
+            mountPath: /var/lib/docker/containers
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          resources:
+            requests:
+              cpu: 100m
+              memory: 200Mi
+            limits:
+              cpu: 500m
+              memory: 500Mi
+        volumes:
+        - name: varlogcontainers
+          hostPath:
+            path: /var/log/containers
+        - name: varlogpods
+          hostPath:
+            path: /var/log/pods
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/rancher/rke2/agent/containerd/io.containerd.grpc.v1.cri/containers
+        - name: hostfs
+          hostPath:
+            path: /
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+#                  - all
+
