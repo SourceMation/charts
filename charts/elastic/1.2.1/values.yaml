@@ -173,10 +173,15 @@ kibana:
         nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     config:
-      xpack.reporting.kibanaServer.port: "443"
-      xpack.security.encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
-      xpack.reporting.encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
-      xpack.encryptedSavedObjects.encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
+      xpack:
+        reporting:
+          encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
+          kibanaServer:
+            port: "443"
+        security:
+          encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
+        encryptedSavedObjects:
+          encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
     service:
       annotations: {}
 
