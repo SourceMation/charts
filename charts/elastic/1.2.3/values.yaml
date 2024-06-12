@@ -268,7 +268,7 @@ enterprise_search:
     ingress:
       enabled: true
       ingressClassName: ""
-      hostname: entsearch-tst.apps.test0.lab.linuxpolska.pl
+      hostname: entsearch-tst.apps.example.com
       annotations:
 #        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 #        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
@@ -293,4 +293,3 @@ tlsSecretName: ""
 nameOverride: ""
 namespaceOverride: ""
 fullnameOverride: ""
-

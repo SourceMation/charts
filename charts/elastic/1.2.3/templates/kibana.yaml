@@ -46,7 +46,7 @@ spec:
           limits:
             cpu: 2000m
             memory: 2Gi
-  {{- if $.Values.kibana.params.config.xpack.security.audit.enabled }}
+  {{- if .config.xpack.security.audit.enabled }}
   monitoring:
     metrics:
       elasticsearchRefs:

@@ -11,8 +11,6 @@ spec:
   count: {{ .Values.enterprise_search.params.count }}
   elasticsearchRef:
     name: {{ include "common.names.shortname" $ }}
-  kibanaRef:
-    name: {{ include "common.names.shortname" $ }}
   podTemplate:
     metadata:
       labels:
