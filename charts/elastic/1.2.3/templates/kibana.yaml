@@ -51,11 +51,11 @@ spec:
     metrics:
       elasticsearchRefs:
       - name: {{ include "common.names.shortname" $ }}
-        namespace: observability
+        namespace: {{ include "common.names.namespace" $ }}
     logs:
       elasticsearchRefs:
       - name: {{ include "common.names.shortname" $ }}
-        namespace: observability
+        namespace: {{ include "common.names.namespace" $ }}
   {{- end }}
   http:
     service:
