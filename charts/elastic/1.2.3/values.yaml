@@ -179,6 +179,8 @@ kibana:
           kibanaServer:
             port: "443"
         security:
+          audit:
+            enabled: "false"
           encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
         encryptedSavedObjects:
           encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"

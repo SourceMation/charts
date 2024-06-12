@@ -46,6 +46,17 @@ spec:
           limits:
             cpu: 2000m
             memory: 2Gi
+  {{- if $.Values.kibana.params.config.xpack.security.audit.enabled }}
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+      - name: monitoring
+        namespace: observability
+    logs:
+      elasticsearchRefs:
+      - name: monitoring
+        namespace: observability
+  {{- end }}
   http:
     service:
       {{- with .service.annotations }}
@@ -82,6 +93,7 @@ spec:
     xpack.reporting.kibanaServer.protocol: "https"
     xpack.reporting.kibanaServer.port: {{ .config.xpack.reporting.kibanaServer.port | quote }}
     xpack.reporting.roles.enabled: "false"
+    xpack.security.audit.enabled: {{ .config.xpack.security.audit.enabled | quote }}
     xpack.security.encryptionKey: {{ .config.xpack.security.encryptionKey | quote }}
     xpack.reporting.encryptionKey: {{ .config.xpack.reporting.encryptionKey | quote }}
     xpack.encryptedSavedObjects.encryptionKey: {{ .config.xpack.encryptedSavedObjects.encryptionKey | quote }}
