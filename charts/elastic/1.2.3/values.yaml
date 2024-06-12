@@ -16,6 +16,12 @@ elasticsearch:
         memory: 4Gi
         storage: 2Gi
         roles: '["master"]'
+        config:
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
+          xpack:
+            security:
+              audit:
+                enabled: false
         labels:
           elasticsearch.type: master
         affinity:
@@ -51,6 +57,12 @@ elasticsearch:
         memory: 8Gi
         storage: 200Gi
         roles: '["data", "ingest", "transform", "remote_cluster_client"]'
+        config:
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
+          xpack:
+            security:
+              audit:
+                enabled: false
         labels:
           elasticsearch.type: data
         affinity:
@@ -86,6 +98,12 @@ elasticsearch:
         memory: 4Gi
         storage: 20Gi
         roles: '["ml"]'
+        config:
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
+          xpack:
+            security:
+              audit:
+                enabled: false
         labels:
           elasticsearch.type: data
         affinity:
@@ -180,7 +198,7 @@ kibana:
             port: "443"
         security:
           audit:
-            enabled: "false"
+            enabled: false
           encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
         encryptedSavedObjects:
           encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"

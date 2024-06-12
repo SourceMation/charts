@@ -9,6 +9,15 @@ metadata:
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   {{- with .Values.elasticsearch.params }}
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
+        namespace: observability
+    logs:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
+        namespace: observability
   image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
   http:
     service:
@@ -42,10 +51,15 @@ spec:
           elasticsearch.k8s.elastic.co/node-master: "true"
   {{- end }}
   nodeSets:
+  # - name: default
+  #   config:
+  #     # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
+  #     xpack.security.audit.enabled: true
   {{- range $k, $v := .roles }}
   - name: {{ $k }}
     count: {{ $v.count }}
     config:
+      xpack.security.audit.enabled: {{ $v.config.xpack.security.audit.enabled }}
       node.roles: {{ $v.roles }}
 #      node.store.allow_mmap: false
     volumeClaimTemplates:
