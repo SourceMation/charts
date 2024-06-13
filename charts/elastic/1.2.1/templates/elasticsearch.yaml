@@ -9,6 +9,15 @@ metadata:
   namespace: {{ include "common.names.namespace" $ }}
 spec:
   {{- with .Values.elasticsearch.params }}
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
+        namespace: {{ include "common.names.namespace" $ }}
+    logs:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
+        namespace: {{ include "common.names.namespace" $ }}
   image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
   http:
     service:
@@ -46,6 +55,7 @@ spec:
   - name: {{ $k }}
     count: {{ $v.count }}
     config:
+      xpack.security.audit.enabled: {{ $v.config.xpack.security.audit.enabled }}
       node.roles: {{ $v.roles }}
 #      node.store.allow_mmap: false
     volumeClaimTemplates:
@@ -260,6 +270,3 @@ spec:
 
 
 {{- end }}
-
-
-
