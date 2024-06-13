@@ -1,4 +1,6 @@
 {{- if .Values.elasticsearch.enabled }}
+  {{- range $k, $v := .Values.elasticsearch.params.roles }}
+    {{- if $v.autoscaling.enabled }}
 ---
 apiVersion: autoscaling.k8s.elastic.co/v1alpha1
 kind: ElasticsearchAutoscaler
@@ -13,6 +15,9 @@ spec:
   elasticsearchRef:
     name: {{ include "common.names.shortname" $ }}
   ## The autoscaling policies.
+  {{- end -}}
+  {{- break -}}
+  {{- with .Values.elasticsearch.params }}
   policies:
   {{- range $k, $v := .roles }}
     {{- if $v.autoscaling.enabled }}
@@ -31,7 +36,10 @@ spec:
         storage:
           min: {{ $v.storage }}
           max: {{ $v.autoscaling.max_storage }}
-    {{- end }}
-  {{- end }}
-  {{- end }}
-{{- end }}
+    {{- end -}}
+  {{- end -}}
+  {{- else -}}
+  {{- end -}}
+  {{- end -}}
+  {{- end -}}
+{{- end -}}
