@@ -26,16 +26,16 @@ spec:
       resources:
         nodeCount:
           min: {{ $v.count }}
-          max: {{ $v.autoscaling.max_nodes }}
+          max: {{ default $v.count $v.autoscaling.maxNodes }}
         cpu:
           min: {{ $v.cpu }}
-          max: {{ $v.autoscaling.max_cpu }}
+          max: {{ default $v.cpu $v.autoscaling.maxCpu }}
         memory:
           min: {{ $v.memory }}
-          max: {{ $v.autoscaling.max_memory }}
+          max: {{ default $v.memory $v.autoscaling.maxMemory }}
         storage:
           min: {{ $v.storage }}
-          max: {{ $v.autoscaling.max_storage }}
+          max: {{ default $v.storage $v.autoscaling.maxStorage }}
     {{- end -}}
   {{- end -}}
   {{- else -}}
