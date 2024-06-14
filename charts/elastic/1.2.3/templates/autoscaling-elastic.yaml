@@ -1,45 +1,39 @@
 {{- if .Values.elasticsearch.enabled }}
-  {{- range $k, $v := .Values.elasticsearch.params.roles }}
-    {{- if $v.autoscaling.enabled }}
+  {{- with .Values.elasticsearch.params }}
+    {{- range $k, $v := .roles }}
+      {{- if $v.autoscaling.enabled }}
 ---
 apiVersion: autoscaling.k8s.elastic.co/v1alpha1
 kind: ElasticsearchAutoscaler
 metadata:
-  name: {{ include "common.names.shortname" $ }}
+  name: {{ include "common.names.shortname" $ }}-{{ $k }}
   labels:
   {{- include "common.labels.labels" $ | nindent 4 }}
   namespace: {{ include "common.names.namespace" $ }}
 spec:
-  {{- with .Values.elasticsearch.params }}
   ## The name of the Elasticsearch cluster to be scaled automatically.
   elasticsearchRef:
     name: {{ include "common.names.shortname" $ }}
   ## The autoscaling policies.
-  {{- end -}}
-  {{- break -}}
-  {{- with .Values.elasticsearch.params }}
   policies:
-  {{- range $k, $v := .roles }}
-    {{- if $v.autoscaling.enabled }}
     - name: {{ $k }}
       roles: {{ $v.roles }}
       resources:
         nodeCount:
           min: {{ $v.count }}
-          max: {{ $v.autoscaling.max_nodes }}
+          max: {{ default $v.count $v.autoscaling.maxNodes }}
         cpu:
           min: {{ $v.cpu }}
-          max: {{ $v.autoscaling.max_cpu }}
+          max: {{ default $v.cpu $v.autoscaling.maxCpu }}
         memory:
           min: {{ $v.memory }}
-          max: {{ $v.autoscaling.max_memory }}
+          max: {{ default $v.memory $v.autoscaling.maxMemory }}
         storage:
           min: {{ $v.storage }}
-          max: {{ $v.autoscaling.max_storage }}
+          max: {{ default $v.storage $v.autoscaling.maxStorage }}
+        {{- end -}}
+      {{- else -}}
     {{- end -}}
   {{- end -}}
-  {{- else -}}
-  {{- end -}}
-  {{- end -}}
-  {{- end -}}
-{{- end -}}
+ {{- end -}}
+ 
