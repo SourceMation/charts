@@ -13,14 +13,14 @@ spec:
     kind: Kibana
     name: {{ include "common.names.shortname" $ }}
   minReplicas: 1
-  maxReplicas: {{ .autoscaling.maxReplicas }}
+  maxReplicas: {{ .autoscaling.maxNodes }}
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .autoscaling.averageUtilization }}
+          averageUtilization: {{ .autoscaling.averageCpuUtilization }}
   {{- end }}
   {{- end }}
 {{- end }}

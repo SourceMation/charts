@@ -170,8 +170,8 @@ kibana:
   params:
     autoscaling:
       enabled: false
-      maxReplicas: 2
-      averageUtilization: 50
+      maxNodes: 2
+      averageCpuUtilization: 50
     image:
       registry: docker.elastic.co
       repository: package-registry/distribution
