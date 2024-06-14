@@ -50,10 +50,10 @@ kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortnam
 
 7. Check autoscaling conditions (if autoscaling enabled)
 
-kubectl get elasticsearchautoscaler {{ .Release.Name }} -o jsonpath='{ .status.conditions }' | jq
+for i in $(kubectl -n {{ .Release.Namespace }} get ElasticsearchAutoscaler | awk '{ print $1 }' | grep {{ .Release.Name }}); do kubectl get elasticsearchautoscaler $i -o jsonpath='{ .status.conditions }' | jq; done
 
 8. Check autoscaling policies (if autoscaling enabled)
 
-kubectl get elasticsearchautoscaler {{ .Release.Name }} -o jsonpath='{ .status.policies }' | jq
+for i in $(kubectl -n {{ .Release.Namespace }} get ElasticsearchAutoscaler | awk '{ print $1 }' | grep {{ .Release.Name }}); do kubectl get elasticsearchautoscaler $i -o jsonpath='{ .status.policies }' | jq; done
 
 #
