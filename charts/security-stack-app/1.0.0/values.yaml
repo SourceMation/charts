@@ -9,9 +9,9 @@ global:
   kyverno:
     enabled: true 
   kubearmor:
-    enabled: true
+    enabled: false
   kubewarden-defaults:
-    enabled: true
+    enabled: false
   neuvector:
     enabled: true
 
@@ -46,6 +46,7 @@ external-secrets:
     securityContext: []
   certController:
     securityContext: []
+  installCRDs: false
 sealed-secrets:
   server:
     ingress:

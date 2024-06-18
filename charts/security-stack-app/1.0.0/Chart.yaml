@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name:  Charts for security provided by LP
+  catalog.cattle.io/display-name:  Security Stack
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: security-stack-app 
   catalog.cattle.io/auto-install: security-stack-crd=match

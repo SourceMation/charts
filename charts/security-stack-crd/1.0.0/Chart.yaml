@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: CRDs for LP security
+  catalog.cattle.io/display-name: CRDs for Security Stack 
   catalog.cattle.io/namespace: default
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: security-stack-crd
@@ -7,10 +7,11 @@ annotations:
 apiVersion: v2
 appVersion: 1.2024-1.0.0
 dependencies:
-- condition: global.crd.enabled
+- condition: global.neuvector-crd.enabled
   name: crd
   repository: https://neuvector.github.io/neuvector-helm/
   version: 2.7.3
+  alias: neuvector-crds
 - condition: global.kubearmor-operator.enabled
   name: kubearmor-operator
   repository: https://kubearmor.github.io/charts

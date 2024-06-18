@@ -1,13 +1,13 @@
 
 global:
-  crd:
+  neuvector-crds:
     enabled: true 
   kubearmor-operator:
-    enabled: true
+    enabled: false
   kubewarden-crds:
-    enabled: true
+    enabled: false
   kubewarden-controller:
-    enabled: true
+    enabled: false
   cert-manager-crd:
     enabled: true
   cert-manager:

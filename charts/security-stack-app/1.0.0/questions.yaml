@@ -32,12 +32,12 @@ questions:
   type: boolean
   group: "Components"
 - variable: global.kubearmor.enabled
-  default: "true"
+  default: "false"
   label: Deploy kubearmor
   type: boolean
   group: "Components"
 - variable: global.kubewarden-defaults.enabled
-  default: "true"
+  default: "false"
   label: Deploy kubewarden-defaults
   type: boolean
   group: "Components"
