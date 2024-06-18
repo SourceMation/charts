@@ -60,8 +60,3 @@ questions:
     type: string
     group: "Jaeger"
     required: true
-- variable: global.rancher-monitoring.enabled
-  default: "false"
-  label: Deploy Prometheus Stack
-  type: boolean
-  group: "Components"

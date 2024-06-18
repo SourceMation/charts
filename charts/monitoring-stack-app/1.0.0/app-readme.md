@@ -1,7 +1,7 @@
 ## Monitoring Stack App 
 
 
-This chart is based off of the some upstream charts. The chart deploys set of crds and apps, which are neccessery to configure monitoring,.
+This chart is based of the some upstream charts. The chart deploys set of crds and apps, which are neccessary to configure monitoring stack.
 
 For more information on how to use the feature, refer to our [docs](https://github.com/sourcemation/charts).
 

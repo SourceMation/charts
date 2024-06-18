@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: CRDs for LP monitoring
+  catalog.cattle.io/display-name: Monitoring Stack
   catalog.cattle.io/namespace: default
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: monitoring-stack-crd
@@ -23,10 +23,6 @@ dependencies:
   name: jaeger-operator
   repository: https://jaegertracing.github.io/helm-charts
   version: 2.53.0
-- condition: global.rancher-monitoring-crd.enabled
-  name: rancher-monitoring-crd
-  repository: https://charts.rancher.io
-  version: 103.0.3+up45.31.1
 description: Set of operators and CRDs for LP monitoring 
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
