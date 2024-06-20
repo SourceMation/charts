@@ -2,11 +2,10 @@ global:
   elastic:
     enabled: true
   istiod:
-    enabled: true
-  jaeger:
-    enabled: true
-  rancher-monitoring:
     enabled: false
+  jaeger:
+    enabled: false
+
 
 
 jaeger:
@@ -28,8 +27,7 @@ jaeger:
     service:
       port: 16686
     ingress:
-      enabled: true
-
+      enabled: false
 istiod:
   meshConfig:
     enableTracing: true

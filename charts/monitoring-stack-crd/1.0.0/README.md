@@ -1,7 +1,6 @@
 # Useful links / Przydatne linki
 - https://istio.io
 - https://www.jaegertracing.io
-- https://ranchermanager.docs.rancher.com/integrations-in-rancher/monitoring-and-alerting
 - https://github.com/rancher/charts
 
 # Installation / Instalacja

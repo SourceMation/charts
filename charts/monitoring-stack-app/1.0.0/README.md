@@ -1,7 +1,6 @@
 # Useful links / Przydatne linki
 - https://istio.io
 - https://www.jaegertracing.io
-- https://ranchermanager.docs.rancher.com/integrations-in-rancher/monitoring-and-alerting
 - https://github.com/rancher/charts
 
 # Installation / Instalacja
@@ -19,7 +18,7 @@ export COLLECTOR_ADDRESS=jaeger-collector.example.com
 export JAEGER_INGRESS_ADDRESS=jaeger.example.com
 
 kubectl create ns ${CHART_NAMESPACE}
-
+kubectl create ns istio-system
 ```
 
 ## Create file with values / Przygotuj plik z parametrami do przekazania
