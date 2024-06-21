@@ -6,27 +6,27 @@ questions:
   group: "Components"
   show_subquestion_if: true
   subquestions:
-  - variable: global.elastic.eckElasticsearch.params.ingress.hostname
+  - variable: elastic.eckElasticsearch.params.ingress.hostname
     label: Elastic Search Ingress
     type: string
     group: "Elastic"
     required: true
-  - variable: global.elastic.eckPackageRegistry.params.ingress.hostname
+  - variable: elastic.eckPackageRegistry.params.ingress.hostname
     label: Elastic Package Registry Ingress
     type: string
     group: "Elastic"
     required: true
-  - variable: global.elastic.eckKibana.params.ingress.hostname
+  - variable: elastic.eckKibana.params.ingress.hostname
     label: Elastic Kibana Ingress
     type: string
     group: "Elastic"
     required: true
-  - variable: global.elastic.eckApm.params.ingress.hostname
+  - variable: elastic.eckApm.params.ingress.hostname
     label: Elastic Apm Ingress
     type: string
     group: "Elastic"
     required: true
-  - variable: global.elastic.eckFleet.params.ingress.hostname
+  - variable: elastic.eckFleet.params.ingress.hostname
     label: Elastic Fleet Ingress
     type: string
     group: "Elastic"
