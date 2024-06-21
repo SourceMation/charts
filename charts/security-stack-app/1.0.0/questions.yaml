@@ -1,0 +1,51 @@
+questions:
+- variable: global.conjur-oss.enabled
+  default: "true"
+  label: Deploy conjur-oss
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: conjur-oss.dataKey
+    required: true
+    type: string
+    label: "Generate dataKey by running: docker run --rm cyberark/conjur data-key generate" 
+    group: "Components"
+    deafult: false
+- variable: global.core.enabled
+  default: "true"
+  label: Deploy neuvector core
+  type: boolean
+  group: "Components"
+- variable: global.external-secrets.enabled
+  default: "true"
+  label: Deploy external-secrets
+  type: boolean
+  group: "Components"
+- variable: global.sealed-secrets.enabled
+  default: "true"
+  label: Deploy sealed-secrets
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sealed-secrets.ingress.hostname
+    label: sealed-secrets host
+    type: string
+    group: sealed-secrets
+    required: true
+- variable: global.kyverno.enabled
+  default: "true"
+  label: Deploy kyverno
+  type: boolean
+  group: "Components"
+- variable: global.kubearmor.enabled
+  default: "false"
+  label: Deploy kubearmor
+  type: boolean
+  group: "Components"
+- variable: global.kubewarden-defaults.enabled
+  default: "false"
+  label: Deploy kubewarden-defaults
+  type: boolean
+  group: "Components"

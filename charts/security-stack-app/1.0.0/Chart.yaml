@@ -1,0 +1,55 @@
+annotations:
+  catalog.cattle.io/display-name:  Security Stack
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/release-name: security-stack-app 
+  catalog.cattle.io/auto-install: security-stack-crd=match
+apiVersion: v2
+appVersion: 1.2024-1.0.0
+dependencies:
+- condition: global.conjur-oss.enabled
+  name: conjur-oss
+  repository:  
+  version: 1.1.0
+- condition: global.sealed-secrets.enabled
+  name: sealed-secrets
+  repository: https://bitnami-labs.github.io/sealed-secrets 
+  version: 2.15.2
+- condition: global.external-secrets.enabled
+  name: external-secrets
+  repository: https://charts.external-secrets.io 
+  version: 0.9.19
+- condition: global.kyverno.enabled
+  name: kyverno
+  repository: https://kyverno.github.io/kyverno/
+  version: 3.0.7
+- condition: global.kubearmor.enabled
+  name: kubearmor
+  repository: https://kubearmor.github.io/charts
+  version: v1.3.2
+- condition: global.kubewarden-defaults.enabled
+  name: kubewarden-defaults
+  repository: https://charts.kubewarden.io
+  version: 2.0.0
+- condition: global.neuvector.enabled
+  name: core
+  repository: https://neuvector.github.io/neuvector-helm/
+  version: 2.7.3
+description: Set of charts for security
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+keywords:
+- conjur-oss
+- external-secrets
+- kyverno
+- kubearmor
+- kubewarden
+- neuvector
+kubeVersion: '>=1.19.0-0'
+maintainers:
+- email: biuro@linuxpolska.com
+  name: Linux Polska
+name: security-stack-app
+sources:
+- https://github.com/SourceMation/charts.git
+type: application
+version: 1.0.0
