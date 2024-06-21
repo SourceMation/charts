@@ -17,7 +17,7 @@ dependencies:
 - condition: global.external-secrets.enabled
   name: external-secrets
   repository: https://charts.external-secrets.io 
-  version: 0.9.13
+  version: 0.9.19
 - condition: global.kyverno.enabled
   name: kyverno
   repository: https://kyverno.github.io/kyverno/
@@ -30,7 +30,7 @@ dependencies:
   name: kubewarden-defaults
   repository: https://charts.kubewarden.io
   version: 2.0.0
-- condition: global.core.enabled
+- condition: global.neuvector.enabled
   name: core
   repository: https://neuvector.github.io/neuvector-helm/
   version: 2.7.3

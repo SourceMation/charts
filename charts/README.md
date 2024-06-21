@@ -38,3 +38,5 @@
 - [postgresql](https://github.com/sourcemation/charts/tree/main/charts/postgresql/current/README.md)
 - [security-stack-crd](https://github.com/sourcemation/charts/tree/main/charts/security-stack-crd/current/README.md)
 - [security-stack-app](https://github.com/sourcemation/charts/tree/main/charts/security-stack-app/current/README.md)
+- [mointoring-stack-crd](https://github.com/sourcemation/charts/tree/main/charts/monitoring-stack-crd/current/README.md)
+- [mointoring-stack-app](https://github.com/sourcemation/charts/tree/main/charts/monitoring-stack-app/current/README.md)

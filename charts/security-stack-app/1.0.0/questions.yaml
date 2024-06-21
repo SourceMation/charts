@@ -4,6 +4,14 @@ questions:
   label: Deploy conjur-oss
   type: boolean
   group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: conjur-oss.dataKey
+    required: true
+    type: string
+    label: "Generate dataKey by running: docker run --rm cyberark/conjur data-key generate" 
+    group: "Components"
+    deafult: false
 - variable: global.core.enabled
   default: "true"
   label: Deploy neuvector core

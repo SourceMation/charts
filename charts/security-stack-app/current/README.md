@@ -14,8 +14,17 @@
 ```bash
 export CHART_NAMESPACE=<desired namespace>
 export CHART_VERSION=<chart version>
+export CHART_DATA_KEY="$(docker run --rm cyberark/conjur data-key generate)"
+export INGRESS_HOST=example.com
+```
 
 ## Installation via helm / Instalacja przy użyciu helm
 ``` bash
 helm -n ${CHART_NAMESPACE} upgrade --install security-stack-app \
+--set conjur-oss.dataKey="$CHART_DATA_KEY" \
+--set sealed-secrets.server.ingress.hosts[0].host=${INGRESS_HOST} \
 --repo https://sourcemation.github.io/charts/ security-stack-app
+
+
+kubectl -n ${CHART_NAMESPACE} apply -f https://raw.githubusercontent.com/kubearmor/KubeArmor/main/pkg/KubeArmorOperator/config/samples/sample-config.yml
+```

@@ -44,7 +44,7 @@ kubeVersion: '>=1.19.0-0'
 maintainers:
 - email: biuro@linuxpolska.com
   name: Linux Polska
-name: monitoring-stack-crd
+name: security-stack-crd
 sources:
 -  https://sourcemation.github.io/charts/
 type: application

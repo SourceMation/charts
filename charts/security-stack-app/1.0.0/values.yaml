@@ -16,7 +16,10 @@ global:
     enabled: true
 
 conjur-oss:
-  dataKey: "docker run --rm cyberark/conjur data-key generate"
+  dataKey: ""
+  service:
+    external:
+      enabled: false
 kyverno:
   test:
     securityContext: []
@@ -46,9 +49,6 @@ external-secrets:
     securityContext: []
   certController:
     securityContext: []
-  installCRDs: false
 sealed-secrets:
-  server:
-    ingress:
-      enabled: true
-
+  ingress:
+    enabled: true
