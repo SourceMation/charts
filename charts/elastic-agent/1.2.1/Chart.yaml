@@ -1,0 +1,26 @@
+annotations:
+  catalog.cattle.io/display-name: Elastic agent client
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/release-name: elastic-agent
+  catalog.cattle.io/hidden: "false"
+apiVersion: v2
+appVersion: "8.12.2"
+
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.x.x
+description: Elastic agent for kubernetes which colecting logs, metrics.
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+keywords:
+- elastic
+kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+maintainers:
+- email: biuro@linuxpolska.com
+  name: Linux Polska
+name: elastic-agent
+sources:
+- https://github.com/SourceMation/charts.git
+type: application
+version: 1.2.1
