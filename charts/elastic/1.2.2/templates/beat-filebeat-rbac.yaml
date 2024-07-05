@@ -1,0 +1,55 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: filebeat-{{ include "common.names.namespace" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources:
+  - namespaces
+  - pods
+  - nodes
+  verbs:
+  - get
+  - watch
+  - list
+- apiGroups: ["apps"]
+  resources:
+  - replicasets
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups: ["batch"]
+  resources:
+  - jobs
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: filebeat
+  namespace: {{ include "common.names.namespace" $ }} 
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: filebeat-{{ include "common.names.namespace" $ }} 
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+subjects:
+- kind: ServiceAccount
+  name: filebeat
+  namespace: {{ include "common.names.namespace" $ }}
+roleRef:
+  kind: ClusterRole
+  name: filebeat-{{ include "common.names.namespace" $ }}
+  apiGroup: rbac.authorization.k8s.io
+

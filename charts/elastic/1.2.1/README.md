@@ -16,6 +16,7 @@ docker.elastic.co:TCP/443
 epr.elastic.co:TCP/443
 docker.elastic.codocker-auth.elastic.cod2iks1dkcwqcbx.cloudfront.net:TCP/443
 quay.io:TCP/443
+geoip.elastic.co:TCP/443
 ```
 
 2. Install kube-vip or any solution with support external ip in a service (optional)
@@ -50,7 +51,7 @@ elastic-operator-crds eck-operator-crds
 ```bash
 
 
-export ELASTIC_VER=1.2.2
+export ELASTIC_VER=1.2.1
 export CLUSTER_NAME=elk
 export K8S_NAMESPACE=elastic-tst
 export ELASTICSEARCH_URL=elastic-tst.apps.example.com

@@ -16,6 +16,7 @@ docker.elastic.co:TCP/443
 epr.elastic.co:TCP/443
 docker.elastic.codocker-auth.elastic.cod2iks1dkcwqcbx.cloudfront.net:TCP/443
 quay.io:TCP/443
+geoip.elastic.co:TCP/443
 ```
 
 2. Install kube-vip or any solution with support external ip in a service (optional)

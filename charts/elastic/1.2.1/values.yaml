@@ -1,0 +1,283 @@
+# Default values for elastic.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+elasticsearch:
+  enabled: true
+  params:
+    pdb: 2
+    roles:
+      master:
+        autoscaling:
+          enabled: false
+        count: 3
+        cpu: 2000m
+        memory: 4Gi
+        storage: 2Gi
+        roles: '["master"]'
+        config:
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
+          xpack:
+            security:
+              audit:
+                enabled: false
+        labels:
+          elasticsearch.type: master
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    elasticsearch.type: master
+                topologyKey: kubernetes.io/hostname
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+        tolerations: []
+      data:
+        autoscaling:
+          enabled: false
+          maxNodes: 4
+          maxCpu: 4000m
+          maxMemory: 8Gi
+          maxStorage: 200Gi
+        count: 3
+        cpu: 4000m
+        memory: 8Gi
+        storage: 200Gi
+        roles: '["data", "ingest", "transform", "remote_cluster_client"]'
+        config:
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
+          xpack:
+            security:
+              audit:
+                enabled: false
+        labels:
+          elasticsearch.type: data
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    elasticsearch.type: data
+                topologyKey: kubernetes.io/hostname
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+        tolerations: []
+      ml:
+        autoscaling:
+          enabled: false
+          maxNodes: 2
+          maxCpu: 2000m
+          maxMemory: 4Gi
+          maxStorage: 20Gi
+        count: 1
+        cpu: 2000m
+        memory: 4Gi
+        storage: 20Gi
+        roles: '["ml"]'
+        config:
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
+          xpack:
+            security:
+              audit:
+                enabled: false
+        labels:
+          elasticsearch.type: ml
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    elasticsearch.type: ml
+                topologyKey: kubernetes.io/hostname
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+        tolerations: []
+    storageClass: ""
+    image:
+      registry: docker.elastic.co
+      repository: elasticsearch/elasticsearch
+      tag: ""
+    
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: es-tst.apps.example.com
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    service:
+      annotations: {}
+
+
+packageRegistry:
+  enabled: true
+  params:
+    image:
+      registry: docker.elastic.co
+      repository: package-registry/distribution
+      tag: ""
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: repo-tst.apps.example.com
+      annotations: {}
+    service:
+      annotations: {}
+
+
+kibana:
+  enabled: true
+  params:
+    autoscaling:
+      enabled: false
+      maxNodes: 2
+      averageCpuUtilization: 50
+    image:
+      registry: docker.elastic.co
+      repository: package-registry/distribution
+      tag: ""
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: kb-tst.apps.example.com
+      annotations:
+#        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+#        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+#        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    config:
+      xpack:
+        reporting:
+          encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
+          kibanaServer:
+            port: "443"
+        security:
+          audit:
+            enabled: false
+          encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
+        encryptedSavedObjects:
+          encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
+    service:
+      annotations: {}
+
+
+agentServices:
+  enabled: true
+  params:
+    image:
+      registry: docker.elastic.co
+      repository: beats/elastic-agent
+      tag: ""
+    count: 3
+    cpu: "1500m"
+    memory: "800Mi"
+    service:
+      annotations: {}
+    roles:
+      apm:
+        token: "E2D3ytLiaI236F62x2n6Rvt4"
+        ingress:
+          enabled: true
+          ingressClassName: ""
+          hostname: apm-http-tst.apps.example.com
+          annotations:
+            nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+            nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+            nginx.ingress.kubernetes.io/ssl-redirect: "true"
+            nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+            nginx.ingress.kubernetes.io/proxy-body-size: "0"
+            nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+            nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+
+
+agentFleet:
+  enabled: true
+  params:
+    image:
+      registry: docker.elastic.co
+      repository: beats/elastic-agent
+      tag: ""
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: fleet-tst.apps.example.com
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    service:
+      annotations: {}
+
+
+logstash:
+  enabled: true
+  params:
+    image:
+      registry: docker.elastic.co
+      repository: logstash/logstash
+      tag: ""
+    service:
+      annotations: {}
+    pipelines: []
+
+
+imagePullSecrets: []
+#- name: repo-auth
+
+tlsSecretName: ""
+
+
+nameOverride: ""
+namespaceOverride: ""
+fullnameOverride: ""

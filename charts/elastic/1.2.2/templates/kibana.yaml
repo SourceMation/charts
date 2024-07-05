@@ -1,0 +1,261 @@
+{{- if .Values.kibana.enabled }}
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: {{ include "common.names.shortname" $ }}
+  namespace: {{ include "common.names.namespace" . }} 
+spec:
+  {{- with .Values.kibana.params }}
+  version: {{ default $.Chart.AppVersion }}
+  image: docker.elastic.co/kibana/kibana:{{  default $.Chart.AppVersion }}
+  count: 1
+  podTemplate:
+    metadata:
+      labels:
+        scrape: kb-{{ include "common.names.namespace" $ }}
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+#              - key: elastic
+#                operator: In
+#                values:
+#                - all
+      initContainers:
+      - name: wait-for
+        image: busybox:latest
+        command: 
+        - /bin/sh
+        - -c
+        - >
+          set -x;
+          until wget -q --spider --no-check-certificate http://{{ include "common.names.shortname" $ -}}-repo:8080; do sleep 2; done
+      containers:
+      - name: kibana
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 1Gi
+          limits:
+            cpu: 2000m
+            memory: 2Gi
+  {{- if .config.xpack.security.audit.enabled }}
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
+        namespace: {{ include "common.names.namespace" $ }}
+    logs:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
+        namespace: {{ include "common.names.namespace" $ }}
+  {{- end }}
+  http:
+    service:
+      {{- with .service.annotations }}
+      metadata:
+        annotations:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      spec:
+        type: LoadBalancer
+    tls:
+      {{- if not $.Values.tlsSecretName }}
+      selfSignedCertificate:
+        disabled: false
+        subjectAltNames:
+        - dns: {{ .ingress.hostname | quote }}
+        - dns: "{{ include "common.names.shortname" $ -}}-repo"
+        - dns: {{ $.Values.packageRegistry.params.ingress.hostname | quote }}
+      {{- else }}
+      certificate:
+        secretName: {{ $.Values.tlsSecretName | quote }}
+      {{- end }}
+  elasticsearchRef:
+    name: {{ include "common.names.shortname" $ }}
+  config:
+    monitoring.kibana.collection.enabled: 'true'
+    monitoring.ui.ccs.enabled: 'false'
+    monitoring.ui.container.elasticsearch.enabled: 'true'
+    monitoring.ui.container.logstash.enabled: 'true'
+    xpack.reporting.kibanaServer.hostname: {{ .ingress.hostname | quote }}
+    xpack.reporting.kibanaServer.protocol: "https"
+    xpack.reporting.kibanaServer.port: {{ .config.xpack.reporting.kibanaServer.port | quote }}
+    xpack.reporting.roles.enabled: "false"
+    xpack.security.audit.enabled: {{ .config.xpack.security.audit.enabled }}
+    xpack.security.encryptionKey: {{ .config.xpack.security.encryptionKey | quote }}
+    xpack.reporting.encryptionKey: {{ .config.xpack.reporting.encryptionKey | quote }}
+    xpack.encryptedSavedObjects.encryptionKey: {{ .config.xpack.encryptedSavedObjects.encryptionKey | quote }}
+    server.publicBaseUrl: "https://{{- .ingress.hostname -}}:443"
+
+    {{- if $.Values.kibana.params.ingress.enabled }}  
+    xpack.fleet.registryUrl: "http://{{- include "common.names.shortname" $ -}}-repo:8080"
+    #xpack.fleet.registryUrl: "https://{{- $.Values.packageRegistry.params.ingress.hostname -}}:443"
+    {{- else if  $.Values.kibana.params.ingress.annotations }}
+    xpack.fleet.registryUrl: "http://{{- include "common.names.shortname" $ -}}-repo:8080"
+    #xpack.fleet.registryUrl: "https://{{- $.Values.packageRegistry.params.ingress.hostname -}}:8080"
+    {{- else }}
+    xpack.fleet.registryUrl: "http://{{- include "common.names.shortname" $ -}}-repo:8080"
+    {{- end }}
+    xpack.fleet.agents.fleet_server.hosts:
+    {{- if $.Values.kibana.params.ingress.enabled }}  
+    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:443"
+    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:8220"
+    - "https://{{- include "common.names.shortname" $ -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
+    {{- else if  $.Values.kibana.params.ingress.annotations }}
+    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:8220"
+    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:443"
+    - "https://{{- include "common.names.shortname" $ -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
+    {{- else }}
+    - "https://{{- include "common.names.shortname" $ -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
+    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:8220"
+    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:443"
+    {{- end }}
+    xpack.fleet.outputs:
+    - id: elastic
+      is_default: true
+      is_default_monitoring: true
+      name: elastic
+      type: elasticsearch
+      hosts:
+      {{- if $.Values.kibana.params.ingress.enabled }}  
+      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
+      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
+      - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
+      {{- else if  $.Values.kibana.params.ingress.annotations }}
+      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
+      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
+      - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
+      {{- else }}
+      - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
+      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
+      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
+      {{- end }}
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/elasticsearch-association/{{ include "common.names.namespace" $ -}}/{{ include "common.names.shortname" $ -}}/certs/ca.crt"
+    xpack.fleet.packages:
+      - name: system
+        version: latest
+      - name: elastic_agent
+        version: latest
+      - name: fleet_server
+        version: latest
+      - name: apm
+        version: latest
+      - name: kubernetes
+        version: latest
+    xpack.fleet.agentPolicies:
+      - name: Agent Fleet Policy on ECK
+        id: eck-fleet
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        unenroll_timeout: 900
+        package_policies:
+        - name: eck-fleet-server
+          id: eck-fleet-server
+          package:
+            name: fleet_server
+        - name: eck-fleet-system
+          id: eck-fleet-system
+          package:
+            name: system
+      - name: Agent Service Policy on ECK
+        id: eck-services
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        unenroll_timeout: 900
+        package_policies:
+        - name: eck-services-system
+          id: eck-services-system
+          package:
+            name: system
+        - name: eck-services-apm
+          id: eck-services-apm
+          package:
+            name: apm
+          inputs:
+          - type: apm
+            enabled: true
+            vars:
+            - name: host
+              value: "0.0.0.0:8200"
+            - name: url
+              value: "https://{{ $.Values.agentServices.params.roles.apm.ingress.hostname -}}:443"
+            - name: api_key_enabled
+              value: 'true'
+            - name: secret_token
+              value: {{ $.Values.agentServices.params.roles.apm.token | quote }}
+            - name: tls_enabled
+              value: 'true'
+            - name: tls_certificate
+              value: "/mnt/elastic-internal/http-certs/tls.crt"
+            - name: tls_key
+              value: "/mnt/elastic-internal/http-certs/tls.key"
+      - name: Default Kubernetes Policy 
+        id: eck-k8s
+        namespace: default
+        monitoring_enabled:
+          - logs
+          - metrics
+        unenroll_timeout: 900
+        package_policies:
+        - name: eck-k8s-system
+          id: eck-k8s-system
+          package:
+            name: system
+        - name: eck-k8s-default
+          id: eck-k8s-default
+          package:
+            name: kubernetes
+{{- if $.Values.kibana.params.ingress.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "common.names.shortname" $ -}}-kb-http
+  namespace: {{ include "common.names.namespace" $ }}
+  {{- with $.Values.kibana.params.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+    kibana.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}
+
+spec:
+  rules:
+  - host: {{ .ingress.hostname }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "common.names.shortname" $ -}}-kb-http
+            port:
+              number: 5601
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - {{ .ingress.hostname }}
+    {{- if  not $.Values.tlsSecretName  }}
+    secretName: {{ include "common.names.shortname" $ -}}-kb-http-certs-internal
+    {{- else }}
+    secretName: {{ $.Values.tlsSecretName | quote }}
+    {{- end }}
+
+{{- end }}
+
+{{- end }}
+{{- end }}

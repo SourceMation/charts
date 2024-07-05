@@ -1,0 +1,137 @@
+{{- if .Values.packageRegistry.enabled }}
+{{- with .Values.packageRegistry.params }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    common.k8s.elastic.co/type: repo
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+  name: {{ include "common.names.shortname" $ -}}-repo
+  namespace: {{ include "common.names.namespace" $ }}
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      common.k8s.elastic.co/type: repo
+      repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        common.k8s.elastic.co/type: repo
+        repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values: 
+                - linux
+#              - key: elastic
+#                operator: In
+#                values:
+#                - all
+      containers:
+      - image: docker.elastic.co/package-registry/distribution:{{ default $.Chart.AppVersion }}
+        imagePullPolicy: Always
+        name: distribution
+        env:
+        - name: EPR_ADDRESS
+          value: '0.0.0.0:8080'
+#        - name: EPR_TLS_KEY
+#          value: '/mnt/elastic-internal/http-certs/tls.key'
+#        - name: EPR_TLS_CERT
+#          value: '/mnt/elastic-internal/http-certs/tls.crt'                   
+        ports:
+        - containerPort: 8080
+        readinessProbe:
+          exec:
+            command:
+            - curl
+            - -f
+            - -L
+            - http://127.0.0.1:8080/health
+          periodSeconds: 5
+        resources: 
+          requests:
+            memory: 1Gi
+          limits:
+            memory: 1500Mi
+#        volumeMounts:
+#        - mountPath: /mnt/elastic-internal/http-certs
+#          name: elastic-internal-http-certificates
+#          readOnly: true
+#      volumes:
+#      - name: elastic-internal-http-certificates
+#        secret:
+#          defaultMode: 420
+#          optional: false
+#          secretName: {{ include "common.names.shortname" $ -}}-kb-http-certs-internal
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    common.k8s.elastic.co/type: repo
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+  {{- with .service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  name: {{ include "common.names.shortname" $ -}}-repo
+  namespace: {{ include "common.names.namespace" $ }}
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    common.k8s.elastic.co/type: repo
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+{{- if .ingress.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "common.names.shortname" $ -}}-repo
+  namespace: {{ include "common.names.namespace" $ }}
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+  labels:
+    common.k8s.elastic.co/type: repo
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+spec:
+  rules:
+  - host: {{ .ingress.hostname | quote }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "common.names.shortname" $ -}}-repo
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - {{ .ingress.hostname | quote }}
+    {{- if  not $.Values.tlsSecretName  }}
+    secretName: {{ include "common.names.shortname" $ -}}-kb-http-certs-internal
+    {{- else }}
+    secretName: {{ $.Values.tlsSecretName | quote }}
+    {{- end }}
+
+
+{{- end }} 
+{{- end }} 
+{{- end }}
+

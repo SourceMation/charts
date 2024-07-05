@@ -1,0 +1,26 @@
+{{- if .Values.kibana.enabled }}
+{{- if .Values.kibana.params.autoscaling.enabled }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "common.names.shortname" $ }}
+  namespace: {{ include "common.names.namespace" $ }}
+spec:
+  {{- with .Values.kibana.params }}
+  scaleTargetRef:
+    apiVersion: kibana.k8s.elastic.co/v1
+    kind: Kibana
+    name: {{ include "common.names.shortname" $ }}
+  minReplicas: 1
+  maxReplicas: {{ .autoscaling.maxNodes }}
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .autoscaling.averageCpuUtilization }}
+  {{- end }}
+  {{- end }}
+{{- end }}

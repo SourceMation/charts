@@ -1,0 +1,141 @@
+{{- if .Values.agentFleet.enabled }}
+
+
+{{- with .Values.agentFleet.params }}
+---
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: {{ include "common.names.shortname" $ }}-fleet
+  namespace: {{ include "common.names.namespace" $ }}
+spec:
+  http:
+    service:
+      {{- with .service.annotations }}
+      metadata:
+        annotations:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      spec:
+        type: LoadBalancer
+  version: {{ default $.Chart.AppVersion }}
+  image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
+  kibanaRef:
+    name: {{ include "common.names.shortname" $ }}
+  elasticsearchRefs:
+  - name: {{ include "common.names.shortname" $ }}
+  mode: fleet
+  fleetServerEnabled: true
+  policyID: eck-fleet
+  deployment:
+    replicas: 2
+    podTemplate:
+      metadata:
+        labels:
+          scrape: agent
+      spec:
+        serviceAccountName: fleet-server
+        automountServiceAccountToken: true
+        securityContext:
+          runAsUser: 0
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+#                - key: elastic
+#                  operator: In
+#                  values:
+#                  - all  
+        initContainers:
+        - name: selinux
+          image: quay.io/eurolinux/eurolinux-9:latest
+          resources:
+            limits:
+              cpu: 100m
+              memory: 32Mi
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /hostfs/
+              name: hostfs
+          command:
+          - 'bash'
+          - '-e'
+          - '-c'
+          - |-
+           set -e;
+           dirs=(
+             "/hostfs/var/lib/elastic-agent/{{- include "common.names.namespace" $ }}"
+              )
+            for dir in ${dirs[@]}; do
+                mkdir -p "${dir}"
+                chcon -Rt svirt_sandbox_file_t "${dir}"
+                chmod g+rw "${dir}"
+                chgrp 0 "${dir}"
+                if [ -n "$(ls -A ${dir} 2>/dev/null)" ]
+                then
+                  chgrp 0 "${dir}"/*
+                  chmod g+rw "${dir}"/*
+                fi
+            done
+        volumes:
+        - name: hostfs
+          hostPath:
+            path: /
+
+
+        containers:
+        - name: agent
+          resources:
+            requests:
+              cpu: 200m
+              memory: 1Gi
+            limits:
+              cpu: 300m
+              memory: 1Gi
+{{- if .ingress.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "common.names.shortname" $ }}-fleet-agent-http
+  namespace: {{ include "common.names.namespace" $ }}
+  {{- with .ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-fleet
+
+spec:
+  rules:
+  - host: {{ .ingress.hostname }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "common.names.shortname" $ -}}-fleet-agent-http
+            port:
+              number: 8220
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - {{ .ingress.hostname }}
+    {{- if  not $.Values.tlsSecretName  }}
+    secretName: {{ include "common.names.shortname" $ }}-fleet-agent-http-certs-internal
+    {{- else }}
+    secretName: {{ $.Values.tlsSecretName | quote }}
+    {{- end }}
+
+{{- end }}
+{{- end }}
+{{- end }}
+
