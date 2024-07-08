@@ -1,15 +1,19 @@
 {{- /*
+
 */}}
 
-{{- if .Values.agentServices.enabled }}
+{{- if and .Values.agentFleet.enabled .Values.agentServices.enabled }}
 
 {{- with .Values.agentServices.params }}
+
 ---
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
 metadata:
   name: {{ include "common.names.shortname" $ }}-service
   namespace: {{ include "common.names.namespace" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   version: {{ default $.Chart.AppVersion }}
   image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
@@ -19,31 +23,28 @@ spec:
     name: {{ include "common.names.shortname" $ }}-fleet
   mode: fleet
   policyID: eck-services
-#  daemonSet:
-  deployment:
+  statefulSet:
+    serviceName: {{ include "common.names.shortname" $ }}-service-agent-http
     replicas: {{ .count }}
     podTemplate:
       metadata:
         labels:
-          scrape: agent
+          scrape: agent-{{ include "common.names.namespace" $ }}
       spec:
+        {{- with .tolerations }}
+        tolerations:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+
+        {{- with .affinity }}
+        affinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
 #        hostNetwork: true
 #        dnsPolicy: ClusterFirstWithHostNet
         serviceAccountName: elastic-agent
         automountServiceAccountToken: true
-        affinity:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/os
-                  operator: In
-                  values:
-                  - linux
-#                - key: elastic
-#                  operator: In
-#                  values:
-#                  - all
+
         initContainers:
         - name: wait-for
           image: quay.io/eurolinux/eurolinux-9:latest
@@ -82,19 +83,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "common.names.shortname" $ }}-service-agent
+  name: {{ include "common.names.shortname" $ }}-service-agent-http
   namespace: {{ include "common.names.namespace" $ }}
   {{- with .service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   labels:
-    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service-agent
+    {{- include "common.labels.labels" $ | nindent 4 }}
+    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service
     common.k8s.elastic.co/type: agent
 spec:
   type: LoadBalancer
   selector:
-    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service-agent
+    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service
   ports:
   - protocol: TCP
     port: 8200

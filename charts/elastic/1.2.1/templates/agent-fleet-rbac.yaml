@@ -1,3 +1,5 @@
+{{- if .Values.agentFleet.enabled }}
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -54,3 +56,4 @@ roleRef:
   name: fleet-server-{{ include "common.names.namespace" $ }}
   apiGroup: rbac.authorization.k8s.io
 
+{{- end }}

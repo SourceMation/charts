@@ -1,7 +1,12 @@
+{{- /*
+https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-logstash.html
+*/}}
+
+
 {{- if .Values.logstash.enabled }}
 
-
 {{- with .Values.logstash.params }}
+
 ---
 apiVersion: {{ include "common.capabilities.logstash.apiVersion" $ }}
 kind: Logstash
@@ -10,6 +15,8 @@ metadata:
   namespace: {{ include "common.names.namespace" $ }}
   labels:
     scrape: ls-{{ include "common.names.namespace" $ }}
+    {{- include "common.labels.labels" $ | nindent 4 }}
+
 spec:
   count: 1
   version: {{ default $.Chart.AppVersion }}
@@ -20,7 +27,13 @@ spec:
   monitoring:
     metrics:
       elasticsearchRefs:
-        - name: {{ include "common.names.shortname" $ }}
+      - name: {{ include "common.names.shortname" $ }}
+        namespace: {{ include "common.names.namespace" $ }}
+    logs:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
+        namespace: {{ include "common.names.namespace" $ }}
+
   pipelines:
   {{- with .pipelines }}
     {{- toYaml . | nindent 4 }}
@@ -62,13 +75,23 @@ spec:
     spec:
       initContainers:
       - name: wait-for
-        image: busybox:latest
+        image: quay.io/eurolinux/eurolinux-9:latest
         command:
         - /bin/sh
         - -c
         - >
           set -x;
-          until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
+          until curl -f -k -L https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
+
+#      initContainers:
+#      - name: wait-for
+#        image: busybox:latest
+#        command:
+#        - /bin/sh
+#        - -c
+#        - >
+#          set -x;
+#          until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
       containers:
       - name: logstash
         env:
@@ -81,51 +104,55 @@ spec:
           limits:
             cpu: 2
             memory: 2Gi
+      {{- with .tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .affinity }}
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os
-                operator: In
-                values:
-                - linux
-#              - key: elastic
-#                operator: In
-#                values:
-#                - all
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
       volumes:
       - name: logstash-data
-#        persistentVolumeClaim:
-#          claimName: logstash-data-{{- include "common.names.shortname" $ -}}-ls-0
-        emptyDir: {}
-#  volumeClaimTemplates:
-#    - metadata:
-#        name: logstash-data
-#      spec:
-#        accessModes:
-#          - ReadWriteOnce
-#        resources:
-#          requests:
-#            storage: 2Gi
-#        storageClassName: {{ $.Values.elasticsearch.storageClass }}
-#---
-#apiVersion: v1
-#kind: PersistentVolumeClaim
-#metadata:
-#  labels:
-#    common.k8s.elastic.co/type: elasticsearch
-#    elasticsearch.k8s.elastic.co/cluster-name: elka-elastic
-#    elasticsearch.k8s.elastic.co/statefulset-name: elka-elastic-es-master
-#  name: logstash-data-{{- include "common.names.shortname" $ -}}-ls-0
-#  namespace: elastic-tst
-#spec:
-#  accessModes:
-#  - ReadWriteOnce
-#  resources:
-#    requests:
-#      storage: 2Gi
-#  storageClassName: cephrbd-csi
+        persistentVolumeClaim:
+          claimName: logstash-data-{{- include "common.names.shortname" $ -}}-ls-0
+#        emptyDir: {}
+{{- /*
+# eck operator do not remove pvc after helm uninstall
+    volumeClaimTemplates:
+    - metadata:
+        name: logstash-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .storage.size }}
+         {{- if .storageClass }}
+         storageClassName: {{ .storage.storageClass }}
+         {{- end }}
+*/}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    common.k8s.elastic.co/type: elasticsearch
+    elasticsearch.k8s.elastic.co/cluster-name: elka-elastic
+    elasticsearch.k8s.elastic.co/statefulset-name: elka-elastic-es-master
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  name: logstash-data-{{- include "common.names.shortname" $ -}}-ls-0
+  namespace: {{ include "common.names.namespace" $ }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .storage.size }}
+   {{- if .storage.storageClass }}
+   storageClassName: {{ .storage.storageClass }}
+   {{- end }}
 
 {{- end }}
 {{- end }}

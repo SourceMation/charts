@@ -1,3 +1,11 @@
+{{- /*
+https://github.com/elastic/cloud-on-k8s/blob/main/config/recipes/beats/README.asciidoc
+https://github.com/elastic/cloud-on-k8s/blob/main/config/recipes/beats/stack_monitoring.yaml
+*/}}
+
+{{- /*
+{{- if .Values.elasticsearch.enabled }}
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -53,3 +61,5 @@ roleRef:
   name: metricbeat-{{ include "common.names.namespace" $ }}
   apiGroup: rbac.authorization.k8s.io
 
+{{- end }}
+*/}}

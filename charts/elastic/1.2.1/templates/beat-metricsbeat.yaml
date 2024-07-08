@@ -1,9 +1,20 @@
+{{- /*
+https://github.com/elastic/cloud-on-k8s/blob/main/config/recipes/beats/README.asciidoc
+https://github.com/elastic/cloud-on-k8s/blob/main/config/recipes/beats/stack_monitoring.yaml
+*/}}
+
+
+{{- /*
+{{- if and $.Values.elasticsearch.enabled $.Values.kibana.enabled }}
+
 ---
 apiVersion: beat.k8s.elastic.co/v1beta1
 kind: Beat
 metadata:
   name: {{ include "common.names.shortname" $ }}-mon-metric
   namespace: {{ include "common.names.namespace" . }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   type: metricbeat
   version: {{ default .Chart.AppVersion }}
@@ -98,7 +109,7 @@ spec:
     podTemplate:
       metadata:
         labels:
-          scrape: beat
+          scrape: beat-{{ include "common.names.namespace" $ }}
       spec:
         serviceAccountName: metricbeat
         automountServiceAccountToken: true
@@ -107,13 +118,22 @@ spec:
           runAsUser: 0
         initContainers:
         - name: wait-for
-          image: busybox:latest
+          image: quay.io/eurolinux/eurolinux-9:latest
           command:
           - /bin/sh
           - -c
           - >
             set -x;
-            until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
+            until curl -f -k -L https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
+
+#        - name: wait-for
+#          image: busybox:latest
+#          command:
+#          - /bin/sh
+#          - -c
+#          - >
+#            set -x;
+#            until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
         containers:
         - name: metricbeat
           env:
@@ -146,3 +166,6 @@ spec:
 #                  values:
 #                  - all
 
+{{- end }}
+
+*/}}

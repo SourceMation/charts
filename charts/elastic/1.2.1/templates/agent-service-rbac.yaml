@@ -1,3 +1,7 @@
+{{- if .Values.agentServices.enabled }}
+
+
+
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -77,3 +81,6 @@ roleRef:
   kind: ClusterRole
   name: elastic-agent-{{ include "common.names.namespace" $ }}
   apiGroup: rbac.authorization.k8s.io
+
+
+{{- end }}

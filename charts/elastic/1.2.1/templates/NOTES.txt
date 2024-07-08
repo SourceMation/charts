@@ -10,8 +10,6 @@ by Linux Polska
 
 1. Check healthy of elastic services
 
-kubectl -n {{ .Release.Namespace }} get po
-
 kubectl -n {{ .Release.Namespace }} get elastic
 
 2. Get the application URLs by running these commands:
@@ -48,12 +46,5 @@ kubectl -n {{ $.Release.Namespace }} get secret {{ $.Values.tlsSecretName }} \
 
 kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortname" $ }}-es-elastic-user -o go-template='{{`{{ .data.elastic | base64decode `}} }}'
 
-7. Check autoscaling conditions (if autoscaling enabled)
 
-kubectl get elasticsearchautoscaler {{ .Release.Name }} -o jsonpath='{ .status.conditions }' | jq
-
-8. Check autoscaling policies (if autoscaling enabled)
-
-kubectl get elasticsearchautoscaler {{ .Release.Name }} -o jsonpath='{ .status.policies }' | jq
-
-#
+END

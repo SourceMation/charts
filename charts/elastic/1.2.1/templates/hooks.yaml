@@ -125,6 +125,10 @@ spec:
           hostPath:
             path: /
 */}}
+
+{{- if .Values.elasticsearch.enabled }}
+
+
 ---
 apiVersion: apps/v1
 kind: DaemonSet
@@ -190,3 +194,4 @@ spec:
           hostPath:
             path: /
 
+{{- end }}
