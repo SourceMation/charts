@@ -6,7 +6,7 @@ annotations:
 apiVersion: v2
 # https://github.com/elastic/elasticsearch/tags
 # https://www.elastic.co/guide/en/cloud-on-k8s/2.11/k8s_supported_versions.html
-appVersion: "8.12.2"
+appVersion: "8.13.4"
 
 dependencies:
 - name: common
@@ -26,4 +26,4 @@ name: elastic
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 1.2.1
+version: 1.3.0

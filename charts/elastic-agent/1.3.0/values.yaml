@@ -1,0 +1,45 @@
+# Default values for elastic-agent.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+global:
+  platform: rke2
+
+kubeStateMetrics:
+  enabled: true
+  params:
+    image:
+      registry: "registry.k8s.io"
+      repository: "kube-state-metrics/kube-state-metrics"
+      tag: "v2.12.0"
+
+elasticAgent:
+  enabled: true
+  params:
+    cpu: "1500m"
+    memory: "1000Mi"
+    fleetUrl: ""
+    fleetEnrollmentToken: ""
+    kibanaUrl: "http://kibana:5601"
+    kibanaUsername: "elastic"
+    kibanaPasswd: "changeme"
+    imageElastic:
+      registry: "docker.elastic.co"
+      repository: "beats/elastic-agent"
+      tag: ""
+    imageInit:
+      registry: "quay.io"
+      repository: "eurolinux/eurolinux-9"
+      tag: "latest"
+
+additionalTrustedCASecret: ""
+
+imagePullSecrets: []
+#- name: repo-auth
+
+
+nameOverride: "elk"
+namespaceOverride: ""
+fullnameOverride: ""
+
