@@ -24,7 +24,7 @@ spec:
   mode: fleet
   policyID: eck-services
   statefulSet:
-#    serviceName: {{ include "common.names.shortname" $ }}-service-agent-http
+    serviceName: {{ include "common.names.shortname" $ }}-service-agent-http
     replicas: {{ .count }}
     podTemplate:
       metadata:
@@ -91,8 +91,8 @@ metadata:
   {{- end }}
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
-    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service
-    common.k8s.elastic.co/type: agent
+#    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service
+#    common.k8s.elastic.co/type: agent
 spec:
   type: LoadBalancer
   selector:
