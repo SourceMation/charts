@@ -45,7 +45,7 @@ spec:
         {{- if $.Values.elasticsearch.params.ingress.enabled }}
         - dns: {{ .ingress.hostname | quote }}
         {{- end }}
-        {{- if $.Values.agentFleet.enabled }}
+        {{- if $.Values.agentServices.enabled }}
         - dns: {{ $.Values.agentServices.params.roles.apm.ingress.hostname | quote }}
         - dns: "{{ include "common.names.shortname" $ }}-service-agent-http.{{ include "common.names.namespace" $ }}.svc"
         {{- end }}
