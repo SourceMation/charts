@@ -24,7 +24,7 @@ spec:
   mode: fleet
   policyID: eck-services
   statefulSet:
-    serviceName: {{ include "common.names.shortname" $ }}-service-agent-http
+#    serviceName: {{ include "common.names.shortname" $ }}-service-agent-http
     replicas: {{ .count }}
     podTemplate:
       metadata:

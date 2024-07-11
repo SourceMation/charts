@@ -24,16 +24,18 @@ spec:
   config:
     heartbeat.monitors:
     {{- if .Values.elasticsearch.enabled }}
-    - type: tcp
+    - type: http
+      id: es-http
       schedule: '@every 5s'
-      hosts: 
-      - "{{ include "common.names.shortname" $ }}-es-http.svc:9200"
+      urls:
+      - "{{ include "common.names.shortname" $ }}-es-http.{{ include "common.names.namespace" . }}.svc:9200"
     {{- end }}
     {{- if .Values.kibana.enabled }}
-    - type: tcp
+    - type: http
+      id: kibana-http
       schedule: '@every 5s'
-      hosts: 
-      - "{{ include "common.names.shortname" $ }}-kb-http.svc:5601"
+      urls:
+      - "{{ include "common.names.shortname" $ }}-kb-http.{{ include "common.names.namespace" . }}.svc:5601"
     {{- end }}
   deployment:
     replicas: 1
