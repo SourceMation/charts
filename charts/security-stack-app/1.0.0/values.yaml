@@ -1,0 +1,54 @@
+
+global:
+  conjur-oss:
+    enabled: true
+  sealed-secrets:
+    enabled: true
+  external-secrets:
+    enabled: true
+  kyverno:
+    enabled: true 
+  kubearmor:
+    enabled: false
+  kubewarden-defaults:
+    enabled: false
+  neuvector:
+    enabled: true
+
+conjur-oss:
+  dataKey: ""
+  service:
+    external:
+      enabled: false
+kyverno:
+  test:
+    securityContext: []
+  webhooksCleanup:
+    securityContext: []
+  policyReportsCleanup:
+    securityContext: []
+  cleanupJobs:
+    admissionReports:
+      securityContext: []
+    clusterAdmissionReports:
+      securityContext: []
+  admissionController:	
+    initContainer:
+      securityContext: []
+    container:
+      securityContext: []
+  backgroundController:
+    securityContext: []
+  cleanupController:
+    securityContext: []
+  reportsController:
+    securityContext: []
+external-secrets:
+  securityContext: []
+  webhook:
+    securityContext: []
+  certController:
+    securityContext: []
+sealed-secrets:
+  ingress:
+    enabled: true

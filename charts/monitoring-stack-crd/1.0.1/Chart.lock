@@ -1,0 +1,24 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: eck-operator-crds
+  repository: https://helm.elastic.co
+  version: 2.11.1
+- name: eck-operator
+  repository: https://helm.elastic.co
+  version: 2.11.1
+- name: base
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.21.2
+- name: istiod
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.21.1
+- name: cert-manager
+  repository: https://charts.jetstack.io
+  version: v1.15.1
+- name: opentelemetry-operator
+  repository: https://open-telemetry.github.io/opentelemetry-helm-charts
+  version: 0.64.1
+digest: sha256:bb32dcc16ae284b4e42748ac16698b1306a2f9e4cd6c491a46c000e6dbd34e32
+generated: "2024-07-10T20:12:43.025397623+02:00"

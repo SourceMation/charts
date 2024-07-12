@@ -16,6 +16,12 @@ elasticsearch:
         memory: 4Gi
         storage: 2Gi
         roles: '["master"]'
+        config:
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
+          xpack:
+            security:
+              audit:
+                enabled: false
         labels:
           elasticsearch.type: master
         affinity:
@@ -42,15 +48,21 @@ elasticsearch:
       data:
         autoscaling:
           enabled: false
-          max_nodes: 4
-          max_cpu: 4000m
-          max_memory: 8Gi
-          max_storage: 200Gi
+          maxNodes: 4
+          maxCpu: 4000m
+          maxMemory: 8Gi
+          maxStorage: 200Gi
         count: 3
         cpu: 4000m
         memory: 8Gi
         storage: 200Gi
         roles: '["data", "ingest", "transform", "remote_cluster_client"]'
+        config:
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
+          xpack:
+            security:
+              audit:
+                enabled: false
         labels:
           elasticsearch.type: data
         affinity:
@@ -77,17 +89,23 @@ elasticsearch:
       ml:
         autoscaling:
           enabled: false
-          max_nodes: 2
-          max_cpu: 2000m
-          max_memory: 4Gi
-          max_storage: 20Gi
+          maxNodes: 2
+          maxCpu: 2000m
+          maxMemory: 4Gi
+          maxStorage: 20Gi
         count: 1
         cpu: 2000m
         memory: 4Gi
         storage: 20Gi
         roles: '["ml"]'
+        config:
+          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
+          xpack:
+            security:
+              audit:
+                enabled: false
         labels:
-          elasticsearch.type: data
+          elasticsearch.type: ml
         affinity:
           podAntiAffinity:
             preferredDuringSchedulingIgnoredDuringExecution:
@@ -95,7 +113,7 @@ elasticsearch:
               podAffinityTerm:
                 labelSelector:
                   matchLabels:
-                    elasticsearch.type: data
+                    elasticsearch.type: ml
                 topologyKey: kubernetes.io/hostname
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -130,6 +148,7 @@ elasticsearch:
     service:
       annotations: {}
 
+
 packageRegistry:
   enabled: true
   params:
@@ -145,13 +164,14 @@ packageRegistry:
     service:
       annotations: {}
 
+
 kibana:
   enabled: true
   params:
     autoscaling:
       enabled: false
-      maxReplicas: 2
-      CPUaverageUtilization: 50
+      maxNodes: 2
+      averageCpuUtilization: 50
     image:
       registry: docker.elastic.co
       repository: package-registry/distribution
@@ -179,12 +199,13 @@ kibana:
           kibanaServer:
             port: "443"
         security:
+          audit:
+            enabled: false
           encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
         encryptedSavedObjects:
           encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
     service:
       annotations: {}
-
 
 
 agentServices:
@@ -251,7 +272,6 @@ logstash:
     pipelines: []
 
 
-
 imagePullSecrets: []
 #- name: repo-auth
 
@@ -261,4 +281,3 @@ tlsSecretName: ""
 nameOverride: ""
 namespaceOverride: ""
 fullnameOverride: ""
-

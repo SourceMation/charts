@@ -1,4 +1,13 @@
+{{- /*
+https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-elasticsearch-specification.html
+*/}}
+
+
+
 {{- if .Values.elasticsearch.enabled }}
+
+{{- with .Values.elasticsearch.params }}
+
 ---
 apiVersion: {{ include "common.capabilities.elasticsearch.apiVersion" .}}
 kind: Elasticsearch
@@ -8,7 +17,13 @@ metadata:
     {{- include "common.labels.labels" $ | nindent 4 }}
   namespace: {{ include "common.names.namespace" $ }}
 spec:
-  {{- with .Values.elasticsearch.params }}
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
+    logs:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
   image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
   http:
     service:
@@ -27,8 +42,12 @@ spec:
       selfSignedCertificate:
         disabled: false
         subjectAltNames:
+        {{- if $.Values.elasticsearch.params.ingress.enabled }}
         - dns: {{ .ingress.hostname | quote }}
+        {{- end }}
+        {{- if $.Values.agentFleet.enabled }}
         - dns: {{ $.Values.agentServices.params.roles.apm.ingress.hostname | quote }}
+        {{- end }}
       {{- else }}
       certificate:
         secretName: {{ $.Values.tlsSecretName | quote }}   
@@ -46,8 +65,7 @@ spec:
   - name: {{ $k }}
     count: {{ $v.count }}
     config:
-      node.roles: {{ $v.roles }}
-#      node.store.allow_mmap: false
+      {{- toYaml $v.config | nindent 6 }}
     volumeClaimTemplates:
     - metadata:
         name: elasticsearch-data
@@ -56,9 +74,9 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: {{ $v.storage }}
-        {{- if $.Values.elasticsearch.params.storageClass }}
-        storageClassName: {{ $.Values.elasticsearch.params.storageClass }}
+            storage: {{ $v.storage.size }}
+        {{- if $v.storage.storageClass }}
+        storageClassName: {{ $v.storage.storageClass }}
         {{- end }}
     podTemplate:
       metadata:
@@ -115,7 +133,7 @@ spec:
               cpu: {{ $v.cpu }}
               memory: {{ $v.memory }}
         {{- with $v.tolerations }}
-        tolerations::
+        tolerations:
           {{- toYaml . | nindent 8 }}
         {{- end }}
 
@@ -257,9 +275,40 @@ spec:
 
 {{- end }}
 
+{{- with .Values.elasticsearch.params }}
+  {{- range $k, $v := .roles }}
+    {{- if $v.autoscaling.enabled }}
+---
+apiVersion: autoscaling.k8s.elastic.co/v1alpha1
+kind: ElasticsearchAutoscaler
+metadata:
+  name: {{ include "common.names.shortname" $ }}-{{ $k }}
+  labels:
+  {{- include "common.labels.labels" $ | nindent 4 }}
+  namespace: {{ include "common.names.namespace" $ }}
+spec:
+  elasticsearchRef:
+    name: {{ include "common.names.shortname" $ }}
+  policies:
+    - name: {{ $k }}
+      roles: 
+        {{- toYaml $v.config.node.roles | nindent 8 }}
+      resources:
+        nodeCount:
+          min: {{ $v.count }}
+          max: {{ default $v.count $v.autoscaling.maxNodes }}
+        cpu:
+          min: {{ $v.cpu }}
+          max: {{ default $v.cpu $v.autoscaling.maxCpu }}
+        memory:
+          min: {{ $v.memory }}
+          max: {{ default $v.memory $v.autoscaling.maxMemory }}
+        storage:
+          min: {{ $v.storage.size }}
+          max: {{ default $v.storage.size $v.autoscaling.maxStorage }}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
 
 
 {{- end }}
-
-
-

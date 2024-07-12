@@ -4,6 +4,8 @@ annotations:
   catalog.cattle.io/release-name: elastic
   catalog.cattle.io/hidden: "false"
 apiVersion: v2
+# https://github.com/elastic/elasticsearch/tags
+# https://www.elastic.co/guide/en/cloud-on-k8s/2.11/k8s_supported_versions.html
 appVersion: "8.12.2"
 
 dependencies:
@@ -15,6 +17,7 @@ home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
 - elastic
+# https://www.elastic.co/guide/en/cloud-on-k8s/2.11/k8s_supported_versions.html
 kubeVersion: '>=1.25.0-0 < 1.30.0-0'
 maintainers:
 - email: biuro@linuxpolska.com

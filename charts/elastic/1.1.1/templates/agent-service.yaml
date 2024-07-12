@@ -8,8 +8,10 @@
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
 metadata:
-  name: {{ include "common.names.shortname" $ }}-service
+  name: {{ include "common.names.shortname" $ }}-service-agent
   namespace: {{ include "common.names.namespace" $ }}
+  labels:
+    agent.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}-service-agent
 spec:
   version: {{ default $.Chart.AppVersion }}
   image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
@@ -20,7 +22,8 @@ spec:
   mode: fleet
   policyID: eck-services
 #  daemonSet:
-  deployment:
+  statefulSet:
+    serviceName: {{ include "common.names.shortname" $ }}-service-agent
     replicas: {{ .count }}
     podTemplate:
       metadata:
