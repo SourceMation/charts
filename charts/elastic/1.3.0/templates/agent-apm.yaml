@@ -23,7 +23,7 @@ spec:
       paths:
       - backend:
           service:
-            name: {{ include "common.names.shortname" $ }}-service-agent-http
+            name: {{ include "common.names.shortname" $ }}-service-agent
             port:
               number: 8200
         path: /

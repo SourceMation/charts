@@ -252,7 +252,7 @@ spec:
             */}}
             {{- else }}
             - name: url
-              value: "https://{{ include "common.names.shortname" $ }}-service-agent-http.{{ include "common.names.namespace" $ -}}.svc:8200"
+              value: "https://{{ include "common.names.shortname" $ }}-service-agent.{{ include "common.names.namespace" $ -}}.svc:8200"
             {{- end }}
             - name: api_key_enabled
               value: 'true'

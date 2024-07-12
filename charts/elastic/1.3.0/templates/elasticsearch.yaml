@@ -47,7 +47,7 @@ spec:
         {{- end }}
         {{- if $.Values.agentServices.enabled }}
         - dns: {{ $.Values.agentServices.params.roles.apm.ingress.hostname | quote }}
-        - dns: "{{ include "common.names.shortname" $ }}-service-agent-http.{{ include "common.names.namespace" $ }}.svc"
+        - dns: "{{ include "common.names.shortname" $ }}-service-agent.{{ include "common.names.namespace" $ }}.svc"
         {{- end }}
       {{- else }}
       certificate:
