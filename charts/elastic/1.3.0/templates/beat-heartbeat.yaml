@@ -7,6 +7,7 @@ https://github.com/elastic/cloud-on-k8s/blob/main/config/recipes/beats/heartbeat
 
 {{- if or .Values.elasticsearch.enabled .Values.kibana.enabled }}
 
+
 ---
 apiVersion: beat.k8s.elastic.co/v1beta1
 kind: Beat
@@ -19,24 +20,281 @@ spec:
   type: heartbeat
   version: {{ default .Chart.AppVersion }}
   image: docker.elastic.co/beats/heartbeat:{{ default .Chart.AppVersion }}
+  {{- if .Values.elasticsearch.enabled }}
   elasticsearchRef:
     name: {{ include "common.names.shortname" $ }}
+  {{- end }}
+  {{- if .Values.kibana.enabled }}
+  kibanaRef:
+    name: {{ include "common.names.shortname" $ }}
+  {{- end }}
   config:
     heartbeat.monitors:
     {{- if .Values.elasticsearch.enabled }}
-    - type: http
-      id: es-http
+    - type: tcp
+      id: svc-es
+      name: svc-es
       schedule: '@every 5s'
-      urls:
+      hosts:
       - "{{ include "common.names.shortname" $ }}-es-http.{{ include "common.names.namespace" . }}.svc:9200"
-    {{- end }}
-    {{- if .Values.kibana.enabled }}
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/elasticsearch-certs/ca.crt"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - elasticsearch
+      run_from:
+        id: svc-es
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+      {{- if .Values.elasticsearch.params.ingress.enabled }}
     - type: http
-      id: kibana-http
+      id: ingress-es
+      name: ingress-es
       schedule: '@every 5s'
       urls:
-      - "{{ include "common.names.shortname" $ }}-kb-http.{{ include "common.names.namespace" . }}.svc:5601"
+      - {{ .Values.elasticsearch.params.ingress.hostname | quote}}
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - elasticsearch
+      run_from:
+        id: ingress-es
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+      {{- end }}
     {{- end }}
+
+    {{- if .Values.kibana.enabled }}
+    - type: tcp
+      id: svc-kibana
+      name: svc-kibana
+      schedule: '@every 5s'
+      hosts: 
+      - "{{ include "common.names.shortname" $ }}-kb-http.{{ include "common.names.namespace" . }}.svc:5601"
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/kibana-certs/ca.crt"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - kibana
+      run_from:
+        id: svc-kb
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+      {{- if .Values.kibana.params.ingress.enabled }}
+    - type: http
+      id: ingress-kibana
+      name: ingress-kibana
+      schedule: '@every 5s'
+      urls:
+      - {{ .Values.kibana.params.ingress.hostname | quote}}
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - ingress
+      - elasticsearch
+      run_from:
+        id: ingress-kibana
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+      {{- end }}
+    {{- end }}
+
+    {{- if .Values.packageRegistry.enabled }}
+    - type: tcp
+      id: svc-package-registry
+      name: svc-package-registry
+      schedule: '@every 5s'
+      hosts: 
+      - "{{ include "common.names.shortname" $ }}-repo-http.{{ include "common.names.namespace" . }}.svc:8080"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - package-registry
+      run_from:
+        id: svc-package-registry
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+      {{- if .Values.packageRegistry.params.ingress.enabled }}
+    - type: http
+      id: ingress-package-registry
+      name: ingress-package-registry
+      schedule: '@every 5s'
+      urls:
+      - {{ .Values.packageRegistry.params.ingress.hostname | quote}}
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - ingress
+      - package-registry
+      run_from:
+        id: ingress-package-registry
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+      {{- end }}
+    {{- end }}
+
+    {{- if and .Values.kibana.enabled .Values.agentFleet.enabled }}
+    - type: tcp
+      id: svc-fleet
+      name: svc-fleet
+      schedule: '@every 5s'
+      hosts: 
+      - "{{ include "common.names.shortname" $ }}-fleet-agent-http.{{ include "common.names.namespace" . }}.svc:8220"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - fleet
+      run_from:
+        id: svc-fleet
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+      {{- if .Values.agentFleet.params.ingress.enabled }}
+    - type: http
+      id: ingress-fleet
+      name: ingress-fleet
+      schedule: '@every 5s'
+      urls:
+      - {{ .Values.agentFleet.params.ingress.hostname | quote}}
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - ingress
+      - fleet
+      run_from:
+        id: ingress-fleet
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+      {{- end }}
+    {{- end }}
+
+    {{- if and .Values.kibana.enabled .Values.agentFleet.enabled .Values.agentServices.enabled }}
+    - type: tcp
+      id: svc-apm
+      name: svc-apm
+      schedule: '@every 5s'
+      hosts: 
+      - "{{ include "common.names.shortname" $ }}-service-agent.{{ include "common.names.namespace" . }}.svc:8200"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - apm
+      run_from:
+        id: svc-apm
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+      {{- if .Values.agentServices.params.roles.apm.ingress.enabled }}
+    - type: http
+      id: ingress-apm
+      name: ingress-apm
+      schedule: '@every 5s'
+      urls:
+      - {{ .Values.agentServices.params.roles.apm.ingress.hostname | quote}}
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - ingress
+      - apm
+      run_from:
+        id: ingress-apm
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+      {{- end }}
+    {{- end }}
+
+    {{- if and .Values.kibana.enabled .Values.logstash.enabled }}
+    - type: tcp
+      id: svc-logstash
+      name: svc-logstash
+      schedule: '@every 5s'
+      hosts: 
+      - "{{ include "common.names.shortname" $ }}-ls-beats.{{ include "common.names.namespace" . }}.svc:5044"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - logstash
+      run_from:
+        id: svc-logstash
+        geo:
+          name: {{ .Release.Namespace }}
+          location: 40.7128, -74.0060
+          continent_name: Europe
+          country_iso_code: PL
+          region_name: Masovian
+          region_iso_code: PL-14
+          city_name: Warsaw
+    {{- end }}
+
   deployment:
     replicas: 1
     podTemplate:
