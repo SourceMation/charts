@@ -6,17 +6,22 @@ https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-elasticsearch-specificat
 
 {{- if .Values.elasticsearch.enabled }}
 
-{{- with .Values.elasticsearch.params }}
+  {{- with .Values.elasticsearch.params }}
 
 ---
 apiVersion: {{ include "common.capabilities.elasticsearch.apiVersion" .}}
 kind: Elasticsearch
 metadata:
   name: {{ include "common.names.shortname" $ }}
+  namespace: {{ include "common.names.namespace" $ }}
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
-  namespace: {{ include "common.names.namespace" $ }}
 spec:
+  version: {{ default $.Chart.AppVersion .image.tag }}
+  auth:
+    disableElasticUser: true
+    fileRealm:
+    - secretName: {{ include "common.names.shortname" $ }}-es-elastic-custom-user
   monitoring:
     metrics:
       elasticsearchRefs:
@@ -62,7 +67,7 @@ spec:
           elasticsearch.k8s.elastic.co/node-master: "true"
   {{- end }}
   nodeSets:
-  {{- range $k, $v := .roles }}
+    {{- range $k, $v := .roles }}
   - name: {{ $k }}
     count: {{ $v.count }}
     config:
@@ -142,143 +147,18 @@ spec:
         affinity:
           {{- toYaml . | nindent 10 }}
         {{- end }}
-  {{- end }}
-
-  {{- end }}
-
-
-  {{- with .Values.elasticsearch.auth }}
-  auth:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-
-  {{- with .Values.elasticsearch.updateStrategy }}
-  updateStrategy:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-
-  {{- with .Values.elasticsearch.secureSettings }}
-  secureSettings:
-    {{- toYaml . | nindent 2 }}
-  {{- end }}
-
-  {{- with .Values.elasticsearch.transport }}
-  transport:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-
-  {{- with .Values.elasticsearch.http }}
-  http:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-
-  version: {{  default .Chart.AppVersion .Values.elasticsearch.version }}
-
-  {{- with .Values.elasticsearch.monitoring }}
-  monitoring:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-
-  {{- with .Values.elasticsearch.remoteClusters }}
-  remoteClusters:
-    {{- toYaml . | nindent 2 }}
-  {{- end }}
-
-  {{- with .Values.elasticsearch.volumeClaimDeletePolicy }}
-  volumeClaimDeletePolicy:
-    {{- if and (not (eq . "DeleteOnScaledownOnly")) (not (eq . "DeleteOnScaledownAndClusterDeletion")) }}
-    {{ fail "volumeClaimDeletePolicy can only be one of 'DeleteOnScaledownOnly' or 'DeleteOnScaledownAndClusterDeletion'" }}
-    {{- end }}
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-
-{{- /*
-  {{- if not (hasKey .Values.elasticsearch "nodeSets") }}
-    {{ fail "nodeSets directive  must by defined" }}
-  {{- else if eq (len .Values.elasticsearch.nodeSets) 0 }}
-    {{ fail "At least one nodeSet is required" }}
-  {{- end }}
-*/}}
-
-  {{- with .Values.elasticsearch.nodeSets }}
-  nodeSets:
-      {{- toYaml . | nindent 4 }}
-  {{- end }}
-
-  {{- with .Values.elasticsearch.image }}
-  image: {{ . }}
-  {{- end }}
-
-  {{- with .Values.elasticsearch.podDisruptionBudget }}
-    {{- if .disabled }}
-  podDisruptionBudget: {}
-    {{- else }}
-      {{- with .spec }}
-  podDisruptionBudget:
-    spec:
-      {{- toYaml . | nindent 6 }}
-      {{- end }}
-    {{- end }}
-  {{- end }}
-
-  {{- with .Values.elasticsearch.serviceAccountName }}
-  serviceAccountName: {{ . }}
-  {{- end }}
-
-  {{- with .Values.elasticsearch.revisionHistoryLimit }}
-  revisionHistoryLimit: {{ . }}
-  {{- end }}
-
-
-
-{{- if .Values.elasticsearch.params.ingress.enabled }}
----
-apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
-kind: Ingress
-metadata:
-  name: {{ include "common.names.shortname" $ -}}-es-http
-  namespace: {{ include "common.names.namespace" . }}
-  {{- with .Values.elasticsearch.params.ingress.annotations }}
-  annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
-  labels:
-    {{- include "common.labels.labels" . | nindent 4 }}  
-    elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.shortname" $ }}
-spec:
-  {{- if .Values.elasticsearch.params.ingress.ingressClassName }}
-  ingressClassName: {{ .Values.elasticsearch.params.ingress.ingressClassName | quote }}
-  {{- end }}
-  rules:
-  {{- if .Values.elasticsearch.params.ingress.hostname }}
-  - host: {{ .Values.elasticsearch.params.ingress.hostname | quote }}
-    http:
-      paths:
-      - backend:
-          service:
-            name: {{ include "common.names.shortname" $ -}}-es-http
-            port:
-              number: 9200
-        path: /
-        pathType: Prefix
-  {{- end }}
-
-  tls:
-  - hosts:
-    - {{ .Values.elasticsearch.params.ingress.hostname | quote }}
-    {{- if  not $.Values.tlsSecretName  }}
-    secretName: {{ include "common.names.shortname" $ -}}-es-http-certs-internal  
-    {{- else }}
-    secretName: {{ $.Values.tlsSecretName | quote }}
     {{- end }}
 
 
 
+  {{- end }}
 {{- end }}
 
-{{- with .Values.elasticsearch.params }}
-  {{- range $k, $v := .roles }}
-    {{- if $v.autoscaling.enabled }}
+
+{{- if .Values.elasticsearch.enabled }}
+  {{- with .Values.elasticsearch.params }}
+    {{- range $k, $v := .roles }}
+      {{- if $v.autoscaling.enabled }}
 ---
 apiVersion: autoscaling.k8s.elastic.co/v1alpha1
 kind: ElasticsearchAutoscaler
@@ -307,9 +187,96 @@ spec:
         storage:
           min: {{ $v.storage.size }}
           max: {{ default $v.storage.size $v.autoscaling.maxStorage }}
+
+
+      {{- end -}}
     {{- end -}}
-  {{- end -}}
-{{- end -}}
-
-
+  {{- end }}
 {{- end }}
+
+
+
+{{- if and $.Values.elasticsearch.enabled $.Values.elasticsearch.params.ingress.enabled }}
+
+  {{- with .Values.elasticsearch.params }}
+
+---
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" $ }}
+kind: Ingress
+metadata:
+  name: {{ include "common.names.shortname" $ -}}-es-http
+  namespace: {{ include "common.names.namespace" $ }}
+  {{- with .ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}  
+    elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.shortname" $ }}
+spec:
+  {{- if .ingress.ingressClassName }}
+  ingressClassName: {{ .ingress.ingressClassName | quote }}
+  {{- end }}
+  rules:
+  {{- if .ingress.hostname }}
+  - host: {{ .ingress.hostname | quote }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "common.names.shortname" $ -}}-es-http
+            port:
+              number: 9200
+        path: /
+        pathType: Prefix
+  {{- end }}
+
+  tls:
+  - hosts:
+    - {{ .ingress.hostname | quote }}
+    {{- if  not $.Values.tlsSecretName  }}
+    secretName: {{ include "common.names.shortname" $ -}}-es-http-certs-internal  
+    {{- else }}
+    secretName: {{ $.Values.tlsSecretName | quote }}
+    {{- end }}
+
+  {{- end }}
+{{- end }}
+
+
+{{- /*
+https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-users-and-roles.html#k8s-default-elastic-user
+*/}}
+
+{{- if $.Values.elasticsearch.enabled }}
+
+  {{- with $.Values.elasticsearch.params }}
+
+---
+apiVersion: v1
+stringData:
+  username: {{ default "admin" .auth.username }} 
+  password: {{ default "password" .auth.password }}
+  roles: superuser 
+kind: Secret
+metadata:
+#  annotations:
+#    meta.helm.sh/release-namespace: {{ include "common.names.namespace" $ }}
+#    meta.helm.sh/release-name: {{ include "common.names.shortname" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+#    app.kubernetes.io/managed-by: Helm
+#    common.k8s.elastic.co/type: elasticsearch
+#    eck.k8s.elastic.co/credentials: "true"
+#    eck.k8s.elastic.co/owner-kind: Elasticsearch
+#    eck.k8s.elastic.co/owner-name: {{ include "common.names.shortname" $ }}
+#    eck.k8s.elastic.co/owner-namespace: {{ include "common.names.namespace" $ }}
+#    elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.shortname" $ }}
+  name: {{ include "common.names.shortname" $ }}-es-elastic-custom-user
+  namespace: {{ include "common.names.namespace" $ }}
+#type: Opaque
+type: kubernetes.io/basic-auth
+
+  {{- end }}
+{{- end }}
+

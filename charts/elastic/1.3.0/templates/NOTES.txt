@@ -42,9 +42,9 @@ kubectl -n {{ $.Release.Namespace }} get secret {{ $.Values.tlsSecretName }} \
 
 {{- end }}
 
-6. Get default password for elastic user
+6. Get default username and password
 
-kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortname" $ }}-es-elastic-user -o go-template='{{`{{ .data.elastic | base64decode `}} }}'
+kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortname" $ }}-es-elastic-custom-user -o go-template='{{`{{ .data.username | base64decode `}} }} / {{`{{ .data.password | base64decode `}} }}'
 
 
 END

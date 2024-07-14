@@ -6,6 +6,9 @@
 elasticsearch:
   enabled: true
   params:
+    auth:
+      username: ""
+      password: ""
     pdb: 2
     roles:
       master:
