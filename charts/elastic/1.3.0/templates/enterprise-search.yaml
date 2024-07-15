@@ -5,6 +5,8 @@ kind: EnterpriseSearch
 metadata:
   name: {{ include "common.names.shortname" $ }}-enterprise-search
   namespace: {{ include "common.names.namespace" . }} 
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   version: {{ default $.Chart.AppVersion }}
   image: docker.elastic.co/enterprise-search/enterprise-search:{{  default $.Chart.AppVersion }}
@@ -20,26 +22,23 @@ spec:
       - name: enterprise-search
         resources:
           requests:
-            cpu: 1
-            memory: 8Gi
-          limits:
-            memory: 8Gi
+            cpu: {{ .Values.enterprise_search.params.cpu }}
+            memory: {{ .Values.enterprise_search.params.memory }}
         env:
           - name: JAVA_OPTS
-            value: -Xms7500m -Xmx7500m
+            value: -Xms{{ .Values.enterprise_search.params.xms }} -Xmx{{ .Values.enterprise_search.params.xmx }}
   config:
     # define the exposed URL at which users will reach Enterprise Search
     ent_search.external_url: https://{{ .Values.enterprise_search.params.ingress.hostname }}
-    # define the exposed URL at which users will reach Kibana
-    elasticsearch.username: {{ .Values.enterprise_search.params.elasticsearch.username }}
-    elasticsearch.password: {{ .Values.enterprise_search.params.elasticsearch.password }}
-    elasticsearch.ssl.verify: {{ .Values.enterprise_search.params.elasticsearch.ssl.verify }}
     allow_es_settings_modification: true
     kibana.external_url: https://{{ .Values.kibana.params.ingress.hostname }}
-    kibana.host: https://{{ include "common.names.shortname" $ -}}-kb-http:5601
+    kibana.host: http://{{ include "common.names.shortname" $ }}-kb-http.{{ include "common.names.namespace" . }}.svc:5601
+    kibana.startup_retry.enabled: true
+    kibana.startup_retry.interval: 5
+    kibana.startup_retry.fail_after: 600
     # configure app search document size limit
     app_search.engine.document_size.limit: 1000kb
-    monitoring.reporting_enabled: true
+    monitoring.reporting_enabled: false
     log_level: info
 
 {{- if $.Values.enterprise_search.params.ingress.enabled }}

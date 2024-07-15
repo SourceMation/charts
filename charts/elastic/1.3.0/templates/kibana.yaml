@@ -81,7 +81,7 @@ spec:
     tls:
       {{- if not $.Values.tlsSecretName }}
       selfSignedCertificate:
-        disabled: false
+        disabled: true
         subjectAltNames:
         - dns: {{ .ingress.hostname | quote }}
         {{- if $.Values.packageRegistry.enabled }}
@@ -94,6 +94,8 @@ spec:
       {{- end }}
   elasticsearchRef:
     name: {{ include "common.names.shortname" $ }}
+  enterpriseSearchRef:
+    name: {{ include "common.names.shortname" $ }}-enterprise-search
   config:
     monitoring.kibana.collection.enabled: 'true'
     monitoring.ui.ccs.enabled: 'false'

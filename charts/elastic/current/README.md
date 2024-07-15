@@ -59,7 +59,7 @@ export REPO_URL=repo-tst.apps.example.com
 export KB_URL=kibana-tst.apps.example.com
 export APM_URL=apm-tst.apps.example.com
 export FLEET_URL=fleet-tst.apps.example.com
-
+export ENT_URL=esearch-tst.apps.example.com
 
 
 helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
@@ -68,6 +68,7 @@ helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
 --set "kibana.params.ingress.hostname=${KB_URL}" \
 --set "agentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
 --set "agentFleet.params.ingress.hostname=${FLEET_URL}" \
+--set "enterprise_search.params.ingress.hostname=${ENT_URL}" \
 --repo https://sourcemation.github.io/charts/ \
 --version ${ELASTIC_VER} \
 ${CLUSTER_NAME} elastic
