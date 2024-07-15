@@ -66,14 +66,14 @@ spec:
               cpu: {{ .cpu | quote }}
           volumeMounts:
           - mountPath: /mnt/elastic-internal/http-certs
-            name: elastic-internal-http-certificates
+            name: {{ include "common.names.shortname" $ }}-es-http-certs-internal
             readOnly: true
         securityContext:
           runAsUser: 0
         volumes:
         - name: agent-data
           emptyDir: {}
-        - name: elastic-internal-http-certificates
+        - name: {{ include "common.names.shortname" $ }}-es-http-certs-internal 
           secret:
             defaultMode: 420
             optional: false

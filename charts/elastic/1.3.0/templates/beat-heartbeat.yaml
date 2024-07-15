@@ -5,7 +5,9 @@ https://github.com/elastic/cloud-on-k8s/blob/main/config/recipes/beats/heartbeat
 
 
 
+
 {{- if or .Values.elasticsearch.enabled .Values.kibana.enabled }}
+
 
 ---
 apiVersion: beat.k8s.elastic.co/v1beta1
@@ -19,24 +21,229 @@ spec:
   type: heartbeat
   version: {{ default .Chart.AppVersion }}
   image: docker.elastic.co/beats/heartbeat:{{ default .Chart.AppVersion }}
+  {{- if .Values.elasticsearch.enabled }}
   elasticsearchRef:
     name: {{ include "common.names.shortname" $ }}
+  {{- end }}
+  {{- if .Values.kibana.enabled }}
+  kibanaRef:
+    name: {{ include "common.names.shortname" $ }}
+  {{- end }}
   config:
+    heartbeat.run_from:
+      id: generic
+      geo:
+        name: {{ .Release.Namespace }}
+        location: 40.7128, -74.0060
+        continent_name: Europe
+        country_iso_code: PL
+        region_name: Masovian
+        region_iso_code: PL-14
+        city_name: Warsaw
     heartbeat.monitors:
     {{- if .Values.elasticsearch.enabled }}
     - type: http
-      id: es-http
+      username: {{ default "admin" .Values.elasticsearch.params.auth.username }}
+      password: {{ default "password" .Values.elasticsearch.params.auth.password }}
+      check.request:
+        method: GET
+      check.response:
+        status: [200]
+      id: svc-es
+      name: svc-es
       schedule: '@every 5s'
-      urls:
-      - "{{ include "common.names.shortname" $ }}-es-http.{{ include "common.names.namespace" . }}.svc:9200"
+      hosts:
+      - "{{ include "common.names.shortname" $ }}-es-http.{{ include "common.names.namespace" . }}.svc:9200/_cluster/health"
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/elasticsearch-certs/ca.crt"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - elasticsearch
+
+      {{- if .Values.elasticsearch.params.ingress.enabled }}
+    - type: http
+      username: {{ default "admin" .Values.elasticsearch.params.auth.username }}
+      password: {{ default "password" .Values.elasticsearch.params.auth.password }}
+      check.request:
+        method: GET
+      check.response:
+        status: [200]
+      id: ingress-es
+      name: ingress-es
+      schedule: '@every 5s'
+      hosts:
+      - "{{ .Values.elasticsearch.params.ingress.hostname }}/_cluster/health"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - elasticsearch
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/elasticsearch-certs/ca.crt"
+      {{- end }}
     {{- end }}
+
     {{- if .Values.kibana.enabled }}
     - type: http
-      id: kibana-http
+      username: {{ default "admin" .Values.elasticsearch.params.auth.username }}
+      password: {{ default "password" .Values.elasticsearch.params.auth.password }}
+      check.request:
+        method: GET
+      check.response:
+        status: [200]
+      id: svc-kibana
+      name: svc-kibana
+      schedule: '@every 5s'
+      hosts: 
+      - "{{ include "common.names.shortname" $ }}-kb-http.{{ include "common.names.namespace" . }}.svc:5601/api/task_manager/_health"
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/kibana-certs/ca.crt"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - kibana
+      {{- if .Values.kibana.params.ingress.enabled }}
+    - type: http
+      username: {{ default "admin" .Values.elasticsearch.params.auth.username }}
+      password: {{ default "password" .Values.elasticsearch.params.auth.password }}
+      check.request:
+        method: GET
+      check.response:
+        status: [200]
+      id: ingress-kibana
+      name: ingress-kibana
+      schedule: '@every 5s'
+      hosts:
+      - "{{ .Values.kibana.params.ingress.hostname }}/api/task_manager/_health"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - ingress
+      - elasticsearch
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/kibana-certs/ca.crt"
+      {{- end }}
+    {{- end }}
+
+    {{- if .Values.packageRegistry.enabled }}
+    - type: http
+      check.request:
+        method: GET
+      check.response:
+        status: [200]
+      id: svc-package-registry
+      name: svc-package-registry
+      schedule: '@every 5s'
+      hosts: 
+      - "{{ include "common.names.shortname" $ }}-repo-http.{{ include "common.names.namespace" . }}.svc:8080"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - package-registry
+      {{- if .Values.packageRegistry.params.ingress.enabled }}
+    - type: http
+      check.request:
+        method: GET
+      check.response:
+        status: [200]
+      id: ingress-package-registry
+      name: ingress-package-registry
+      schedule: '@every 5s'
+      hosts:
+      - {{ .Values.packageRegistry.params.ingress.hostname | quote}}
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/kibana-certs/ca.crt"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - ingress
+      - package-registry
+      {{- end }}
+    {{- end }}
+
+    {{- if and .Values.kibana.enabled .Values.agentFleet.enabled }}
+    - type: tcp
+      id: svc-fleet
+      name: svc-fleet
+      schedule: '@every 5s'
+      hosts: 
+      - "{{ include "common.names.shortname" $ }}-fleet-agent-http.{{ include "common.names.namespace" . }}.svc:8220"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - fleet
+      {{- if .Values.agentFleet.params.ingress.enabled }}
+    - type: http
+      id: ingress-fleet
+      name: ingress-fleet
       schedule: '@every 5s'
       urls:
-      - "{{ include "common.names.shortname" $ }}-kb-http.{{ include "common.names.namespace" . }}.svc:5601"
+      - {{ .Values.agentFleet.params.ingress.hostname | quote}}
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - ingress
+      - fleet
+      {{- end }}
     {{- end }}
+
+    {{- if and .Values.kibana.enabled .Values.agentFleet.enabled .Values.agentServices.enabled }}
+    - type: http
+      id: svc-apm
+      name: svc-apm
+      schedule: '@every 5s'
+      hosts: 
+      - "{{ include "common.names.shortname" $ }}-service-agent.{{ include "common.names.namespace" . }}.svc:8200"
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/elasticsearch-certs/ca.crt"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - apm
+      {{- if .Values.agentServices.params.roles.apm.ingress.enabled }}
+    - type: http
+      id: ingress-apm
+      name: ingress-apm
+      schedule: '@every 5s'
+      hosts:
+      - {{ .Values.agentServices.params.roles.apm.ingress.hostname | quote}}
+      ssl:
+        certificate_authorities: 
+        - "/mnt/elastic-internal/elasticsearch-certs/ca.crt"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - ingress
+      - apm
+      {{- end }}
+    {{- end }}
+
+    {{- if and .Values.kibana.enabled .Values.logstash.enabled }}
+    - type: tcp
+      id: svc-logstash
+      name: svc-logstash
+      schedule: '@every 5s'
+      hosts: 
+      - "{{ include "common.names.shortname" $ }}-ls-beats.{{ include "common.names.namespace" . }}.svc:5044"
+      tags:
+      - kubernetes
+      - {{ .Release.Namespace }}
+      - service
+      - logstash
+    {{- end }}
+
   deployment:
     replicas: 1
     podTemplate:
