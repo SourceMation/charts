@@ -95,7 +95,7 @@ elasticsearch:
           maxCpu: 2000m
           maxMemory: 4Gi
           maxStorage: 20Gi
-        count: 0
+        count: 1
         cpu: 2000m
         memory: 4Gi
         storage:
@@ -200,9 +200,9 @@ kibana:
 #        nginx.ingress.kubernetes.io/ssl-redirect: "false"
 #        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
         nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-        # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-        # nginx.ingress.kubernetes.io/ssl-redirect: "true"
-        # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+#        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+#        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+#        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/proxy-body-size: "0"
         nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
