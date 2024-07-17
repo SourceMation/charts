@@ -329,6 +329,34 @@ logstash:
     tolerations: []
     pipelines: []
 
+enterpriseSearch:
+  enabled: true
+  params:
+    count: 1
+    image:
+      registry: docker.elastic.co
+      repository: package-registry/distribution
+      tag: ""
+    cpu: "2000m"
+    memory: "8Gi"
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: entsearch-tst.apps.example.com
+      annotations:
+#        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+#        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+#        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    service:
+      annotations: {}
 
 imagePullSecrets: []
 #- name: repo-auth
