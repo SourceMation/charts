@@ -199,10 +199,10 @@ kibana:
 #        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
 #        nginx.ingress.kubernetes.io/ssl-redirect: "false"
 #        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-#        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-#        nginx.ingress.kubernetes.io/ssl-redirect: "true"
-#        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/proxy-body-size: "0"
         nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
@@ -329,7 +329,7 @@ logstash:
     tolerations: []
     pipelines: []
 
-enterprise_search:
+enterpriseSearch:
   enabled: true
   params:
     count: 1
@@ -339,8 +339,6 @@ enterprise_search:
       tag: ""
     cpu: "2000m"
     memory: "8Gi"
-    xms: "7500m"
-    xmx: "7500m"
     ingress:
       enabled: true
       ingressClassName: ""

@@ -68,7 +68,7 @@ helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
 --set "kibana.params.ingress.hostname=${KB_URL}" \
 --set "agentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
 --set "agentFleet.params.ingress.hostname=${FLEET_URL}" \
---set "enterprise_search.params.ingress.hostname=${ENT_URL}" \
+--set "enterpriseSearch.params.ingress.hostname=${ENT_URL}" \
 --repo https://sourcemation.github.io/charts/ \
 --version ${ELASTIC_VER} \
 ${CLUSTER_NAME} elastic
