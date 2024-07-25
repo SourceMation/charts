@@ -1,0 +1,21 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: sonarqube
+  repository: https://SonarSource.github.io/helm-chart-sonarqube
+  version: 10.6.1+3163
+- name: harbor
+  repository: https://helm.goharbor.io
+  version: 1.14.2
+- name: forgejo
+  repository: oci://codeberg.org/forgejo-contrib
+  version: 7.0.3
+- name: coder
+  repository: https://helm.coder.com/v2
+  version: 2.13.2
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.5.19
+digest: sha256:2359c451b6f94b66570b51b8dc3370a261f579d98a8142d661d538f09443d9a4
+generated: "2024-07-25T15:00:57.990249921+02:00"

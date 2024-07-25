@@ -1,0 +1,31 @@
+
+global:
+  sonraqubeApp:
+    enabled: true
+  harborApp:
+    enabled: false
+  forgejoApp:
+    enabled: false
+  coderApp:
+    enabled: false
+
+sonarqube:
+  persistence:
+    enabled: true
+  seccompProfile: {}
+  prometheusMonitoring:
+    podMonitor:
+      enabled: true
+  
+#harbor:
+#
+#forgejo:
+#
+#coder:
+#
+#postgresql:
+#
+#
+#
+#
+#
