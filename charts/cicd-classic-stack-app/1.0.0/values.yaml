@@ -3,11 +3,11 @@ global:
   sonraqubeApp:
     enabled: true
   harborApp:
-    enabled: false
+    enabled: true
   forgejoApp:
-    enabled: false
+    enabled: true
   coderApp:
-    enabled: false
+    enabled: true
 
 sonarqube:
   persistence:
@@ -17,15 +17,65 @@ sonarqube:
     podMonitor:
       enabled: true
   
-#harbor:
-#
-#forgejo:
-#
-#coder:
-#
-#postgresql:
-#
-#
-#
-#
-#
+harbor:
+  expose:
+    type: ingress
+    ingress:
+      hosts:
+        core: harbor.apps.example.com
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+forgejo:
+  gitea:
+    additionalConfigSources:
+      - secret:
+        secretName: forgejo-configuration
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+
+  ingress:
+    enabled: true
+    hosts:
+    - host: forgejo.apps.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  
+  postgresql-ha:
+    enabled: true
+    global:
+      postgresql:
+        auth:
+          password: gitea
+          database: gitea
+          username: gitea
+        service:
+          ports:
+            postgresql: 5432
+
+coder:
+  coder:
+    env:
+      - name: coder-db-postgresql
+        valueFrom:
+          secretKeyRef:
+            name: coder-db-url
+            key: url
+    ingress:
+      enable: true
+      host: "coder.apps.example.com"
+
+postgresql:
+  auth:
+    username: coder
+    password: CODER_password
+    database: coderi
+  persistence:
+    size: 10Gi
+  nameOverride: "coder"
+  fullnameOverride: ""
