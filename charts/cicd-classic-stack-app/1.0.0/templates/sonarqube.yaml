@@ -9,11 +9,7 @@ spec:
       paths:
       - backend:
           service:
-<<<<<<< HEAD
             name: cicd-blad-sonarqube
-=======
-            name: cicd-blad11-sonarqube
->>>>>>> d2c5f4b (test: chart fixing)
             port:
               number: 9000
         path: /
