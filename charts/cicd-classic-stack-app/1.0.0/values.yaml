@@ -12,12 +12,19 @@ global:
     enabled: true
 
 sonarqube:
+  params:
+    ingress:
+      enabled: true
+      host: sonarqube.apps.example.com
   persistence:
     enabled: true
   seccompProfile: {}
   prometheusMonitoring:
     podMonitor:
       enabled: true
+  postgresql:
+    ldap:
+      tls: []
   
 harbor:
   expose:
@@ -85,15 +92,16 @@ postgresql:
 jenkins:
   controller:
     installPlugins:
-      - kubernetes:4230.vceef11cb_ca_37
-      - workflow-aggregator:596.v8c21c963d92d
+      - kubernetes:4265.v78b_d4a_1c864a_
+      - workflow-aggregator:600.vb_57cdd26fdd7
       - git:5.2.2
-      - configuration-as-code:1807.v0175eda_00a_20
+      - configuration-as-code:1836.vccda_4a_122a_a_e
+      - prometheus:780.v7c50a_d288424
     additionalPlugins:
       - pipeline-stage-view:2.34
-      - pipeline-utility-steps:2.16.2
-      - generic-webhook-trigger:2.2.1
-      - gitea:1.4.7
+      - pipeline-utility-steps:2.17.0
+      - generic-webhook-trigger:2.2.2
+      - gitea:220.v4618c82a_40fb_
       - rebuild:332.va_1ee476d8f6d
     ingress:
       enabled: true
@@ -107,10 +115,16 @@ jenkins:
         memory: "4Gi"
         cpu: "2000m"
     persistence:
-      enabled: false
+      enabled: true
       accessMode: ReadWriteOnce
     javaOpts: >
       -Xmx2g
       -Djenkins.install.runSetupWizard=false
       -Dorg.jenkinsci.plugins.casc.ConfigurationAsCode.systemConfig=/var/jenkins_home/casc_configs/jenkins-casc.yaml
+    prometheus:
+      enabled: true
+    admin:
+      username: "admin"
+      password: "password"
+
 

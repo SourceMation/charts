@@ -1,16 +1,23 @@
-apiVersion: networking.k8s.io/v1
+{{- if $.Values.sonarqube.params.ingress.enabled }}
+
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" $ }}
 kind: Ingress
 metadata:
-  name: sonar-url
+  name: {{ include "common.names.shortname" $ }}-sonarqube-http
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   rules:
-  - host: sonar.apps.example.com
+  - host: {{ $.Values.sonarqube.params.ingress.host }}
     http:
       paths:
       - backend:
           service:
-            name: cicd-blad-sonarqube
+            name: {{ include "common.names.shortname" $ }}-sonarqube
             port:
               number: 9000
         path: /
         pathType: Prefix
+
+{{- end }}
+
