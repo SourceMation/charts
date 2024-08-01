@@ -9,7 +9,7 @@ spec:
       paths:
       - backend:
           service:
-            name: cicd-blad12-sonarqube
+            name: cicd-blad13-sonarqube
             port:
               number: 9000
         path: /
