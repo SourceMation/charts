@@ -8,6 +8,8 @@ global:
     enabled: true
   coderApp:
     enabled: true
+  jenkinsApp:
+    enabled: true
 
 sonarqube:
   persistence:
@@ -79,4 +81,36 @@ postgresql:
     size: 10Gi
   nameOverride: "coder"
   fullnameOverride: ""
+
+jenkins:
+  controller:
+    installPlugins:
+      - kubernetes:4230.vceef11cb_ca_37
+      - workflow-aggregator:596.v8c21c963d92d
+      - git:5.2.2
+      - configuration-as-code:1807.v0175eda_00a_20
+    additionalPlugins:
+      - pipeline-stage-view:2.34
+      - pipeline-utility-steps:2.16.2
+      - generic-webhook-trigger:2.2.1
+      - gitea:1.4.7
+      - rebuild:332.va_1ee476d8f6d
+    ingress:
+      enabled: true
+      hostName: jenkins.apps.example.com
+    serviceType: ClusterIP
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "4Gi"
+        cpu: "2000m"
+    persistence:
+      enabled: false
+      accessMode: ReadWriteOnce
+    javaOpts: >
+      -Xmx2g
+      -Djenkins.install.runSetupWizard=false
+      -Dorg.jenkinsci.plugins.casc.ConfigurationAsCode.systemConfig=/var/jenkins_home/casc_configs/jenkins-casc.yaml
 

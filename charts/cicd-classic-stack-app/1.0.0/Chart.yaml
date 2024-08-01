@@ -57,6 +57,11 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   version: 15.5.19
 
+- condition: global.jenkinsApp.enabled
+  name: jenkins
+  repository: https://charts.jenkins.io
+  version: 5.0.1
+
 
 
 

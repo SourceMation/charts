@@ -17,5 +17,8 @@ dependencies:
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
   version: 15.5.19
-digest: sha256:2359c451b6f94b66570b51b8dc3370a261f579d98a8142d661d538f09443d9a4
-generated: "2024-07-25T15:00:57.990249921+02:00"
+- name: jenkins
+  repository: https://charts.jenkins.io
+  version: 5.0.1
+digest: sha256:62e7b50357c2fd0bb9caff3f369f6acdc46cb9c41abea75a88bab78edc53240f
+generated: "2024-08-01T12:22:33.254384225+02:00"
