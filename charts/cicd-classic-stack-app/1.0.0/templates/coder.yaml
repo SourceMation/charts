@@ -4,6 +4,5 @@ stringData:
   url: postgres://coder:CODER_password@cicd-classic-coder:5432/coder?sslmode=disable
 kind: Secret
 metadata:
-  creationTimestamp: null
   name: coder-db-url
 
