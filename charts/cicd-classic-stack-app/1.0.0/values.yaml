@@ -39,9 +39,10 @@ harbor:
 
 forgejo:
   gitea:
-    additionalConfigSources:
-      - secret:
-        secretName: forgejo-configuration
+    params:
+      additionalConfigSources:
+        secret:
+          secretName: forgejo-configuration
     metrics:
       enabled: true
       serviceMonitor:
