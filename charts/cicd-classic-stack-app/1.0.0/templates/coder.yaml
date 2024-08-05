@@ -1,7 +1,7 @@
 ---
 apiVersion: v1
 stringData:
-  url: postgres://coder:CODER_password@cicd-classic-coder:5432/coder?sslmode=disable
+  url: postgres://{{ $.Values.postgresql.auth.username }}:{{ $.Values.postgresql.auth.password }}@{{ include "common.name.shortname" $ }}-coder:5432/coder?sslmode=disable
 kind: Secret
 metadata:
   name: coder-db-url
