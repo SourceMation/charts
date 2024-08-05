@@ -110,14 +110,15 @@ jenkins:
     serviceType: ClusterIP
     resources:
       requests:
-        memory: "128Mi"
-        cpu: "100m"
+        memory: "512Mi"
+        cpu: "512m"
       limits:
         memory: "4Gi"
         cpu: "2000m"
     persistence:
       enabled: true
-      accessMode: ReadWriteOnce
+      accessMode: "ReadWriteOnce"
+      size: "8Gi"
     javaOpts: >
       -Xmx2g
       -Djenkins.install.runSetupWizard=false
@@ -127,5 +128,3 @@ jenkins:
     admin:
       username: "admin"
       password: "password"
-
-
