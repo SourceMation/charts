@@ -67,8 +67,14 @@ forgejo:
         service:
           ports:
             postgresql: 5432
-
 coder:
+  params:
+    ingress:
+      enabled: true
+      host: "coder.apps.example.com"
+    service:
+      enabled: true
+      type: ClusterIP
   coder:
     env:
       - name: coder-db-postgresql
@@ -77,8 +83,9 @@ coder:
             name: coder-db-url
             key: url
     ingress:
-      enable: true
-      host: "coder.apps.example.com"
+      enable: false
+    service:
+      enable: false
 
 postgresql:
   auth:
