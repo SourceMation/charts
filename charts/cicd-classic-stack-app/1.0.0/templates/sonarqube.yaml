@@ -1,0 +1,23 @@
+{{- if $.Values.sonarqube.params.ingress.enabled }}
+
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" $ }}
+kind: Ingress
+metadata:
+  name: {{ include "common.names.shortname" $ }}-sonarqube-http
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+spec:
+  rules:
+  - host: {{ $.Values.sonarqube.params.ingress.host }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "common.names.shortname" $ }}-sonarqube
+            port:
+              number: 9000
+        path: /
+        pathType: Prefix
+
+{{- end }}
+

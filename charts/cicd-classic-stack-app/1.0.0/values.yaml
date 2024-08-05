@@ -1,0 +1,137 @@
+
+global:
+  sonraqubeApp:
+    enabled: true
+  harborApp:
+    enabled: true
+  forgejoApp:
+    enabled: true
+  coderApp:
+    enabled: true
+  jenkinsApp:
+    enabled: true
+
+sonarqube:
+  params:
+    ingress:
+      enabled: true
+      host: sonarqube.apps.example.com
+  persistence:
+    enabled: true
+  seccompProfile: {}
+  prometheusMonitoring:
+    podMonitor:
+      enabled: true
+  postgresql:
+    ldap:
+      tls: []
+  
+harbor:
+  expose:
+    type: ingress
+    ingress:
+      hosts:
+        core: harbor.apps.example.com
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
+forgejo:
+  gitea:
+    params:
+      additionalConfigSources:
+        secret:
+          secretName: forgejo-configuration
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+
+  ingress:
+    enabled: true
+    hosts:
+    - host: forgejo.apps.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  
+  postgresql-ha:
+    enabled: true
+    global:
+      postgresql:
+        auth:
+          password: gitea
+          database: gitea
+          username: gitea
+        service:
+          ports:
+            postgresql: 5432
+coder:
+  params:
+    ingress:
+      enabled: true
+      host: "coder.apps.example.com"
+    service:
+      enabled: true
+      type: ClusterIP
+  coder:
+    env:
+      - name: coder-db-postgresql
+        valueFrom:
+          secretKeyRef:
+            name: coder-db-url
+            key: url
+    ingress:
+      enable: false
+    service:
+      enable: false
+
+postgresql:
+  auth:
+    username: coder
+    password: CODER_password
+    database: coderi
+  persistence:
+    size: 10Gi
+  nameOverride: "coder"
+  fullnameOverride: ""
+
+jenkins:
+  controller:
+    installPlugins:
+      - kubernetes:4265.v78b_d4a_1c864a_
+      - workflow-aggregator:600.vb_57cdd26fdd7
+      - git:5.2.2
+      - configuration-as-code:1836.vccda_4a_122a_a_e
+      - prometheus:780.v7c50a_d288424
+    additionalPlugins:
+      - pipeline-stage-view:2.34
+      - pipeline-utility-steps:2.17.0
+      - generic-webhook-trigger:2.2.2
+      - gitea:220.v4618c82a_40fb_
+      - rebuild:332.va_1ee476d8f6d
+    ingress:
+      enabled: true
+      hostName: jenkins.apps.example.com
+    serviceType: ClusterIP
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "512m"
+      limits:
+        memory: "4Gi"
+        cpu: "2000m"
+    persistence:
+      enabled: true
+      accessMode: "ReadWriteOnce"
+      size: "8Gi"
+    javaOpts: >
+      -Xmx2g
+      -Djenkins.install.runSetupWizard=false
+      -Dorg.jenkinsci.plugins.casc.ConfigurationAsCode.systemConfig=/var/jenkins_home/casc_configs/jenkins-casc.yaml
+    prometheus:
+      enabled: true
+    admin:
+      username: "admin"
+      password: "password"

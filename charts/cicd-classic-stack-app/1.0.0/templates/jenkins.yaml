@@ -1,0 +1,21 @@
+{{- if .Values.jenkins.controller.ingress.enabled }}
+
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" $ }}
+kind: Ingress
+metadata:
+  name: {{ include "common.names.shortname" . }}-jenkins-http
+  labels:
+    {{- include "common.labels.labels" . | nindent 4 }}
+spec:
+  rules:
+  - host: {{ .Values.jenkins.controller.ingress.hostName }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "common.names.shortname" . }}-jenkins
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+{{- end }}
