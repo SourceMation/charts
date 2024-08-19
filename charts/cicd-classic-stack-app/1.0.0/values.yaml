@@ -1,13 +1,13 @@
 
 global:
   sonraqubeApp:
-    enabled: true
+    enabled: false
   harborApp:
-    enabled: true
+    enabled: false
   forgejoApp:
     enabled: true
   coderApp:
-    enabled: true
+    enabled: false
   jenkinsApp:
     enabled: true
 
@@ -111,9 +111,10 @@ jenkins:
       - generic-webhook-trigger:2.2.2
       - gitea:220.v4618c82a_40fb_
       - rebuild:332.va_1ee476d8f6d
+    customResources: false
     ingress:
       enabled: true
-      hostName: jenkins.apps.example.com
+      hostName: jenkins.apps.site.com
     serviceType: ClusterIP
     resources:
       requests:
