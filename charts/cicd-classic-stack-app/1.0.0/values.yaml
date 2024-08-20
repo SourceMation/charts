@@ -231,7 +231,7 @@ jenkins:
       - rebuild:332.va_1ee476d8f6d
     customResources: false
     ingress:
-      enabled: true
+      enabled: false
       hostName: "jenkins.apps.example.com"
     serviceType: ClusterIP
     resources:
