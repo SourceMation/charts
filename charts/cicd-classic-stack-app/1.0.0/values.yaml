@@ -222,6 +222,7 @@ jenkins:
       - workflow-aggregator:600.vb_57cdd26fdd7
       - git:5.2.2
       - configuration-as-code:1836.vccda_4a_122a_a_e
+      - cloudbees-disk-usage-simple:203.v3f46a_7462b_1a_
       - prometheus:780.v7c50a_d288424
     additionalPlugins:
       - pipeline-stage-view:2.34
