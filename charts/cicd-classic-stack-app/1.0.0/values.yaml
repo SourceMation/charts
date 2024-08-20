@@ -96,13 +96,7 @@ forgejo:
   # default persistence
   persistence:
     enabled: false
-  resources:
-    limits:
-      cpu: ""
-      memory: ""
-    requests:
-      cpu: ""
-      memory: ""
+  resources: {}
   service:
     http:
       type: "ClusterIP"
