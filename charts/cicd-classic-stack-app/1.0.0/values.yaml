@@ -11,6 +11,7 @@ global:
   jenkinsApp:
     enabled: true
 
+
 sonarqube:
   params:
     ingress:
@@ -25,7 +26,8 @@ sonarqube:
   postgresql:
     ldap:
       tls: []
-  
+
+
 harbor:
   expose:
     type: ingress
@@ -37,36 +39,151 @@ harbor:
     serviceMonitor:
       enabled: true
 
+
 forgejo:
+  affinity: {}
+  nodeSelector: {}
+  securityContext: {}
+  params:
+    additionalConfigSources:
+      secret:
+        secretName: "forgejo-configuration"
+    persistence:
+      enabled: true
+      create: true
+      claimName: "gitea-shared-storage"
+      size: "10Gi"
+      storageClass: "vsphere-csi"
+      volumeName: ""
+      accessModes:
+        - "ReadWriteOnce"
+      annotations: {}
+    customImage:
+      gitea: false
+      postgresqlHA: false
+      redisCluster: false
+    customResources:
+      gitea: false
+      postgresqlHA: true
+      redisCluster: true
+    customPasswords:
+      gitea: true
+      postgresqlHA: false
+      redisCluster: false
+  image:
+    registry: "code.forgejo.org"
+    repository: "forgejo/forgejo"
+    tag: ''
+    pullPolicy: "IfNotPresent"
   gitea:
-    params:
-      additionalConfigSources:
-        secret:
-          secretName: forgejo-configuration
+    admin:
+      username: "gitea_admin"
+      password: "r8sA8CPHD9!bt6d"
+      email: "gitea@local.domain"
+      passwordMode: "keepUpdated"
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
-
   ingress:
     enabled: true
     hosts:
-    - host: forgejo.apps.example.com
-      paths:
-        - path: /
-          pathType: Prefix
-  
+      - host: "forgejo.apps.example.com"
+        paths:
+        - path: "/"
+          pathType: "Prefix"
+    tls: []
+  # default persistence
+  persistence:
+    enabled: false
+  resources:
+    limits:
+      cpu: ""
+      memory: ""
+    requests:
+      cpu: ""
+      memory: ""
+  service:
+    http:
+      type: "ClusterIP"
+      port: 3000
+    ssh:
+      type: "ClusterIP"
+      port: 22
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxSurge: "100%"
+      maxUnavailable: 0
+  postgresql:
+    enabled: false
   postgresql-ha:
     enabled: true
     global:
       postgresql:
-        auth:
-          password: gitea
-          database: gitea
-          username: gitea
-        service:
-          ports:
-            postgresql: 5432
+        password: "gitea"
+        database: "gitea"
+        username: "gitea"
+    metrics:
+      enabled: true
+      #collectors:
+      #  wal: false
+      serviceMonitor:
+        enabled: true
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: "Retain"
+      whenDeleted: "Delete"
+    postgresql:
+      repmgrPassword: "changeme2"
+      postgresPassword: "changeme1"
+    pgpool:
+      adminPassword: "changeme3"
+    resources:
+      requests:
+        cpu: "250m"
+        memory: "256Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+    service:
+      ports:
+        postgresql: 5432
+    persistence:
+      enabled: true
+      size: "8Gi"
+      storageClass: ""
+  redis-cluster:
+    enabled: true
+    usePassword: false
+    cluster:
+      nodes: 3
+      replicas: 0
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    persistence:
+      enabled: true
+      size: "8Gi"
+      storageClass: ""
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: "Retain"
+      whenDeleted: "Delete"
+    redis:
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "200m"
+          memory: "256Mi"
+    service:
+      ports:
+        redis: 6379
+
+
 coder:
   params:
     ingress:
@@ -97,6 +214,7 @@ postgresql:
   nameOverride: "coder"
   fullnameOverride: ""
 
+
 jenkins:
   controller:
     installPlugins:
@@ -114,7 +232,7 @@ jenkins:
     customResources: false
     ingress:
       enabled: true
-      hostName: jenkins.apps.site.com
+      hostName: "jenkins.apps.example.com"
     serviceType: ClusterIP
     resources:
       requests:

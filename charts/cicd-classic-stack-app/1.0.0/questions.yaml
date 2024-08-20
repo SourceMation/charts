@@ -73,3 +73,310 @@ questions:
       type: string
       required: true
 
+- variable: global.forgejoApp.enabled
+  default: "true"
+  label: Deploy Forgejo
+  group: "Components"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.params.customImage.gitea
+    default: "false"
+    label: Change Forgejo image
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.image.repository
+      default: "forgejo/forgejo"
+      label: Forgejo image repository
+      description: "Forgejo image repository"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.image.registry
+      default: "code.forgejo.org"
+      label: Forgejo image registry
+      description: "Forgejo image registry"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.image.tag
+      default: ""
+      label: Forgejo image tag
+      description: "Forgejo image tag"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.image.pullPolicy
+      default: "IfNotPresent"
+      label: Forgejo image pullPolicy
+      description: "Forgejo image pullPolicy"
+      group: "Forgejo settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: forgejo.gitea.admin.username
+    default: "admin123"
+    label: Forgejo admin username
+    description: "Forgejo admin username"
+    group: "Forgejo settings"
+    type: string
+    required: true
+  - variable: forgejo.gitea.admin.password
+    default: "admin123"
+    label: Forgejo admin password
+    description: "Forgejo admin password"
+    group: "Forgejo settings"
+    type: string  
+    required: true
+  - variable: forgejo.gitea.admin.email
+    default: "admin@example.com"
+    label: Forgejo admin email
+    description: "Forgejo admin email"
+    group: "Forgejo settings"
+    type: string
+    required: true
+  - variable: forgejo.params.persistence.enabled
+    default: "true"
+    label: Forgejo persistent storage
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.params.persistence.size
+      default: "10Gi"
+      label: Forgejo persistent volume size
+      group: "Forgejo settings"
+      type: string
+      required: true
+    - variable: forgejo.params.persistence.storageClass
+      label: Forgejo persistent volume Storage Class
+      group: "Forgejo settings"
+      type: storageclass
+      required: false
+  - variable: forgejo.params.customResources.gitea
+    default: "false"
+    label: Modify Forgejo resource consumption
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.resources.limits.cpu
+      label: Milicore limit for a Forgejo instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.resources.requests.cpu
+      label: Milicore requests for a Forgejo instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.resources.limits.memory
+      label: Memory limit for a Forgejo instance
+      description: "Memory limit for a Forgejo instance"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.resources.requests.memory
+      label: Memory requests for a Forgejo instance
+      description: "Memory request, value must be <= memory limit"
+      group: "Forgejo settings"
+      type: string
+      required: false
+  - variable: forgejo.ingress.enabled
+    default: "true"
+    label: Enable Forgejo ingress
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.ingress.hosts.0.host
+      default: "forgejo.apps.example.com"
+      label: URL
+      description: "Forgejo ingress URL"
+      group: "Forgejo settings"
+      type: string
+      required: true
+  - variable: forgejo.strategy.type
+    default: "RollingUpdate"
+    label: Forgejo update strategy
+    description: "Forgejo update strategy"
+    group: "Forgejo settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
+  - variable: forgejo.params.customPasswords.postgresqlHA
+    default: "false"
+    label: Change Postgresql DB configuration
+    description: "Change Postgresql DB configuration"
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.postgresql-ha.postgresql.postgresPassword
+      default: "changeme1"
+      label: Postgresql admin password
+      description: "Postgresql admin password"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.postgresql.repmgrPassword
+      default: "changeme2"
+      label: Postgresql repmgr password
+      description: "Postgresql repmgr password"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.pgpool.adminPassword
+      default: "changeme3"
+      label: Postgresql pgpool admin password
+      description: "Postgresql pgpool admin password"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.global.postgresql.database
+      default: "gitea"
+      label: Forgejo DB name
+      description: "Forgejo DB name"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.global.postgresql.username
+      default: "gitea"
+      label: Forgejo DB username
+      description: "Forgejo DB username"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.global.postgresql.password
+      default: "gitea"
+      label: Forgejo DB password
+      description: "Forgejo DB password"
+      group: "Forgejo settings"
+      type: string
+  - variable: forgejo.params.customResources.postgresqlHA
+    default: "false"
+    label: Modify Postgresql resource consumption
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.postgresql-ha.persistence.size
+      default: "8Gi"
+      label: Postgresql persistent volume size
+      description: "Postgresql persistent volume size"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.persistence.storageClass
+      label: Postgresql persistent Storage Class
+      description: "Postgresql persistent Storage Class"
+      group: "Forgejo settings"
+      type: storageclass
+    - variable: forgejo.postgresql-ha.resources.limits.cpu
+      default: "500m"
+      label: Milicore limit for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.resources.requests.cpu
+      default: "250m"
+      label: Milicore requests for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.resources.limits.memory
+      default: "512Mi"
+      label: Memory limit for a Postgresql instance
+      description: "Memory limit for a Postgresql instance"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.resources.requests.memory
+      default: "256Mi"
+      label: Memory requests for a Postgresql instance
+      description: "Memory request, value must be <= memory limit"
+      group: "Forgejo settings"
+      type: string
+  - variable: forgejo.params.customResources.redisCluster
+    default: "false"
+    label: Modify Redis resource consumption
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.redis-cluster.persistence.size
+      default: "8Gi"
+      label: Redis persistent volume size
+      description: "Redis persistent volume size"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.redis-cluster.persistence.storageClass
+      label: Redis persistent Storage Class
+      description: "Redis persistent Storage Class"
+      group: "Forgejo settings"
+      type: storageclass
+    - variable: forgejo.redis-cluster.redis.resources.limits.cpu
+      default: "200m"
+      label: Milicore limit for a Redis instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.redis-cluster.redis.resources.requests.cpu
+      default: "100m"
+      label: Milicore requests for a Redis instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.redis-cluster.redis.resources.limits.memory
+      default: "256Mi"
+      label: Memory limit for a Redis instance
+      description: "Memory limit for a Redis instance"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.redis-cluster.redis.resources.requests.memory
+      default: "128Mi"
+      label: Memory request for a Redis instance
+      description: "Memory request, value must be <= memory limit"
+      group: "Forgejo settings"
+      type: string
+      required: false
+  - variable: forgejo.gitea.metrics.enabled
+    default: "true"
+    label: Forgejo metrics
+    description: "Forgejo metrics"
+    group: "Forgejo settings"
+    type: boolean
+  - variable: forgejo.postgresql-ha.metrics.enabled
+    default: "true"
+    label: Postgresql metrics
+    description: "Postgresql metrics"
+    group: "Forgejo settings"
+    type: boolean
+  - variable: forgejo.redis-cluster.metrics.enabled
+    default: "true"
+    label: Redis metrics
+    description: "Redis metrics"
+    group: "Forgejo settings"
+    type: boolean
+
+
+- variable: global.sonraqubeApp.enabled
+  default: "false"
+  label: Deploy Sonraqube
+  group: "Components"
+  type: boolean
+  #show_subquestion_if: true
+- variable: global.harborApp.enabled
+  default: "false"
+  label: Deploy Harbor
+  group: "Components"
+  type: boolean
+  #show_subquestion_if: true
+- variable: global.coderApp.enabled
+  default: "false"
+  label: Deploy Coder
+  group: "Components"
+  type: boolean
+  #show_subquestion_if: true
