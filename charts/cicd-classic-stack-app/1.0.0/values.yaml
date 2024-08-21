@@ -1,31 +1,99 @@
 
 global:
-  sonraqubeApp:
-    enabled: false
+  sonarqubeApp:
+    enabled: true
   harborApp:
-    enabled: false
+    enabled: true
   forgejoApp:
     enabled: true
   coderApp:
-    enabled: false
+    enabled: true
   jenkinsApp:
     enabled: true
 
 
 sonarqube:
+  affinity: {}
+  nodeSelector: {}
+  seccompProfile: {}
+  securityContext:
+    fsGroup: 0
   params:
-    ingress:
-      enabled: true
-      host: sonarqube.apps.example.com
+    customImage:
+      sonarqube: false
+    customPasswords:
+      sonarqube: false
+      postgresql: false
+    customResources:
+      sonarqube: false
+      postgresql: false
+  #account:
+  #  adminPassword: admin
+  image:
+    repository: "sonarqube"
+    #tag: 10.6.0-{{ .Values.edition }}
+    pullPolicy: "IfNotPresent"
+  ingress:
+    enabled: true
+    hosts:
+      - name: "sonarqube.apps.example.com"
+  networkPolicy:
+    enabled: false
   persistence:
     enabled: true
-  seccompProfile: {}
+    size: "5Gi"
+    storageClass: ""
+    accessMode: "ReadWriteOnce"
   prometheusMonitoring:
     podMonitor:
       enabled: true
+  resources:
+    limits:
+      cpu: "800m"
+      memory: "6144Mi"
+      ephemeral-storage: "50Gi"
+    requests:
+      cpu: "400m"
+      memory: "2048Mi"
+      ephemeral-storage: "512Mi"
+  service:
+    type: ClusterIP
+    externalPort: 9000
+    internalPort: 9000
   postgresql:
-    ldap:
-      tls: []
+    enabled: true
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    networkPolicy:
+      enabled: false
+    postgresqlUsername: "sonarUser"
+    postgresqlPassword: "sonarPass"
+    postgresqlDatabase: "sonarDB"
+    persistence:
+      enabled: true
+      existingClaim: "{{ .Release.Name }}-data-postgresql-0"
+      claimName: "data-postgresql-0"
+      size: "20Gi"
+      storageClass: ""
+      accessMode:
+      - "ReadWriteOnce"
+    resources:
+      limits:
+        cpu: "2000m"
+        memory: "2Gi"
+      requests:
+        cpu: "100m"
+        memory: "200Mi"
+    securityContext:
+      enabled: true
+      fsGroup: 1001
+    service:
+      port: 5432
+      type: ClusterIP
+    updateStrategy:
+      type: "RollingUpdate"
 
 
 harbor:

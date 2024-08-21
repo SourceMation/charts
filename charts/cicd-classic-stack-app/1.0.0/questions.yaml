@@ -1,6 +1,203 @@
 categories:
 - cicd
 questions:
+- variable: global.sonarqubeApp.enabled
+  default: true
+  label: Deploy Sonarqube
+  group: "Components"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.params.customImage.sonarqube
+    default: false
+    label: Change SonarQube image
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.image.repository
+      default: "sonarqube"
+      label: SonarQube image repository
+      description: "SonarQube image repository"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.image.tag
+      label: SonarQube image tag
+      description: "SonarQube image tag"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.image.pullPolicy
+      default: "IfNotPresent"
+      label: SonarQube image pullPolicy
+      description: "SonarQube image pullPolicy"
+      group: "SonarQube settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: sonarqube.account.adminPassword
+    default: "admin"
+    label: SonarQube admin password
+    description: "SonarQube admin password"
+    group: "SonarQube settings"
+    type: string  
+    required: false
+  - variable: sonarqube.ingress.enabled
+    default: "true"
+    label: Enable SonarQube ingress
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.ingress.hosts.0.name
+      default: "sonarqube.apps.example.com"
+      label: URL
+      description: "SonarQube ingress URL"
+      group: "SonarQube settings"
+      type: string
+      required: true
+  - variable: sonarqube.persistence.enabled
+    default: true
+    label: SonarQube persistent storage
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.persistence.size
+      default: "5Gi"
+      label: SonarQube persistent volume size
+      group: "SonarQube settings"
+      type: string
+      required: true
+    - variable: sonarqube.persistence.storageClass
+      label: SonarQube persistent volume Storage Class
+      group: "SonarQube settings"
+      type: storageclass
+      required: false
+  - variable: sonarqube.params.customResources.sonarqube
+    default: false
+    label: Modify SonarQube resource consumption
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.resources.limits.cpu
+      label: Milicore limit for a SonarQube instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.resources.requests.cpu
+      label: Milicore requests for a SonarQube instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.resources.limits.memory
+      label: Memory limit for a SonarQube instance
+      description: "Memory limit for a SonarQube instance"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.resources.requests.memory
+      label: Memory requests for a SonarQube instance
+      description: "Memory request, value must be <= memory limit"
+      group: "SonarQube settings"
+      type: string
+      required: false
+  - variable: sonarqube.params.customPasswords.postgresql
+    default: false
+    label: Change Postgresql DB configuration
+    description: "Change Postgresql DB configuration"
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.postgresql.postgresqlDatabase
+      default: "sonarDB"
+      label: SonarQube DB name
+      description: "SonarQube DB name"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.postgresqlUsername
+      default: "sonarUser"
+      label: SonarQube DB username
+      description: "SonarQube DB username"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.postgresqlPassword
+      default: "sonarPass"
+      label: SonarQube DB password
+      description: "SonarQube DB password"
+      group: "SonarQube settings"
+      type: string
+  - variable: sonarqube.params.customResources.postgresql
+    default: false
+    label: Modify Postgresql resource consumption
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.postgresql.persistence.size
+      default: "20Gi"
+      label: Postgresql persistent volume size
+      description: "Postgresql persistent volume size"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.persistence.storageClass
+      label: Postgresql persistent Storage Class
+      description: "Postgresql persistent Storage Class"
+      group: "SonarQube settings"
+      type: storageclass
+    - variable: sonarqube.postgresql.resources.limits.cpu
+      default: "2000m"
+      label: Milicore limit for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.resources.requests.cpu
+      default: "100m"
+      label: Milicore requests for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.resources.limits.memory
+      default: "2Gi"
+      label: Memory limit for a Postgresql instance
+      description: "Memory limit for a Postgresql instance"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.resources.requests.memory
+      default: "200Mi"
+      label: Memory requests for a Postgresql instance
+      description: "Memory request, value must be <= memory limit"
+      group: "SonarQube settings"
+      type: string
+  - variable: sonarqube.postgresql.updateStrategy.type
+    default: "RollingUpdate"
+    label: SonarQube update strategy
+    description: "SonarQube update strategy"
+    group: "SonarQube settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
+  - variable: sonarqube.prometheusMonitoring.podMonitor.enabled
+    default: true
+    label: SonarQube metrics
+    description: "SonarQube metrics"
+    group: "SonarQube settings"
+    type: boolean
+  - variable: sonarqube.postgresql.metrics.enabled
+    default: true
+    label: Postgresql metrics
+    description: "Postgresql metrics"
+    group: "SonarQube settings"
+    type: boolean
+
 - variable: global.jenkinsApp.enabled
   default: true
   label: "Deploy Jenkins"
@@ -362,20 +559,14 @@ questions:
     type: boolean
 
 
-- variable: global.sonraqubeApp.enabled
-  default: "false"
-  label: Deploy Sonraqube
-  group: "Components"
-  type: boolean
-  #show_subquestion_if: true
 - variable: global.harborApp.enabled
-  default: "false"
+  default: false
   label: Deploy Harbor
   group: "Components"
   type: boolean
   #show_subquestion_if: true
 - variable: global.coderApp.enabled
-  default: "false"
+  default: false
   label: Deploy Coder
   group: "Components"
   type: boolean
