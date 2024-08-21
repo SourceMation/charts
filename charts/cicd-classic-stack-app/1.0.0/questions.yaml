@@ -565,9 +565,52 @@ questions:
   group: "Components"
   type: boolean
   #show_subquestion_if: true
+
 - variable: global.coderApp.enabled
-  default: false
+  default: "true"
   label: Deploy Coder
-  group: "Components"
   type: boolean
-  #show_subquestion_if: true
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: postgresql.auth.username
+    label: SuperUser name
+    description: "Username for PostgreSQL SuperUser role"
+    group: "Coder Settings"
+    type: string
+    default: "coder"
+    required: true
+  - variable: postgresql.auth.password
+    label: SuperUser password
+    description: "Password for PostgreSQL SuperUser role"
+    group: "Coder Settings"
+    type: password
+    min: 8
+    required: true
+  - variable: postgresql.auth.database
+    label: Postgresql database name
+    description: "Name for PostgreSQL database"
+    group: "Coder Settings"
+    type: string
+    default: "coder"
+    required: true
+  - variable: postgresql.persistence.size
+    label: Database size
+    description: "Size database data"
+    group: "Coder Settings"
+    type: string
+    default: "10Gi"
+  - variable: coder.params.ingress.enabled
+    default: "true"
+    label: Enable web console for Coder
+    group: "Coder Settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: coder.params.ingress.host
+      label: URL
+      description: "Configure url for coder web-ui"
+      group: "Coder Settings"
+      type: string
+      default: "coder.my.domain.internal"
+      min: 6
