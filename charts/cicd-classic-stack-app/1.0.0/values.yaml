@@ -109,6 +109,9 @@ harbor:
 
 
 forgejo:
+# missing:
+# - nameOverride, namespaceOverride
+# - networkPolicy:
   affinity: {}
   nodeSelector: {}
   securityContext: {}
@@ -122,7 +125,6 @@ forgejo:
       claimName: "gitea-shared-storage"
       size: "10Gi"
       storageClass: "vsphere-csi"
-      volumeName: ""
       accessModes:
         - "ReadWriteOnce"
       annotations: {}
@@ -143,12 +145,16 @@ forgejo:
     repository: "forgejo/forgejo"
     tag: ''
     pullPolicy: "IfNotPresent"
+  imagePullSecrets: []
   gitea:
     admin:
       username: "gitea_admin"
       password: "P@ssword1"
       email: "gitea@local.domain"
-      passwordMode: "keepUpdated"
+    config:
+      # Forgejo app settings section.
+      # Check default values here: https://forgejo.org/docs/latest/admin/config-cheat-sheet/#overall-default
+      RUN_MODE: "prod"
     metrics:
       enabled: true
       serviceMonitor:
@@ -192,13 +198,29 @@ forgejo:
       #  wal: false
       serviceMonitor:
         enabled: true
+    nameOverride: ""
+    namespaceOverride: ""
     persistentVolumeClaimRetentionPolicy:
       enabled: true
       whenScaled: "Retain"
       whenDeleted: "Delete"
     postgresql:
+      affinity: {}
+      nodeSelector: {}
+      image:
+        registry: docker.io
+        repository: bitnami/postgresql-repmgr
+        #tag: 16.3.0-debian-12-r18
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+      networkPolicy:
+        enabled: true
+        allowExternal: true
+        allowExternalEgress: true
       repmgrPassword: "changeme2"
       postgresPassword: "changeme1"
+      updateStrategy:
+        type: RollingUpdate
     pgpool:
       adminPassword: "changeme3"
     resources:
@@ -209,31 +231,49 @@ forgejo:
         cpu: "500m"
         memory: "512Mi"
     service:
+      type: ClusterIP
       ports:
         postgresql: 5432
     persistence:
       enabled: true
       size: "8Gi"
       storageClass: ""
+      accessModes:
+      - ReadWriteOnce
   redis-cluster:
     enabled: true
     usePassword: false
     cluster:
       nodes: 3
       replicas: 0
+    image:
+      registry: docker.io
+      repository: bitnami/redis-cluster
+      #tag: 7.2.5-debian-12-r4
+      pullPolicy: IfNotPresent
+      pullSecrets: []
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
+    nameOverride: ""
+    networkPolicy:
+      enabled: true
+      allowExternal: true
+      allowExternalEgress: true
     persistence:
       enabled: true
       size: "8Gi"
       storageClass: ""
+      accessModes:
+      - ReadWriteOnce
     persistentVolumeClaimRetentionPolicy:
       enabled: true
       whenScaled: "Retain"
       whenDeleted: "Delete"
     redis:
+      affinity: {}
+      nodeSelector: {}
       resources:
         requests:
           cpu: "100m"
@@ -241,7 +281,12 @@ forgejo:
         limits:
           cpu: "200m"
           memory: "256Mi"
+      updateStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          partition: 0
     service:
+      type: ClusterIP
       ports:
         redis: 6379
 
