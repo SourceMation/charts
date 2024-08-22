@@ -38,7 +38,7 @@ questions:
       - "If NotPresent"
       - "Never"
   - variable: sonarqube.account.adminPassword
-    default: "admin"
+    default: "P@ssword1"
     label: SonarQube admin password
     description: "SonarQube admin password"
     group: "SonarQube settings"
@@ -128,7 +128,7 @@ questions:
       group: "SonarQube settings"
       type: string
     - variable: sonarqube.postgresql.postgresqlPassword
-      default: "sonarPass"
+      default: "P@ssword1"
       label: SonarQube DB password
       description: "SonarQube DB password"
       group: "SonarQube settings"
@@ -263,8 +263,13 @@ questions:
       group: "Jenkins Settings"
       type: string
       required: true
+    - variable: jenkins.controller.persistence.storageClass
+      label: Jenkins persistent volume Storage Class
+      group: "Jenkins settings"
+      type: storageclass
+      required: false
     - variable: jenkins.controller.persistence.size
-      label: "Jenkins storage size"
+      label: Jenkins storage size
       description: "Jenkins storage size"
       group: "Jenkins Settings"
       type: string
@@ -321,7 +326,6 @@ questions:
     type: string
     required: true
   - variable: forgejo.gitea.admin.password
-    default: "admin123"
     label: Forgejo admin password
     description: "Forgejo admin password"
     group: "Forgejo settings"
@@ -416,19 +420,19 @@ questions:
     show_subquestion_if: true
     subquestions:
     - variable: forgejo.postgresql-ha.postgresql.postgresPassword
-      default: "changeme1"
+      default: "P@ssword1"
       label: Postgresql admin password
       description: "Postgresql admin password"
       group: "Forgejo settings"
       type: string
     - variable: forgejo.postgresql-ha.postgresql.repmgrPassword
-      default: "changeme2"
+      default: "P@ssword1"
       label: Postgresql repmgr password
       description: "Postgresql repmgr password"
       group: "Forgejo settings"
       type: string
     - variable: forgejo.postgresql-ha.pgpool.adminPassword
-      default: "changeme3"
+      default: "P@ssword1"
       label: Postgresql pgpool admin password
       description: "Postgresql pgpool admin password"
       group: "Forgejo settings"
@@ -446,7 +450,7 @@ questions:
       group: "Forgejo settings"
       type: string
     - variable: forgejo.postgresql-ha.global.postgresql.password
-      default: "gitea"
+      default: "P@ssword1"
       label: Forgejo DB password
       description: "Forgejo DB password"
       group: "Forgejo settings"
@@ -584,7 +588,8 @@ questions:
     label: SuperUser password
     description: "Password for PostgreSQL SuperUser role"
     group: "Coder Settings"
-    type: password
+    default: "P@ssword1"
+    type: string
     min: 8
     required: true
   - variable: postgresql.auth.database

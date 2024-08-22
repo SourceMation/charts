@@ -146,7 +146,7 @@ forgejo:
   gitea:
     admin:
       username: "gitea_admin"
-      password: "r8sA8CPHD9!bt6d"
+      password: "P@ssword1"
       email: "gitea@local.domain"
       passwordMode: "keepUpdated"
     metrics:
@@ -269,7 +269,7 @@ coder:
 postgresql:
   auth:
     username: coder
-    password: CODER_password
+    password: P@ssword1
     database: coderi
   persistence:
     size: 10Gi
@@ -288,7 +288,7 @@ jenkins:
       - prometheus:780.v7c50a_d288424
     additionalPlugins:
       - pipeline-stage-view:2.34
-      - pipeline-utility-steps:2.17.0
+       pipeline-utility-steps:2.17.0
       - generic-webhook-trigger:2.2.2
       - gitea:220.v4618c82a_40fb_
       - rebuild:332.va_1ee476d8f6d
@@ -307,6 +307,7 @@ jenkins:
     persistence:
       enabled: true
       accessMode: "ReadWriteOnce"
+      storageClass: "" 
       size: "8Gi"
     javaOpts: >
       -Xmx2g
@@ -316,4 +317,4 @@ jenkins:
       enabled: true
     admin:
       username: "admin"
-      password: "password"
+      password: "P@ssword1"
