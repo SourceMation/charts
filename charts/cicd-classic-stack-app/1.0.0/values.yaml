@@ -134,8 +134,8 @@ forgejo:
       redisCluster: false
     customResources:
       gitea: false
-      postgresqlHA: true
-      redisCluster: true
+      postgresqlHA: false
+      redisCluster: false
     customPasswords:
       gitea: true
       postgresqlHA: false
@@ -150,7 +150,7 @@ forgejo:
     admin:
       username: "gitea_admin"
       password: "P@ssword1"
-      email: "gitea@local.domain"
+      email: "gitea_admin@example.com"
     config:
       # Forgejo app settings section.
       # Check default values here: https://forgejo.org/docs/latest/admin/config-cheat-sheet/#overall-default
@@ -189,7 +189,7 @@ forgejo:
     enabled: true
     global:
       postgresql:
-        password: "gitea"
+        password: "P@ssword1"
         database: "gitea"
         username: "gitea"
     metrics:
@@ -217,12 +217,12 @@ forgejo:
         enabled: true
         allowExternal: true
         allowExternalEgress: true
-      repmgrPassword: "changeme2"
-      postgresPassword: "changeme1"
+      repmgrPassword: "P@ssword1"
+      postgresPassword: "P@ssword1"
       updateStrategy:
         type: RollingUpdate
     pgpool:
-      adminPassword: "changeme3"
+      adminPassword: "P@ssword1"
     resources:
       requests:
         cpu: "250m"

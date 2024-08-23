@@ -289,22 +289,28 @@ questions:
     type: boolean
     show_subquestion_if: true
     subquestions:
-    - variable: forgejo.image.repository
-      default: "forgejo/forgejo"
-      label: Forgejo image repository
-      description: "Forgejo image repository"
-      group: "Forgejo settings"
-      type: string
     - variable: forgejo.image.registry
       default: "code.forgejo.org"
       label: Forgejo image registry
       description: "Forgejo image registry"
       group: "Forgejo settings"
       type: string
+    - variable: forgejo.image.repository
+      default: "forgejo/forgejo"
+      label: Forgejo image repository
+      description: "Forgejo image repository"
+      group: "Forgejo settings"
+      type: string
     - variable: forgejo.image.tag
       default: ""
       label: Forgejo image tag
       description: "Forgejo image tag"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.imagePullSecrets
+      label: Forgejo image PullSecrets
+      description: "Forgejo image PullSecrets"
       group: "Forgejo settings"
       type: string
       required: false
@@ -319,7 +325,7 @@ questions:
       - "If NotPresent"
       - "Never"
   - variable: forgejo.gitea.admin.username
-    default: "admin123"
+    default: "gitea_admin"
     label: Forgejo admin username
     description: "Forgejo admin username"
     group: "Forgejo settings"
@@ -327,12 +333,12 @@ questions:
     required: true
   - variable: forgejo.gitea.admin.password
     label: Forgejo admin password
-    description: "Forgejo admin password"
+    description: "Default password is 'P@ssword1'. Change it!"
     group: "Forgejo settings"
-    type: string  
+    type: password  
     required: true
   - variable: forgejo.gitea.admin.email
-    default: "admin@example.com"
+    default: "gitea_admin@example.com"
     label: Forgejo admin email
     description: "Forgejo admin email"
     group: "Forgejo settings"
@@ -411,6 +417,58 @@ questions:
     - "RollingUpdate"
     - "Recreate"
     required: false
+  - variable: forgejo.params.customImage.postgresqlHA
+    default: false
+    label: Change Postgresql image
+    description: "Change Postgresql image"
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.postgresql-ha.postgresql.image.registry
+      default: "docker.io"
+      label: Postgresql image registry
+      description: "Postgresql image registry"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.postgresql.image.repository
+      default: "bitnami/postgresql-repmgr"
+      label: Postgresql image repository
+      description: "Postgresql image repository"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.postgresql.image.tag
+      label: Postgresql image tag
+      description: "Postgresql image tag"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.postgresql-ha.postgresql.image.pullSecrets
+      label: Postgresql image PullSecrets
+      description: "Postgresql image PullSecrets"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.postgresql-ha.postgresql.image.pullPolicy
+      default: "IfNotPresent"
+      label: Postgresql image pullPolicy
+      description: "Postgresql image pullPolicy"
+      group: "Forgejo settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: forgejo.postgresql-ha.postgresql.updateStrategy.type
+    default: "RollingUpdate"
+    label: Postgresql update strategy
+    description: "Postgresql update strategy"
+    group: "Forgejo settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
   - variable: forgejo.params.customPasswords.postgresqlHA
     default: "false"
     label: Change Postgresql DB configuration
@@ -422,21 +480,21 @@ questions:
     - variable: forgejo.postgresql-ha.postgresql.postgresPassword
       default: "P@ssword1"
       label: Postgresql admin password
-      description: "Postgresql admin password"
+      description: "Default password is 'P@ssword1'. Change it!"
       group: "Forgejo settings"
-      type: string
+      type: password
     - variable: forgejo.postgresql-ha.postgresql.repmgrPassword
       default: "P@ssword1"
       label: Postgresql repmgr password
-      description: "Postgresql repmgr password"
+      description: "Default password is 'P@ssword1'. Change it!"
       group: "Forgejo settings"
-      type: string
+      type: password
     - variable: forgejo.postgresql-ha.pgpool.adminPassword
       default: "P@ssword1"
       label: Postgresql pgpool admin password
-      description: "Postgresql pgpool admin password"
+      description: "Default password is 'P@ssword1'. Change it!"
       group: "Forgejo settings"
-      type: string
+      type: password
     - variable: forgejo.postgresql-ha.global.postgresql.database
       default: "gitea"
       label: Forgejo DB name
@@ -452,9 +510,9 @@ questions:
     - variable: forgejo.postgresql-ha.global.postgresql.password
       default: "P@ssword1"
       label: Forgejo DB password
-      description: "Forgejo DB password"
+      description: "Default password is 'P@ssword1'. Change it!"
       group: "Forgejo settings"
-      type: string
+      type: password
   - variable: forgejo.params.customResources.postgresqlHA
     default: "false"
     label: Modify Postgresql resource consumption
@@ -497,6 +555,58 @@ questions:
       description: "Memory request, value must be <= memory limit"
       group: "Forgejo settings"
       type: string
+  - variable: forgejo.params.customImage.redisCluster
+    default: false
+    label: Change Redis image
+    description: "Change Redis image"
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.redis-cluster.image.registry
+      default: "docker.io"
+      label: Redis image registry
+      description: "Redis image registry"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.redis-cluster.image.repository
+      default: "bitnami/redis-cluster"
+      label: Redis image repository
+      description: "Redis image repository"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.redis-cluster.image.tag
+      label: Redis image tag
+      description: "Redis image tag"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.redis-cluster.image.pullSecrets
+      label: Redis image PullSecrets
+      description: "Redis image PullSecrets"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.redis-cluster.image.pullPolicy
+      default: "IfNotPresent"
+      label: Redis image pullPolicy
+      description: "Redis image pullPolicy"
+      group: "Forgejo settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: forgejo.redis-cluster.redis.updateStrategy.type
+    default: "RollingUpdate"
+    label: Redis update strategy
+    description: "Redis update strategy"
+    group: "Forgejo settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
   - variable: forgejo.params.customResources.redisCluster
     default: "false"
     label: Modify Redis resource consumption
