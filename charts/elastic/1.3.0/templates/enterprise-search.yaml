@@ -19,6 +19,7 @@ spec:
     spec:
       containers:
         - name: enterprise-search
+#          args: ["--enable-read-only-mode"]
           resources:
             limits:
               cpu: {{ .Values.enterpriseSearch.params.cpu }}

@@ -6,7 +6,7 @@ annotations:
 apiVersion: v2
 # https://github.com/elastic/elasticsearch/tags
 # https://www.elastic.co/guide/en/cloud-on-k8s/2.11/k8s_supported_versions.html
-appVersion: "8.13.4"
+appVersion: "8.15.0"
 
 dependencies:
 - name: common

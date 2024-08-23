@@ -7,9 +7,11 @@ elasticsearch:
   enabled: true
   params:
     auth:
-      username: ""
-      password: ""
+      username: "elastic-eck"
+      password: "qaz123456"
     pdb: 2
+    secureSettings:
+      - secretName: gcp-s3-secret
     roles:
       master:
         autoscaling:
@@ -53,16 +55,16 @@ elasticsearch:
           maxNodes: 4
           maxCpu: 4000m
           maxMemory: 8Gi
-          maxStorage: 200Gi
+          maxStorage: 250Gi
         count: 3
         cpu: 4000m
         memory: 8Gi
         storage:
-          size: 200Gi
+          size: 250Gi
           storageClass: ""
         config:
           node:
-            roles: [ "data", "ingest", "transform", "remote_cluster_client"]
+            roles: [ "data", "ingest", "transform", "remote_cluster_client" ]
           # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
           xpack:
             security:
@@ -94,16 +96,16 @@ elasticsearch:
           maxNodes: 2
           maxCpu: 2000m
           maxMemory: 4Gi
-          maxStorage: 20Gi
+          maxStorage: 10Gi
         count: 1
         cpu: 2000m
         memory: 4Gi
         storage:
-          size: 20Gi
+          size: 10Gi
           storageClass: ""
         config:
           node:
-            roles: ["ml"]
+            roles: [ "ml", "remote_cluster_client" ]
           # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
           xpack:
             security:
@@ -136,7 +138,7 @@ elasticsearch:
     ingress:
       enabled: true
       ingressClassName: ""
-      hostname: es-tst.apps.example.com
+      hostname: es-tst.apps.test0.lab.linuxpolska.pl
       annotations:
         nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         nginx.ingress.kubernetes.io/ssl-passthrough: "true"
@@ -159,7 +161,7 @@ packageRegistry:
     ingress:
       enabled: true
       ingressClassName: ""
-      hostname: repo-tst.apps.example.com
+      hostname: repo-tst.apps.test0.lab.linuxpolska.pl
       annotations:
         nginx.ingress.kubernetes.io/backend-protocol: "HTTP" 
         nginx.ingress.kubernetes.io/ssl-passthrough: "false" 
@@ -183,7 +185,7 @@ kibana:
   enabled: true
   params:
     autoscaling:
-      enabled: true
+      enabled: false
       maxNodes: 2
       averageCpuUtilization: 50
     image:
@@ -193,7 +195,7 @@ kibana:
     ingress:
       enabled: true
       ingressClassName: ""
-      hostname: kb-tst.apps.example.com
+      hostname: kb-tst.apps.test0.lab.linuxpolska.pl
       annotations:
 #        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 #        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
@@ -240,7 +242,7 @@ agentFleet:
     ingress:
       enabled: true
       ingressClassName: ""
-      hostname: fleet-tst.apps.example.com
+      hostname: fleet-tst.apps.test0.lab.linuxpolska.pl
       annotations:
         nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         nginx.ingress.kubernetes.io/ssl-passthrough: "true"
@@ -280,7 +282,7 @@ agentServices:
         ingress:
           enabled: true
           ingressClassName: ""
-          hostname: apm-http-tst.apps.example.com
+          hostname: apm-http-tst.apps.test0.lab.linuxpolska.pl
           annotations:
             nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
             nginx.ingress.kubernetes.io/ssl-passthrough: "true"
@@ -342,7 +344,7 @@ enterpriseSearch:
     ingress:
       enabled: true
       ingressClassName: ""
-      hostname: entsearch-tst.apps.example.com
+      hostname: entsearch-tst.apps.test0.lab.linuxpolska.pl
       annotations:
 #        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 #        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
