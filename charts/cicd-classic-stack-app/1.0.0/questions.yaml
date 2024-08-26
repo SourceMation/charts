@@ -68,7 +68,7 @@ questions:
       label: URL
       description: "SonarQube Ingress URL"
       group: "SonarQube settings"
-      type: string
+      type: hostname
       required: true
   - variable: sonarqube.persistence.enabled
     default: true
@@ -294,7 +294,7 @@ questions:
       label: "hostName"
       description: "hostName"
       group: "Jenkins Settings"
-      type: string
+      type: hostname
       required: true
   - variable: jenkins.controller.customResources
     default: false
@@ -469,7 +469,7 @@ questions:
       label: URL
       description: "Forgejo Ingress URL"
       group: "Forgejo settings"
-      type: string
+      type: hostname
       required: true
   - variable: forgejo.strategy.type
     default: "RollingUpdate"
@@ -790,6 +790,6 @@ questions:
       label: URL
       description: "Configure url for coder web-ui"
       group: "Coder Settings"
-      type: string
+      type: hostname
       default: "coder.my.domain.internal"
       min: 6
