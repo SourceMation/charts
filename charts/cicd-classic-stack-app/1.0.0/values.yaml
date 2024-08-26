@@ -13,26 +13,32 @@ global:
 
 
 sonarqube:
+# missing:
+# - nameOverride, namespaceOverride
   affinity: {}
   nodeSelector: {}
   seccompProfile: {}
+  deploymentStrategy: {}
   securityContext:
     fsGroup: 0
   params:
     customImage:
       sonarqube: false
+      postgresql: false
     customPasswords:
       sonarqube: false
       postgresql: false
     customResources:
       sonarqube: false
       postgresql: false
-  #account:
-  #  adminPassword: admin
+  account:
+    adminPassword: "P@ssword1"
   image:
+    registry: docker.io
     repository: "sonarqube"
     #tag: 10.6.0-{{ .Values.edition }}
     pullPolicy: "IfNotPresent"
+    pullSecrets: []
   ingress:
     enabled: true
     hosts:
@@ -44,6 +50,11 @@ sonarqube:
     size: "5Gi"
     storageClass: ""
     accessMode: "ReadWriteOnce"
+  plugins:
+    # Define the list of plugins to install. Example:
+    # install:
+    #   - https://example.com/plugin/ver1.0/plugin.jar"
+    install: []
   prometheusMonitoring:
     podMonitor:
       enabled: true
@@ -61,16 +72,26 @@ sonarqube:
     externalPort: 9000
     internalPort: 9000
   postgresql:
+    primary:
+      affinity: {}
+      nodeSelector: {}
     enabled: true
+    image:
+      registry: docker.io
+      repository: bitnami/postgresql
+      #tag: 11.14.0-debian-10-r22
+      pullPolicy: IfNotPresent
+      pullSecrets: []
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
+    nameOverride: ""
     networkPolicy:
       enabled: false
-    postgresqlUsername: "sonarUser"
-    postgresqlPassword: "sonarPass"
-    postgresqlDatabase: "sonarDB"
+    postgresqlUsername: "sonar"
+    postgresqlPassword: "P@ssword1"
+    postgresqlDatabase: "sonar"
     persistence:
       enabled: true
       existingClaim: "{{ .Release.Name }}-data-postgresql-0"

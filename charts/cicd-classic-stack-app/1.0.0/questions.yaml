@@ -15,6 +15,12 @@ questions:
     type: boolean
     show_subquestion_if: true
     subquestions:
+    - variable: sonarqube.image.registry
+      default: "docker.io"
+      label: SonarQube image registry
+      description: "SonarQube image registry"
+      group: "SonarQube settings"
+      type: string
     - variable: sonarqube.image.repository
       default: "sonarqube"
       label: SonarQube image repository
@@ -24,6 +30,12 @@ questions:
     - variable: sonarqube.image.tag
       label: SonarQube image tag
       description: "SonarQube image tag"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.image.pullSecrets
+      label: SonarQube image pullSecrets
+      description: "SonarQube image pullSecrets"
       group: "SonarQube settings"
       type: string
       required: false
@@ -40,9 +52,9 @@ questions:
   - variable: sonarqube.account.adminPassword
     default: "P@ssword1"
     label: SonarQube admin password
-    description: "SonarQube admin password"
+    description: "Default password is 'P@ssword1'. Change it!"
     group: "SonarQube settings"
-    type: string  
+    type: password  
     required: false
   - variable: sonarqube.ingress.enabled
     default: "true"
@@ -107,6 +119,58 @@ questions:
       group: "SonarQube settings"
       type: string
       required: false
+  - variable: sonarqube.deploymentStrategy.type
+    default: "RollingUpdate"
+    label: SonarQube update strategy
+    description: "SonarQube update strategy"
+    group: "SonarQube settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
+  - variable: sonarqube.params.customImage.postgresql
+    default: false
+    label: Change Postgresql image
+    description: "Change Postgresql image"
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.postgresql.image.registry
+      default: "docker.io"
+      label: Postgresql image registry
+      description: "Postgresql image registry"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.image.repository
+      default: "bitnami/postgresql"
+      label: Postgresql image repository
+      description: "Postgresql image repository"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.image.tag
+      label: Postgresql image tag
+      description: "Postgresql image tag"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.postgresql.image.pullSecrets
+      label: Postgresql image PullSecrets
+      description: "Postgresql image PullSecrets"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.postgresql.image.pullPolicy
+      default: "IfNotPresent"
+      label: Postgresql image pullPolicy
+      description: "Postgresql image pullPolicy"
+      group: "SonarQube settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
   - variable: sonarqube.params.customPasswords.postgresql
     default: false
     label: Change Postgresql DB configuration
@@ -116,13 +180,13 @@ questions:
     show_subquestion_if: true
     subquestions:
     - variable: sonarqube.postgresql.postgresqlDatabase
-      default: "sonarDB"
+      default: "sonar"
       label: SonarQube DB name
       description: "SonarQube DB name"
       group: "SonarQube settings"
       type: string
     - variable: sonarqube.postgresql.postgresqlUsername
-      default: "sonarUser"
+      default: "sonar"
       label: SonarQube DB username
       description: "SonarQube DB username"
       group: "SonarQube settings"
@@ -130,9 +194,9 @@ questions:
     - variable: sonarqube.postgresql.postgresqlPassword
       default: "P@ssword1"
       label: SonarQube DB password
-      description: "SonarQube DB password"
+      description: "Default password is 'P@ssword1'. Change it!"
       group: "SonarQube settings"
-      type: string
+      type: password
   - variable: sonarqube.params.customResources.postgresql
     default: false
     label: Modify Postgresql resource consumption
@@ -177,8 +241,8 @@ questions:
       type: string
   - variable: sonarqube.postgresql.updateStrategy.type
     default: "RollingUpdate"
-    label: SonarQube update strategy
-    description: "SonarQube update strategy"
+    label: Postgresql update strategy
+    description: "Postgresql update strategy"
     group: "SonarQube settings"
     type: enum
     options:
@@ -459,16 +523,6 @@ questions:
       - "Always"
       - "If NotPresent"
       - "Never"
-  - variable: forgejo.postgresql-ha.postgresql.updateStrategy.type
-    default: "RollingUpdate"
-    label: Postgresql update strategy
-    description: "Postgresql update strategy"
-    group: "Forgejo settings"
-    type: enum
-    options:
-    - "RollingUpdate"
-    - "Recreate"
-    required: false
   - variable: forgejo.params.customPasswords.postgresqlHA
     default: "false"
     label: Change Postgresql DB configuration
@@ -555,6 +609,16 @@ questions:
       description: "Memory request, value must be <= memory limit"
       group: "Forgejo settings"
       type: string
+  - variable: forgejo.postgresql-ha.postgresql.updateStrategy.type
+    default: "RollingUpdate"
+    label: Postgresql update strategy
+    description: "Postgresql update strategy"
+    group: "Forgejo settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
   - variable: forgejo.params.customImage.redisCluster
     default: false
     label: Change Redis image
@@ -597,16 +661,6 @@ questions:
       - "Always"
       - "If NotPresent"
       - "Never"
-  - variable: forgejo.redis-cluster.redis.updateStrategy.type
-    default: "RollingUpdate"
-    label: Redis update strategy
-    description: "Redis update strategy"
-    group: "Forgejo settings"
-    type: enum
-    options:
-    - "RollingUpdate"
-    - "Recreate"
-    required: false
   - variable: forgejo.params.customResources.redisCluster
     default: "false"
     label: Modify Redis resource consumption
@@ -653,6 +707,16 @@ questions:
       group: "Forgejo settings"
       type: string
       required: false
+  - variable: forgejo.redis-cluster.redis.updateStrategy.type
+    default: "RollingUpdate"
+    label: Redis update strategy
+    description: "Redis update strategy"
+    group: "Forgejo settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
   - variable: forgejo.gitea.metrics.enabled
     default: "true"
     label: Forgejo metrics
