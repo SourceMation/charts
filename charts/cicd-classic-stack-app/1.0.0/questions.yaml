@@ -58,7 +58,7 @@ questions:
     required: false
   - variable: sonarqube.ingress.enabled
     default: "true"
-    label: Enable SonarQube ingress
+    label: Enable SonarQube Ingress
     group: "SonarQube settings"
     type: boolean
     show_subquestion_if: true
@@ -66,7 +66,7 @@ questions:
     - variable: sonarqube.ingress.hosts.0.name
       default: "sonarqube.apps.example.com"
       label: URL
-      description: "SonarQube ingress URL"
+      description: "SonarQube Ingress URL"
       group: "SonarQube settings"
       type: string
       required: true
@@ -277,9 +277,9 @@ questions:
     required: true
   - variable: jenkins.controller.admin.password
     label: Password
-    description: "Password"
+    description: "Default password is 'P@ssword1'. Change it!"
     group: "Jenkins Settings"
-    type: string
+    type: password
     required: true
   - variable: jenkins.controller.ingress.enabled
     label: "Enable Ingress"
@@ -467,7 +467,7 @@ questions:
     - variable: forgejo.ingress.hosts.0.host
       default: "forgejo.apps.example.com"
       label: URL
-      description: "Forgejo ingress URL"
+      description: "Forgejo Ingress URL"
       group: "Forgejo settings"
       type: string
       required: true
@@ -751,6 +751,13 @@ questions:
   group: "Components"
   show_subquestion_if: true
   subquestions:
+  - variable: postgresql.auth.database
+    label: Postgresql database name
+    description: "Name for PostgreSQL database"
+    group: "Coder Settings"
+    type: string
+    default: "coder"
+    required: true
   - variable: postgresql.auth.username
     label: SuperUser name
     description: "Username for PostgreSQL SuperUser role"
@@ -759,19 +766,12 @@ questions:
     default: "coder"
     required: true
   - variable: postgresql.auth.password
-    label: SuperUser password
-    description: "Password for PostgreSQL SuperUser role"
-    group: "Coder Settings"
     default: "P@ssword1"
-    type: string
-    min: 8
-    required: true
-  - variable: postgresql.auth.database
-    label: Postgresql database name
-    description: "Name for PostgreSQL database"
+    label: SuperUser password
+    description: "Default password is 'P@ssword1'. Change it!"
     group: "Coder Settings"
-    type: string
-    default: "coder"
+    type: password
+    min: 8
     required: true
   - variable: postgresql.persistence.size
     label: Database size
@@ -781,7 +781,7 @@ questions:
     default: "10Gi"
   - variable: coder.params.ingress.enabled
     default: "true"
-    label: Enable web console for Coder
+    label: Enable Coder Ingress
     group: "Coder Settings"
     type: boolean
     show_subquestion_if: true
