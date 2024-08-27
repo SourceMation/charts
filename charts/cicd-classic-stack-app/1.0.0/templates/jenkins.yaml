@@ -1,4 +1,4 @@
-{{- if and .Values.global.jenkinsApp.enabled .Values.jenkins.controller.ingress.enabled }}
+{{- if and .Values.global.jenkinsApp.enabled .Values.jenkins.params.ingress.enabled }}
 
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" $ }}
 kind: Ingress
@@ -8,7 +8,7 @@ metadata:
     {{- include "common.labels.labels" . | nindent 4 }}
 spec:
   rules:
-  - host: {{ .Values.jenkins.controller.ingress.hostName }}
+  - host: {{ .Values.jenkins.params.ingress.hostName }}
     http:
       paths:
       - backend:

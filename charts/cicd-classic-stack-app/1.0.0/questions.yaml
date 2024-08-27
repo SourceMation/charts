@@ -119,16 +119,6 @@ questions:
       group: "SonarQube settings"
       type: string
       required: false
-  - variable: sonarqube.deploymentStrategy.type
-    default: "RollingUpdate"
-    label: SonarQube update strategy
-    description: "SonarQube update strategy"
-    group: "SonarQube settings"
-    type: enum
-    options:
-    - "RollingUpdate"
-    - "Recreate"
-    required: false
   - variable: sonarqube.params.customImage.postgresql
     default: false
     label: Change Postgresql image
@@ -281,7 +271,7 @@ questions:
     group: "Jenkins Settings"
     type: password
     required: true
-  - variable: jenkins.controller.ingress.enabled
+  - variable: jenkins.params.ingress.enabled
     label: "Enable Ingress"
     description: "Enable Ingress"
     group: "Jenkins Settings"
@@ -290,7 +280,7 @@ questions:
     required: false
     show_subquestion_if: true
     subquestions:
-    - variable: jenkins.controller.ingress.hostName
+    - variable: jenkins.params.ingress.hostName
       label: "hostName"
       description: "hostName"
       group: "Jenkins Settings"

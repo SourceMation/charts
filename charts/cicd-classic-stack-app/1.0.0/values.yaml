@@ -15,10 +15,10 @@ global:
 sonarqube:
 # missing:
 # - nameOverride, namespaceOverride
+# - updateStrategy
   affinity: {}
   nodeSelector: {}
   seccompProfile: {}
-  deploymentStrategy: {}
   securityContext:
     fsGroup: 0
   params:
@@ -344,6 +344,10 @@ postgresql:
 
 
 jenkins:
+  params:
+    ingress:
+      enabled: false
+      hostName: "jenkins.apps.example.com"
   controller:
     installPlugins:
       - kubernetes:4265.v78b_d4a_1c864a_
@@ -354,14 +358,14 @@ jenkins:
       - prometheus:780.v7c50a_d288424
     additionalPlugins:
       - pipeline-stage-view:2.34
-       pipeline-utility-steps:2.17.0
+      - pipeline-utility-steps:2.17.0
       - generic-webhook-trigger:2.2.2
       - gitea:220.v4618c82a_40fb_
       - rebuild:332.va_1ee476d8f6d
     customResources: false
+    # default ingress
     ingress:
       enabled: false
-      hostName: "jenkins.apps.example.com"
     serviceType: ClusterIP
     resources:
       requests:
