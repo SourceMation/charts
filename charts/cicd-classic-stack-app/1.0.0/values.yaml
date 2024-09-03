@@ -323,15 +323,44 @@ coder:
     ingress:
       enable: true
       host: "coder.apps.example.com"
+      tls:
+        enable: false
+        secretName: ""
     service:
+      enable: true
       type: ClusterIP
+      externalTrafficPolicy: Cluster
+      # if service.type LoadBalancer
+      loadBalancerIP: ""
     serviceAccount:
       name: coder
     image:
+      repo: "ghcr.io/coder/coder"
+      tag: "v2.13.2"
       pullSecrets: []
     certs:
       secrets: []
     volumes: []
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - "coder"
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+    nodeSelector: {}
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      seccompProfile:
+        type: RuntimeDefault
+      allowPrivilegeEscalation: false
 
 postgresql:
   auth:
