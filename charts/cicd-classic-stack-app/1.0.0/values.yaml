@@ -1,15 +1,15 @@
 
 global:
   sonarqubeApp:
-    enabled: false
+    enabled: true
   harborApp:
-    enabled: false
+    enabled: true
   forgejoApp:
-    enabled: false
+    enabled: true
   coderApp:
     enabled: true
   jenkinsApp:
-    enabled: false
+    enabled: true
 
 
 sonarqube:
