@@ -1,15 +1,15 @@
 
 global:
   sonarqubeApp:
-    enabled: true
+    enabled: false
   harborApp:
-    enabled: true
+    enabled: false
   forgejoApp:
-    enabled: true
+    enabled: false
   coderApp:
     enabled: true
   jenkinsApp:
-    enabled: true
+    enabled: false
 
 
 sonarqube:
@@ -313,13 +313,6 @@ forgejo:
 
 
 coder:
-  params:
-    ingress:
-      enabled: true
-      host: "coder.apps.example.com"
-    service:
-      enabled: true
-      type: ClusterIP
   coder:
     env:
       - name: coder-db-postgresql
@@ -328,18 +321,37 @@ coder:
             name: coder-db-url
             key: url
     ingress:
-      enable: false
+      enable: true
+      host: "coder.apps.example.com"
     service:
-      enable: false
+      type: ClusterIP
+    serviceAccount:
+      name: coder
+    image:
+      pullSecrets: []
+    certs:
+      secrets: []
+    volumes: []
 
 postgresql:
   auth:
     username: coder
     password: P@ssword1
     database: coderi
-  persistence:
-    size: 10Gi
-  nameOverride: "coder"
+  primary:
+    enabled: true
+    persistence:
+      accessModes:
+        - ReadWriteOnce
+      storageClass: ""
+      volumeName: "data"
+      size: "10Gi"
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: "Retain"
+      whenDeleted: "Delete"
+  
+  nameOverride: "coder-postgresql"
   fullnameOverride: ""
 
 

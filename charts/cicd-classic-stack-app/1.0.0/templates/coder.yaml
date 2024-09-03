@@ -7,45 +7,4 @@ kind: Secret
 metadata:
   name: coder-db-url
 
-  {{- if $.Values.coder.params.ingress.enabled }}
----
-apiVersion: {{ include "common.capabilities.ingress.apiVersion" $ }}
-kind: Ingress
-metadata:
-  name: {{ include "common.names.shortname" $ }}-coder
-  labels:
-    {{- include "common.labels.labels" $ | nindent 4 }}
-spec:
-  rules:
-  - host: {{ $.Values.coder.params.ingress.host }}
-    http:
-      paths:
-      - backend:
-          service:
-            name: {{ include "common.names.shortname" $ }}-coder
-            port:
-              name: "http"
-        path: /
-        pathType: Prefix
-  {{- end }}
-
-  {{- if $.Values.coder.params.service.enabled }}
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: {{ include "common.names.shortname" $ }}-coder
-  labels:
-    {{- include "common.labels.labels" $ | nindent 4 }}
-spec:
-  ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: http
-  selector:
-    app.kubernetes.io/instance: {{ include "common.names.shortname" $ }}
-    app.kubernetes.io/name: coder
-  type: {{ $.Values.coder.params.service.type }}
-  {{- end }}
 {{- end }}

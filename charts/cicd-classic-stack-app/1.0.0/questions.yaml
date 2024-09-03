@@ -769,14 +769,14 @@ questions:
     group: "Coder Settings"
     type: string
     default: "10Gi"
-  - variable: coder.params.ingress.enabled
+  - variable: coder.coder.ingress.enabled
     default: "true"
     label: Enable Coder Ingress
     group: "Coder Settings"
     type: boolean
     show_subquestion_if: true
     subquestions:
-    - variable: coder.params.ingress.host
+    - variable: coder.coder.ingress.host
       label: URL
       description: "Configure url for coder web-ui"
       group: "Coder Settings"
