@@ -118,16 +118,141 @@ sonarqube:
 
 
 harbor:
+# missing:
+# - nameOverride, namespaceOverride
+# - networkPolicy:
   expose:
     type: ingress
     ingress:
       hosts:
         core: harbor.apps.example.com
+    nodePort:
+      ports:
+        http:
+          nodePort: 30002
+        https:
+          nodePort: 30003
+  persistence:
+    enabled: true
+    resourcePolicy: ""
+    persistentVolumeClaim:
+      registry:
+        storageClass: ""
+        size: 5Gi
+      jobservice:
+        storageClass: ""
+        size: 1Gi
+      database:
+        storageClass: ""
+        size: 1Gi
+      redis:
+        storageClass: ""
+        size: 1Gi
+      trivy:
+        storageClass: ""
+        size: 5Gi
+
+  imagePullPolicy: IfNotPresent
+  #imagePullSecrets:
+  ##  - name: docker-registry-secret
+  ##  - name: internal-registry-secret
+  #
+  updateStrategy:
+    type: RollingUpdate
+
+  harborAdminPassword: "P@ssword1"
+  secretKey: "not-a-secure-key-min-16-characters"
+
+  nginx:
+    image:
+      repository: goharbor/nginx-photon
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  portal:
+    image:
+      repository: goharbor/harbor-portal
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  core:
+    image:
+      repository: goharbor/harbor-core
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  jobservice:
+    image:
+      repository: goharbor/harbor-jobservice
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  registry:
+    registry:
+      image:
+        repository: goharbor/registry-photon
+        tag: v2.10.2
+    controller:
+      image:
+        repository: goharbor/harbor-registryctl
+        tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    credentials:
+      username: "harbor_registry_user"
+      password: "harbor_registry_password"
+
+  trivy:
+    image:
+      repository: goharbor/trivy-adapter-photon
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  database:
+    internal:
+      image:
+        repository: goharbor/harbor-db
+        tag: v2.10.2
+      password: "P@ssword1"
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+
+  redis:
+    internal:
+      image:
+        repository: goharbor/redis-photon
+        tag: v2.10.2
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+
+  exporter:
+    image:
+      repository: goharbor/harbor-exporter
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
   metrics:
     enabled: true
     serviceMonitor:
       enabled: true
-
+  trace:
+    enabled: true
+    provider: otel
 
 forgejo:
 # missing:
@@ -377,7 +502,7 @@ jenkins:
     persistence:
       enabled: true
       accessMode: "ReadWriteOnce"
-      storageClass: "" 
+      storageClass: ""
       size: "8Gi"
     javaOpts: >
       -Xmx2g

@@ -1,6 +1,7 @@
 categories:
 - cicd
 questions:
+  # sonarqubeApp
 - variable: global.sonarqubeApp.enabled
   default: true
   label: Deploy Sonarqube
@@ -54,7 +55,7 @@ questions:
     label: SonarQube admin password
     description: "Default password is 'P@ssword1'. Change it!"
     group: "SonarQube settings"
-    type: password  
+    type: password
     required: false
   - variable: sonarqube.ingress.enabled
     default: "true"
@@ -252,6 +253,7 @@ questions:
     group: "SonarQube settings"
     type: boolean
 
+  # jenkinsApp
 - variable: global.jenkinsApp.enabled
   default: true
   label: "Deploy Jenkins"
@@ -329,6 +331,7 @@ questions:
       type: string
       required: true
 
+  # forgejoApp
 - variable: global.forgejoApp.enabled
   default: "true"
   label: Deploy Forgejo
@@ -389,7 +392,7 @@ questions:
     label: Forgejo admin password
     description: "Default password is 'P@ssword1'. Change it!"
     group: "Forgejo settings"
-    type: password  
+    type: password
     required: true
   - variable: forgejo.gitea.admin.email
     default: "gitea_admin@example.com"
@@ -726,14 +729,255 @@ questions:
     group: "Forgejo settings"
     type: boolean
 
-
+  # harborApp
 - variable: global.harborApp.enabled
-  default: false
-  label: Deploy Harbor
-  group: "Components"
+  default: true
+  label: "Deploy Harbor"
   type: boolean
-  #show_subquestion_if: true
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: harbor.expose.type
+    label: "How you will access harbor portal through?"
+    type: enum
+    options:
+    - "ingress"
+    - "clusterIP"
+    - "nodePort"
+    - "loadBalancer"
+    group: "Harbor settings"
+  - variable: harbor.expose.ingress.hosts.core
+    label: "Ingress for harbor portal"
+    type: hostname
+    group: "Harbor settings"
+    show_if: "harbor.expose.type=ingress"
+  - variable: harbor.expose.nodePort.ports.http.nodePort
+    label: "NodePort for harbor portal http protocol"
+    type: int
+    group: "Harbor settings"
+    show_if: "harbor.expose.type=nodePort"
+  - variable: harbor.expose.nodePort.ports.https.nodePort
+    label: "NodePort for harbor portal https protocol"
+    type: int
+    group: "Harbor settings"
+    show_if: "harbor.expose.type=nodePort"
+  - variable: harbor.persistence.enabled
+    label: "Enable persistent storage"
+    type: boolean
+    group: "Harbor settings"
+  - variable: harbor.persistence.resourcePolicy
+    label: "Do you want to keep all PVCs after helm chart uninstall? If yes, write 'keep'. If no, leave empty line."
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.registry.storageClass
+    label: "Choose storage class for registry PVC."
+    type: storageclass
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.registry.size
+    label: "Size for registry PVC"
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.jobservice.storageClass
+    label: "Choose storage class for jobservice PVC."
+    type: storageclass
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.jobservice.size
+    label: "Size for jobservice PVC"
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.database.storageClass
+    label: "Choose storage class for database PVC."
+    type: storageclass
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.database.size
+    label: "Size for database PVC"
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.redis.storageClass
+    label: "Choose storage class for redis PVC."
+    type: storageclass
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.redis.size
+    label: "Size for redis PVC"
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.trivy.storageClass
+    label: "Choose storage class for trivy PVC."
+    type: storageclass
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.trivy.size
+    label: "Size for trivy PVC"
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.imagePullPolicy
+    label: "Select image pull policy"
+    type: enum
+    options:
+    - "IfNotPresent"
+    - "Always"
+    - "Never"
+    group: "Harbor settings"
+  #- variable: harbor.imagePullSecrets
+  - variable: harbor.updateStrategy.type
+    label: "Select update strategy"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    group: "Harbor settings"
+  - variable: harbor.harborAdminPassword
+    label: "Initial password for 'admin' user"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.secretKey
+    label: "chose a secret key minimum 16 characters long"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.nginx.image.repository
+    label: "Image source for harbor nginx"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.nginx.image.tag
+    label: "Image tag for harbor nginx"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.nginx.nodeSelector
+  #- variable: harbor.nginx.tolerations
+  #- variable: harbor.nginx.affinity
+  - variable: harbor.portal.image.repository
+    label: "Image source for harbor portal"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.portal.image.tag
+    label: "Image tag for harbor portal"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.portal.nodeSelector
+  #- variable: harbor.portal.tolerations
+  #- variable: harbor.portal.affinity
+  - variable: harbor.core.image.repository
+    label: "Image source for harbor core"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.core.image.tag
+    label: "Image tag for harbor core"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.core.nodeSelector
+  #- variable: harbor.core.tolerations
+  #- variable: harbor.core.affinity
+  - variable: harbor.jobservice.image.repository
+    label: "Image source for harbor jobservice"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.jobservice.image.tag
+    label: "Image tag for harbor jobservice"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.jobservice.nodeSelector
+  #- variable: harbor.jobservice.tolerations
+  #- variable: harbor.jobservice.affinity
+  - variable: harbor.registry.registry.image.repository
+    label: "Image source for harbor registry"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.registry.registry.image.tag
+    label: "Image tag for harbor registry"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.registry.controller.image.repository
+    label: "Image source for harbor registry controller"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.registry.controller.image.tag
+    label: "Image tag for harbor registry controller"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.registry.nodeSelector
+  #- variable: harbor.registry.tolerations
+  #- variable: harbor.registry.affinity
+  - variable: harbor.registry.credentials.username
+    label: "Username for harbor registry"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.registry.credentials.password
+    label: "Password for harbor registry"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.trivy.image.repository
+    label: "Image source for harbor trivy"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.trivy.image.tag
+    label: "Image tag for harbor trivy"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.trivy.nodeSelector
+  #- variable: harbor.trivy.tolerations
+  #- variable: harbor.trivy.affinity
+  - variable: harbor.database.internal.image.repository
+    label: "Image source for harbor database"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.database.internal.image.tag
+    label: "Image tag for harbor database"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.database.internal.password
+    label: "Password for harbor database"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.database.internal.nodeSelector
+  #- variable: harbor.database.internal.tolerations
+  #- variable: harbor.database.internal.affinity
+  - variable: harbor.redis.internal.image.repository
+    label: "Image source for harbor redis"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.redis.internal.image.tag
+    label: "Image tag for harbor redis"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.redis.internal.nodeSelector
+  #- variable: harbor.redis.internal.tolerations
+  #- variable: harbor.redis.internal.affinity
+  - variable: harbor.exporter.image.repository
+    label: "Image source for harbor exporter"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.exporter.image.tag
+    label: "Image tag for harbor exporter"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.exporter.nodeSelector
+  #- variable: harbor.exporter.tolerations
+  #- variable: harbor.exporter.affinity
+  - variable: harbor.metrics.enabled
+    label: "Enable harbor metrics"
+    type: boolean
+    group: "Harbor settings"
+  - variable: harbor.metrics.serviceMonitor.enabled
+    label: "Enable harbor metrics system monitor"
+    type: boolean
+    group: "Harbor settings"
+    show_if: "harbor.metrics.enabled=true"
+  - variable: harbor.trace.enabled
+    label: "Enable harbor trace by otel"
+    type: boolean
+    group: "Harbor settings"
 
+  # coderApp
 - variable: global.coderApp.enabled
   default: "true"
   label: Deploy Coder
