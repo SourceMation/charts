@@ -438,13 +438,6 @@ forgejo:
 
 
 coder:
-  params:
-    ingress:
-      enabled: true
-      host: "coder.apps.example.com"
-    service:
-      enabled: true
-      type: ClusterIP
   coder:
     env:
       - name: coder-db-postgresql
@@ -453,18 +446,66 @@ coder:
             name: coder-db-url
             key: url
     ingress:
-      enable: false
+      enable: true
+      host: "coder.apps.example.com"
+      tls:
+        enable: false
+        secretName: ""
     service:
-      enable: false
+      enable: true
+      type: ClusterIP
+      externalTrafficPolicy: Cluster
+      # if service.type LoadBalancer
+      loadBalancerIP: ""
+    serviceAccount:
+      name: coder
+    image:
+      repo: "ghcr.io/coder/coder"
+      tag: "v2.13.2"
+      pullSecrets: []
+    certs:
+      secrets: []
+    volumes: []
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - "coder"
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+    nodeSelector: {}
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      seccompProfile:
+        type: RuntimeDefault
+      allowPrivilegeEscalation: false
 
 postgresql:
   auth:
     username: coder
     password: P@ssword1
     database: coderi
-  persistence:
-    size: 10Gi
-  nameOverride: "coder"
+  primary:
+    enabled: true
+    persistence:
+      accessModes:
+        - ReadWriteOnce
+      storageClass: ""
+      volumeName: "data"
+      size: "10Gi"
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: "Retain"
+      whenDeleted: "Delete"
+  
+  nameOverride: "coder-postgresql"
   fullnameOverride: ""
 
 

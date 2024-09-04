@@ -49,7 +49,7 @@ dependencies:
 
 - condition: global.coderApp.enabled
   name: coder
-  repository: https://helm.coder.com/v2
+  repository: file://./charts/coder-2.13.2.tgz
   version: 2.13.2
 
 - condition: global.coderApp.enabled
