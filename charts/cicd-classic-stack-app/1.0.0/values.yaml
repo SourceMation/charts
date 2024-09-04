@@ -515,6 +515,12 @@ jenkins:
       enabled: false
       hostName: "jenkins.apps.example.com"
   controller:
+    image:
+      registry: "docker.io"
+      repository: "jenkins/jenkins"
+      tag:
+      tagLabel: jdk17
+      pullPolicy: "Always"
     installPlugins:
       - kubernetes:4265.v78b_d4a_1c864a_
       - workflow-aggregator:600.vb_57cdd26fdd7
