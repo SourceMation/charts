@@ -35,39 +35,10 @@ spec:
   resources:
     requests:
       storage: {{ .size }}
+    {{- if not (empty .storageClass) }}
   storageClassName: {{ .storageClass }}
+    {{- end }}
   volumeMode: Filesystem
     {{- end }}
   {{- end }}
-
-  {{- if index .Values.forgejo "postgresql-ha" "enabled" }}
----
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: metrics-fix
-  annotations:
-    "helm.sh/hook": post-install
-  labels:
-    {{- include "common.labels.labels" $ | nindent 4 }}
-spec:
-  ttlSecondsAfterFinished: 60
-  template:
-    spec:
-      initContainers:
-        - name: init-delay
-          image: busybox
-          command: ["sh", "-c", "sleep 360"]
-      containers:
-        - name: metrics-fix
-          image: bitnami/postgresql
-      {{- with index .Values.forgejo "postgresql-ha" }}
-          env:
-            - name: PGPASSWORD
-              value: "{{ .postgresql.postgresPassword }}"
-          command: ["psql", "-h", "{{ $.Release.Name }}-postgresql-ha-postgresql-headless", "-U", "postgres", "--command=GRANT pg_monitor TO {{ .global.postgresql.username }};"]
-      {{- end }}
-      restartPolicy: Never
-  {{- end }}
-
 {{- end }}

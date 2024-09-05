@@ -38,7 +38,7 @@ sonarqube:
     repository: "sonarqube"
     #tag: 10.6.0-{{ .Values.edition }}
     pullPolicy: "IfNotPresent"
-    pullSecrets: []
+    #pullSecrets: []
   ingress:
     enabled: true
     hosts:
@@ -81,7 +81,7 @@ sonarqube:
       repository: bitnami/postgresql
       #tag: 11.14.0-debian-10-r22
       pullPolicy: IfNotPresent
-      pullSecrets: []
+      #pullSecrets: 
     metrics:
       enabled: true
       serviceMonitor:
@@ -94,7 +94,7 @@ sonarqube:
     postgresqlDatabase: "sonar"
     persistence:
       enabled: true
-      existingClaim: "{{ .Release.Name }}-data-postgresql-0"
+      existingClaim: "{{ .Release.Name }}-data-gitlab-postgresql-0"
       claimName: "data-postgresql-0"
       size: "20Gi"
       storageClass: ""
@@ -274,22 +274,10 @@ forgejo:
       accessModes:
         - "ReadWriteOnce"
       annotations: {}
-    customImage:
-      gitea: false
-      postgresqlHA: false
-      redisCluster: false
-    customResources:
-      gitea: false
-      postgresqlHA: false
-      redisCluster: false
-    customPasswords:
-      gitea: true
-      postgresqlHA: false
-      redisCluster: false
   image:
     registry: "code.forgejo.org"
     repository: "forgejo/forgejo"
-    tag: ''
+    #tag: ''
     pullPolicy: "IfNotPresent"
   imagePullSecrets: []
   gitea:
@@ -534,6 +522,7 @@ jenkins:
       - generic-webhook-trigger:2.2.2
       - gitea:220.v4618c82a_40fb_
       - rebuild:332.va_1ee476d8f6d
+      - sonar:2.17.2
     customResources: false
     # default ingress
     ingress:

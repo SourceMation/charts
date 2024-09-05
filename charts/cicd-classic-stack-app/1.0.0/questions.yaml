@@ -34,11 +34,11 @@ questions:
       group: "SonarQube settings"
       type: string
       required: false
-    - variable: sonarqube.image.pullSecrets
-      label: SonarQube image pullSecrets
-      description: "SonarQube image pullSecrets"
+    - variable: sonarqube.image.pullSecret
+      label: SonarQube image pullSecret
+      description: "SonarQube image pullSecret"
       group: "SonarQube settings"
-      type: string
+      type: secret
       required: false
     - variable: sonarqube.image.pullPolicy
       default: "IfNotPresent"
@@ -58,7 +58,6 @@ questions:
     type: password
     required: false
   - variable: sonarqube.ingress.enabled
-    default: "true"
     label: Enable SonarQube Ingress
     group: "SonarQube settings"
     type: boolean
@@ -146,12 +145,12 @@ questions:
       group: "SonarQube settings"
       type: string
       required: false
-    - variable: sonarqube.postgresql.image.pullSecrets
-      label: Postgresql image PullSecrets
-      description: "Postgresql image PullSecrets"
-      group: "SonarQube settings"
-      type: string
-      required: false
+    #- variable: sonarqube.postgresql.image.pullSecrets
+    #  label: Postgresql image PullSecrets
+    #  description: "Postgresql image PullSecrets"
+    #  group: "SonarQube settings"
+    #  type: secret
+    #  required: false
     - variable: sonarqube.postgresql.image.pullPolicy
       default: "IfNotPresent"
       label: Postgresql image pullPolicy
@@ -278,7 +277,6 @@ questions:
     description: "Enable Ingress"
     group: "Jenkins Settings"
     type: boolean
-    default: false
     required: false
     show_subquestion_if: true
     subquestions:
@@ -340,7 +338,7 @@ questions:
   show_subquestion_if: true
   subquestions:
   - variable: forgejo.params.customImage.gitea
-    default: "false"
+    default: false
     label: Change Forgejo image
     group: "Forgejo settings"
     type: boolean
@@ -365,12 +363,12 @@ questions:
       group: "Forgejo settings"
       type: string
       required: false
-    - variable: forgejo.imagePullSecrets
-      label: Forgejo image PullSecrets
-      description: "Forgejo image PullSecrets"
-      group: "Forgejo settings"
-      type: string
-      required: false
+    #- variable: forgejo.imagePullSecrets
+    #  label: Forgejo image PullSecrets
+    #  description: "Forgejo image PullSecrets"
+    #  group: "Forgejo settings"
+    #  type: string
+    #  required: false
     - variable: forgejo.image.pullPolicy
       default: "IfNotPresent"
       label: Forgejo image pullPolicy
@@ -420,7 +418,7 @@ questions:
       type: storageclass
       required: false
   - variable: forgejo.params.customResources.gitea
-    default: "false"
+    default: false
     label: Modify Forgejo resource consumption
     group: "Forgejo settings"
     type: boolean
@@ -451,7 +449,6 @@ questions:
       type: string
       required: false
   - variable: forgejo.ingress.enabled
-    default: "true"
     label: Enable Forgejo ingress
     group: "Forgejo settings"
     type: boolean
@@ -500,12 +497,12 @@ questions:
       group: "Forgejo settings"
       type: string
       required: false
-    - variable: forgejo.postgresql-ha.postgresql.image.pullSecrets
-      label: Postgresql image PullSecrets
-      description: "Postgresql image PullSecrets"
-      group: "Forgejo settings"
-      type: string
-      required: false
+    #- variable: forgejo.postgresql-ha.postgresql.image.pullSecrets
+    #  label: Postgresql image PullSecrets
+    #  description: "Postgresql image PullSecrets"
+    #  group: "Forgejo settings"
+    #  type: string
+    #  required: false
     - variable: forgejo.postgresql-ha.postgresql.image.pullPolicy
       default: "IfNotPresent"
       label: Postgresql image pullPolicy
@@ -517,7 +514,7 @@ questions:
       - "If NotPresent"
       - "Never"
   - variable: forgejo.params.customPasswords.postgresqlHA
-    default: "false"
+    default: false
     label: Change Postgresql DB configuration
     description: "Change Postgresql DB configuration"
     group: "Forgejo settings"
@@ -561,7 +558,7 @@ questions:
       group: "Forgejo settings"
       type: password
   - variable: forgejo.params.customResources.postgresqlHA
-    default: "false"
+    default: false
     label: Modify Postgresql resource consumption
     group: "Forgejo settings"
     type: boolean
@@ -638,12 +635,12 @@ questions:
       group: "Forgejo settings"
       type: string
       required: false
-    - variable: forgejo.redis-cluster.image.pullSecrets
-      label: Redis image PullSecrets
-      description: "Redis image PullSecrets"
-      group: "Forgejo settings"
-      type: string
-      required: false
+    #- variable: forgejo.redis-cluster.image.pullSecrets
+    #  label: Redis image PullSecrets
+    #  description: "Redis image PullSecrets"
+    #  group: "Forgejo settings"
+    #  type: string
+    #  required: false
     - variable: forgejo.redis-cluster.image.pullPolicy
       default: "IfNotPresent"
       label: Redis image pullPolicy
@@ -655,7 +652,7 @@ questions:
       - "If NotPresent"
       - "Never"
   - variable: forgejo.params.customResources.redisCluster
-    default: "false"
+    default: false
     label: Modify Redis resource consumption
     group: "Forgejo settings"
     type: boolean
@@ -1014,7 +1011,6 @@ questions:
     type: string
     default: "10Gi"
   - variable: coder.coder.ingress.enabled
-    default: "true"
     label: Enable Coder Ingress
     group: "Coder Settings"
     type: boolean
