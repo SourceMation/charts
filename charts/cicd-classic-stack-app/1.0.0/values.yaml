@@ -21,16 +21,6 @@ sonarqube:
   seccompProfile: {}
   securityContext:
     fsGroup: 0
-  params:
-    customImage:
-      sonarqube: false
-      postgresql: false
-    customPasswords:
-      sonarqube: false
-      postgresql: false
-    customResources:
-      sonarqube: false
-      postgresql: false
   account:
     adminPassword: "P@ssword1"
   image:

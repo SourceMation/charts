@@ -34,12 +34,12 @@ questions:
       group: "SonarQube settings"
       type: string
       required: false
-    - variable: sonarqube.image.pullSecret
-      label: SonarQube image pullSecret
-      description: "SonarQube image pullSecret"
-      group: "SonarQube settings"
-      type: secret
-      required: false
+    #- variable: sonarqube.image.pullSecret
+    #  label: SonarQube image pullSecret
+    #  description: "SonarQube image pullSecret"
+    #  group: "SonarQube settings"
+    #  type: secret
+    #  required: false
     - variable: sonarqube.image.pullPolicy
       default: "IfNotPresent"
       label: SonarQube image pullPolicy
