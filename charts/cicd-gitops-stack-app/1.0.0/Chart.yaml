@@ -1,0 +1,79 @@
+apiVersion: v2
+name: cicd-gitops-stack-app
+description: A Helm chart for Kubernetes
+type: application
+version: 1.0.0
+
+appVersion: "1.0.0"
+
+annotations:
+  catalog.cattle.io/display-name: "CI/CD GitOps Stack"
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/release-name: cicd-gitops
+
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+
+keywords:
+- cicd-gitops-stack-app
+- cicd
+
+kubeVersion: '>=1.19.0-0'
+
+maintainers:
+- email: biuro@linuxpolska.com
+  name: Linux Polska
+sources:
+- https://github.com/linuxpolska/ezd-rp.git
+
+
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.x
+
+#- condition: global.argocdApp.enabled
+#  name: argocd
+#  repository: https://SonarSource.github.io/helm-chart-sonarqube
+#  version: 10.6.1+3163
+
+#- condition: global.tektonoperatorApp.enabled
+#  name: tektonoperator
+#  repository: https://SonarSource.github.io/helm-chart-sonarqube
+#  version: 10.6.1+3163
+
+#- condition: global.shipwrightcliApp.enabled
+#  name: shipwrightcli
+#  repository: https://SonarSource.github.io/helm-chart-sonarqube
+#  version: 10.6.1+3163
+
+#- condition: global.shipwrightoperatorApp.enabled
+#  name: shipwrightoperator
+#  repository: https://SonarSource.github.io/helm-chart-sonarqube
+#  version: 10.6.1+3163
+
+#- condition: global.gitlabApp.enabled
+#  name: gitlab
+#  repository: https://SonarSource.github.io/helm-chart-sonarqube
+#  version: 10.6.1+3163
+
+- condition: global.sonarqubeApp.enabled
+  name: sonarqube
+  repository: https://SonarSource.github.io/helm-chart-sonarqube
+  version: 10.6.1+3163
+
+- condition: global.harborApp.enabled
+  name: harbor
+  repository: https://helm.goharbor.io
+  version: 1.14.2
+
+- condition: global.coderApp.enabled
+  name: coder
+  repository: file://./charts/coder-2.13.2.tgz
+  version: 2.13.2
+
+- condition: global.coderApp.enabled
+  name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.5.19
+

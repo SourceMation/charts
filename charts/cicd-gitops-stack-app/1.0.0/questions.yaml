@@ -1,0 +1,551 @@
+categories:
+- cicd
+questions:
+  # sonarqubeApp
+- variable: global.sonarqubeApp.enabled
+  default: true
+  label: Deploy Sonarqube
+  group: "Components"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.params.customImage.sonarqube
+    default: false
+    label: Change SonarQube image
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.image.registry
+      default: "docker.io"
+      label: SonarQube image registry
+      description: "SonarQube image registry"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.image.repository
+      default: "sonarqube"
+      label: SonarQube image repository
+      description: "SonarQube image repository"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.image.tag
+      label: SonarQube image tag
+      description: "SonarQube image tag"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    #- variable: sonarqube.image.pullSecret
+    #  label: SonarQube image pullSecret
+    #  description: "SonarQube image pullSecret"
+    #  group: "SonarQube settings"
+    #  type: secret
+    #  required: false
+    - variable: sonarqube.image.pullPolicy
+      default: "IfNotPresent"
+      label: SonarQube image pullPolicy
+      description: "SonarQube image pullPolicy"
+      group: "SonarQube settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: sonarqube.account.adminPassword
+    default: "P@ssword1"
+    label: SonarQube admin password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "SonarQube settings"
+    type: password
+    required: false
+  - variable: sonarqube.ingress.enabled
+    label: Enable SonarQube Ingress
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.ingress.hosts.0.name
+      default: "sonarqube.apps.example.com"
+      label: URL
+      description: "SonarQube Ingress URL"
+      group: "SonarQube settings"
+      type: hostname
+      required: true
+  - variable: sonarqube.persistence.enabled
+    default: true
+    label: SonarQube persistent storage
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.persistence.size
+      default: "5Gi"
+      label: SonarQube persistent volume size
+      group: "SonarQube settings"
+      type: string
+      required: true
+    - variable: sonarqube.persistence.storageClass
+      label: SonarQube persistent volume Storage Class
+      group: "SonarQube settings"
+      type: storageclass
+      required: false
+  - variable: sonarqube.params.customResources.sonarqube
+    default: false
+    label: Modify SonarQube resource consumption
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.resources.limits.cpu
+      label: Milicore limit for a SonarQube instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.resources.requests.cpu
+      label: Milicore requests for a SonarQube instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.resources.limits.memory
+      label: Memory limit for a SonarQube instance
+      description: "Memory limit for a SonarQube instance"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.resources.requests.memory
+      label: Memory requests for a SonarQube instance
+      description: "Memory request, value must be <= memory limit"
+      group: "SonarQube settings"
+      type: string
+      required: false
+  - variable: sonarqube.params.customImage.postgresql
+    default: false
+    label: Change Postgresql image
+    description: "Change Postgresql image"
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.postgresql.image.registry
+      default: "docker.io"
+      label: Postgresql image registry
+      description: "Postgresql image registry"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.image.repository
+      default: "bitnami/postgresql"
+      label: Postgresql image repository
+      description: "Postgresql image repository"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.image.tag
+      label: Postgresql image tag
+      description: "Postgresql image tag"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    #- variable: sonarqube.postgresql.image.pullSecrets
+    #  label: Postgresql image PullSecrets
+    #  description: "Postgresql image PullSecrets"
+    #  group: "SonarQube settings"
+    #  type: secret
+    #  required: false
+    - variable: sonarqube.postgresql.image.pullPolicy
+      default: "IfNotPresent"
+      label: Postgresql image pullPolicy
+      description: "Postgresql image pullPolicy"
+      group: "SonarQube settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: sonarqube.params.customPasswords.postgresql
+    default: false
+    label: Change Postgresql DB configuration
+    description: "Change Postgresql DB configuration"
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.postgresql.postgresqlDatabase
+      default: "sonar"
+      label: SonarQube DB name
+      description: "SonarQube DB name"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.postgresqlUsername
+      default: "sonar"
+      label: SonarQube DB username
+      description: "SonarQube DB username"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.postgresqlPassword
+      default: "P@ssword1"
+      label: SonarQube DB password
+      description: "Default password is 'P@ssword1'. Change it!"
+      group: "SonarQube settings"
+      type: password
+  - variable: sonarqube.params.customResources.postgresql
+    default: false
+    label: Modify Postgresql resource consumption
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.postgresql.persistence.size
+      default: "20Gi"
+      label: Postgresql persistent volume size
+      description: "Postgresql persistent volume size"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.persistence.storageClass
+      label: Postgresql persistent Storage Class
+      description: "Postgresql persistent Storage Class"
+      group: "SonarQube settings"
+      type: storageclass
+    - variable: sonarqube.postgresql.resources.limits.cpu
+      default: "2000m"
+      label: Milicore limit for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.resources.requests.cpu
+      default: "100m"
+      label: Milicore requests for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.resources.limits.memory
+      default: "2Gi"
+      label: Memory limit for a Postgresql instance
+      description: "Memory limit for a Postgresql instance"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.resources.requests.memory
+      default: "200Mi"
+      label: Memory requests for a Postgresql instance
+      description: "Memory request, value must be <= memory limit"
+      group: "SonarQube settings"
+      type: string
+  - variable: sonarqube.postgresql.updateStrategy.type
+    default: "RollingUpdate"
+    label: Postgresql update strategy
+    description: "Postgresql update strategy"
+    group: "SonarQube settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
+  - variable: sonarqube.prometheusMonitoring.podMonitor.enabled
+    default: true
+    label: SonarQube metrics
+    description: "SonarQube metrics"
+    group: "SonarQube settings"
+    type: boolean
+  - variable: sonarqube.postgresql.metrics.enabled
+    default: true
+    label: Postgresql metrics
+    description: "Postgresql metrics"
+    group: "SonarQube settings"
+    type: boolean
+
+  # harborApp
+- variable: global.harborApp.enabled
+  default: true
+  label: "Deploy Harbor"
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: harbor.expose.type
+    label: "How you will access harbor portal through?"
+    type: enum
+    options:
+    - "ingress"
+    - "clusterIP"
+    - "nodePort"
+    - "loadBalancer"
+    group: "Harbor settings"
+  - variable: harbor.expose.ingress.hosts.core
+    label: "Ingress for harbor portal"
+    type: hostname
+    group: "Harbor settings"
+    show_if: "harbor.expose.type=ingress"
+  - variable: harbor.expose.nodePort.ports.http.nodePort
+    label: "NodePort for harbor portal http protocol"
+    type: int
+    group: "Harbor settings"
+    show_if: "harbor.expose.type=nodePort"
+  - variable: harbor.expose.nodePort.ports.https.nodePort
+    label: "NodePort for harbor portal https protocol"
+    type: int
+    group: "Harbor settings"
+    show_if: "harbor.expose.type=nodePort"
+  - variable: harbor.persistence.enabled
+    label: "Enable persistent storage"
+    type: boolean
+    group: "Harbor settings"
+  - variable: harbor.persistence.resourcePolicy
+    label: "Do you want to keep all PVCs after helm chart uninstall? If yes, write 'keep'. If no, leave empty line."
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.registry.storageClass
+    label: "Choose storage class for registry PVC."
+    type: storageclass
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.registry.size
+    label: "Size for registry PVC"
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.jobservice.storageClass
+    label: "Choose storage class for jobservice PVC."
+    type: storageclass
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.jobservice.size
+    label: "Size for jobservice PVC"
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.database.storageClass
+    label: "Choose storage class for database PVC."
+    type: storageclass
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.database.size
+    label: "Size for database PVC"
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.redis.storageClass
+    label: "Choose storage class for redis PVC."
+    type: storageclass
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.redis.size
+    label: "Size for redis PVC"
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.trivy.storageClass
+    label: "Choose storage class for trivy PVC."
+    type: storageclass
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.persistence.persistentVolumeClaim.trivy.size
+    label: "Size for trivy PVC"
+    type: string
+    group: "Harbor settings"
+    show_if: "harbor.persistence.enabled=true"
+  - variable: harbor.imagePullPolicy
+    label: "Select image pull policy"
+    type: enum
+    options:
+    - "IfNotPresent"
+    - "Always"
+    - "Never"
+    group: "Harbor settings"
+  #- variable: harbor.imagePullSecrets
+  - variable: harbor.updateStrategy.type
+    label: "Select update strategy"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    group: "Harbor settings"
+  - variable: harbor.harborAdminPassword
+    label: "Initial password for 'admin' user"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.secretKey
+    label: "chose a secret key minimum 16 characters long"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.nginx.image.repository
+    label: "Image source for harbor nginx"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.nginx.image.tag
+    label: "Image tag for harbor nginx"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.nginx.nodeSelector
+  #- variable: harbor.nginx.tolerations
+  #- variable: harbor.nginx.affinity
+  - variable: harbor.portal.image.repository
+    label: "Image source for harbor portal"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.portal.image.tag
+    label: "Image tag for harbor portal"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.portal.nodeSelector
+  #- variable: harbor.portal.tolerations
+  #- variable: harbor.portal.affinity
+  - variable: harbor.core.image.repository
+    label: "Image source for harbor core"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.core.image.tag
+    label: "Image tag for harbor core"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.core.nodeSelector
+  #- variable: harbor.core.tolerations
+  #- variable: harbor.core.affinity
+  - variable: harbor.jobservice.image.repository
+    label: "Image source for harbor jobservice"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.jobservice.image.tag
+    label: "Image tag for harbor jobservice"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.jobservice.nodeSelector
+  #- variable: harbor.jobservice.tolerations
+  #- variable: harbor.jobservice.affinity
+  - variable: harbor.registry.registry.image.repository
+    label: "Image source for harbor registry"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.registry.registry.image.tag
+    label: "Image tag for harbor registry"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.registry.controller.image.repository
+    label: "Image source for harbor registry controller"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.registry.controller.image.tag
+    label: "Image tag for harbor registry controller"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.registry.nodeSelector
+  #- variable: harbor.registry.tolerations
+  #- variable: harbor.registry.affinity
+  - variable: harbor.registry.credentials.username
+    label: "Username for harbor registry"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.registry.credentials.password
+    label: "Password for harbor registry"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.trivy.image.repository
+    label: "Image source for harbor trivy"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.trivy.image.tag
+    label: "Image tag for harbor trivy"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.trivy.nodeSelector
+  #- variable: harbor.trivy.tolerations
+  #- variable: harbor.trivy.affinity
+  - variable: harbor.database.internal.image.repository
+    label: "Image source for harbor database"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.database.internal.image.tag
+    label: "Image tag for harbor database"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.database.internal.password
+    label: "Password for harbor database"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.database.internal.nodeSelector
+  #- variable: harbor.database.internal.tolerations
+  #- variable: harbor.database.internal.affinity
+  - variable: harbor.redis.internal.image.repository
+    label: "Image source for harbor redis"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.redis.internal.image.tag
+    label: "Image tag for harbor redis"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.redis.internal.nodeSelector
+  #- variable: harbor.redis.internal.tolerations
+  #- variable: harbor.redis.internal.affinity
+  - variable: harbor.exporter.image.repository
+    label: "Image source for harbor exporter"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.exporter.image.tag
+    label: "Image tag for harbor exporter"
+    type: string
+    group: "Harbor settings"
+  #- variable: harbor.exporter.nodeSelector
+  #- variable: harbor.exporter.tolerations
+  #- variable: harbor.exporter.affinity
+  - variable: harbor.metrics.enabled
+    label: "Enable harbor metrics"
+    type: boolean
+    group: "Harbor settings"
+  - variable: harbor.metrics.serviceMonitor.enabled
+    label: "Enable harbor metrics system monitor"
+    type: boolean
+    group: "Harbor settings"
+    show_if: "harbor.metrics.enabled=true"
+  - variable: harbor.trace.enabled
+    label: "Enable harbor trace by otel"
+    type: boolean
+    group: "Harbor settings"
+
+  # coderApp
+- variable: global.coderApp.enabled
+  default: "true"
+  label: Deploy Coder
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: postgresql.auth.database
+    label: Postgresql database name
+    description: "Name for PostgreSQL database"
+    group: "Coder Settings"
+    type: string
+    default: "coder"
+    required: true
+  - variable: postgresql.auth.username
+    label: SuperUser name
+    description: "Username for PostgreSQL SuperUser role"
+    group: "Coder Settings"
+    type: string
+    default: "coder"
+    required: true
+  - variable: postgresql.auth.password
+    default: "P@ssword1"
+    label: SuperUser password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Coder Settings"
+    type: password
+    min: 8
+    required: true
+  - variable: postgresql.persistence.size
+    label: Database size
+    description: "Size database data"
+    group: "Coder Settings"
+    type: string
+    default: "10Gi"
+  - variable: coder.coder.ingress.enabled
+    label: Enable Coder Ingress
+    group: "Coder Settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: coder.coder.ingress.host
+      label: URL
+      description: "Configure url for coder web-ui"
+      group: "Coder Settings"
+      type: hostname
+      default: "coder.my.domain.internal"
+      min: 6

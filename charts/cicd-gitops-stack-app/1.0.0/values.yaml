@@ -1,0 +1,323 @@
+
+global:
+  argocdApp:
+    enabled: false
+  tektonoperatorApp:
+    enabled: false
+  shipwrightcliApp:
+    enabled: false
+  shipwrightoperatorApp:
+    enabled: false
+  gitlabApp:
+    enabled: false
+  sonarqubeApp:
+    enabled: true
+  harborApp:
+    enabled: true
+  coderApp:
+    enabled: true
+
+
+sonarqube:
+# missing:
+# - nameOverride, namespaceOverride
+# - updateStrategy
+  affinity: {}
+  nodeSelector: {}
+  seccompProfile: {}
+  securityContext:
+    fsGroup: 0
+  account:
+    adminPassword: "P@ssword1"
+  image:
+    registry: docker.io
+    repository: "sonarqube"
+    #tag: 10.6.0-{{ .Values.edition }}
+    pullPolicy: "IfNotPresent"
+    #pullSecrets: []
+  ingress:
+    enabled: true
+    hosts:
+      - name: "sonarqube.apps.example.com"
+  networkPolicy:
+    enabled: false
+  persistence:
+    enabled: true
+    size: "5Gi"
+    storageClass: ""
+    accessMode: "ReadWriteOnce"
+  plugins:
+    # Define the list of plugins to install. Example:
+    # install:
+    #   - https://example.com/plugin/ver1.0/plugin.jar"
+    install: []
+  prometheusMonitoring:
+    podMonitor:
+      enabled: true
+  resources:
+    limits:
+      cpu: "800m"
+      memory: "6144Mi"
+      ephemeral-storage: "50Gi"
+    requests:
+      cpu: "400m"
+      memory: "2048Mi"
+      ephemeral-storage: "512Mi"
+  service:
+    type: ClusterIP
+    externalPort: 9000
+    internalPort: 9000
+  postgresql:
+    primary:
+      affinity: {}
+      nodeSelector: {}
+    enabled: true
+    image:
+      registry: docker.io
+      repository: bitnami/postgresql
+      #tag: 11.14.0-debian-10-r22
+      pullPolicy: IfNotPresent
+      #pullSecrets: 
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    nameOverride: ""
+    networkPolicy:
+      enabled: false
+    postgresqlUsername: "sonar"
+    postgresqlPassword: "P@ssword1"
+    postgresqlDatabase: "sonar"
+    persistence:
+      enabled: true
+      existingClaim: "{{ .Release.Name }}-data-gitlab-postgresql-0"
+      claimName: "data-postgresql-0"
+      size: "20Gi"
+      storageClass: ""
+      accessMode:
+      - "ReadWriteOnce"
+    resources:
+      limits:
+        cpu: "2000m"
+        memory: "2Gi"
+      requests:
+        cpu: "100m"
+        memory: "200Mi"
+    securityContext:
+      enabled: true
+      fsGroup: 1001
+    service:
+      port: 5432
+      type: ClusterIP
+    updateStrategy:
+      type: "RollingUpdate"
+
+
+harbor:
+# missing:
+# - nameOverride, namespaceOverride
+# - networkPolicy:
+  expose:
+    type: ingress
+    ingress:
+      hosts:
+        core: harbor.apps.example.com
+    nodePort:
+      ports:
+        http:
+          nodePort: 30002
+        https:
+          nodePort: 30003
+  persistence:
+    enabled: true
+    resourcePolicy: ""
+    persistentVolumeClaim:
+      registry:
+        storageClass: ""
+        size: 5Gi
+      jobservice:
+        storageClass: ""
+        size: 1Gi
+      database:
+        storageClass: ""
+        size: 1Gi
+      redis:
+        storageClass: ""
+        size: 1Gi
+      trivy:
+        storageClass: ""
+        size: 5Gi
+
+  imagePullPolicy: IfNotPresent
+  #imagePullSecrets:
+  ##  - name: docker-registry-secret
+  ##  - name: internal-registry-secret
+  #
+  updateStrategy:
+    type: RollingUpdate
+
+  harborAdminPassword: "P@ssword1"
+  secretKey: "not-a-secure-key-min-16-characters"
+
+  nginx:
+    image:
+      repository: goharbor/nginx-photon
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  portal:
+    image:
+      repository: goharbor/harbor-portal
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  core:
+    image:
+      repository: goharbor/harbor-core
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  jobservice:
+    image:
+      repository: goharbor/harbor-jobservice
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  registry:
+    registry:
+      image:
+        repository: goharbor/registry-photon
+        tag: v2.10.2
+    controller:
+      image:
+        repository: goharbor/harbor-registryctl
+        tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    credentials:
+      username: "harbor_registry_user"
+      password: "harbor_registry_password"
+
+  trivy:
+    image:
+      repository: goharbor/trivy-adapter-photon
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  database:
+    internal:
+      image:
+        repository: goharbor/harbor-db
+        tag: v2.10.2
+      password: "P@ssword1"
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+
+  redis:
+    internal:
+      image:
+        repository: goharbor/redis-photon
+        tag: v2.10.2
+      nodeSelector: {}
+      tolerations: []
+      affinity: {}
+
+  exporter:
+    image:
+      repository: goharbor/harbor-exporter
+      tag: v2.10.2
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  trace:
+    enabled: true
+    provider: otel
+
+coder:
+  coder:
+    env:
+      - name: coder-db-postgresql
+        valueFrom:
+          secretKeyRef:
+            name: coder-db-url
+            key: url
+    ingress:
+      enable: true
+      host: "coder.apps.example.com"
+      tls:
+        enable: false
+        secretName: ""
+    service:
+      enable: true
+      type: ClusterIP
+      externalTrafficPolicy: Cluster
+      # if service.type LoadBalancer
+      loadBalancerIP: ""
+    serviceAccount:
+      name: coder
+    image:
+      repo: "ghcr.io/coder/coder"
+      tag: "v2.13.2"
+      pullSecrets: []
+    certs:
+      secrets: []
+    volumes: []
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: app.kubernetes.io/instance
+                    operator: In
+                    values:
+                      - "coder"
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+    nodeSelector: {}
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      seccompProfile:
+        type: RuntimeDefault
+      allowPrivilegeEscalation: false
+
+postgresql:
+  auth:
+    username: coder
+    password: P@ssword1
+    database: coderi
+  primary:
+    enabled: true
+    persistence:
+      accessModes:
+        - ReadWriteOnce
+      storageClass: ""
+      volumeName: "data"
+      size: "10Gi"
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: "Retain"
+      whenDeleted: "Delete"
+  
+  nameOverride: "coder-postgresql"
+  fullnameOverride: ""
+

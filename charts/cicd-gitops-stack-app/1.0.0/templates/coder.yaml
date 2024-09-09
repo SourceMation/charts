@@ -1,0 +1,10 @@
+{{- if $.Values.global.coderApp.enabled }}
+---
+apiVersion: v1
+stringData:
+  url: postgres://{{ $.Values.postgresql.auth.username }}:{{ $.Values.postgresql.auth.password }}@coder:5432/coder?sslmode=disable
+kind: Secret
+metadata:
+  name: coder-db-url
+
+{{- end }}
