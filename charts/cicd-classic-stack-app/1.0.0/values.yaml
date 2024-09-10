@@ -108,9 +108,6 @@ sonarqube:
 
 
 harbor:
-# missing:
-# - nameOverride, namespaceOverride
-# - networkPolicy:
   expose:
     type: ingress
     ingress:
@@ -131,7 +128,7 @@ harbor:
         size: 5Gi
       jobservice:
         storageClass: ""
-        size: 1Gi
+        size: 1Gi      
       database:
         storageClass: ""
         size: 1Gi
@@ -148,15 +145,16 @@ harbor:
   ##  - name: internal-registry-secret
   #
   updateStrategy:
-    type: RollingUpdate
+    type: Recreate
 
   harborAdminPassword: "P@ssword1"
-  secretKey: "not-a-secure-key-min-16-characters"
+  #secretKey: "not-a-secure-key-min-16-characters"
 
   nginx:
     image:
       repository: goharbor/nginx-photon
-      tag: v2.10.2
+      tag: v2.11.1
+    replicas: 1
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -164,7 +162,8 @@ harbor:
   portal:
     image:
       repository: goharbor/harbor-portal
-      tag: v2.10.2
+      tag: v2.11.1
+    replicas: 1
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -172,7 +171,8 @@ harbor:
   core:
     image:
       repository: goharbor/harbor-core
-      tag: v2.10.2
+      tag: v2.11.1
+    replicas: 1
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -180,7 +180,8 @@ harbor:
   jobservice:
     image:
       repository: goharbor/harbor-jobservice
-      tag: v2.10.2
+      tag: v2.11.1
+    replicas: 1
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -189,22 +190,24 @@ harbor:
     registry:
       image:
         repository: goharbor/registry-photon
-        tag: v2.10.2
+        tag: v2.11.1
     controller:
       image:
         repository: goharbor/harbor-registryctl
-        tag: v2.10.2
+        tag: v2.11.1
+    replicas: 1
     nodeSelector: {}
     tolerations: []
     affinity: {}
     credentials:
       username: "harbor_registry_user"
-      password: "harbor_registry_password"
+      password: "P@ssword1"
 
   trivy:
     image:
       repository: goharbor/trivy-adapter-photon
-      tag: v2.10.2
+      tag: v2.11.1
+    replicas: 1
     nodeSelector: {}
     tolerations: []
     affinity: {}
@@ -213,7 +216,7 @@ harbor:
     internal:
       image:
         repository: goharbor/harbor-db
-        tag: v2.10.2
+        tag: v2.11.1
       password: "P@ssword1"
       nodeSelector: {}
       tolerations: []
@@ -223,7 +226,7 @@ harbor:
     internal:
       image:
         repository: goharbor/redis-photon
-        tag: v2.10.2
+        tag: v2.11.1
       nodeSelector: {}
       tolerations: []
       affinity: {}
@@ -231,7 +234,8 @@ harbor:
   exporter:
     image:
       repository: goharbor/harbor-exporter
-      tag: v2.10.2
+      tag: v2.11.1
+    replicas: 1
     nodeSelector: {}
     tolerations: []
     affinity: {}
