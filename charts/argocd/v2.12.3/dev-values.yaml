@@ -1,0 +1,102 @@
+nameOverride: cicd-gitops-stack-app
+fullnameOverride: cicd-gitops-stack-app
+crds:
+  install: true
+  keep: false
+global:
+  domain: argocd
+  additionalLabels:
+    app: argo-cd
+  image:
+    repository: quay.io/argoproj/argocd
+    tag: ""
+    imagePullPolicy: ""
+  imagePullSecrets: []
+  logging:
+    format: text
+    level: info
+  podLabels: {}
+  securityContext: {}
+  # runAsUser: 999 
+  # runAsGroup: 999
+  # fsGroup: 999
+  networkPolicy:
+    create: false
+    defaultDenyIngress: false
+  affinity:
+    podAntiAffinity: soft
+    nodeAffinity:
+      type: hard
+      matchExpressions: []
+        # - key: topology.kubernetes.io/zone
+        #   operator: In
+        #   values:
+        #    - antarctica-east1
+  deploymentStrategy: {}
+    # type: RollingUpdate
+    # rollingUpdate:
+    #   maxSurge: 25%
+    #   maxUnavailable: 25%
+configs:
+  cm:
+    create: true
+    admin.enabled: true
+  params:
+    server.insecure: true
+  rbac:
+    create: true
+  ssh:
+    #ssh.dev.azure.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7Hr1oTWqNqOlzGJOfGJ4NakVyIzf1rXYd4d7wo6jBlkLvCA4odBlL0mDUyZ0/QUfTTqeu+tm22gOsv+VrVTMk6vwRU75gY/y9ut5Mb3bR5BV58dKXyq9A9UeB5Cakehn5Zgm6x1mKoVyf+FFn26iYqXJRgzIZZcZ5V6hrE0Qg39kZm4az48o0AUbf6Sp4SLdvnuMa2sVNwHBboS7EJkm57XQPVU3/QpyNLHbWDdzwtrlS+ez30S3AdYhLKEOxAG8weOnyrtLJAUen9mTkol8oII1edf7mWWbWVf0nBmly21+nZcmCTISQBtdcyPaEno7fFQMDD26/s0lfKob4Kw8H
+    extraHosts: ''
+  repositories: {}
+    # private-helm-repo:
+    #   url: https://my-private-chart-repo.internal
+    #   name: private-repo
+    #   type: helm
+    #   password: my-password
+    #   username: my-username
+  secret:
+    createSecret: true
+    # -- Shared secret for authenticating GitHub webhook events
+    githubSecret: ""
+    # -- Shared secret for authenticating GitLab webhook events
+    gitlabSecret: ""
+redis:
+  enabled: true
+server:
+  name: server
+  replicas: 1
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 50
+  image:
+    repository: ""
+    tag: ""
+    imagePullPolicy: ""
+  imagePullSecrets: []
+  containerSecurityContext:
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    seccompProfile:
+      type: RuntimeDefault
+    capabilities:
+      drop:
+      - ALL
+  service:
+    type: ClusterIP
+    # if servicetype LoadBalancer
+    loadBalancerIP: ""
+    externalTrafficPolicy: Cluster
+  metrics:
+    enabled: false
+    serviceMonitor:
+      enabled: true
+      interval: 30s
+      scrapeTimeout: ""
+  ingress:
+    enabled: true
+    hostname: argo.apps.dev0.lab.linuxpolska.pl
