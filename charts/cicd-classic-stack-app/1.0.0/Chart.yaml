@@ -47,6 +47,11 @@ dependencies:
   repository: oci://codeberg.org/forgejo-contrib
   version: 7.0.3
 
+- condition: global.gitlabApp.enabled
+  name: gitlab
+  repository: https://charts.gitlab.io/
+  version: 8.3.1
+
 - condition: global.coderApp.enabled
   name: coder
   repository: file://./charts/coder-2.13.2.tgz

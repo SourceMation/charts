@@ -6,6 +6,8 @@ global:
     enabled: true
   forgejoApp:
     enabled: true
+  gitlabApp:
+    enabled: true
   coderApp:
     enabled: true
   jenkinsApp:
@@ -244,6 +246,7 @@ harbor:
     enabled: true
     provider: otel
 
+
 forgejo:
 # missing:
 # - nameOverride, namespaceOverride
@@ -413,6 +416,367 @@ forgejo:
       type: ClusterIP
       ports:
         redis: 6379
+
+
+gitlab:
+  auth:
+    gitlab_password: "P@ssword1"
+    postgresql_password: "P@ssword1"
+    postgresql_postgres_password: "P@ssword1"
+  global:
+    edition: ce
+    #gitlabVersion: "17.3.1"
+    hosts:
+      domain: "apps.example.com"
+      hostSuffix:
+      https: true
+      gitlab:
+        https: true
+      registry:
+        https: true
+      minio:
+        https: true
+      smartcard: {}
+      pages:
+        https: true
+      tls:
+        enabled: false
+      kas: {}
+    ingress:
+      enabled: true
+      configureCertmanager: false
+      tls:
+        enabled: true
+    monitoring:
+      enabled: true
+    praefect:
+      enabled: false
+    spamcheck:
+      enabled: false
+  upgradeCheck:
+    enabled: false
+    resources:
+      requests:
+        cpu: "50m"
+  certmanager:
+  # missing:
+  # - nameOverride, namespaceOverride
+    affinity: {}
+    nodeSelector:
+      kubernetes.io/os: linux
+    global:
+      imagePullSecrets: []
+    install: true
+    installCRDs: false
+    image:
+      registry: quay.io
+      repository: jetstack/cert-manager-controller
+      #tag: ""
+      pullPolicy: IfNotPresent
+    prometheus:
+      enabled: true
+      servicemonitor:
+        enabled: true
+    rbac:
+      create: true
+    resources: {}
+    strategy: {}
+    cainjector:
+      image:
+        registry: quay.io
+        repository: jetstack/cert-manager-cainjector
+        #tag:
+        pullPolicy: IfNotPresent
+      resources: {}
+      strategy: {}
+    startupapicheck:
+      image:
+        registry: quay.io
+        repository: jetstack/cert-manager-ctl
+        #tag: ""
+        pullPolicy: IfNotPresent
+      resources: {}
+    webhook:
+      image:
+        registry: quay.io
+        repository: jetstack/cert-manager-webhook
+        #tag: ""
+        pullPolicy: IfNotPresent
+      resources: {}
+      strategy: {}
+  certmanager-issuer:
+    email: "email@example.com"
+    rbac:
+      create: true
+    resources:
+      requests:
+        cpu: 50m
+  nginx-ingress:
+    enabled: true
+    #nameOverride: ""
+    #fullnameOverride: ""
+    controller:
+      affinity: {}
+      #nodeSelector: {}
+      image:
+        registry: registry.gitlab.com
+        image: gitlab-org/cloud-native/mirror/images/ingress-nginx/controller
+        #tag: "v1.3.1"
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "100Mi"
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      service:
+        enabled: true
+        externalIPs: []
+        type: LoadBalancer
+      updateStrategy: {}
+  nginx-ingress-geo:
+    enabled: false
+  haproxy:
+    install: false
+  prometheus:
+    install: false
+  redis:
+    install: true
+    architecture: "standalone"
+    nameOverride: ""
+    fullnameOverride: ""
+    cluster:
+      enabled: false
+    image:
+      registry: docker.io
+      repository: bitnami/redis
+      #tag: 6.2.7-debian-11-r11
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    master:
+      affinity: {}
+      nodeSelector: {}
+      persistence:
+        enabled: true
+        claimName: "data-gitlab-redis-master-0"
+        existingClaim: "{{ .Release.Name }}-data-gitlab-redis-master-0"
+        #size: 8Gi
+        size: "1Gi"
+        storageClass: ""
+        accessMode:
+        - "ReadWriteOnce"
+      resources: {}
+      service:
+        type: "ClusterIP"
+        ports:
+          redis: 6379
+      updateStrategy:
+        type: RollingUpdate
+        rollingUpdate: {}
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  registry:
+    # missing:
+    # - nameOverride, namespaceOverride
+    affinity: {}
+    nodeSelector: {}
+    enabled: true
+    deployment:
+      strategy: {}
+    image:
+      repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-container-registry
+      #tag: 'v4.6.0-gitlab'
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "32Mi"
+    service:
+      name: "registry"
+      type: "ClusterIP"
+      externalPort: 5000
+      internalPort: 5000
+  minio:
+    image: "minio/minio"
+    imageTag: "RELEASE.2017-12-28T01-21-00Z"
+    imagePullPolicy: IfNotPresent
+    pullSecrets: []
+    persistence:
+      enabled: true
+      #size: 10Gi
+      size: "3Gi"
+      storageClass: ""
+      accessMode: "ReadWriteOnce"
+    metrics:
+      serviceMonitor:
+        enabled: true
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+  postgresql:
+    install: true
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    primary:
+      persistence:
+        enabled: true
+        #size: 8Gi
+        size: "2Gi"
+        existingClaim: "{{ .Release.Name }}-data-gitlab-postgresql-0"
+        claimName: "data-gitlab-postgresql-0"
+        storageClass: ""
+        accessMode:
+        - "ReadWriteOnce"
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "250m"
+  shared-secrets:
+    enabled: true
+  gitlab-runner:
+    install: true
+    # hardcoded secret, need to be changed
+    certsSecretName: "cicd1-wildcard-tls-chain"
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        type: "ClusterIP"
+    resources: {}
+    service:
+      enabled: true
+  traefik:
+    install: false
+    persistence:
+      size: "128Mi"
+      storageClass: ""
+  gitlab:
+    gitlab-exporter:
+      enabled: true
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      resources:
+        requests:
+          cpu: "75m"
+          memory: "100M"
+      service:
+        name: "gitlab-exporter"
+        type: "ClusterIP"
+        externalPort: 9168
+        internalPort: 9168
+    gitlab-pages:
+      global:
+        pages:
+          enabled: false
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      service:
+        type: "ClusterIP"
+        externalPort: 8090
+    gitlab-shell:
+      enabled: true
+      sshDaemon: "openssh"
+      resources:
+        requests:
+          cpu: "0"
+          memory: "6M"
+      service:
+        name: "gitlab-shell"
+        type: "ClusterIP"
+        internalPort: 2222
+      metrics:
+        # Metrics are not supported for the "openssh"
+        enabled: false
+        serviceMonitor:
+          enabled: true
+    gitaly:
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      persistence:
+        enabled: true
+        #size: 50Gi
+        size: "1Gi"
+        storageClass: ""
+        accessMode: "ReadWriteOnce"
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "200Mi"
+    kas:
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "100M"
+      service:
+        type: "ClusterIP"
+        externalPort: 8150
+        internalPort: 8150
+    migrations:
+      enabled: true
+      resources:
+        requests:
+          cpu: "250m"
+          memory: "200Mi"
+    sidekiq:
+      enabled: true
+      metrics:
+        enabled: true
+        podMonitor:
+          enabled: true
+      resources:
+        requests:
+          cpu: "900m"
+          memory: "2G"
+    toolbox:
+      enabled: true
+      persistence:
+        enabled: false
+        size: "10Gi"
+        storageClass: ""
+      resources:
+        requests:
+          cpu: "50m"
+          memory: "350M"
+    webservice:
+      enabled: true
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      resources:
+        requests:
+          cpu: "300m"
+          memory: "2.5G"
+      service:
+        type: "ClusterIP"
+        externalPort: 8080
+        internalPort: 8080
+  gitlab-zoekt:
+    install: false
+    indexStorage: "2Gi"
+    indexStorageClassName: ""
 
 
 coder:

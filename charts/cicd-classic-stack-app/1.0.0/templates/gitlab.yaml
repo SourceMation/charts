@@ -1,0 +1,172 @@
+{{- if .Values.global.gitlabApp.enabled }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Release.Name }}-sm-cleaner
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: {{ .Release.Namespace }}
+  name: {{ include "common.names.shortname" $ }}-sm-cleaner-role
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+rules:
+- apiGroups: [""]
+  resources: ["persistentvolumeclaims"]
+  verbs: ["get", "list", "watch", "delete", "patch", "update"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list", "watch", "delete", "patch", "update"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "common.names.shortname" $ }}-sm-cleaner-binding
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Release.Name }}-sm-cleaner
+  namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ include "common.names.shortname" $ }}-sm-cleaner-role
+  apiGroup: rbac.authorization.k8s.io
+  
+---
+apiVersion: v1
+data:
+  password: {{ .Values.gitlab.auth.gitlab_password | b64enc }}
+kind: Secret
+metadata:
+  name: {{ include "common.names.shortname" $ }}-gitlab-initial-root-password
+  namespace: {{ include "common.names.namespace" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "0"
+type: Opaque
+  
+  {{- if .Values.gitlab.postgresql.install }}
+---
+apiVersion: v1
+data:
+  postgresql-password: {{ .Values.gitlab.auth.postgresql_password | b64enc }}
+  postgresql-postgres-password: {{ .Values.gitlab.auth.postgresql_postgres_password | b64enc }}
+kind: Secret
+metadata:
+  name: {{ include "common.names.shortname" $ }}-postgresql-password
+  namespace: {{ include "common.names.namespace" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "0"
+type: Opaque
+  {{- end }}
+
+  {{- if and .Values.gitlab.postgresql.install .Values.gitlab.postgresql.primary.persistence.enabled }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+  name: {{ include "common.names.shortname" $ }}-{{ .Values.gitlab.postgresql.primary.persistence.claimName }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+spec:
+    {{- with .Values.gitlab.postgresql.primary.persistence }}
+  accessModes:
+    {{ .accessMode | toYaml | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .size }}
+    {{- if not (empty .storageClass) }}
+  storageClassName: {{ .storageClass }}
+    {{- end }}
+  volumeMode: Filesystem
+    {{- end }}
+  {{- end }}
+
+  {{- if and (.Values.gitlab.redis.install) (eq .Values.gitlab.redis.architecture "standalone") (.Values.gitlab.redis.master.persistence.enabled) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+  name: {{ include "common.names.shortname" $ }}-{{ .Values.gitlab.redis.master.persistence.claimName }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+spec:
+    {{- with .Values.gitlab.redis.master.persistence }}
+  accessModes:
+    {{ .accessMode | toYaml | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .size }}
+    {{- if not (empty .storageClass) }}
+  storageClassName: {{ .storageClass }}
+    {{- end }}
+  volumeMode: Filesystem
+    {{- end }}
+  {{- end }}
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": hook-succeeded
+  name: {{ include "common.names.shortname" $ }}-delete-secrets
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+spec:
+  ttlSecondsAfterFinished: 5
+  activeDeadlineSeconds: 30
+  template:
+    spec:
+      serviceAccountName: {{ .Release.Name }}-sm-cleaner
+      containers:
+        - name: delete-secrets
+          image: bitnami/kubectl
+          command: ["sh", "-c", "kubectl delete -n {{ .Release.Namespace }} --ignore-not-found=true $(kubectl get secret -o name |grep -v 'helm.release.v')"]
+      restartPolicy: Never
+  backoffLimit: 3
+
+  {{- if .Values.gitlab.gitlab.gitaly.persistence.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "common.names.shortname" $ }}-delete-pvc
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-delete-policy": hook-succeeded
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+spec:
+  ttlSecondsAfterFinished: 5
+  activeDeadlineSeconds: 15
+  template:
+    spec:
+      serviceAccountName: {{ .Release.Name }}-sm-cleaner
+      containers:
+        - name: delete-gitaly-pvc
+          image: bitnami/kubectl
+          command: ["sh", "-c", "kubectl delete pvc repo-data-{{ .Release.Name }}-gitaly-0 & sleep 3 && true"]
+      restartPolicy: OnFailure
+  backoffLimit: 3
+  {{- end }}
+
+{{- end }}
