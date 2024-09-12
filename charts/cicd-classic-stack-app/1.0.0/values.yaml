@@ -459,6 +459,8 @@ gitlab:
       requests:
         cpu: "50m"
   certmanager:
+    install: true
+    installCRDs: false
   # missing:
   # - nameOverride, namespaceOverride
     affinity: {}
@@ -466,8 +468,6 @@ gitlab:
       kubernetes.io/os: linux
     global:
       imagePullSecrets: []
-    install: true
-    installCRDs: false
     image:
       registry: quay.io
       repository: jetstack/cert-manager-controller
@@ -580,11 +580,11 @@ gitlab:
       serviceMonitor:
         enabled: true
   registry:
+    enabled: true
     # missing:
     # - nameOverride, namespaceOverride
     affinity: {}
     nodeSelector: {}
-    enabled: true
     deployment:
       strategy: {}
     image:
@@ -601,14 +601,35 @@ gitlab:
         cpu: "50m"
         memory: "32Mi"
     service:
-      name: "registry"
       type: "ClusterIP"
       externalPort: 5000
       internalPort: 5000
   minio:
+    # missing:
+    # - affinity
+    # - nameOverride, namespaceOverride
+    # - image.registry
+    nodeSelector: {}
+    defaultBuckets:
+      - name: "registry"
+      - name: "git-lfs"
+      - name: "runner-cache"
+      - name: "gitlab-uploads"
+      - name: "gitlab-artifacts"
+      - name: "gitlab-backups"
+      - name: "gitlab-packages"
+      - name: "tmp"
+      - name: "gitlab-mr-diffs"
+      - name: "gitlab-terraform-state"
+      - name: "gitlab-ci-secure-files"
+      - name: "gitlab-dependency-proxy"
+      - name: "gitlab-pages"
     image: "minio/minio"
-    imageTag: "RELEASE.2017-12-28T01-21-00Z"
+    #imageTag: "RELEASE.2017-12-28T01-21-00Z"
     imagePullPolicy: IfNotPresent
+    deployment:
+      strategy:
+        type: Recreate
     pullSecrets: []
     persistence:
       enabled: true
@@ -623,13 +644,26 @@ gitlab:
       requests:
         memory: "128Mi"
         cpu: "100m"
+    serviceType: ClusterIP
+    servicePort: 9000
   postgresql:
     install: true
+    architecture: standalone
+    nameOverride: ""
+    fullnameOverride: ""
+    image:
+      registry: docker.io
+      repository: bitnami/postgresql
+      #tag: 15.3.0-debian-11-r0
+      pullPolicy: IfNotPresent
+      pullSecrets: []
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
     primary:
+      affinity: {}
+      nodeSelector: {}
       persistence:
         enabled: true
         #size: 8Gi
@@ -643,12 +677,45 @@ gitlab:
         requests:
           memory: "256Mi"
           cpu: "250m"
+      service:
+        type: ClusterIP
+        port:
+          postgresql: 5432
+      updateStrategy:
+        type: RollingUpdate
+        rollingUpdate: {}
   shared-secrets:
     enabled: true
+    # missing:
+    # - affinity, nodeSelector
+    # - updateStrategy
+    rbac:
+      create: true
+    selfsign:
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/cfssl-self-sign
+        #tag: master
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+        caSubject: "GitLab Helm Chart"
+    env: production
+    resources:
+      requests:
+        cpu: 50m
   gitlab-runner:
     install: true
+    # missing:
+    # - nameOverride, namespaceOverride
+    affinity: {}
+    nodeSelector: {}
     # hardcoded secret, need to be changed
     certsSecretName: "cicd1-wildcard-tls-chain"
+    image:
+      registry: registry.gitlab.com
+      image: gitlab-org/gitlab-runner
+      #tag: alpine-v{{.Chart.AppVersion}}
+    imagePullPolicy: IfNotPresent
+    imagePullSecrets: []
     metrics:
       enabled: true
       serviceMonitor:
@@ -657,6 +724,8 @@ gitlab:
     resources: {}
     service:
       enabled: true
+      type: ClusterIP
+    strategy: {}
   traefik:
     install: false
     persistence:
@@ -665,6 +734,17 @@ gitlab:
   gitlab:
     gitlab-exporter:
       enabled: true
+      # missing:
+      # - nodeSelector
+      # - nameOverride, namespaceOverride
+      affinity: {}
+      deployment:
+        strategy: {}
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-exporter
+        # tag: master
+        pullPolicy: IfNotPresent
+        pullSecrets: []
       metrics:
         enabled: true
         serviceMonitor:
@@ -674,7 +754,6 @@ gitlab:
           cpu: "75m"
           memory: "100M"
       service:
-        name: "gitlab-exporter"
         type: "ClusterIP"
         externalPort: 9168
         internalPort: 9168
@@ -682,30 +761,57 @@ gitlab:
       global:
         pages:
           enabled: false
+      affinity: {}
+      deployment:
+        strategy: {}
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-pages
+        #tag: master
+        pullPolicy: IfNotPresent
+        pullSecrets: []
       metrics:
         enabled: true
         serviceMonitor:
           enabled: true
+      resources:
+        requests:
+          cpu: 900m
+          memory: 2G
       service:
         type: "ClusterIP"
         externalPort: 8090
+        internalPort: 8090
     gitlab-shell:
       enabled: true
+      affinity: {}
+      deployment:
+        strategy: {}
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-shell
+        #tag: master
+        pullPolicy: IfNotPresent
+        pullSecrets: []
       sshDaemon: "openssh"
       resources:
         requests:
           cpu: "0"
           memory: "6M"
       service:
-        name: "gitlab-shell"
         type: "ClusterIP"
         internalPort: 2222
+        externalTrafficPolicy: Cluster
       metrics:
-        # Metrics are not supported for the "openssh"
+        # Metrics are not supported for the sshDaemon="openssh"
         enabled: false
         serviceMonitor:
           enabled: true
     gitaly:
+      affinity: {}
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitaly
+        #tag: master
+        pullPolicy: IfNotPresent
+        pullSecrets: []
       metrics:
         enabled: true
         serviceMonitor:
@@ -720,7 +826,24 @@ gitlab:
         requests:
           cpu: "100m"
           memory: "200Mi"
+      service:
+        type: ClusterIP
+        externalPort: 8075
+        internalPort: 8075
+        tls:
+          externalPort: 8076
+          internalPort: 8076
+      statefulset:
+        strategy: {}
     kas:
+      affinity: {}
+      deployment:
+        strategy: {}
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-kas
+        #tag: latest
+        pullPolicy: IfNotPresent
+        pullSecrets: []
       metrics:
         enabled: true
         serviceMonitor:
@@ -735,12 +858,26 @@ gitlab:
         internalPort: 8150
     migrations:
       enabled: true
+      image: {}
+        #repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-toolbox-ee
+        #tag: master
+        #pullPolicy: IfNotPresent
+        #pullSecrets: []
       resources:
         requests:
           cpu: "250m"
           memory: "200Mi"
     sidekiq:
       enabled: true
+      affinity: {}
+      nodeSelector: {}
+      deployment:
+        strategy: {}
+      image: {}
+        #repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee
+        #tag: master
+        #pullPolicy: IfNotPresent
+        #pullSecrets: []
       metrics:
         enabled: true
         podMonitor:
@@ -751,6 +888,18 @@ gitlab:
           memory: "2G"
     toolbox:
       enabled: true
+      affinity: {}
+      antiAffinityLabels:
+        matchLabels:
+          app: gitaly
+      deployment:
+        strategy:
+          type: Recreate
+      image: {}
+        #repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-toolbox-ee
+        #tag: master
+        #pullPolicy: IfNotPresent
+        #pullSecrets: []
       persistence:
         enabled: false
         size: "10Gi"
@@ -761,6 +910,14 @@ gitlab:
           memory: "350M"
     webservice:
       enabled: true
+      affinity: {}
+      deployment:
+        strategy: {}
+      image: {}
+        #repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-webservice-ee
+        #tag: master
+        #pullPolicy: IfNotPresent
+        #pullSecrets: []
       metrics:
         enabled: true
         serviceMonitor:
@@ -773,6 +930,11 @@ gitlab:
         type: "ClusterIP"
         externalPort: 8080
         internalPort: 8080
+        workhorseExternalPort: 8181
+        workhorseInternalPort: 8181
+        tls:
+          externalPort: 8081
+    internalPort: 8081
   gitlab-zoekt:
     install: false
     indexStorage: "2Gi"

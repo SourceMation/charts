@@ -139,7 +139,7 @@ spec:
       containers:
         - name: delete-secrets
           image: bitnami/kubectl
-          command: ["sh", "-c", "kubectl delete -n {{ .Release.Namespace }} --ignore-not-found=true $(kubectl get secret -o name |grep -v 'helm.release.v')"]
+          command: ["sh", "-c", "kubectl delete -n {{ .Release.Namespace }} --ignore-not-found=true --wait=false $(kubectl get secret -o name |grep -v 'helm.release.v')"]
       restartPolicy: Never
   backoffLimit: 3
 
@@ -164,8 +164,8 @@ spec:
       containers:
         - name: delete-gitaly-pvc
           image: bitnami/kubectl
-          command: ["sh", "-c", "kubectl delete pvc repo-data-{{ .Release.Name }}-gitaly-0 & sleep 3 && true"]
-      restartPolicy: OnFailure
+          command: ["sh", "-c", "kubectl delete -n {{ .Release.Namespace }} pvc repo-data-{{ .Release.Name }}-gitaly-0 --wait=false"]
+      restartPolicy: Never
   backoffLimit: 3
   {{- end }}
 
