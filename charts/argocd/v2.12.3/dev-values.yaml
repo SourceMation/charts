@@ -1,16 +1,17 @@
 nameOverride: cicd-gitops-stack-app
 fullnameOverride: cicd-gitops-stack-app
+namespaceOverride: ""
 crds:
   install: true
   keep: false
 global:
-  domain: argocd
+  domain: argocd.example.com
   additionalLabels:
     app: argo-cd
   image:
     repository: quay.io/argoproj/argocd
     tag: ""
-    imagePullPolicy: ""
+    imagePullPolicy: IfNotPresent
   imagePullSecrets: []
   logging:
     format: text
@@ -23,6 +24,7 @@ global:
   networkPolicy:
     create: false
     defaultDenyIngress: false
+  nodeSelector: {}
   affinity:
     podAntiAffinity: soft
     nodeAffinity:
@@ -42,7 +44,7 @@ configs:
     create: true
     admin.enabled: true
   params:
-    server.insecure: true
+    server.insecure: false
   rbac:
     create: true
   ssh:
@@ -92,11 +94,14 @@ server:
     loadBalancerIP: ""
     externalTrafficPolicy: Cluster
   metrics:
-    enabled: false
+    enabled: true
     serviceMonitor:
       enabled: true
       interval: 30s
       scrapeTimeout: ""
   ingress:
     enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     hostname: argo.apps.dev0.lab.linuxpolska.pl

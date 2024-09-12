@@ -4,7 +4,7 @@ This chart is based on community helm chart.
 https://github.com/argoproj/argo-helm
 
 ### Add helm repository
-> helm repo add argo https://argoproj.github.io/argo-hel
+> helm repo add argo https://argoproj.github.io/argo-helm
 
 ### Update repositories
 > helm repo update
@@ -14,6 +14,11 @@ https://github.com/argoproj/argo-helm
 > kubectl create ns ${ARGOCD_NAMESPACE}
 > kubectl config set-context --current --namespace ${ARGOCD_NAMESPACE}
 > helm install argocd argo/argo-cd -f dev-values.yaml -n ${ARGOCD_NAMESPACE}
+
+
+### Get admin user password
+> kubectl -n ${ARGOCD_NAMESPACE} get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+
 
 ### Dry run
 > helm upgrade argocd argo/argo-cd -f dev-values.yaml -n ${ARGOCD_NAMESPACE} --dry-run=client |less
