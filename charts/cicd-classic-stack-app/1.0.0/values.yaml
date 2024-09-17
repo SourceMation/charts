@@ -461,6 +461,7 @@ gitlab:
   certmanager:
     install: true
     installCRDs: false
+    replicaCount: 1
   # missing:
   # - nameOverride, namespaceOverride
     affinity: {}
@@ -516,6 +517,7 @@ gitlab:
     #nameOverride: ""
     #fullnameOverride: ""
     controller:
+      replicaCount: 1
       affinity: {}
       #nodeSelector: {}
       image:
@@ -536,12 +538,6 @@ gitlab:
         externalIPs: []
         type: LoadBalancer
       updateStrategy: {}
-  nginx-ingress-geo:
-    enabled: false
-  haproxy:
-    install: false
-  prometheus:
-    install: false
   redis:
     install: true
     architecture: "standalone"
@@ -579,6 +575,8 @@ gitlab:
       enabled: true
       serviceMonitor:
         enabled: true
+    networkPolicy:
+      enabled: false
   registry:
     enabled: true
     # missing:
@@ -596,6 +594,8 @@ gitlab:
       enabled: true
       serviceMonitor:
         enabled: true
+    networkpolicy:
+      enabled: false
     resources:
       requests:
         cpu: "50m"
@@ -640,6 +640,8 @@ gitlab:
     metrics:
       serviceMonitor:
         enabled: true
+    networkPolicy:
+      enabled: false
     resources:
       requests:
         memory: "128Mi"
@@ -661,6 +663,8 @@ gitlab:
       enabled: true
       serviceMonitor:
         enabled: true
+    networkPolicy:
+      enabled: false
     primary:
       affinity: {}
       nodeSelector: {}
@@ -726,11 +730,6 @@ gitlab:
       enabled: true
       type: ClusterIP
     strategy: {}
-  traefik:
-    install: false
-    persistence:
-      size: "128Mi"
-      storageClass: ""
   gitlab:
     gitlab-exporter:
       enabled: true
@@ -773,6 +772,8 @@ gitlab:
         enabled: true
         serviceMonitor:
           enabled: true
+      networkpolicy:
+        enabled: false
       resources:
         requests:
           cpu: 900m
@@ -783,6 +784,9 @@ gitlab:
         internalPort: 8090
     gitlab-shell:
       enabled: true
+      maxUnavailable: 1
+      minReplicas: 2
+      maxReplicas: 10
       affinity: {}
       deployment:
         strategy: {}
@@ -792,6 +796,13 @@ gitlab:
         pullPolicy: IfNotPresent
         pullSecrets: []
       sshDaemon: "openssh"
+      metrics:
+        # Metrics are not supported for the sshDaemon="openssh"
+        enabled: false
+        serviceMonitor:
+          enabled: true
+      networkpolicy:
+        enabled: false
       resources:
         requests:
           cpu: "0"
@@ -800,11 +811,6 @@ gitlab:
         type: "ClusterIP"
         internalPort: 2222
         externalTrafficPolicy: Cluster
-      metrics:
-        # Metrics are not supported for the sshDaemon="openssh"
-        enabled: false
-        serviceMonitor:
-          enabled: true
     gitaly:
       affinity: {}
       image:
@@ -836,6 +842,9 @@ gitlab:
       statefulset:
         strategy: {}
     kas:
+      maxReplicas: 10
+      maxUnavailable: 1
+      minReplicas: 2
       affinity: {}
       deployment:
         strategy: {}
@@ -848,6 +857,8 @@ gitlab:
         enabled: true
         serviceMonitor:
           enabled: true
+      networkpolicy:
+        enabled: false
       resources:
         requests:
           cpu: "100m"
@@ -869,6 +880,8 @@ gitlab:
           memory: "200Mi"
     sidekiq:
       enabled: true
+      minReplicas: 1
+      maxReplicas: 10
       affinity: {}
       nodeSelector: {}
       deployment:
@@ -882,12 +895,15 @@ gitlab:
         enabled: true
         podMonitor:
           enabled: true
+      networkpolicy:
+        enabled: false
       resources:
         requests:
           cpu: "900m"
           memory: "2G"
     toolbox:
       enabled: true
+      replicas: 1
       affinity: {}
       antiAffinityLabels:
         matchLabels:
@@ -910,6 +926,9 @@ gitlab:
           memory: "350M"
     webservice:
       enabled: true
+      maxUnavailable: 1
+      minReplicas: 2
+      maxReplicas: 10
       affinity: {}
       deployment:
         strategy: {}
@@ -922,6 +941,8 @@ gitlab:
         enabled: true
         serviceMonitor:
           enabled: true
+      networkpolicy:
+        enabled: false
       resources:
         requests:
           cpu: "300m"
@@ -934,11 +955,17 @@ gitlab:
         workhorseInternalPort: 8181
         tls:
           externalPort: 8081
-    internalPort: 8081
+          internalPort: 8081
   gitlab-zoekt:
     install: false
-    indexStorage: "2Gi"
-    indexStorageClassName: ""
+  haproxy:
+    install: false
+  nginx-ingress-geo:
+    enabled: false
+  prometheus:
+    install: false
+  traefik:
+    install: false
 
 
 coder:

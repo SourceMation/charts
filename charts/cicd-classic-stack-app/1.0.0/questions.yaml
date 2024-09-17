@@ -726,6 +726,57 @@ questions:
     group: "Forgejo settings"
     type: boolean
 
+  # gitlabApp
+- variable: global.gitlabApp.enabled
+  default: "true"
+  label: Deploy Gitlab
+  group: "Components"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: gitlab.global.gitlabVersion
+    default: "17.3.1"
+    label: Gitlab version
+    group: "Gitlab settings"
+    type: string
+    required: false
+  - variable: gitlab.auth.gitlab_password
+    label: Gitlab initial root password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Gitlab settings"
+    type: password
+    required: true
+  - variable: gitlab.auth.postgresql_password
+    label: Postgresql gitlab password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Gitlab settings"
+    type: password
+    required: true
+  - variable: gitlab.auth.postgresql_postgres_password
+    label: Postgresql postgres user password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Gitlab settings"
+    type: password
+    required: true
+  - variable: gitlab.ingress.enabled
+    label: Enable Gitlab ingress
+    group: "Gitlab settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: gitlab.global.hosts.domain
+      default: "apps.example.com"
+      label: URL
+      description: "Gitlab Ingress domain(all services)."
+      group: "Gitlab settings"
+      type: hostname
+      required: true
+    - variable: gitlab.global.hosts.hostSuffix
+      default: "prod"
+      label: Suffix
+      description: "Gitlab Ingress suffix(all services). Example: gitlab-prod.apps.example.com"
+      group: "Gitlab settings"
+      type: hostname
   # harborApp
 - variable: global.harborApp.enabled
   default: true
