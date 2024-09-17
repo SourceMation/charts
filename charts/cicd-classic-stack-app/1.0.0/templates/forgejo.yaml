@@ -20,17 +20,17 @@ stringData:
     {{- end }}
   {{- end }}
 
-  {{- if and .Values.forgejo.params.persistence.enabled .Values.forgejo.params.persistence.create }}
+  {{- if and .Values.forgejo.persistence.enabled (not .Values.forgejo.persistence.create) }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   annotations:
-  name: {{ include "common.names.shortname" $ }}-{{ .Values.forgejo.params.persistence.claimName }}
+  name: {{ .Values.forgejo.persistence.claimName }}
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
-    {{- with .Values.forgejo.params.persistence }}
+    {{- with .Values.forgejo.persistence }}
   accessModes: {{ .accessModes | toYaml | nindent 4 }}
   resources:
     requests:

@@ -399,20 +399,20 @@ questions:
     group: "Forgejo settings"
     type: string
     required: true
-  - variable: forgejo.params.persistence.enabled
+  - variable: forgejo.persistence.enabled
     default: "true"
     label: Forgejo persistent storage
     group: "Forgejo settings"
     type: boolean
     show_subquestion_if: true
     subquestions:
-    - variable: forgejo.params.persistence.size
+    - variable: forgejo.persistence.size
       default: "10Gi"
       label: Forgejo persistent volume size
       group: "Forgejo settings"
       type: string
       required: true
-    - variable: forgejo.params.persistence.storageClass
+    - variable: forgejo.persistence.storageClass
       label: Forgejo persistent volume Storage Class
       group: "Forgejo settings"
       type: storageclass
@@ -462,7 +462,7 @@ questions:
       type: hostname
       required: true
   - variable: forgejo.strategy.type
-    default: "RollingUpdate"
+    default: "Recreate"
     label: Forgejo update strategy
     description: "Forgejo update strategy"
     group: "Forgejo settings"

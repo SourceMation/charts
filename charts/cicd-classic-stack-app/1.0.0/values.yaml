@@ -259,15 +259,6 @@ forgejo:
     additionalConfigSources:
       secret:
         secretName: "forgejo-configuration"
-    persistence:
-      enabled: true
-      create: true
-      claimName: "gitea-shared-storage"
-      size: "10Gi"
-      storageClass: "vsphere-csi"
-      accessModes:
-        - "ReadWriteOnce"
-      annotations: {}
   image:
     registry: "code.forgejo.org"
     repository: "forgejo/forgejo"
@@ -297,7 +288,14 @@ forgejo:
     tls: []
   # default persistence
   persistence:
-    enabled: false
+    enabled: true
+    create: false
+    mount: true
+    claimName: "cicd-classic-gitea-storage"
+    size: 10Gi
+    storageClass: ""
+    accessModes:
+      - ReadWriteOnce
   resources: {}
   service:
     http:
@@ -307,10 +305,10 @@ forgejo:
       type: "ClusterIP"
       port: 22
   strategy:
-    type: "RollingUpdate"
-    rollingUpdate:
-      maxSurge: "100%"
-      maxUnavailable: 0
+    type: "Recreate"
+    rollingUpdate: {}
+      #maxSurge: "100%"
+      #maxUnavailable: 0
   postgresql:
     enabled: false
   postgresql-ha:
