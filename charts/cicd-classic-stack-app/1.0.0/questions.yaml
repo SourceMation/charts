@@ -382,7 +382,7 @@ questions:
   - variable: forgejo.gitea.admin.username
     default: "gitea_admin"
     label: Forgejo admin username
-    description: "Forgejo admin username"
+    description: "The username 'admin' is reserved. Don't use it."
     group: "Forgejo settings"
     type: string
     required: true
