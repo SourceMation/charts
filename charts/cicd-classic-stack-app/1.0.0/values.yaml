@@ -472,19 +472,22 @@ postgresql:
     username: coder
     password: P@ssword1
     database: coderi
-  primary:
+  metrics:
     enabled: true
+    serviceMonitor:
+      enabled: true
+  primary:
     persistence:
+      enabled: true
       accessModes:
         - ReadWriteOnce
+      existingClaim: ""
       storageClass: ""
-      volumeName: "data"
       size: "10Gi"
     persistentVolumeClaimRetentionPolicy:
       enabled: true
       whenScaled: "Retain"
       whenDeleted: "Delete"
-  
   nameOverride: "coder-postgresql"
   fullnameOverride: ""
 
