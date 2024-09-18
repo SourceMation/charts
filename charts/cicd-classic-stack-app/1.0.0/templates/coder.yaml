@@ -7,4 +7,22 @@ kind: Secret
 metadata:
   name: coder-db-url
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "common.names.shortname" . }}-prometheus 
+spec:
+  clusterIP: None
+  ports:
+    - name: prometheus-http
+      port: 2112
+      protocol: TCP
+      targetPort: 2112
+  selector:
+    app.kubernetes.io/instance: {{ include "common.names.shortname" . }}
+    app.kubernetes.io/name: coder
+  type: ClusterIP
+
+
 {{- end }}

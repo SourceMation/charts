@@ -425,6 +425,9 @@ coder:
           secretKeyRef:
             name: coder-db-url
             key: url
+        # https://coder.com/docs/admin/prometheus
+      - name: CODER_PROMETHEUS_ENABLE
+        value: "true"
     ingress:
       enable: true
       host: "coder.apps.example.com"
