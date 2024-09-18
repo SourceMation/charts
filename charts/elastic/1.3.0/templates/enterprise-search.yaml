@@ -17,6 +17,27 @@ spec:
       labels:
         scrape: entsearch-{{ include "common.names.namespace" $ }}
     spec:
+  http:
+    service:
+      {{- with .Values.enterprise_search.params.service.annotations }}
+      metadata:
+        annotations:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      spec:
+        type: LoadBalancer
+    tls:
+      {{- if not $.Values.tlsSecretName }}
+      selfSignedCertificate:
+        disabled: false
+        subjectAltNames:
+        {{- if $.Values.enterprise_search.params.ingress.enabled }}
+        - dns: {{ .Values.enterprise_search.params.ingress.hostname | quote }}
+        {{- end }}
+      {{- else }}
+      certificate:
+        secretName: {{ $.Values.tlsSecretName | quote }}
+      {{- end }}
       containers:
         - name: enterprise-search
 #          args: ["--enable-read-only-mode"]
