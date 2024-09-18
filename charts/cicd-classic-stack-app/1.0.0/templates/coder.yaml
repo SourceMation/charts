@@ -2,10 +2,10 @@
 ---
 apiVersion: v1
 stringData:
-  url: postgres://{{ $.Values.postgresql.auth.username }}:{{ $.Values.postgresql.auth.password }}@coder:5432/coder?sslmode=disable
+  url: postgres://{{ $.Values.postgresql.auth.username }}:{{ $.Values.postgresql.auth.password }}@{{ include "common.names.shortname" . }}-coder-postgresql/{{ .Values.postgresql.auth.database }}?sslmode=disable
 kind: Secret
 metadata:
-  name: coder-db-url
+  name: {{ include "common.names.shortname" . }}-coder-db-url
 
 ---
 apiVersion: v1

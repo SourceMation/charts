@@ -420,10 +420,10 @@ forgejo:
 coder:
   coder:
     env:
-      - name: coder-db-postgresql
+      - name: CODER_PG_CONNECTION_URL
         valueFrom:
           secretKeyRef:
-            name: coder-db-url
+            name: cicd-classic-coder-db-url
             key: url
         # https://coder.com/docs/admin/prometheus
       - name: CODER_PROMETHEUS_ENABLE
