@@ -1,0 +1,6 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+digest: sha256:1bbf9a8b625537e143b748ee7a8ad6a1b803cd2489f3525582727c669fbcb12e
+generated: "2024-05-08T15:58:18.854090895+02:00"

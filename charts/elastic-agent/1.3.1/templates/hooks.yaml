@@ -1,0 +1,66 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    common.k8s.elastic.co/type: clean-agent
+    repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+  annotations:
+    "helm.sh/hook": post-delete
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+#    "helm.sh/hook-delete-policy": hook-failed
+  name: {{ include "common.names.shortname" $ -}}-clean-agent
+  namespace: {{ include "common.names.namespace" $ }}
+spec:
+  selector:
+    matchLabels:
+      common.k8s.elastic.co/type: clean-agent
+      repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+  template:
+    metadata:
+      labels:
+        common.k8s.elastic.co/type: clean-agent
+        repo.k8s.elastic.co/name: {{ include "common.names.shortname" $ | quote }}
+    spec:
+      tolerations:
+        - key: node-role.kubernetes.io/control-plane
+          effect: NoSchedule
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+        - effect: NoExecute
+          key: node-role.kubernetes.io/etcd
+      hostPID: true
+      containers:
+        - name: toolbox
+          image: quay.io/eurolinux/eurolinux-9:latest
+          resources:
+            limits:
+              cpu: 100m
+              memory: 32Mi
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /hostfs/
+              name: hostfs
+          command:
+          - 'bash'
+          - '-e'
+          - '-c'
+          - |-
+            set -e;
+            dirs=(
+              "/hostfs/var/lib/elastic-agent-managed"
+              )
+            for dir in ${dirs[@]}; do
+              if [ -d ${dir} ]; then
+                chcon -Rt svirt_sandbox_file_t "${dir}"
+                rm -rf "${dir}"
+              fi
+            done
+      volumes:
+        - name: hostfs
+          hostPath:
+            path: /
+
