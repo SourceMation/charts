@@ -15,10 +15,10 @@ global:
 sonarqube:
 # missing:
 # - nameOverride, namespaceOverride
-# - updateStrategy
   affinity: {}
   nodeSelector: {}
   seccompProfile: {}
+  deploymentStrategy: {}
   securityContext:
     fsGroup: 0
   account:
@@ -62,10 +62,10 @@ sonarqube:
     externalPort: 9000
     internalPort: 9000
   postgresql:
+    enabled: true
     primary:
       affinity: {}
       nodeSelector: {}
-    enabled: true
     image:
       registry: docker.io
       repository: bitnami/postgresql
@@ -84,8 +84,8 @@ sonarqube:
     postgresqlDatabase: "sonar"
     persistence:
       enabled: true
-      existingClaim: "{{ .Release.Name }}-data-gitlab-postgresql-0"
-      claimName: "data-postgresql-0"
+      existingClaim: "{{ .Release.Name }}-data-sonar-postgresql-0"
+      claimName: "data-sonar-postgresql-0"
       size: "20Gi"
       storageClass: ""
       accessMode:
@@ -291,7 +291,7 @@ forgejo:
     enabled: true
     create: false
     mount: true
-    claimName: "cicd-classic-gitea-storage"
+    claimName: "cicd-classic-data-forgejo-0"
     size: 10Gi
     storageClass: ""
     accessModes:

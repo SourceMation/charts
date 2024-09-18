@@ -14,7 +14,9 @@ spec:
   resources:
     requests:
       storage: {{ .size }}
+    {{- if not (empty .storageClass) }}
   storageClassName: {{ .storageClass }}
+    {{- end }}
   volumeMode: Filesystem
     {{- end }}
   {{- end }}
