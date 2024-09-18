@@ -62,6 +62,7 @@ export FLEET_URL=fleet-tst.apps.example.com
 export ENT_URL=esearch-tst.apps.example.com
 
 
+
 helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
 --set "elasticsearch.params.ingress.hostname=${ELASTICSEARCH_URL}" \
 --set "packageRegistry.params.ingress.hostname=${REPO_URL}" \
@@ -120,6 +121,7 @@ helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace ${CLUSTER_NAME} . 
 --set "packageRegistry.params.ingress.hostname=${REPO_URL}" \
 --set "kibana.params.ingress.hostname=${KB_URL}" \
 --set "agentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
+--set "enterpriseSearch.params.ingress.hostname=${ENT_URL}" \
 --set "agentFleet.params.ingress.hostname=${FLEET_URL}"
 
 ```
