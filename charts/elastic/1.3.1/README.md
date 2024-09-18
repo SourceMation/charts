@@ -51,7 +51,7 @@ elastic-operator-crds eck-operator-crds
 ```bash
 
 
-export ELASTIC_VER=1.4.0
+export ELASTIC_VER=1.3.1
 export CLUSTER_NAME=elk
 export K8S_NAMESPACE=elastic-tst
 export ELASTICSEARCH_URL=elastic-tst.apps.example.com
@@ -121,7 +121,6 @@ helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace ${CLUSTER_NAME} . 
 --set "packageRegistry.params.ingress.hostname=${REPO_URL}" \
 --set "kibana.params.ingress.hostname=${KB_URL}" \
 --set "agentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
---set "enterpriseSearch.params.ingress.hostname=${ENT_URL}" \
 --set "agentFleet.params.ingress.hostname=${FLEET_URL}"
 
 ```
