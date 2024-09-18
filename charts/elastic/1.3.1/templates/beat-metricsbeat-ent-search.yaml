@@ -46,23 +46,15 @@ spec:
         labels:
           scrape: entsearch-{{ include "common.names.namespace" $ }}
       spec:
-      {{- with .Values.enterprise_search.params.tolerations }}
+      {{- with .Values.enterpriseSearch.params.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
 
-      {{- with .Values.enterprise_search.params.affinity }}
+      {{- with .Values.enterpriseSearch.params.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-        {{- with .Values.enterpriseSearch.params.tolerations }}
-      tolerations:
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
-        {{- with .Values.enterpriseSearch.params.affinity }}
-      affinity:
-          {{- toYaml . | nindent 8 }}
-        {{- end }}
         # required to read /etc/beat.yml
         securityContext:
           runAsUser: 0
@@ -77,17 +69,6 @@ spec:
             until curl -f -k -L https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
         containers:
         - name: metricbeat
-          env:
-          - name: MONITORED_ES_USERNAME
-            valueFrom:
-              secretKeyRef:
-                key: username
-                name: {{ include "common.names.shortname" $ }}-es-elastic-custom-user
-          - name: MONITORED_ES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                key: password
-                name: {{ include "common.names.shortname" $ }}-es-elastic-custom-user
           env:
           - name: MONITORED_ES_USERNAME
             valueFrom:

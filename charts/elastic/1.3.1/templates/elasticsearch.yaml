@@ -29,6 +29,10 @@ spec:
     logs:
       elasticsearchRefs:
       - name: {{ include "common.names.shortname" $ }}
+  {{- with .secureSettings }}
+  secureSettings:
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
   image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
   http:
     service:

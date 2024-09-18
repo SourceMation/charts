@@ -10,6 +10,8 @@ elasticsearch:
       username: ""
       password: ""
     pdb: 2
+#    secureSettings:
+#      - secretName: s3-secret
     roles:
       master:
         autoscaling:
@@ -53,16 +55,16 @@ elasticsearch:
           maxNodes: 4
           maxCpu: 4000m
           maxMemory: 8Gi
-          maxStorage: 200Gi
+          maxStorage: 250Gi
         count: 3
         cpu: 4000m
         memory: 8Gi
         storage:
-          size: 200Gi
+          size: 80Gi
           storageClass: ""
         config:
           node:
-            roles: [ "data", "ingest", "transform", "remote_cluster_client"]
+            roles: [ "data", "ingest", "transform", "remote_cluster_client" ]
           # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
           xpack:
             security:
@@ -94,16 +96,16 @@ elasticsearch:
           maxNodes: 2
           maxCpu: 2000m
           maxMemory: 4Gi
-          maxStorage: 20Gi
+          maxStorage: 10Gi
         count: 1
         cpu: 2000m
         memory: 4Gi
         storage:
-          size: 20Gi
+          size: 2Gi
           storageClass: ""
         config:
           node:
-            roles: ["ml"]
+            roles: [ "ml", "remote_cluster_client" ]
           # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
           xpack:
             security:
@@ -183,7 +185,7 @@ kibana:
   enabled: true
   params:
     autoscaling:
-      enabled: true
+      enabled: false
       maxNodes: 2
       averageCpuUtilization: 50
     image:
@@ -329,6 +331,34 @@ logstash:
     tolerations: []
     pipelines: []
 
+enterpriseSearch:
+  enabled: false
+  params:
+    count: 1
+    image:
+      registry: docker.elastic.co
+      repository: package-registry/distribution
+      tag: ""
+    cpu: "2000m"
+    memory: "8Gi"
+    ingress:
+      enabled: true
+      ingressClassName: ""
+      hostname: entsearch-tst.apps.example.com
+      annotations:
+#        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+#        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+#        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+#        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    service:
+      annotations: {}
 
 imagePullSecrets: []
 #- name: repo-auth
