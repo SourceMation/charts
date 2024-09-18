@@ -88,6 +88,17 @@ spec:
               secretKeyRef:
                 key: password
                 name: {{ include "common.names.shortname" $ }}-es-elastic-custom-user
+          env:
+          - name: MONITORED_ES_USERNAME
+            valueFrom:
+              secretKeyRef:
+                key: username
+                name: {{ include "common.names.shortname" $ }}-es-elastic-custom-user
+          - name: MONITORED_ES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: {{ include "common.names.shortname" $ }}-es-elastic-custom-user
           resources:
             requests:
               cpu: 100m
