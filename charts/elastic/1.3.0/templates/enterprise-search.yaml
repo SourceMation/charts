@@ -78,7 +78,11 @@ spec:
     {{- end }}
     allow_es_settings_modification: true
     {{- if $.Values.kibana.params.ingress.enabled }}
+    {{- if $.Values.enterprise_search.params.ingress.enabled }}
     kibana.external_url: https://{{ .Values.kibana.params.ingress.hostname }}
+    {{- else }}
+    kibana.external_url: https://{{ include "common.names.shortname" $ }}-kb-http.{{ include "common.names.namespace" . }}.svc:5601
+    {{- end }}
     {{- else }}
     kibana.external_url: https://{{ include "common.names.shortname" $ }}-kb-http.{{ include "common.names.namespace" . }}.svc:5601
     {{- end }}
