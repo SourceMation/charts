@@ -88,5 +88,6 @@ kubectl -n example-istio exec "$(kubectl -n example-istio get pod -l app=ratings
 
 kubectl delete ns example-istio
 
+#
 
 ```
