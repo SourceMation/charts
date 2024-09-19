@@ -24,7 +24,7 @@ sonarqube:
   account:
     adminPassword: "P@ssword1"
   image:
-    registry: docker.io
+    registry: "docker.io"
     repository: "sonarqube"
     #tag: 10.6.0-{{ .Values.edition }}
     pullPolicy: "IfNotPresent"
@@ -58,7 +58,7 @@ sonarqube:
       memory: "2048Mi"
       ephemeral-storage: "512Mi"
   service:
-    type: ClusterIP
+    type: "ClusterIP"
     externalPort: 9000
     internalPort: 9000
   postgresql:
@@ -67,10 +67,10 @@ sonarqube:
       affinity: {}
       nodeSelector: {}
     image:
-      registry: docker.io
-      repository: bitnami/postgresql
+      registry: "docker.io"
+      repository: "bitnami/postgresql"
       #tag: 11.14.0-debian-10-r22
-      pullPolicy: IfNotPresent
+      pullPolicy: "IfNotPresent"
       #pullSecrets: 
     metrics:
       enabled: true
@@ -102,7 +102,7 @@ sonarqube:
       fsGroup: 1001
     service:
       port: 5432
-      type: ClusterIP
+      type: "ClusterIP"
     updateStrategy:
       type: "RollingUpdate"
 
@@ -295,7 +295,7 @@ forgejo:
     size: 10Gi
     storageClass: ""
     accessModes:
-      - ReadWriteOnce
+      - "ReadWriteOnce"
   resources: {}
   service:
     http:
@@ -334,10 +334,10 @@ forgejo:
       affinity: {}
       nodeSelector: {}
       image:
-        registry: docker.io
-        repository: bitnami/postgresql-repmgr
+        registry: "docker.io"
+        repository: "bitnami/postgresql-repmgr"
         #tag: 16.3.0-debian-12-r18
-        pullPolicy: IfNotPresent
+        pullPolicy: "IfNotPresent"
         pullSecrets: []
       networkPolicy:
         enabled: true
@@ -346,7 +346,7 @@ forgejo:
       repmgrPassword: "P@ssword1"
       postgresPassword: "P@ssword1"
       updateStrategy:
-        type: RollingUpdate
+        type: "RollingUpdate"
     pgpool:
       adminPassword: "P@ssword1"
     resources:
@@ -357,7 +357,7 @@ forgejo:
         cpu: "500m"
         memory: "512Mi"
     service:
-      type: ClusterIP
+      type: "ClusterIP"
       ports:
         postgresql: 5432
     persistence:
@@ -365,7 +365,7 @@ forgejo:
       size: "8Gi"
       storageClass: ""
       accessModes:
-      - ReadWriteOnce
+      - "ReadWriteOnce"
   redis-cluster:
     enabled: true
     usePassword: false
@@ -373,10 +373,10 @@ forgejo:
       nodes: 3
       replicas: 0
     image:
-      registry: docker.io
-      repository: bitnami/redis-cluster
+      registry: "docker.io"
+      repository: "bitnami/redis-cluster"
       #tag: 7.2.5-debian-12-r4
-      pullPolicy: IfNotPresent
+      pullPolicy: "IfNotPresent"
       pullSecrets: []
     metrics:
       enabled: true
@@ -392,7 +392,7 @@ forgejo:
       size: "8Gi"
       storageClass: ""
       accessModes:
-      - ReadWriteOnce
+      - "ReadWriteOnce"
     persistentVolumeClaimRetentionPolicy:
       enabled: true
       whenScaled: "Retain"
@@ -408,11 +408,11 @@ forgejo:
           cpu: "200m"
           memory: "256Mi"
       updateStrategy:
-        type: RollingUpdate
+        type: "RollingUpdate"
         rollingUpdate:
           partition: 0
     service:
-      type: ClusterIP
+      type: "ClusterIP"
       ports:
         redis: 6379
 
@@ -423,29 +423,31 @@ coder:
       - name: CODER_PG_CONNECTION_URL
         valueFrom:
           secretKeyRef:
-            name: cicd-classic-coder-db-url
-            key: url
-        # https://coder.com/docs/admin/prometheus
+            name: "cicd-classic-coder-db-url"
+            key: "url"
+      # https://coder.com/docs/admin/prometheus
       - name: CODER_PROMETHEUS_ENABLE
         value: "true"
+    image:
+      repo: "ghcr.io/coder/coder"
+      tag: "v2.13.2"
+      pullPolicy: "IfNotPresent"
+      pullSecrets: []
     ingress:
       enable: true
       host: "coder.apps.example.com"
       tls:
         enable: false
         secretName: ""
+    resources: {}
     service:
       enable: true
-      type: ClusterIP
-      externalTrafficPolicy: Cluster
+      type: "ClusterIP"
+      externalTrafficPolicy: "Cluster"
       # if service.type LoadBalancer
       loadBalancerIP: ""
     serviceAccount:
-      name: coder
-    image:
-      repo: "ghcr.io/coder/coder"
-      tag: "v2.13.2"
-      pullSecrets: []
+      name: "coder"
     certs:
       secrets: []
     volumes: []
@@ -455,42 +457,65 @@ coder:
           - podAffinityTerm:
               labelSelector:
                 matchExpressions:
-                  - key: app.kubernetes.io/instance
-                    operator: In
+                  - key: "app.kubernetes.io/instance"
+                    operator: "In"
                     values:
                       - "coder"
-              topologyKey: kubernetes.io/hostname
+              topologyKey: "kubernetes.io/hostname"
             weight: 1
+    nameOverride: "coder"
     nodeSelector: {}
     securityContext:
       runAsNonRoot: true
       runAsUser: 1000
       runAsGroup: 1000
       seccompProfile:
-        type: RuntimeDefault
+        type: "RuntimeDefault"
       allowPrivilegeEscalation: false
 
 postgresql:
+  architecture: standalone
   auth:
-    username: coder
-    password: P@ssword1
-    database: coderi
+    username: "coder"
+    password: "P@ssword1"
+    database: "coder"
+    postgresPassword: "P@ssword1"
+  image:
+    registry: "docker.io"
+    repository: "bitnami/postgresql"
+    #tag: 16.3.0-debian-12-r22
+    pullPolicy: "IfNotPresent"
+    pullSecrets: []
   metrics:
     enabled: true
     serviceMonitor:
       enabled: true
   primary:
+    affinity: {}
+    nodeSelector: {}
+    networkPolicy:
+      enabled: true
+      allowExternal: true
+      allowExternalEgress: true
     persistence:
       enabled: true
       accessModes:
-        - ReadWriteOnce
+        - "ReadWriteOnce"
       existingClaim: ""
       storageClass: ""
       size: "10Gi"
+      #volumeName: "data"
     persistentVolumeClaimRetentionPolicy:
       enabled: true
       whenScaled: "Retain"
       whenDeleted: "Delete"
+    resources: {}
+    service:
+      type: "ClusterIP"
+      ports:
+        postgresql: 5432
+    updateStrategy:
+      type: "RollingUpdate"
   nameOverride: "coder-postgresql"
   fullnameOverride: ""
 
