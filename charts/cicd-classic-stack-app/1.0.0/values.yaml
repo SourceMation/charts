@@ -526,12 +526,18 @@ jenkins:
       enabled: false
       hostName: "jenkins.apps.example.com"
   controller:
+    affinity: {}
+    nodeSelector: {}
+    admin:
+      username: "admin"
+      password: "P@ssword1"
     image:
       registry: "docker.io"
       repository: "jenkins/jenkins"
-      tag:
-      tagLabel: jdk17
+      tag: ""
+      tagLabel: "jdk17"
       pullPolicy: "Always"
+    imagePullSecretName: ""
     installPlugins:
       - kubernetes:4265.v78b_d4a_1c864a_
       - workflow-aggregator:600.vb_57cdd26fdd7
@@ -550,7 +556,13 @@ jenkins:
     # default ingress
     ingress:
       enabled: false
-    serviceType: ClusterIP
+    persistence:
+      enabled: true
+      accessMode: "ReadWriteOnce"
+      storageClass: ""
+      size: "8Gi"
+    prometheus:
+      enabled: true
     resources:
       requests:
         memory: "512Mi"
@@ -558,17 +570,15 @@ jenkins:
       limits:
         memory: "4Gi"
         cpu: "2000m"
-    persistence:
-      enabled: true
-      accessMode: "ReadWriteOnce"
-      storageClass: ""
-      size: "8Gi"
+    serviceType: ClusterIP
+    servicePort: 8080
+    targetPort: 8080
     javaOpts: >
       -Xmx2g
       -Djenkins.install.runSetupWizard=false
       -Dorg.jenkinsci.plugins.casc.ConfigurationAsCode.systemConfig=/var/jenkins_home/casc_configs/jenkins-casc.yaml
-    prometheus:
-      enabled: true
-    admin:
-      username: "admin"
-      password: "P@ssword1"
+    updateStrategy: {}
+  nameOverride: ""
+  fullnameOverride: ""
+  namespaceOverride: ""
+  
