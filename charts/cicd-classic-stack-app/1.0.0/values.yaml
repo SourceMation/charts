@@ -108,6 +108,12 @@ sonarqube:
 
 
 harbor:
+  #secretKey: "not-a-secure-key-min-16-characters"
+  harborAdminPassword: "P@ssword1"
+  # 1) If "expose.type" is "ingress", set externalURL to "expose.ingress.hosts.core".
+  # 2) If "expose.type" is "clusterIP", set externalURL to "expose.clusterIP.name".
+  # 3) If "expose.type" is "nodePort", set externalURL to the IP address of k8s node.
+  externalURL: https://harbor.apps.example.com
   expose:
     type: ingress
     ingress:
@@ -124,32 +130,29 @@ harbor:
     resourcePolicy: ""
     persistentVolumeClaim:
       registry:
+        accessMode: "ReadWriteOnce"
         storageClass: ""
         size: 5Gi
       jobservice:
+        accessMode: "ReadWriteOnce"
         storageClass: ""
         size: 1Gi      
       database:
+        accessMode: "ReadWriteOnce"
         storageClass: ""
         size: 1Gi
       redis:
+        accessMode: "ReadWriteOnce"
         storageClass: ""
         size: 1Gi
       trivy:
+        accessMode: "ReadWriteOnce"
         storageClass: ""
         size: 5Gi
-
   imagePullPolicy: IfNotPresent
   #imagePullSecrets:
   ##  - name: docker-registry-secret
   ##  - name: internal-registry-secret
-  #
-  updateStrategy:
-    type: Recreate
-
-  harborAdminPassword: "P@ssword1"
-  #secretKey: "not-a-secure-key-min-16-characters"
-
   nginx:
     image:
       repository: goharbor/nginx-photon
@@ -158,7 +161,6 @@ harbor:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-
   portal:
     image:
       repository: goharbor/harbor-portal
@@ -167,7 +169,6 @@ harbor:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-
   core:
     image:
       repository: goharbor/harbor-core
@@ -176,7 +177,6 @@ harbor:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-
   jobservice:
     image:
       repository: goharbor/harbor-jobservice
@@ -185,7 +185,6 @@ harbor:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-
   registry:
     registry:
       image:
@@ -202,7 +201,6 @@ harbor:
     credentials:
       username: "harbor_registry_user"
       password: "P@ssword1"
-
   trivy:
     image:
       repository: goharbor/trivy-adapter-photon
@@ -211,7 +209,6 @@ harbor:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-
   database:
     internal:
       image:
@@ -221,7 +218,6 @@ harbor:
       nodeSelector: {}
       tolerations: []
       affinity: {}
-
   redis:
     internal:
       image:
@@ -230,7 +226,6 @@ harbor:
       nodeSelector: {}
       tolerations: []
       affinity: {}
-
   exporter:
     image:
       repository: goharbor/harbor-exporter
@@ -239,7 +234,6 @@ harbor:
     nodeSelector: {}
     tolerations: []
     affinity: {}
-
   metrics:
     enabled: true
     serviceMonitor:
@@ -247,6 +241,8 @@ harbor:
   trace:
     enabled: true
     provider: otel
+  updateStrategy:
+    type: Recreate
 
 forgejo:
 # missing:
