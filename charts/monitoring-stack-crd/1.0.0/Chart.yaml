@@ -1,6 +1,6 @@
 annotations:
-  catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
-  catalog.cattle.io/namespace: lp-system
+  catalog.cattle.io/display-name: Monitoring Stack
+  catalog.cattle.io/namespace: default
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: monitoring-stack-crd
   catalog.cattle.io/hidden: "false"
