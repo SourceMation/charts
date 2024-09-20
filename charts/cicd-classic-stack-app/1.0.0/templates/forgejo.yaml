@@ -1,25 +1,4 @@
 {{- if .Values.global.forgejoApp.enabled }}
-  {{- if index .Values.forgejo "postgresql-ha" "enabled" }}
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: {{ include "common.names.shortname" $ }}-{{ .Values.forgejo.params.additionalConfigSources.secret.secretName }}
-  namespace: {{ include "common.names.namespace" $ }}
-  labels:
-    {{- include "common.labels.labels" $ | nindent 4 }}
-type: Opaque
-stringData:
-  database: |
-    {{- with index .Values.forgejo "postgresql-ha" "global" }}
-    DB_TYPE = postgres
-    HOST = {{ $.Release.Name }}-postgresql-ha-postgresql:5432
-    NAME = {{ .postgresql.database }}
-    PASSWD = {{ .postgresql.password }}
-    USER = {{ .postgresql.username }}
-    {{- end }}
-  {{- end }}
-
   {{- if and .Values.forgejo.persistence.enabled (not .Values.forgejo.persistence.create) }}
 ---
 apiVersion: v1

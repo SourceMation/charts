@@ -251,10 +251,6 @@ forgejo:
   affinity: {}
   nodeSelector: {}
   securityContext: {}
-  params:
-    additionalConfigSources:
-      secret:
-        secretName: "forgejo-configuration"
   image:
     registry: "code.forgejo.org"
     repository: "forgejo/forgejo"
@@ -320,7 +316,8 @@ forgejo:
       #  wal: false
       serviceMonitor:
         enabled: true
-    nameOverride: ""
+    #Do not change it, value is hardcoded at _helpers.tpl
+    #nameOverride: ""
     namespaceOverride: ""
     persistentVolumeClaimRetentionPolicy:
       enabled: true
@@ -378,7 +375,8 @@ forgejo:
       enabled: true
       serviceMonitor:
         enabled: true
-    nameOverride: ""
+    #Do not change it, value is hardcoded at _helpers.tpl
+    #nameOverride: ""
     networkPolicy:
       enabled: true
       allowExternal: true
