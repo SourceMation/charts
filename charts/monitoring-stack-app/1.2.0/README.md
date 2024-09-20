@@ -7,7 +7,7 @@
 
 ```bash
 
-export CHART_VERSION=1.1.0
+export CHART_VERSION=1.2.0
 export CLUSTER_NAME=elk
 export K8S_NAMESPACE=lp-app
 export ELASTICSEARCH_URL=elastic-tst.apps.example.com
