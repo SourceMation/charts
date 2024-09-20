@@ -1200,7 +1200,7 @@ questions:
     options:
     - "RollingUpdate"
     - "Recreate"
-  - variable: coder.coder.env.1.value
+  - variable: coder.coder.env[1].value
     default: "true"
     label: Coder metrics
     description: "Coder metrics"
