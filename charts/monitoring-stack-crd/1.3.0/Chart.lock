@@ -4,9 +4,9 @@ dependencies:
   version: 0.1.1
 - name: eck-operator-crds
   repository: https://helm.elastic.co
-  version: 2.11.1
+  version: 2.14.0
 - name: eck-operator
   repository: https://helm.elastic.co
-  version: 2.11.1
-digest: sha256:0363b48d05b65bbb8cab29cbb52719dc209c69266507e1b2254a59ca28429dd6
-generated: "2024-09-20T00:42:58.490605162+02:00"
+  version: 2.14.0
+digest: sha256:1383de7553afd8dbb707c43a98ca5fddab7ebe7d7a347ba2c5090c13f3776ac6
+generated: "2024-09-20T01:26:13.011555524+02:00"

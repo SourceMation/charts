@@ -1,0 +1,10 @@
+global:
+  elasticApp:
+    enabled: true
+
+
+#elastic:
+#  nameOverride: "elk"
+
+
+

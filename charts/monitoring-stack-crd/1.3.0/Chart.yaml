@@ -1,11 +1,11 @@
 annotations:
   catalog.cattle.io/display-name: Monitoring Stack CRD
-  catalog.cattle.io/namespace: monitoring-stack-crd
+  catalog.cattle.io/namespace: lp-system
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: monitoring-stack-crd
   catalog.cattle.io/hidden: "true"
 apiVersion: v2
-appVersion: 1.0.1
+appVersion: 1.3.0
 # https://github.com/helm/helm/blob/main/pkg/releaseutil/kind_sorter.go
 dependencies:
 - name: common
@@ -14,12 +14,12 @@ dependencies:
 - condition: global.elasticCrd.enabled
   name: eck-operator-crds
   repository: https://helm.elastic.co
-  version: 2.11.1
+  version: 2.14.0
 #  alias: eckOperatorCrds
 - condition: global.elasticCrd.enabled
   name: eck-operator
   repository: https://helm.elastic.co
-  version: 2.11.1
+  version: 2.14.0
 #  alias: eckOperator
 
 #- condition: global.istioCrd.enabled
@@ -53,7 +53,7 @@ keywords:
 - elastic
 #- istio
 # 
-kubeVersion: '>=1.25.0-0 <1.30.0-0'
+kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
 - email: biuro@linuxpolska.com
   name: Linux Polska
@@ -61,4 +61,4 @@ name: monitoring-stack-crd
 sources:
 -  https://sourcemation.github.io/charts/
 type: application
-version: 1.0.1
+version: 1.3.0
