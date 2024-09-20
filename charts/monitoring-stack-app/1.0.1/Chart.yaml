@@ -1,8 +1,8 @@
 annotations:
-  catalog.cattle.io/display-name:  Monitoring Stack
+  catalog.cattle.io/display-name: Monitoring Stack APP (2/2)
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: monitoring-stack-app 
-  catalog.cattle.io/auto-install: monitoring-stack-crd=match
+#  catalog.cattle.io/auto-install: monitoring-stack-crd=match
 apiVersion: v2
 appVersion: 1.0.1
 dependencies:

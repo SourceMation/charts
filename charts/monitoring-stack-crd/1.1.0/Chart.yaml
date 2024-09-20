@@ -1,9 +1,9 @@
 annotations:
-  catalog.cattle.io/display-name: Monitoring Stack CRD
+  catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
   catalog.cattle.io/namespace: lp-system
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: monitoring-stack-crd
-  catalog.cattle.io/hidden: "true"
+  catalog.cattle.io/hidden: "false"
 apiVersion: v2
 appVersion: 1.1.0
 # https://github.com/helm/helm/blob/main/pkg/releaseutil/kind_sorter.go
