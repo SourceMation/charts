@@ -9,13 +9,9 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.668451522+02:00"
-=======
-    created: "2024-09-20T03:32:44.117007789+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.831184428+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
-    digest: 41d4e6815af8fca6d885a045beccec4b9496f5ad54968318b16184ec29ea9433
+    digest: 7b430316ecc0bab82476c486da0a753d678bdccc338745a5018b74584bea4deb
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -29,81 +25,21 @@ entries:
     urls:
     - common/common-0.1.1.tgz
     version: 0.1.1
-  - annotations:
-      catalog.cattle.io/display-name: Commons librares
-      catalog.cattle.io/hidden: "true"
-      catalog.cattle.io/namespace: default
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: commons
-    apiVersion: v2
-    appVersion: 0.1.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.668181988+02:00"
-=======
-    created: "2024-09-20T03:32:44.116701015+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Library Helm Chart for grouping common logic between charts.
-    digest: a28e0fc27bdbd329975818848d14a9c0eb830a9e906f066d083a462d3284bfb9
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - common
-    kubeVersion: '>=1.19.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: common
-    type: library
-    urls:
-    - common/common-0.1.0.tgz
-    version: 0.1.0
-  - annotations:
-      catalog.cattle.io/display-name: Commons librares
-      catalog.cattle.io/hidden: "true"
-      catalog.cattle.io/namespace: default
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: commons
-    apiVersion: v2
-    appVersion: 0.1.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.668657084+02:00"
-=======
-    created: "2024-09-20T03:32:44.117526334+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Library Helm Chart for grouping common logic between charts.
-    digest: a47d2e5894cfcc9b3baec58fc24353200bdd83059be67c117d03acb93f65e9e1
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - common
-    kubeVersion: '>=1.19.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: common
-    type: library
-    urls:
-    - elastic/common-0.1.0.tgz
-    version: 0.1.0
   elastic:
   - annotations:
       catalog.cattle.io/display-name: Elastic Stack
-      catalog.cattle.io/hidden: "false"
+      catalog.cattle.io/hidden: "true"
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.15.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.679903039+02:00"
-=======
-    created: "2024-09-20T03:32:44.130066456+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.843818167+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
     description: Elastic stack deployment
-    digest: 1211fa0eec3e2233d0a6ebd67f841d134630c32ace9026a81607777ecf70a260
+    digest: 82dc96785e663b299e8a0b6c2c704f31d417bdc0d3734fd077c6daa7edd841e1
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -126,17 +62,13 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.13.4
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.677153923+02:00"
-=======
-    created: "2024-09-20T03:32:44.127197961+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.840360548+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
     description: Elastic stack deployment
-    digest: fcb1f06900981e555992e5fee943f0160ae9ef142fb23ba35e1964d1a482ac96
+    digest: 5b94ba3745c6d8f025b91cda781b0c004626e0b0b78fe380e7f5faf7333810ce
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -159,17 +91,13 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.13.4
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.675472534+02:00"
-=======
-    created: "2024-09-20T03:32:44.124878855+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.838638438+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
     description: Elastic stack deployment
-    digest: 621b728ac0f0c879ae41bc36835ce71359f296198f9ebfa4bf1ffda8bdbdebc4
+    digest: 84c2e1845f46410a54dd383da64f3b38114a419d561e814c0ef5f88442d200cb
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -185,119 +113,6 @@ entries:
     urls:
     - elastic/elastic-1.3.0.tgz
     version: 1.3.0
-  - annotations:
-      catalog.cattle.io/display-name: Elastic Stack
-      catalog.cattle.io/hidden: "false"
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic
-    apiVersion: v2
-    appVersion: 8.12.2
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.673838924+02:00"
-=======
-    created: "2024-09-20T03:32:44.123279863+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - name: common
-      repository: https://sourcemation.github.io/charts/
-      version: 0.1.x
-    description: Elastic stack deployment
-    digest: 6143eac516479ab343c6d6b24780680daf6544d3614f5a7a371244e8dbc4d674
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: elastic
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - elastic/elastic-1.2.1.tgz
-    version: 1.2.1
-  - annotations:
-      catalog.cattle.io/display-name: Elastic Stack
-      catalog.cattle.io/hidden: "false"
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic
-    apiVersion: v2
-    appVersion: 8.12.2
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.672160309+02:00"
-=======
-    created: "2024-09-20T03:32:44.121576619+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - name: common
-      repository: https://sourcemation.github.io/charts/
-      version: 0.1.x
-    description: Elastic stack deployment
-    digest: 61e161b1a7faaa61a0d9e95c7e05b4104da48e973bc4ce359e85e974af42c26c
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: elastic
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - elastic/elastic-1.1.1.tgz
-    version: 1.1.1
-  - annotations:
-      catalog.cattle.io/display-name: Elastic stack for k8s
-      catalog.cattle.io/hidden: "true"
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic
-    apiVersion: v2
-    appVersion: 8.12.2
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.670209283+02:00"
-=======
-    created: "2024-09-20T03:32:44.120364335+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - name: common
-      repository: https://sourcemation.github.io/charts/
-      version: 0.x.x
-    description: Elastic stack deployment
-    digest: 81a09b3b52d5c4d782a8ec234b903985b95b84d77179656cbc986afa533ed8c2
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: elastic
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - elastic/elastic-1.1.0.tgz
-    version: 1.1.0
-  - apiVersion: v2
-    appVersion: 8.12.2
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.66918028+02:00"
-=======
-    created: "2024-09-20T03:32:44.118592839+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Helm chart for Kubernetes
-    digest: 1c56f1e282625fb45b37b1a4cd179e7e578c48242a47ed9ea2baaa5b88fb5fa8
-    name: elastic
-    type: application
-    urls:
-    - elastic/elastic-1.0.0.tgz
-    version: 1.0.0
   elastic-agent:
   - annotations:
       catalog.cattle.io/display-name: Elastic agent client
@@ -306,17 +121,13 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.15.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.683853693+02:00"
-=======
-    created: "2024-09-20T03:32:44.133730901+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.84577763+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.x.x
     description: Elastic agent for kubernetes which colecting logs, metrics.
-    digest: 80a05b357d6f5c0d7a9d23798dc548f5a808921cca352474f7a1ab8ee5b1a130
+    digest: 04ed51a6c9d1d8850e1a83717264acb170bd4c4d0e21bef3c27c5027db82e319
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -339,17 +150,13 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.13.4
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.683267279+02:00"
-=======
-    created: "2024-09-20T03:32:44.133080488+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.845157548+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.x.x
     description: Elastic agent for kubernetes which colecting logs, metrics.
-    digest: 344e3f1d9c51f02116beee07e745cd8fe56de7216a1604ce7b219019b4507be4
+    digest: a7c145158ff40ba8d29721009cee959464c7b7521751f615acdde1f99d4063db
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -372,17 +179,13 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.13.4
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.682673248+02:00"
-=======
-    created: "2024-09-20T03:32:44.132288002+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.844474445+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.x.x
     description: Elastic agent for kubernetes which colecting logs, metrics.
-    digest: 9b8b996233f0070ef377320c618a0c0a543a8d13c0f9f1b93a966e2bc438dbab
+    digest: 7e738aeb42059612b73389e249ab00087a88eb694e24565d30d2c63a837c4b82
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -398,107 +201,21 @@ entries:
     urls:
     - elastic-agent/elastic-agent-1.3.0.tgz
     version: 1.3.0
-  - annotations:
-      catalog.cattle.io/display-name: Elastic agent client
-      catalog.cattle.io/hidden: "false"
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic-agent
-    apiVersion: v2
-    appVersion: 8.12.2
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.681916911+02:00"
-=======
-    created: "2024-09-20T03:32:44.131549899+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - name: common
-      repository: https://sourcemation.github.io/charts/
-      version: 0.x.x
-    description: Elastic agent for kubernetes which colecting logs, metrics.
-    digest: 51a8219ff2ff32e3294fb70a411defab72617b5e6e4a358e6fbf9d7475c08795
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: elastic-agent
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - elastic-agent/elastic-agent-1.1.1.tgz
-    version: 1.1.1
-  - annotations:
-      catalog.cattle.io/display-name: Elastic agent client
-      catalog.cattle.io/hidden: "false"
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic-agent
-    apiVersion: v2
-    appVersion: 8.12.2
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.681251487+02:00"
-=======
-    created: "2024-09-20T03:32:44.130810836+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - name: common
-      repository: https://sourcemation.github.io/charts/
-      version: 0.x.x
-    description: Elastic agent for kubernetes which colecting logs, metrics.
-    digest: 8d380b9097c6b48eca4d380f583348a54df1557ffec3b7b70cabbc683436e300
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: elastic-agent
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - elastic-agent/elastic-agent-1.1.0.tgz
-    version: 1.1.0
-  mongodb:
-  - apiVersion: v2
-    appVersion: 7.0.3
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.684131125+02:00"
-=======
-    created: "2024-09-20T03:32:44.13400962+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Helm chart for MongoDB on EuroLinux 9
-    digest: cc70ea7f2d0fac635d56f0485874e2bbafd3f28fd7fa0bf39ca7165071d20289
-    name: mongodb
-    type: application
-    urls:
-    - mongodb/mongodb-7.0.3.tgz
-    version: 7.0.3
   monitoring-stack-app:
   - annotations:
-      catalog.cattle.io/auto-install: monitoring-stack-crd=match
-      catalog.cattle.io/display-name: Monitoring Stack
+      catalog.cattle.io/display-name: Monitoring Stack APP (2/2)
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.3.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.764002915+02:00"
-=======
-    created: "2024-09-20T03:32:44.164903773+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.852686708+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
       repository: https://sourcemation.github.io/charts
       version: 1.4.0
     description: Set of charts for monitoring
-    digest: d647ca93a0ff50edcb9264ee3474e5900301a213fa205d5e5af2c9e708e69d5a
+    digest: 93ec4148772d62d871e705ae096d9536060ba2069612b09873d60def0962a178
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -521,24 +238,19 @@ entries:
     - monitoring-stack-app/monitoring-stack-app-1.3.0.tgz
     version: 1.3.0
   - annotations:
-      catalog.cattle.io/auto-install: monitoring-stack-crd=match
-      catalog.cattle.io/display-name: Monitoring Stack
+      catalog.cattle.io/display-name: Monitoring Stack APP (2/2)
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.2.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.760581467+02:00"
-=======
-    created: "2024-09-20T03:32:44.162960726+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.849654817+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
       repository: https://sourcemation.github.io/charts
       version: 1.4.0
     description: Set of charts for monitoring
-    digest: c3211da1a3567c50b8978fa3326862b3afb9e158d254787d0f1b6336263a818e
+    digest: 1694c71ab8dd870547d78ab49cfb9e7478da4aae11c9c8b89da284225d71c543
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -560,24 +272,19 @@ entries:
     - monitoring-stack-app/monitoring-stack-app-1.2.0.tgz
     version: 1.2.0
   - annotations:
-      catalog.cattle.io/auto-install: monitoring-stack-crd=match
-      catalog.cattle.io/display-name: Monitoring Stack
+      catalog.cattle.io/display-name: Monitoring Stack APP (2/2)
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.1.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.757275993+02:00"
-=======
-    created: "2024-09-20T03:32:44.160833967+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.847660723+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
       repository: https://sourcemation.github.io/charts
       version: 1.4.0
     description: Set of charts for monitoring
-    digest: 22cf6298a5284c0c08e81b5862fa7767d321739c3e608f6bb3aa0aaff74fc51e
+    digest: ab805ffbf0afea65bebcdb25a32c1f997a1ba22a64c8d15b8b31ac3b024b0fa7
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -598,105 +305,16 @@ entries:
     urls:
     - monitoring-stack-app/monitoring-stack-app-1.1.0.tgz
     version: 1.1.0
-  - annotations:
-<<<<<<< HEAD
-      catalog.cattle.io/display-name: Monitoring Stack App (2/2)
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: monitoring-stack-app
-    apiVersion: v2
-    appVersion: 1.0.1
-    created: "2024-09-20T06:53:44.754421613+02:00"
-    dependencies:
-    - condition: global.elasticApp.enabled
-      name: elastic
-      repository: https://sourcemation.github.io/charts
-      version: 1.1.0
-    - condition: global.jaegerApp.enabled
-      name: jaeger
-      repository: https://jaegertracing.github.io/helm-charts
-      version: 3.0.6
-    description: Set of charts for monitoring
-    digest: a927f2db59fcb03efa97aae1bf31285f190dac1865201dc3a26978b3f12a9fcc
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    - kibana
-    - istio
-    - jaeger
-    kubeVersion: '>=1.19.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: monitoring-stack-app
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - monitoring-stack-app/monitoring-stack-app-1.0.1.tgz
-    version: 1.0.1
-  - annotations:
-      catalog.cattle.io/display-name: Monitoring Stack App (2/2)
-=======
-      catalog.cattle.io/auto-install: monitoring-stack-crd=match
-      catalog.cattle.io/display-name: Monitoring Stack
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: monitoring-stack-app
-    apiVersion: v2
-    appVersion: 1.2024-1.0.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.717634547+02:00"
-=======
-    created: "2024-09-20T03:32:44.158730797+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - condition: global.elastic.enabled
-      name: elastic
-      repository: https://github.com/SourceMation/charts
-      version: 1.1.0
-    - condition: global.istiod.enabled
-      name: istiod
-      repository: https://istio-release.storage.googleapis.com/charts
-      version: 1.21.1
-    - condition: global.jaeger.enabled
-      name: jaeger
-      repository: https://jaegertracing.github.io/helm-charts
-      version: 3.0.6
-    description: Set of charts for monitoring
-    digest: e198cab5000c83b3228bb5de4b0728516654b64aa46f6e98bda36b13c5c00190
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    - kibana
-    - istio
-    - jaeger
-    kubeVersion: '>=1.19.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: monitoring-stack-app
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - monitoring-stack-app/monitoring-stack-app-1.0.0.tgz
-    version: 1.0.0
   monitoring-stack-crd:
   - annotations:
-      catalog.cattle.io/display-name: Monitoring Stack CRD
-      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
+      catalog.cattle.io/hidden: "false"
       catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.3.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.812233249+02:00"
-=======
-    created: "2024-09-20T03:32:44.214497576+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.878609955+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -710,11 +328,7 @@ entries:
       repository: https://helm.elastic.co
       version: 2.14.0
     description: Set of operators and CRDs for LP monitoring
-<<<<<<< HEAD
-    digest: 0d89bfb735c2a66eda358a04eeec626e55c7d5ae783e969fc39f17676d471193
-=======
-    digest: de03fd279daea679365c9eb9150ad081666e77bac552aaad3f35cd3cd75732db
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    digest: e702580b304651bde25cb5e34de84cca82e1d7766b35de356580afa108895c6c
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -731,18 +345,14 @@ entries:
     - monitoring-stack-crd/monitoring-stack-crd-1.3.0.tgz
     version: 1.3.0
   - annotations:
-      catalog.cattle.io/display-name: Monitoring Stack CRD
-      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
+      catalog.cattle.io/hidden: "false"
       catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.2.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.803136399+02:00"
-=======
-    created: "2024-09-20T03:32:44.206931015+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.870281733+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -756,11 +366,7 @@ entries:
       repository: https://helm.elastic.co
       version: 2.13.0
     description: Set of operators and CRDs for LP monitoring
-<<<<<<< HEAD
-    digest: 036f2e9f26c7eb936e5a503519d067824d64e41e9d386e6354c01d9cf11d907c
-=======
-    digest: 6c83eec74d8cd105f0742b22ed52f509d63e2f30869e384b8cc8cd99269eba0e
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    digest: 3983eccf86de2e8141e0b0bcb5854a1b83ae899ea56fa5f1f2617819ec8fb3ed
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -777,18 +383,14 @@ entries:
     - monitoring-stack-crd/monitoring-stack-crd-1.2.0.tgz
     version: 1.2.0
   - annotations:
-      catalog.cattle.io/display-name: Monitoring Stack CRD
-      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
+      catalog.cattle.io/hidden: "false"
       catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.1.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.793585899+02:00"
-=======
-    created: "2024-09-20T03:32:44.195951109+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    created: "2024-09-20T07:51:05.861819475+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -802,11 +404,7 @@ entries:
       repository: https://helm.elastic.co
       version: 2.12.1
     description: Set of operators and CRDs for LP monitoring
-<<<<<<< HEAD
-    digest: 8368778982461bb358dbb47cb74168c981ecd0642447fed695b1e4d3de655180
-=======
-    digest: 772f5374fd0e9286e0850d37a0e6745c6a0d279045b4325a59c36691262058d4
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+    digest: baf44f8496f5b882734bf48a8d19e0d707a1a3e1b248df044e89ccfff5a91bfa
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -822,421 +420,4 @@ entries:
     urls:
     - monitoring-stack-crd/monitoring-stack-crd-1.1.0.tgz
     version: 1.1.0
-  - annotations:
-<<<<<<< HEAD
-      catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
-      catalog.cattle.io/hidden: "false"
-=======
-      catalog.cattle.io/display-name: Monitoring Stack CRD
-      catalog.cattle.io/hidden: "true"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-      catalog.cattle.io/namespace: monitoring-stack-crd
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: monitoring-stack-crd
-    apiVersion: v2
-    appVersion: 1.0.1
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.784747023+02:00"
-=======
-    created: "2024-09-20T03:32:44.187184752+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - name: common
-      repository: https://sourcemation.github.io/charts/
-      version: 0.1.x
-    - condition: global.elasticCrd.enabled
-      name: eck-operator-crds
-      repository: https://helm.elastic.co
-      version: 2.11.1
-    - condition: global.elasticCrd.enabled
-      name: eck-operator
-      repository: https://helm.elastic.co
-      version: 2.11.1
-    description: Set of operators and CRDs for LP monitoring
-<<<<<<< HEAD
-    digest: b7902e32f7a805face2b1e1ceacf2ec471e12a2978f2afe7f202e734e9847559
-=======
-    digest: 4460bec01ca5b55b882f2344b9a9a056cd0658510798c8c6315f3ba87cd91de4
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    kubeVersion: '>=1.25.0-0 <1.30.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: monitoring-stack-crd
-    sources:
-    - https://sourcemation.github.io/charts/
-    type: application
-    urls:
-    - monitoring-stack-crd/monitoring-stack-crd-1.0.1.tgz
-    version: 1.0.1
-  - annotations:
-<<<<<<< HEAD
-      catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
-      catalog.cattle.io/hidden: "false"
-      catalog.cattle.io/namespace: lp-system
-=======
-      catalog.cattle.io/display-name: Monitoring Stack
-      catalog.cattle.io/hidden: "true"
-      catalog.cattle.io/namespace: default
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: monitoring-stack-crd
-    apiVersion: v2
-    appVersion: 1.2024-1.0.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.775379377+02:00"
-=======
-    created: "2024-09-20T03:32:44.178178798+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - condition: global.eck-operator-crds.enabled
-      name: eck-operator-crds
-      repository: https://helm.elastic.co
-      version: 2.12.1
-    - condition: global.eck-operator.enabled
-      name: eck-operator
-      repository: https://helm.elastic.co
-      version: 2.12.1
-    - condition: global.base.enabled
-      name: base
-      repository: https://istio-release.storage.googleapis.com/charts
-      version: 1.21.2
-    - condition: global.jaeger-operator.enabled
-      name: jaeger-operator
-      repository: https://jaegertracing.github.io/helm-charts
-      version: 2.53.0
-    description: Set of operators and CRDs for LP monitoring
-<<<<<<< HEAD
-    digest: d9bc010c13e560b8d3b867d0c9a3497939404e5d6cacc3905e561bbb1888a461
-=======
-    digest: 5d36aaa4ba9ed66177cdc82c48391b4636a4c761136c527885c7c5d1aa615261
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    - kibana
-    - jaeger
-    kubeVersion: '>=1.19.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: monitoring-stack-crd
-    sources:
-    - https://sourcemation.github.io/charts/
-    type: application
-    urls:
-    - monitoring-stack-crd/monitoring-stack-crd-1.0.0.tgz
-    version: 1.0.0
-  - annotations:
-      catalog.cattle.io/display-name: CRDs for Security Stack
-      catalog.cattle.io/hidden: "true"
-      catalog.cattle.io/namespace: default
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: security-stack-crd
-    apiVersion: v2
-    appVersion: 1.2024-1.0.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.848354769+02:00"
-=======
-    created: "2024-09-20T03:32:44.25406336+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - alias: neuvector-crds
-      condition: global.neuvector-crd.enabled
-      name: crd
-      repository: https://neuvector.github.io/neuvector-helm/
-      version: 2.7.3
-    - condition: global.kubearmor-operator.enabled
-      name: kubearmor-operator
-      repository: https://kubearmor.github.io/charts
-      version: v1.3.2
-    - condition: global.kubewarden-crds.enabled
-      name: kubewarden-crds
-      repository: https://charts.kubewarden.io
-      version: 1.5.0
-    - condition: global.kubewarden-controller.enabled
-      name: kubewarden-controller
-      repository: https://charts.kubewarden.io
-      version: 2.0.8
-    - condition: global.cert-manager-crd.enabled
-      name: cert-manager-crd
-      repository: charts/cert-manager
-      version: 1.14.4
-    - condition: global.cert-manager.enabled
-      name: cert-manager
-      repository: charts/cert-manager
-      version: 1.14.4
-    description: Set of operators and CRDs for LP security
-    digest: 6cdde4b02689b4fff04faa09ee8133dc68a9077ac48adf5a413ccaf1ae25fd40
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - neuevector
-    - kubewarden
-    - kubearmor
-    - cert-manager
-    kubeVersion: '>=1.19.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: monitoring-stack-crd
-    sources:
-    - https://sourcemation.github.io/charts/
-    type: application
-    urls:
-    - security-stack-crd/monitoring-stack-crd-1.0.0.tgz
-    version: 1.0.0
-  pgadmin:
-  - apiVersion: v2
-    appVersion: 8.5.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.812443334+02:00"
-=======
-    created: "2024-09-20T03:32:44.214686705+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Helm chart for Kubernetes
-    digest: 2a7400e8b397ae2fa068a9e1a6f265bbbb854c354ad61cbd8e106bb041741fd7
-    name: pgadmin
-    type: application
-    urls:
-    - pgadmin/pgadmin-1.0.0.tgz
-    version: 1.0.0
-  pgbadger:
-  - apiVersion: v2
-    appVersion: "11.1"
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.812626081+02:00"
-=======
-    created: "2024-09-20T03:32:44.215654137+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Helm chart for Kubernetes
-    digest: 002bd9e0c0998cb850187723b23ec3233c277399e55290cb60f9b58731d82002
-    name: pgbadger
-    type: application
-    urls:
-    - pgbadger/pgbadger-1.0.0.tgz
-    version: 1.0.0
-  pgbouncer:
-  - apiVersion: v2
-    appVersion: 1.22.1
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.813024017+02:00"
-=======
-    created: "2024-09-20T03:32:44.216086789+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Helm chart for Kubernetes
-    digest: 835b36e512313e97bea09644e35afef12d8afa510e217c401ed7fb126d6e43cc
-    name: pgbouncer
-    type: application
-    urls:
-    - pgbouncer/pgbouncer-0.1.0.tgz
-    version: 0.1.0
-  pgloader:
-  - apiVersion: v2
-    appVersion: 3.6.7
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.813218014+02:00"
-=======
-    created: "2024-09-20T03:32:44.216349826+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Helm chart for Kubernetes
-    digest: 3fefcd25827a760059cc30f95dafb94dac5e00a55f4075dfe0766d27f438f8c9
-    name: pgloader
-    type: application
-    urls:
-    - pgloader/pgloader-1.0.0.tgz
-    version: 1.0.0
-  pgpool:
-  - apiVersion: v2
-    appVersion: 4.4.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.813406985+02:00"
-=======
-    created: "2024-09-20T03:32:44.216547691+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Helm chart for Kubernetes
-    digest: 4076de8d80582436d8dd5523aa8b435094a76ff0ea17e2c4ab59b691236bb9b0
-    name: pgpool
-    type: application
-    urls:
-    - pgpool/pgpool-1.0.0.tgz
-    version: 1.0.0
-  postgresql:
-  - apiVersion: v2
-    appVersion: 14.8.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.813859454+02:00"
-=======
-    created: "2024-09-20T03:32:44.216890568+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Helm chart for PostgreSQL on EuroLinux 9
-    digest: af0f82a51b3cd16d308c9506e16943daff845b4a9a5a0b27ec0908f57ae30010
-    name: postgresql
-    type: application
-    urls:
-    - postgresql/postgresql-14.8.0.tgz
-    version: 14.8.0
-  rabbitmq:
-  - apiVersion: v2
-    appVersion: 3.11.10
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.814134555+02:00"
-=======
-    created: "2024-09-20T03:32:44.217247405+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Helm chart for RabbitMQ on EuroLinux 9
-    digest: 5786bda63a017352c3d87d3651e9f47ce2bad627d66d34e62db02be993781a6c
-    name: rabbitmq
-    type: application
-    urls:
-    - rabbitmq/rabbitmq-3.11.10.tgz
-    version: 3.11.10
-  redis:
-  - apiVersion: v2
-    appVersion: 6.2.7
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.814403836+02:00"
-=======
-    created: "2024-09-20T03:32:44.217497336+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    description: A Helm chart for Redis on EuroLinux 9
-    digest: 9be5e726c3ad27f65188db150b5081c17014b1d419ac5cff8e8ad8de1c789353
-    name: redis
-    type: application
-    urls:
-    - redis/redis-6.2.7.tgz
-    version: 6.2.7
-  security-stack-app:
-  - annotations:
-      catalog.cattle.io/auto-install: security-stack-crd=match
-      catalog.cattle.io/display-name: Security Stack
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: security-stack-app
-    apiVersion: v2
-    appVersion: 1.2024-1.0.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.837784043+02:00"
-=======
-    created: "2024-09-20T03:32:44.2416217+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - condition: global.conjur-oss.enabled
-      name: conjur-oss
-      repository: ""
-      version: 1.1.0
-    - condition: global.sealed-secrets.enabled
-      name: sealed-secrets
-      repository: https://bitnami-labs.github.io/sealed-secrets
-      version: 2.15.2
-    - condition: global.external-secrets.enabled
-      name: external-secrets
-      repository: https://charts.external-secrets.io
-      version: 0.9.19
-    - condition: global.kyverno.enabled
-      name: kyverno
-      repository: https://kyverno.github.io/kyverno/
-      version: 3.0.7
-    - condition: global.kubearmor.enabled
-      name: kubearmor
-      repository: https://kubearmor.github.io/charts
-      version: v1.3.2
-    - condition: global.kubewarden-defaults.enabled
-      name: kubewarden-defaults
-      repository: https://charts.kubewarden.io
-      version: 2.0.0
-    - condition: global.neuvector.enabled
-      name: core
-      repository: https://neuvector.github.io/neuvector-helm/
-      version: 2.7.3
-    description: Set of charts for security
-    digest: 2a38b8b2c51b98653357e3400034ab33a2c135c59235665f3717fece72727501
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - conjur-oss
-    - external-secrets
-    - kyverno
-    - kubearmor
-    - kubewarden
-    - neuvector
-    kubeVersion: '>=1.19.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: security-stack-app
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - security-stack-app/security-stack-app-1.0.0.tgz
-    version: 1.0.0
-  security-stack-crd:
-  - annotations:
-      catalog.cattle.io/display-name: CRDs for Security Stack
-      catalog.cattle.io/hidden: "true"
-      catalog.cattle.io/namespace: default
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: security-stack-crd
-    apiVersion: v2
-    appVersion: 1.2024-1.0.0
-<<<<<<< HEAD
-    created: "2024-09-20T06:53:44.860027746+02:00"
-=======
-    created: "2024-09-20T03:32:44.266009066+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
-    dependencies:
-    - alias: neuvector-crds
-      condition: global.neuvector-crd.enabled
-      name: crd
-      repository: https://neuvector.github.io/neuvector-helm/
-      version: 2.7.3
-    - condition: global.kubearmor-operator.enabled
-      name: kubearmor-operator
-      repository: https://kubearmor.github.io/charts
-      version: v1.3.2
-    - condition: global.kubewarden-crds.enabled
-      name: kubewarden-crds
-      repository: https://charts.kubewarden.io
-      version: 1.5.0
-    - condition: global.kubewarden-controller.enabled
-      name: kubewarden-controller
-      repository: https://charts.kubewarden.io
-      version: 2.0.8
-    - condition: global.cert-manager-crd.enabled
-      name: cert-manager-crd
-      repository: charts/cert-manager
-      version: 1.14.4
-    - condition: global.cert-manager.enabled
-      name: cert-manager
-      repository: charts/cert-manager
-      version: 1.14.4
-    description: Set of operators and CRDs for LP security
-    digest: f2e603a318d237055146f6b4f8d2fee3d132bc776357dafe3c0bc18c33aa98f0
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - neuevector
-    - kubewarden
-    - kubearmor
-    - cert-manager
-    kubeVersion: '>=1.19.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: security-stack-crd
-    sources:
-    - https://sourcemation.github.io/charts/
-    type: application
-    urls:
-    - security-stack-crd/security-stack-crd-1.0.0.tgz
-    version: 1.0.0
-<<<<<<< HEAD
-generated: "2024-09-20T06:53:44.667873972+02:00"
-=======
-generated: "2024-09-20T03:32:44.116414347+02:00"
->>>>>>> ba8a7d68167eee11e71e2aff71ce69b9c4f11f11
+generated: "2024-09-20T07:51:05.830867642+02:00"
