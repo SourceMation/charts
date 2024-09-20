@@ -9,7 +9,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2024-09-20T06:44:41.487297401+02:00"
+    created: "2024-09-20T06:53:44.668451522+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: 41d4e6815af8fca6d885a045beccec4b9496f5ad54968318b16184ec29ea9433
     home: https://linuxpolska.com
@@ -33,7 +33,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-09-20T06:44:41.487087242+02:00"
+    created: "2024-09-20T06:53:44.668181988+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: a28e0fc27bdbd329975818848d14a9c0eb830a9e906f066d083a462d3284bfb9
     home: https://linuxpolska.com
@@ -57,7 +57,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.0
-    created: "2024-09-20T06:44:41.487502192+02:00"
+    created: "2024-09-20T06:53:44.668657084+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: a47d2e5894cfcc9b3baec58fc24353200bdd83059be67c117d03acb93f65e9e1
     home: https://linuxpolska.com
@@ -81,7 +81,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-20T06:44:41.499955879+02:00"
+    created: "2024-09-20T06:53:44.679903039+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -110,7 +110,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-20T06:44:41.496480928+02:00"
+    created: "2024-09-20T06:53:44.677153923+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -139,7 +139,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-20T06:44:41.494303892+02:00"
+    created: "2024-09-20T06:53:44.675472534+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -168,7 +168,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-09-20T06:44:41.49279213+02:00"
+    created: "2024-09-20T06:53:44.673838924+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -197,7 +197,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-09-20T06:44:41.491111956+02:00"
+    created: "2024-09-20T06:53:44.672160309+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -226,7 +226,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-09-20T06:44:41.490011583+02:00"
+    created: "2024-09-20T06:53:44.670209283+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -250,7 +250,7 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-09-20T06:44:41.488230941+02:00"
+    created: "2024-09-20T06:53:44.66918028+02:00"
     description: A Helm chart for Kubernetes
     digest: 1c56f1e282625fb45b37b1a4cd179e7e578c48242a47ed9ea2baaa5b88fb5fa8
     name: elastic
@@ -266,7 +266,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-20T06:44:41.503756255+02:00"
+    created: "2024-09-20T06:53:44.683853693+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -295,7 +295,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-20T06:44:41.503005206+02:00"
+    created: "2024-09-20T06:53:44.683267279+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -324,7 +324,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-20T06:44:41.502195873+02:00"
+    created: "2024-09-20T06:53:44.682673248+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -353,7 +353,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-09-20T06:44:41.50138237+02:00"
+    created: "2024-09-20T06:53:44.681916911+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -382,7 +382,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.12.2
-    created: "2024-09-20T06:44:41.500683639+02:00"
+    created: "2024-09-20T06:53:44.681251487+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -407,7 +407,7 @@ entries:
   mongodb:
   - apiVersion: v2
     appVersion: 7.0.3
-    created: "2024-09-20T06:44:41.504024603+02:00"
+    created: "2024-09-20T06:53:44.684131125+02:00"
     description: A Helm chart for MongoDB on EuroLinux 9
     digest: cc70ea7f2d0fac635d56f0485874e2bbafd3f28fd7fa0bf39ca7165071d20289
     name: mongodb
@@ -422,7 +422,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.3.0
-    created: "2024-09-20T06:44:41.556612751+02:00"
+    created: "2024-09-20T06:53:44.764002915+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
@@ -457,7 +457,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-09-20T06:44:41.554679928+02:00"
+    created: "2024-09-20T06:53:44.760581467+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
@@ -491,7 +491,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.1.0
-    created: "2024-09-20T06:44:41.552779212+02:00"
+    created: "2024-09-20T06:53:44.757275993+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
@@ -525,7 +525,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.0.1
-    created: "2024-09-20T06:44:41.55078474+02:00"
+    created: "2024-09-20T06:53:44.754421613+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
@@ -561,7 +561,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.2024-1.0.0
-    created: "2024-09-20T06:44:41.528527196+02:00"
+    created: "2024-09-20T06:53:44.717634547+02:00"
     dependencies:
     - condition: global.elastic.enabled
       name: elastic
@@ -604,7 +604,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.3.0
-    created: "2024-09-20T06:44:41.602100476+02:00"
+    created: "2024-09-20T06:53:44.812233249+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -618,7 +618,7 @@ entries:
       repository: https://helm.elastic.co
       version: 2.14.0
     description: Set of operators and CRDs for LP monitoring
-    digest: 7064781ca9006b5f539d7221eabf6a8d12c13c6ac2cc822d71b91099a58892f5
+    digest: 0d89bfb735c2a66eda358a04eeec626e55c7d5ae783e969fc39f17676d471193
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -642,7 +642,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-09-20T06:44:41.594221034+02:00"
+    created: "2024-09-20T06:53:44.803136399+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -656,7 +656,7 @@ entries:
       repository: https://helm.elastic.co
       version: 2.13.0
     description: Set of operators and CRDs for LP monitoring
-    digest: 2e7873a0b33a0028ae429a959d811d705ea634d7fab8853e7eb294daa7c5a934
+    digest: 036f2e9f26c7eb936e5a503519d067824d64e41e9d386e6354c01d9cf11d907c
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -680,7 +680,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.1.0
-    created: "2024-09-20T06:44:41.584574334+02:00"
+    created: "2024-09-20T06:53:44.793585899+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -694,7 +694,7 @@ entries:
       repository: https://helm.elastic.co
       version: 2.12.1
     description: Set of operators and CRDs for LP monitoring
-    digest: 7f059175e85555d91c7d4ef7d4045d7288a3569bc841a9e54582ca96dc75f22d
+    digest: 8368778982461bb358dbb47cb74168c981ecd0642447fed695b1e4d3de655180
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -712,13 +712,13 @@ entries:
     version: 1.1.0
   - annotations:
       catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
-      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/hidden: "false"
       catalog.cattle.io/namespace: monitoring-stack-crd
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.0.1
-    created: "2024-09-20T06:44:41.575927822+02:00"
+    created: "2024-09-20T06:53:44.784747023+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -732,7 +732,7 @@ entries:
       repository: https://helm.elastic.co
       version: 2.11.1
     description: Set of operators and CRDs for LP monitoring
-    digest: 8ccc9ae865d7346a795915eba1c3677dd86509bdb68afaf55bda12398067bea1
+    digest: b7902e32f7a805face2b1e1ceacf2ec471e12a2978f2afe7f202e734e9847559
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -750,13 +750,13 @@ entries:
     version: 1.0.1
   - annotations:
       catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
-      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/hidden: "false"
       catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.2024-1.0.0
-    created: "2024-09-20T06:44:41.568131889+02:00"
+    created: "2024-09-20T06:53:44.775379377+02:00"
     dependencies:
     - condition: global.eck-operator-crds.enabled
       name: eck-operator-crds
@@ -775,7 +775,7 @@ entries:
       repository: https://jaegertracing.github.io/helm-charts
       version: 2.53.0
     description: Set of operators and CRDs for LP monitoring
-    digest: b23f62dedab1570c9845550e5a39ac0bf276ba061dc94d404e5f6f62135bd66c
+    digest: d9bc010c13e560b8d3b867d0c9a3497939404e5d6cacc3905e561bbb1888a461
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -801,7 +801,7 @@ entries:
       catalog.cattle.io/release-name: security-stack-crd
     apiVersion: v2
     appVersion: 1.2024-1.0.0
-    created: "2024-09-20T06:44:41.639890301+02:00"
+    created: "2024-09-20T06:53:44.848354769+02:00"
     dependencies:
     - alias: neuvector-crds
       condition: global.neuvector-crd.enabled
@@ -851,7 +851,7 @@ entries:
   pgadmin:
   - apiVersion: v2
     appVersion: 8.5.0
-    created: "2024-09-20T06:44:41.602301447+02:00"
+    created: "2024-09-20T06:53:44.812443334+02:00"
     description: A Helm chart for Kubernetes
     digest: 2a7400e8b397ae2fa068a9e1a6f265bbbb854c354ad61cbd8e106bb041741fd7
     name: pgadmin
@@ -862,7 +862,7 @@ entries:
   pgbadger:
   - apiVersion: v2
     appVersion: "11.1"
-    created: "2024-09-20T06:44:41.602537532+02:00"
+    created: "2024-09-20T06:53:44.812626081+02:00"
     description: A Helm chart for Kubernetes
     digest: 002bd9e0c0998cb850187723b23ec3233c277399e55290cb60f9b58731d82002
     name: pgbadger
@@ -873,7 +873,7 @@ entries:
   pgbouncer:
   - apiVersion: v2
     appVersion: 1.22.1
-    created: "2024-09-20T06:44:41.602952148+02:00"
+    created: "2024-09-20T06:53:44.813024017+02:00"
     description: A Helm chart for Kubernetes
     digest: 835b36e512313e97bea09644e35afef12d8afa510e217c401ed7fb126d6e43cc
     name: pgbouncer
@@ -884,7 +884,7 @@ entries:
   pgloader:
   - apiVersion: v2
     appVersion: 3.6.7
-    created: "2024-09-20T06:44:41.603153123+02:00"
+    created: "2024-09-20T06:53:44.813218014+02:00"
     description: A Helm chart for Kubernetes
     digest: 3fefcd25827a760059cc30f95dafb94dac5e00a55f4075dfe0766d27f438f8c9
     name: pgloader
@@ -895,7 +895,7 @@ entries:
   pgpool:
   - apiVersion: v2
     appVersion: 4.4.0
-    created: "2024-09-20T06:44:41.603371386+02:00"
+    created: "2024-09-20T06:53:44.813406985+02:00"
     description: A Helm chart for Kubernetes
     digest: 4076de8d80582436d8dd5523aa8b435094a76ff0ea17e2c4ab59b691236bb9b0
     name: pgpool
@@ -906,7 +906,7 @@ entries:
   postgresql:
   - apiVersion: v2
     appVersion: 14.8.0
-    created: "2024-09-20T06:44:41.60367661+02:00"
+    created: "2024-09-20T06:53:44.813859454+02:00"
     description: A Helm chart for PostgreSQL on EuroLinux 9
     digest: af0f82a51b3cd16d308c9506e16943daff845b4a9a5a0b27ec0908f57ae30010
     name: postgresql
@@ -917,7 +917,7 @@ entries:
   rabbitmq:
   - apiVersion: v2
     appVersion: 3.11.10
-    created: "2024-09-20T06:44:41.603975272+02:00"
+    created: "2024-09-20T06:53:44.814134555+02:00"
     description: A Helm chart for RabbitMQ on EuroLinux 9
     digest: 5786bda63a017352c3d87d3651e9f47ce2bad627d66d34e62db02be993781a6c
     name: rabbitmq
@@ -928,7 +928,7 @@ entries:
   redis:
   - apiVersion: v2
     appVersion: 6.2.7
-    created: "2024-09-20T06:44:41.604269802+02:00"
+    created: "2024-09-20T06:53:44.814403836+02:00"
     description: A Helm chart for Redis on EuroLinux 9
     digest: 9be5e726c3ad27f65188db150b5081c17014b1d419ac5cff8e8ad8de1c789353
     name: redis
@@ -944,7 +944,7 @@ entries:
       catalog.cattle.io/release-name: security-stack-app
     apiVersion: v2
     appVersion: 1.2024-1.0.0
-    created: "2024-09-20T06:44:41.628319773+02:00"
+    created: "2024-09-20T06:53:44.837784043+02:00"
     dependencies:
     - condition: global.conjur-oss.enabled
       name: conjur-oss
@@ -1005,7 +1005,7 @@ entries:
       catalog.cattle.io/release-name: security-stack-crd
     apiVersion: v2
     appVersion: 1.2024-1.0.0
-    created: "2024-09-20T06:44:41.651592916+02:00"
+    created: "2024-09-20T06:53:44.860027746+02:00"
     dependencies:
     - alias: neuvector-crds
       condition: global.neuvector-crd.enabled
@@ -1052,4 +1052,4 @@ entries:
     urls:
     - security-stack-crd/security-stack-crd-1.0.0.tgz
     version: 1.0.0
-generated: "2024-09-20T06:44:41.486763056+02:00"
+generated: "2024-09-20T06:53:44.667873972+02:00"

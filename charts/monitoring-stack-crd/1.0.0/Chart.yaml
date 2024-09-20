@@ -3,7 +3,7 @@ annotations:
   catalog.cattle.io/namespace: lp-system
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: monitoring-stack-crd
-  catalog.cattle.io/hidden: "true"
+  catalog.cattle.io/hidden: "false"
 apiVersion: v2
 appVersion: 1.2024-1.0.0
 dependencies:
