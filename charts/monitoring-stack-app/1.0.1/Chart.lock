@@ -2,8 +2,11 @@ dependencies:
 - name: elastic
   repository: https://sourcemation.github.io/charts
   version: 1.1.0
+- name: istiod
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.21.1
 - name: jaeger
   repository: https://jaegertracing.github.io/helm-charts
   version: 3.0.6
-digest: sha256:8590c92c69a57021907545470496fc77bcd2d70fbddac92712787f90d3c49d3c
-generated: "2024-09-20T06:44:06.06257317+02:00"
+digest: sha256:35b3db17578f9dbc70d152eedc0d3c95c957e104c4827eef7300443b706e9337
+generated: "2024-07-09T17:49:05.847480695+02:00"
