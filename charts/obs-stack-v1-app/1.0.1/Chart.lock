@@ -1,0 +1,9 @@
+dependencies:
+- name: elastic
+  repository: https://sourcemation.github.io/charts
+  version: 1.1.0
+- name: jaeger
+  repository: https://jaegertracing.github.io/helm-charts
+  version: 3.0.6
+digest: sha256:8590c92c69a57021907545470496fc77bcd2d70fbddac92712787f90d3c49d3c
+generated: "2024-09-20T07:18:43.34865439+02:00"

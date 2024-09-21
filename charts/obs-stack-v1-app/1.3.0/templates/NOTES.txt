@@ -1,0 +1,29 @@
+
+
+ ██████╗ ██████╗ ███████╗███████╗██████╗ ██╗   ██╗ █████╗ ██████╗ ██╗██╗     ██╗████████╗██╗   ██╗
+██╔═══██╗██╔══██╗██╔════╝██╔════╝██╔══██╗██║   ██║██╔══██╗██╔══██╗██║██║     ██║╚══██╔══╝╚██╗ ██╔╝
+██║   ██║██████╔╝███████╗█████╗  ██████╔╝██║   ██║███████║██████╔╝██║██║     ██║   ██║    ╚████╔╝ 
+██║   ██║██╔══██╗╚════██║██╔══╝  ██╔══██╗╚██╗ ██╔╝██╔══██║██╔══██╗██║██║     ██║   ██║     ╚██╔╝  
+╚██████╔╝██████╔╝███████║███████╗██║  ██║ ╚████╔╝ ██║  ██║██████╔╝██║███████╗██║   ██║      ██║   
+ ╚═════╝ ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝╚═════╝ ╚═╝╚══════╝╚═╝   ╚═╝      ╚═╝   
+
+v1 by Linux polska
+
+
+# Elastic
+1. Get self-signed CA Elasticsearch and APM
+
+kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortname" $ }}-es-http-certs-public \
+-o go-template='{{`{{ index .data "ca.crt" | base64decode `}} }}'
+
+2. Get self-signed CA Kibana
+
+kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortname" $ }}-kb-http-certs-public \
+-o go-template='{{`{{ index .data "ca.crt" | base64decode `}} }}'
+
+3. Get default username and password
+
+kubectl -n {{ .Release.Namespace }} get secret {{ include "common.names.shortname" $ }}-es-elastic-custom-user -o go-template='{{`{{ .data.username | base64decode `}} }} / {{`{{ .data.password | base64decode `}} }}'
+
+
+

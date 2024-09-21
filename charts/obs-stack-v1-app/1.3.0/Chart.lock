@@ -1,0 +1,6 @@
+dependencies:
+- name: elastic
+  repository: https://sourcemation.github.io/charts
+  version: 1.4.0
+digest: sha256:ef0d21791ea85873e24d3153129e6fdd74b05eb371e4f8a593add3304dab3e04
+generated: "2024-09-20T02:36:12.740375845+02:00"

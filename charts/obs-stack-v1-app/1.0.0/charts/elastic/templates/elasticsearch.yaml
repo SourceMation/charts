@@ -1,0 +1,260 @@
+{{- if .Values.eckElasticsearch.enabled }}
+---
+apiVersion: {{ include "common.capabilities.elasticsearch.apiVersion" .}}
+kind: Elasticsearch
+metadata:
+  name: {{ include "common.names.shortname" $ }}
+  labels:
+    {{- include "common.labels.labels" . | nindent 4 }}
+  namespace: {{ include "common.names.namespace" . }}
+spec:
+  {{- with .Values.eckElasticsearch.params }}
+  image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
+  http:
+    service:
+      spec:
+        type: LoadBalancer
+        selector:
+          elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.shortname" $ | quote }}
+          elasticsearch.k8s.elastic.co/node-master: "false"
+    tls:
+      {{- if not $.Values.tlsSecretName }}
+      selfSignedCertificate:
+        disabled: false
+        subjectAltNames:
+        - dns: {{ .ingress.hostname | quote }}
+        - dns: {{ $.Values.eckApm.params.ingress.hostname | quote }}
+      {{- else }}
+      certificate:
+        secretName: {{ $.Values.tlsSecretName | quote }}   
+      {{- end }}
+  {{- with .pdb }}
+  podDisruptionBudget:
+    spec:
+      minAvailable: {{ . }}
+      selector:
+        matchLabels:
+          elasticsearch.k8s.elastic.co/node-master: "true"
+  {{- end }}
+  nodeSets:
+  {{- range $k, $v := .roles }}
+  - name: {{ $k }}
+    count: {{ $v.count }}
+    config:
+      node.roles: {{ $v.roles }}
+#      node.store.allow_mmap: false
+    volumeClaimTemplates:
+    - metadata:
+        name: elasticsearch-data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ $v.storage }}
+        {{- if $.Values.eckElasticsearch.params.storageClass }}
+        storageClassName: {{ $.Values.eckElasticsearch.params.storageClass }}
+        {{- end }}
+    podTemplate:
+      metadata:
+        labels:
+          scrape: es
+          {{- with $v.labels }}
+          {{- toYaml . | nindent 10 }}
+          {{- end }}
+      spec:
+        {{- with $.Values.imagePullSecrets }}
+        imagePullSecrets:
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+        initContainers:
+        - name: max-map-count
+          image: quay.io/eurolinux/eurolinux-9:latest
+          resources:
+            limits:
+              cpu: 100m
+              memory: 32Mi
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /hostfs/
+              name: hostfs
+          command:
+          - 'bash'
+          - '-e'
+          - '-c'
+          - |-
+            echo 262144 > /hostfs/proc/sys/vm/max_map_count
+        - name: max-map-count-check
+          image: quay.io/eurolinux/eurolinux-9:latest
+          resources:
+            limits:
+              cpu: 100m
+              memory: 32Mi
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - mountPath: /hostfs/
+              name: hostfs
+          command: ['sh', '-c', "while true; do mmc=$(cat /hostfs/proc/sys/vm/max_map_count); if [ ${mmc} -eq 262144 ]; then exit 0; else echo 'vm.max_map_count not equal l262144'; fi; sleep 1; done"]
+        volumes:
+        - name: hostfs
+          hostPath:
+            path: /
+        containers:
+        - name: elasticsearch
+          resources:
+            limits:
+              cpu: {{ $v.cpu }}
+              memory: {{ $v.memory }}
+        {{- with $v.tolerations }}
+        tolerations::
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+
+        {{- with $v.affinity }}
+        affinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+  {{- end }}
+
+  {{- end }}
+
+
+  {{- with .Values.eckElasticsearch.auth }}
+  auth:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+  {{- with .Values.eckElasticsearch.updateStrategy }}
+  updateStrategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+  {{- with .Values.eckElasticsearch.secureSettings }}
+  secureSettings:
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
+
+  {{- with .Values.eckElasticsearch.transport }}
+  transport:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+  {{- with .Values.eckElasticsearch.http }}
+  http:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+  version: {{  default .Chart.AppVersion .Values.eckElasticsearch.version }}
+
+  {{- with .Values.eckElasticsearch.monitoring }}
+  monitoring:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+  {{- with .Values.eckElasticsearch.remoteClusters }}
+  remoteClusters:
+    {{- toYaml . | nindent 2 }}
+  {{- end }}
+
+  {{- with .Values.eckElasticsearch.volumeClaimDeletePolicy }}
+  volumeClaimDeletePolicy:
+    {{- if and (not (eq . "DeleteOnScaledownOnly")) (not (eq . "DeleteOnScaledownAndClusterDeletion")) }}
+    {{ fail "volumeClaimDeletePolicy can only be one of 'DeleteOnScaledownOnly' or 'DeleteOnScaledownAndClusterDeletion'" }}
+    {{- end }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+{{- /*
+  {{- if not (hasKey .Values.eckElasticsearch "nodeSets") }}
+    {{ fail "nodeSets directive  must by defined" }}
+  {{- else if eq (len .Values.eckElasticsearch.nodeSets) 0 }}
+    {{ fail "At least one nodeSet is required" }}
+  {{- end }}
+*/}}
+
+  {{- with .Values.eckElasticsearch.nodeSets }}
+  nodeSets:
+      {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+  {{- with .Values.eckElasticsearch.image }}
+  image: {{ . }}
+  {{- end }}
+
+  {{- with .Values.eckElasticsearch.podDisruptionBudget }}
+    {{- if .disabled }}
+  podDisruptionBudget: {}
+    {{- else }}
+      {{- with .spec }}
+  podDisruptionBudget:
+    spec:
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+
+  {{- with .Values.eckElasticsearch.serviceAccountName }}
+  serviceAccountName: {{ . }}
+  {{- end }}
+
+  {{- with .Values.eckElasticsearch.revisionHistoryLimit }}
+  revisionHistoryLimit: {{ . }}
+  {{- end }}
+
+
+
+{{- if .Values.eckElasticsearch.params.ingress.enabled }}
+---
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
+kind: Ingress
+metadata:
+  name: {{ include "common.names.shortname" $ -}}-es-http
+  namespace: {{ include "common.names.namespace" . }}
+  {{- with .Values.eckElasticsearch.params.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "common.labels.labels" . | nindent 4 }}  
+    elasticsearch.k8s.elastic.co/cluster-name: {{ include "common.names.shortname" $ }}
+spec:
+  {{- if .Values.eckElasticsearch.params.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.eckElasticsearch.params.ingress.ingressClassName | quote }}
+  {{- end }}
+  rules:
+  {{- if .Values.eckElasticsearch.params.ingress.hostname }}
+  - host: {{ .Values.eckElasticsearch.params.ingress.hostname | quote }}
+    http:
+      paths:
+      - backend:
+          service:
+            name: {{ include "common.names.shortname" $ -}}-es-http
+            port:
+              number: 9200
+        path: /
+        pathType: Prefix
+  {{- end }}
+
+  tls:
+  - hosts:
+    - {{ .Values.eckElasticsearch.params.ingress.hostname | quote }}
+    {{- if  not $.Values.tlsSecretName  }}
+    secretName: {{ include "common.names.shortname" $ -}}-es-http-certs-internal  
+    {{- else }}
+    secretName: {{ $.Values.tlsSecretName | quote }}
+    {{- end }}
+
+
+
+{{- end }}
+
+
+
+{{- end }}
+
+
+
