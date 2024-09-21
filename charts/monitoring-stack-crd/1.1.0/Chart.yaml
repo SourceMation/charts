@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: Monitoring Stack Operators (1/2)
+  catalog.cattle.io/display-name: Monitoring Stack - Operators (1/2)
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: monitoring-stack-crd
   catalog.cattle.io/namespace: lp-system
@@ -19,7 +19,7 @@ dependencies:
   repository: https://helm.elastic.co
   version: 2.14.0
 #  alias: eckOperator
-description: Set of operators and CRDs for LP monitoring 
+description: Set of operators and CRDs for "Monitoring Stack - Apps" chart
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
@@ -30,6 +30,8 @@ keywords:
 - monitoring
 - enterprise search
 - fleet
+- opentelemetry
+- istio
 #- istio
 #- jaeger
 kubeVersion: '>=1.26.0-0 <1.31.0-0'

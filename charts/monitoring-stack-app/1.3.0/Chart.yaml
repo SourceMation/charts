@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: Monitoring Stack Apps (2/2)
+  catalog.cattle.io/display-name: Monitoring Stack - Apps (2/2)
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: monitoring-stack-app 
 #  catalog.cattle.io/auto-install: monitoring-stack-crd=match
@@ -14,7 +14,7 @@ dependencies:
 #  name: jaeger
 #  repository: https://jaegertracing.github.io/helm-charts 
 #  version: 3.0.6
-description: Set of charts for monitoring
+description: Set of elastic, opentelemetry, isito apps
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
@@ -25,6 +25,8 @@ keywords:
 - monitoring
 - enterprise search
 - fleet
+- opentelemetry
+- istio
 #- istio
 #- jaeger
 kubeVersion: '>=1.26.0-0 <1.31.0-0'
