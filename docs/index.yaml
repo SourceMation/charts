@@ -9,7 +9,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2024-09-20T07:51:05.831184428+02:00"
+    created: "2024-09-21T06:17:12.601719721+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: 7b430316ecc0bab82476c486da0a753d678bdccc338745a5018b74584bea4deb
     home: https://linuxpolska.com
@@ -33,7 +33,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-20T07:51:05.843818167+02:00"
+    created: "2024-09-21T06:17:12.611001078+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -62,7 +62,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-20T07:51:05.840360548+02:00"
+    created: "2024-09-21T06:17:12.607479303+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -91,7 +91,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-20T07:51:05.838638438+02:00"
+    created: "2024-09-21T06:17:12.604383379+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -121,7 +121,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-20T07:51:05.84577763+02:00"
+    created: "2024-09-21T06:17:12.615044264+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -150,7 +150,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-20T07:51:05.845157548+02:00"
+    created: "2024-09-21T06:17:12.614398627+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -179,7 +179,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-20T07:51:05.844474445+02:00"
+    created: "2024-09-21T06:17:12.6126572+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -208,7 +208,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.3.0
-    created: "2024-09-20T07:51:05.852686708+02:00"
+    created: "2024-09-21T06:17:12.621181054+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
@@ -243,7 +243,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-09-20T07:51:05.849654817+02:00"
+    created: "2024-09-21T06:17:12.619131055+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
@@ -277,7 +277,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-app
     apiVersion: v2
     appVersion: 1.1.0
-    created: "2024-09-20T07:51:05.847660723+02:00"
+    created: "2024-09-21T06:17:12.617096107+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
@@ -314,7 +314,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.3.0
-    created: "2024-09-20T07:51:05.878609955+02:00"
+    created: "2024-09-21T06:17:12.65125694+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -352,7 +352,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-09-20T07:51:05.870281733+02:00"
+    created: "2024-09-21T06:17:12.640192036+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -390,7 +390,7 @@ entries:
       catalog.cattle.io/release-name: monitoring-stack-crd
     apiVersion: v2
     appVersion: 1.1.0
-    created: "2024-09-20T07:51:05.861819475+02:00"
+    created: "2024-09-21T06:17:12.632145266+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -420,4 +420,4 @@ entries:
     urls:
     - monitoring-stack-crd/monitoring-stack-crd-1.1.0.tgz
     version: 1.1.0
-generated: "2024-09-20T07:51:05.830867642+02:00"
+generated: "2024-09-21T06:17:12.601224525+02:00"
