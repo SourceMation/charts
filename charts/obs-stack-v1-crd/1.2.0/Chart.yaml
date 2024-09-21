@@ -19,7 +19,7 @@ dependencies:
   repository: https://helm.elastic.co
   version: 2.14.0
 #  alias: eckOperator
-description: Set of operators and CRDs for Observability Stack - (2/2) chart
+description: Set of operators and CRDs for Observability - (2/2) chart
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:

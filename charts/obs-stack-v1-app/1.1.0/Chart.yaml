@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: Observability Stack - Apps (2/2)
+  catalog.cattle.io/display-name: Observability - Apps (2/2)
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: obs-stack-v1-app 
 #  catalog.cattle.io/auto-install: monitoring-stack-crd=match

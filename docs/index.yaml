@@ -9,7 +9,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2024-09-22T01:27:04.905087176+02:00"
+    created: "2024-09-22T01:31:05.065147846+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: 7b430316ecc0bab82476c486da0a753d678bdccc338745a5018b74584bea4deb
     home: https://linuxpolska.com
@@ -33,7 +33,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-22T01:27:04.914035234+02:00"
+    created: "2024-09-22T01:31:05.075509854+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -62,7 +62,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-22T01:27:04.911777517+02:00"
+    created: "2024-09-22T01:31:05.071954658+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -91,7 +91,7 @@ entries:
       catalog.cattle.io/release-name: elastic
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-22T01:27:04.908652758+02:00"
+    created: "2024-09-22T01:31:05.068685119+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -121,7 +121,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-22T01:27:04.916326838+02:00"
+    created: "2024-09-22T01:31:05.078751677+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -150,7 +150,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-22T01:27:04.915612739+02:00"
+    created: "2024-09-22T01:31:05.077286786+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -179,7 +179,7 @@ entries:
       catalog.cattle.io/release-name: elastic-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-22T01:27:04.914806422+02:00"
+    created: "2024-09-22T01:31:05.076410482+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -203,19 +203,19 @@ entries:
     version: 1.3.0
   obs-stack-v1-app:
   - annotations:
-      catalog.cattle.io/display-name: Observability Stack - Apps (2/2)
+      catalog.cattle.io/display-name: Observability - Apps (2/2)
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: obs-stack-v1-app
     apiVersion: v2
     appVersion: 1.3.0
-    created: "2024-09-22T01:27:04.923158483+02:00"
+    created: "2024-09-22T01:31:05.086356047+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
       repository: https://sourcemation.github.io/charts
       version: 1.4.0
     description: Set of elastic, opentelemetry, isito apps
-    digest: 11328c4812c9a60fa28ff4f1eddfdd1608efffc8efa054c965aec073531b2b13
+    digest: d09d5bfe58526940bc9091c0712021d6ddf1e99b30db77896ddf6699f357e20f
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -240,19 +240,19 @@ entries:
     - obs-stack-v1-app/obs-stack-v1-app-1.3.0.tgz
     version: 1.3.0
   - annotations:
-      catalog.cattle.io/display-name: Observability Stack - Apps (2/2)
+      catalog.cattle.io/display-name: Observability - Apps (2/2)
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: obs-stack-v1-app
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-09-22T01:27:04.921146298+02:00"
+    created: "2024-09-22T01:31:05.083959013+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
       repository: https://sourcemation.github.io/charts
       version: 1.4.0
     description: Set of elastic, opentelemetry, isito apps
-    digest: 5797e401ae6b8be147d6c607c2529fb3e45c4fc6310b56dde938edb34322ef2d
+    digest: 74297cc3479c16308878e3896d00d44f3b361b8acf119d773458e46a72871ebd
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -276,19 +276,19 @@ entries:
     - obs-stack-v1-app/obs-stack-v1-app-1.2.0.tgz
     version: 1.2.0
   - annotations:
-      catalog.cattle.io/display-name: Observability Stack - Apps (2/2)
+      catalog.cattle.io/display-name: Observability - Apps (2/2)
       catalog.cattle.io/os: linux
       catalog.cattle.io/release-name: obs-stack-v1-app
     apiVersion: v2
     appVersion: 1.1.0
-    created: "2024-09-22T01:27:04.919064021+02:00"
+    created: "2024-09-22T01:31:05.081623749+02:00"
     dependencies:
     - condition: global.elasticApp.enabled
       name: elastic
       repository: https://sourcemation.github.io/charts
       version: 1.4.0
     description: Set of elastic, opentelemetry, isito apps
-    digest: 37e198313bb2fbb2bd6fb1fe8ca62fe76442340e38f8dc8ca35ddae883515ad5
+    digest: db25e1c8abeb1e0c2963c66a89739ddd01510945866de7b68c1b8a7a6a6fe960
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -319,7 +319,7 @@ entries:
       catalog.cattle.io/release-name: obs-stack-v1-crd
     apiVersion: v2
     appVersion: 1.3.0
-    created: "2024-09-22T01:27:04.952444724+02:00"
+    created: "2024-09-22T01:31:05.11738571+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -332,8 +332,8 @@ entries:
       name: eck-operator
       repository: https://helm.elastic.co
       version: 2.14.0
-    description: Set of operators and CRDs for Observability Stack - (2/2) chart
-    digest: a07a2a705270862b831af7e1e10757de834e4d71553d991a6487627e039748db
+    description: Set of operators and CRDs for Observability - (2/2) chart
+    digest: 68b895acda33a149846e597b28d8d69daf38063752704172362ae4f1c6d8d501
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -364,7 +364,7 @@ entries:
       catalog.cattle.io/release-name: obs-stack-v1-crd
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2024-09-22T01:27:04.943611503+02:00"
+    created: "2024-09-22T01:31:05.10756269+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -377,8 +377,8 @@ entries:
       name: eck-operator
       repository: https://helm.elastic.co
       version: 2.14.0
-    description: Set of operators and CRDs for Observability Stack - (2/2) chart
-    digest: e6ce81151cc4662ba9f3c741908209e3654cfca68818ac7e5fc781530886afbf
+    description: Set of operators and CRDs for Observability - (2/2) chart
+    digest: ae19948a30ef87d731d2bbcdc8c792087f38dda33efb05299bbbca15d3da3f30
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -409,7 +409,7 @@ entries:
       catalog.cattle.io/release-name: obs-stack-v1-crd
     apiVersion: v2
     appVersion: 1.1.0
-    created: "2024-09-22T01:27:04.933490815+02:00"
+    created: "2024-09-22T01:31:05.096428826+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -422,8 +422,8 @@ entries:
       name: eck-operator
       repository: https://helm.elastic.co
       version: 2.14.0
-    description: Set of operators and CRDs for Observability Stack - (2/2) chart
-    digest: b8a1964c24fb72a8e97c1690cd80582472b5c11fb0ba7c72ee9b4ba4eda9c2fe
+    description: Set of operators and CRDs for Observability - (2/2) chart
+    digest: e54c0f2ad061eb5936ba16bbcd97b60d278f20d3bf6d50366eb7f6999a51b965
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -447,4 +447,4 @@ entries:
     urls:
     - obs-stack-v1-crd/obs-stack-v1-crd-1.1.0.tgz
     version: 1.1.0
-generated: "2024-09-22T01:27:04.89846058+02:00"
+generated: "2024-09-22T01:31:05.064269644+02:00"
