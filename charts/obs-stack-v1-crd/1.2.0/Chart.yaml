@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: Observability Stack - Operators (1/2)
+  catalog.cattle.io/display-name: Observability - Operators (1/2)
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: obs-stack-v1-crd
   catalog.cattle.io/namespace: lp-system
