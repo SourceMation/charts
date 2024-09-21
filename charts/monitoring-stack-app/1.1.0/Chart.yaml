@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: Monitoring Stack APP (2/2)
+  catalog.cattle.io/display-name: Monitoring Stack Apps (2/2)
   catalog.cattle.io/os: linux
   catalog.cattle.io/release-name: monitoring-stack-app 
 #  catalog.cattle.io/auto-install: monitoring-stack-crd=match
