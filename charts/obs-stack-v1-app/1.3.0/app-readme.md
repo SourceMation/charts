@@ -11,8 +11,22 @@ v1 by Linux Polska
 
 ## Before Installation
 
-* Install Observability Stack - Operators (1/2) chart
+* Install Observability - Operators (1/2) chart
+
+## After Installation
+
+no action required
+
+## Before Upgrade
+
+no action required
+
+## After Upgrade
+
+no action required
+
+## Known Issues
+
+lack of known issues
 
 
-
-For more information on how to configure the Helm chart, refer to the Helm Chart README.
