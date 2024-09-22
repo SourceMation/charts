@@ -1,5 +1,5 @@
 categories:
-- observability
+- monitoring
 namespace: lp-system
 questions:
 - variable: global.elasticCrd.enabled
