@@ -1,5 +1,5 @@
 categories:
-- Observability
+- observability
 questions:
 - variable: global.elastic.enabled
   default: "true"
