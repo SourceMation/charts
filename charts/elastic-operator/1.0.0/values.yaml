@@ -1,0 +1,9 @@
+global:
+  eck-operator-crds:
+    enabled: true 
+  eck-operator:
+    enabled: true
+  base:
+    enabled: true
+  jaeger-operator:
+    enabled: true

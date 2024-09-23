@@ -1,24 +1,34 @@
-annotations:
-  catalog.cattle.io/display-name: Elastic Stack 
-  catalog.cattle.io/os: linux
-  catalog.cattle.io/release-name: elastic
-  catalog.cattle.io/hidden: "false"
-apiVersion: v2
 # https://github.com/elastic/elasticsearch/tags
 # https://www.elastic.co/guide/en/cloud-on-k8s/2.11/k8s_supported_versions.html
-appVersion: "8.15.0"
-
+annotations:
+  catalog.cattle.io/display-name: Elastic - Apps (2/3)
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
+  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+  catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+  catalog.cattle.io/release-name: elk
+#  catalog.cattle.io/auto-install: monitoring-stack-crd=match
+apiVersion: v2
+appVersion: 8.15.0
 dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/
   version: 0.1.x
-description: Elastic stack deployment
+description: Set of elastic, opentelemetry apps
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
+- elasticagent
+- elastic agent
 - elastic
-# https://www.elastic.co/guide/en/cloud-on-k8s/2.11/k8s_supported_versions.html
-kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+- elasticsearch
+- kibana
+- apm
+- monitoring
+- enterprise search
+- fleet
+- opentelemetry
+kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
 - email: biuro@linuxpolska.com
   name: Linux Polska
