@@ -1,0 +1,10 @@
+To login ArgoCD UI get admin user password:
+
+1. Set namespace
+export ARGOCD_NAMESPACE=...
+
+2. Get ArgoCD UI address (use HTTPS and trust certificate in your browser)
+kubectl get ingress -n ${ARGOCD_NAMESPACE} -o jsonpath="{.items[*].spec.rules[*].host}"
+
+3. Login to UI using 'admin' login and password from command below
+kubectl -n ${ARGOCD_NAMESPACE} get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d

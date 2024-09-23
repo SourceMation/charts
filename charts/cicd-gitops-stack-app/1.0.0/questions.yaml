@@ -1,5 +1,6 @@
 categories:
 - cicd
+- gitops
 questions:
   # sonarqubeApp
 - variable: global.sonarqubeApp.enabled
@@ -549,3 +550,34 @@ questions:
       type: hostname
       default: "coder.my.domain.internal"
       min: 6
+
+# ArgoCD app
+- variable: global.argocdApp.enabled
+  default: true
+  label: Deploy ArgoCD
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+    
+  - variable: argo-cd.server.ingress.hostname
+    label: URL
+    description: "Configure url for ArgoCD server web-ui (only hostname, without http(s)://)"
+    group: "ArgoCD Settings"
+    type: hostname
+    default: "argocd.example.com"
+    required: true
+
+  - variable: argo-cd.configs.cm.timeout.reconciliation
+    label: Sync time
+    description: "Set time for sync changes from git repository" 
+    group: "ArgoCD Settings"
+    type: string
+    default: "180s"
+
+  - variable: argo-cd.server.metrics.serviceMonitor.enabled
+    label: Metrics (Prometheus format)
+    description: "Deploy serviceMonitor for ArgoCD pods if Prometheus Operator is installed in cluster"
+    group: "ArgoCD Settings"
+    type: boolean
+    default: "true"

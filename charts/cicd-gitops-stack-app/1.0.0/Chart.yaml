@@ -32,10 +32,10 @@ dependencies:
   repository: https://sourcemation.github.io/charts/
   version: 0.1.x
 
-#- condition: global.argocdApp.enabled
-#  name: argocd
-#  repository: https://SonarSource.github.io/helm-chart-sonarqube
-#  version: 10.6.1+3163
+- name: argo-cd  
+  condition: global.argocdApp.enabled
+  repository: https://argoproj.github.io/argo-helm
+  version: 7.5.2
 
 #- condition: global.tektonoperatorApp.enabled
 #  name: tektonoperator
