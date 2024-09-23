@@ -9,7 +9,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2024-09-23T12:32:43.103367327+02:00"
+    created: "2024-09-23T12:46:02.864965551+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: 7b430316ecc0bab82476c486da0a753d678bdccc338745a5018b74584bea4deb
     home: https://linuxpolska.com
@@ -31,17 +31,17 @@ entries:
       catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-23T12:32:43.110020383+02:00"
+    created: "2024-09-23T12:46:02.871159458+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
     description: Set of elastic, opentelemetry apps
-    digest: a251a8c4031417b1890c92bd456940b7dfaa60adabed5717e5fc7557960c8f45
+    digest: 4f475ed402f552ce917df9d5577d9cab376467de45151e72ad79b53f03581e64
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -71,17 +71,17 @@ entries:
       catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-23T12:32:43.108197116+02:00"
+    created: "2024-09-23T12:46:02.869320578+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
     description: Set of elastic, opentelemetry apps
-    digest: 7bd83a798f0e755ad5edb100a80bec2a9cd1c29d63dd299175a510457d5e4ea1
+    digest: 97823a5906e35f4fa9abe0e5f3f27a3ca9be5f755d71985477cd715dd2ddd978
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -111,17 +111,17 @@ entries:
       catalog.cattle.io/kube-version: '>=1.25.0-0 < 1.30.0-0'
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-23T12:32:43.106208259+02:00"
+    created: "2024-09-23T12:46:02.866819949+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
     description: Set of elastic, opentelemetry apps
-    digest: 31ff98ba17280c968e247917ddacd80768aae627960ebe939a7b1c0ac4d970d5
+    digest: f0c0ae39c278be18a39e8bbad4e990a66445c36441307f17c54d87a3921d4887
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -152,18 +152,18 @@ entries:
       catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-23T12:32:43.112015892+02:00"
+    created: "2024-09-23T12:46:02.873376275+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.x.x
     description: Install once per k8s. Elastic agent for kubernetes which colecting
       logs, metrics, traces.
-    digest: 07612cb5a7ccaf9f397cd0652823fe6a01e9ff32bb0adc705c170eef157d9866
+    digest: d54899743b39dac5b40576bf33bade2194ef7912b0e106d55d22f77d209f8de0
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -193,18 +193,18 @@ entries:
       catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-23T12:32:43.111336319+02:00"
+    created: "2024-09-23T12:46:02.872474054+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.x.x
     description: Install once per k8s. Elastic agent for kubernetes which colecting
       logs, metrics, traces.
-    digest: 2ea8cac714571b20b2cd378fbff386c9001474e84651a18b1aaeefec035f76e1
+    digest: 5e1d2ce319ab3db2a1d7efbf955b6bbfc0a347ed199f5cdb416034791348c3e5
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -234,18 +234,18 @@ entries:
       catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-23T12:32:43.110709005+02:00"
+    created: "2024-09-23T12:46:02.871775572+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.x.x
     description: Install once per k8s. Elastic agent for kubernetes which colecting
       logs, metrics, traces.
-    digest: fd7badbcc8ada5030092d8650cc715d990a45948c20393554174e7eb05fa2370
+    digest: 9d86803bd5fbd1135dd6bc100a60324d9a3870558656641d5d3ba4fcb48c81e0
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -277,11 +277,11 @@ entries:
       catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.14.0
-    created: "2024-09-23T12:32:43.142506232+02:00"
+    created: "2024-09-23T12:46:02.902029701+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -295,7 +295,7 @@ entries:
       repository: https://helm.elastic.co
       version: 2.14.0
     description: Install once per k8s. Set of operators for Elastic - Apps (2/3) chart
-    digest: 9c63809d19727b71cabb7f08d33609ad3720e0e19f40a76fdfb8f5e686918ac0
+    digest: 2c06a4236235d0dba4cf1c735dfffff3a820573ce193e107e04475bdb59d4569
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -327,11 +327,11 @@ entries:
       catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.13.0
-    created: "2024-09-23T12:32:43.131795669+02:00"
+    created: "2024-09-23T12:46:02.892155575+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -345,7 +345,7 @@ entries:
       repository: https://helm.elastic.co
       version: 2.13.0
     description: Install once per k8s. Set of operators for Elastic - Apps (2/3) chart
-    digest: 854403c8ad489b0769739e4ce7b478ed055130d13d77a959d459087496cbf96a
+    digest: 0f5efb4eb928caea3b3db6dd4ce32be5880b347292f24e31fddadc716158ef74
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -377,11 +377,11 @@ entries:
       catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/rancher-version: '>= 2.9.0-0 < 2.10.0-0'
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.12.1
-    created: "2024-09-23T12:32:43.122774946+02:00"
+    created: "2024-09-23T12:46:02.88394632+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -395,7 +395,7 @@ entries:
       repository: https://helm.elastic.co
       version: 2.12.1
     description: Install once per k8s. Set of operators for Elastic - Apps (2/3) chart
-    digest: 0f433753c0c6629858eefe0da92a1c049467d1b89f095a89b1d877145187a187
+    digest: fcfd4e315715003855f9e56e8a1318f4877a862415f517a27799307ce678157e
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -422,140 +422,4 @@ entries:
     urls:
     - elastic-operator/elastic-operator-1.3.0.tgz
     version: 1.3.0
-  obs-stack-v1-crd:
-  - annotations:
-      catalog.cattle.io/display-name: Observability - Operators (1/2)
-      catalog.cattle.io/namespace: lp-system
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: obs-stack-v1-crd
-    apiVersion: v2
-    appVersion: 1.3.0
-    created: "2024-09-23T12:32:43.169074863+02:00"
-    dependencies:
-    - name: common
-      repository: https://sourcemation.github.io/charts/
-      version: 0.1.x
-    - condition: global.elasticCrd.enabled
-      name: eck-operator-crds
-      repository: https://helm.elastic.co
-      version: 2.14.0
-    - condition: global.elasticCrd.enabled
-      name: eck-operator
-      repository: https://helm.elastic.co
-      version: 2.14.0
-    description: Set of operators and CRDs for Observability - (2/2) chart
-    digest: 05def1776fa9c19a7fc002ebe0f888714e77e4789597865fcabbb8457e8b7982
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    - elasticsearch
-    - kibana
-    - apm
-    - monitoring
-    - enterprise search
-    - fleet
-    - opentelemetry
-    - istio
-    kubeVersion: '>=1.26.0-0 <1.31.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: obs-stack-v1-crd
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - obs-stack-v1-app/obs-stack-v1-crd-1.3.0.tgz
-    version: 1.3.0
-  - annotations:
-      catalog.cattle.io/display-name: Observability - Operators (1/2)
-      catalog.cattle.io/namespace: lp-system
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: obs-stack-v1-crd
-    apiVersion: v2
-    appVersion: 1.2.0
-    created: "2024-09-23T12:32:43.160891497+02:00"
-    dependencies:
-    - name: common
-      repository: https://sourcemation.github.io/charts/
-      version: 0.1.x
-    - condition: global.elasticCrd.enabled
-      name: eck-operator-crds
-      repository: https://helm.elastic.co
-      version: 2.14.0
-    - condition: global.elasticCrd.enabled
-      name: eck-operator
-      repository: https://helm.elastic.co
-      version: 2.14.0
-    description: Set of operators and CRDs for Observability - (2/2) chart
-    digest: d3911f150c4e5f839d16f280840d7a8406d45ebe7996166c347493f6c5b18724
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    - elasticsearch
-    - kibana
-    - apm
-    - monitoring
-    - enterprise search
-    - fleet
-    - opentelemetry
-    - istio
-    kubeVersion: '>=1.26.0-0 <1.31.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: obs-stack-v1-crd
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - obs-stack-v1-app/obs-stack-v1-crd-1.2.0.tgz
-    version: 1.2.0
-  - annotations:
-      catalog.cattle.io/display-name: Observability - Operators (1/2)
-      catalog.cattle.io/namespace: lp-system
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: obs-stack-v1-crd
-    apiVersion: v2
-    appVersion: 1.1.0
-    created: "2024-09-23T12:32:43.151183458+02:00"
-    dependencies:
-    - name: common
-      repository: https://sourcemation.github.io/charts/
-      version: 0.1.x
-    - condition: global.elasticCrd.enabled
-      name: eck-operator-crds
-      repository: https://helm.elastic.co
-      version: 2.14.0
-    - condition: global.elasticCrd.enabled
-      name: eck-operator
-      repository: https://helm.elastic.co
-      version: 2.14.0
-    description: Set of operators and CRDs for Observability - (2/2) chart
-    digest: 0ee512bccc4ce13caa226e0242529ad79656575ef7f492000f47c8d119ce7ac3
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    - elasticsearch
-    - kibana
-    - apm
-    - monitoring
-    - enterprise search
-    - fleet
-    - opentelemetry
-    - istio
-    kubeVersion: '>=1.26.0-0 <1.31.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: obs-stack-v1-crd
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - obs-stack-v1-app/obs-stack-v1-crd-1.1.0.tgz
-    version: 1.1.0
-generated: "2024-09-23T12:32:43.103039588+02:00"
+generated: "2024-09-23T12:46:02.864648102+02:00"
