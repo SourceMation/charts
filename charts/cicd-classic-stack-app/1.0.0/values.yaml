@@ -517,7 +517,7 @@ postgresql:
 jenkins:
   params:
     ingress:
-      enabled: false
+      enabled: true
       hostName: "jenkins.apps.example.com"
   controller:
     affinity: {}
