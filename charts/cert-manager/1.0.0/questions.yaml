@@ -10,6 +10,25 @@ questions:
 #  group: "Components"
 #  show_if: "scope=cluster"
 
+- variable: namespaceOverride
+  label: "Set namespace override"
+  default: "cert-manager"
+  description: Set namespace where components of this chart will be deployed
+  type: string
+  group: "Integrations"
+
+- variable: namespaceOverride
+  label: "Set namespace override"
+  description: Set namespace where components of this chart will be deployed
+  type: string
+  group: "Chart"
+
+- variable: nameOverride
+  label: "Release name override"
+  description: Change nem of this release.
+  type: string
+  group: "Chart"
+
 - variable: cert-manager.params.custom
   default: "false"
   label: Overwrite default namespace for cert-manager
@@ -17,13 +36,6 @@ questions:
   group: "Integrations"
   show_subquestion_if: "true"
   subquestions:
-  - variable: namespaceOverride
-    label: "Set namespace override"
-    default: "cert-manager"
-    description: Set namespace where components of this chart will be deployed
-    type: string
-    group: "Integrations"
-    show_if: "cert-manager.params.custom=true"
   - variable: cert-manager.namespace
     label: "Cert-manager's namespace"
     default: "cert-manager"

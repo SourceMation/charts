@@ -10,7 +10,7 @@ lack of informations
 
 ## Before Installation
 
-no action required
+1. Install chart via Apps: Cert-manager - Operator (1/2)
 
 ## After Installation
 
@@ -24,30 +24,13 @@ no action required
 
 no action required
 
+## Tips and Tricks
+
+lack of informations
 
 ## Known Issues
 
-
-#### Error: Unable to continue with install: CustomResourceDefinition "*.cert-manager.io" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "": current value is ""
-
-Reason: cert-manager is installed in another namespace
-
-Soloution:
-
-1. Do not deploy this operator
-
-2. If do not have cert-manager, just clean resources
-
-```bash 
-kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
-
-```
-
-#### Internal error occurred: failed calling webhook "webhook.cert-manager.io": failed to call webhook: Post "": no endpoints available for service "cert-manager-webhook"
-
-Reason:
-
-1. cert-manager do not start on time
+lack of informations
 
 
 ## CLI installation
@@ -71,7 +54,7 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 
 helm -n ${CHART_NAMESPACE} upgrade --install cert-manager \
 --repo https://sourcemation.github.io/charts/ \
-cert-manager-operator /
+cert-manager-config /
 --version ${CHART_VERSION}
 
 
@@ -86,13 +69,8 @@ kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,chall
 
 ```bash
 
-helm -n ${CHART_NAMESPACE} uninstall cert-manager-operator
+helm -n ${CHART_NAMESPACE} uninstall cert-manager-config
 
-kubectl delete apiservice v1beta1.webhook.cert-manager.io
-
-kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
-
-kubectl -n ${CHART_NAMESPACE} delete secret/trust-manager-tls
 
 ```
 
