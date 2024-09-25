@@ -15,7 +15,7 @@ questions:
   label: Set custom namespace for cert-manager
   type: boolean
   group: "Integrations"
-  show_subquestion_if: true
+  show_subquestion_if: "cert-manager.params.custom=true"
   subquestions:
   - variable: namespaceOverride
     label: "Cert-manager namespace override"
