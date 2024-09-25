@@ -26,7 +26,7 @@ questions:
   description: Set custom namespace where cert-manager is installed
   type: boolean
   group: "Integrations"
-  show_subquestion_if: "true"
+  show_subquestion_if: true
   subquestions:
   - variable: namespaceOverride
     label: "Cert-manager's namespace"
@@ -59,7 +59,7 @@ questions:
   label: Deploy SelfSigned Issuer
   type: boolean
   group: "Integrations"
-  show_if: "cert-manager.params.mode=cluster"
+  show_if: "scope=cluster"
   subquestions:
   - variable: selfSigned.issuerName
     label: "Issuer name"
