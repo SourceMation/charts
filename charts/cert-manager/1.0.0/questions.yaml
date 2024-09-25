@@ -73,11 +73,11 @@ questions:
   group: "Issuers"
 
 - variable: selfSigned.enabled
-  default: "true"
+  default: "false"
   label: Deploy SelfSigned Issuer
   type: boolean
   group: "Issuers"
-  show_if: "scope=cluster"
+#  show_if: "scope=cluster"
   show_subquestion_if: true
   subquestions:
   - variable: selfSigned.issuerName
