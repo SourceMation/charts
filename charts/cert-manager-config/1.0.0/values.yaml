@@ -1,0 +1,23 @@
+global:
+  certManagerCrd:
+    enabled: true
+  certManagerApproverPolicyCrd:
+    enabled: false
+#  certManagerMode: cluster
+#  certManagerSelfSignedApp:
+#    enabled: true
+
+scope: "cluster"
+
+selfSigned:
+  enabled: true
+  issuerName: "default"
+
+#cert-manager:
+
+#cert-manager-approver-policy:
+
+#trust-manager:
+
+nameOverride: ''
+namespaceOverride: ''
