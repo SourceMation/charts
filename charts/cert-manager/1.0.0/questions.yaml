@@ -21,10 +21,10 @@ questions:
   group: "Issuers"
 
 - variable: cert-manager.params.custom
-  default: "true"
+  default: "false"
   label: Modify cert-manager location
   description: Set custom namespace where cert-manager is installed
-  type: boolenan
+  type: boolean
   group: "Integrations"
   show_subquestion_if: "true"
   subquestions:
@@ -63,7 +63,7 @@ questions:
   default: "true"
   label: Deploy SelfSigned Issuer
   type: boolean
-  group: "Issuers"
+  group: "Integrations"
   show_if: "cert-manager.params.mode=cluster"
   subquestions:
   - variable: selfSigned.issuerName
