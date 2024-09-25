@@ -33,31 +33,26 @@ questions:
     default: "cert-manager"
     description: Namespace whrere cert-manager exists.
     type: string
-    group: "Integrations"
   - variable: cert-manager.namespace
     label: "Cert-manager's namespace"
     default: "cert-manager"
     description: Namespace whrere cert-manager exists.
     type: string
-    group: "Integrations"
   - variable: cert-manager.global.leaderElection.namespace
     label: "Cert-manager's namespace"
     default: "cert-manager"
     description: Namespace whrere cert-manager exists.
     type: string
-    group: "Integrations"
   - variable: cert-manager.nameOverride
     label: "Cert-manager's release name"
     default: "cert-manager"
     description: Cert-manager's release name set in a helm.
     type: string
-    group: "Integrations"
   - variable: nameOverride
     label: "Cert-manager's release name"
     default: "cert-manager"
     description: Cert-manager's release name set in a helm.
     type: string
-    group: "Integrations"
 
 - variable: selfSigned.enabled
   default: "true"
@@ -71,7 +66,6 @@ questions:
     default: "default"
     description: Issuer name used during TLS request. Just lower letters and dashes   
     type: string
-    group: "Integrations"
 
 #- variable: ownCa.enabled
 #  default: "false"
