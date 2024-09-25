@@ -12,9 +12,15 @@ questions:
   label: Integrate with Prometheus
   type: boolean
   group: "Integrations"
+- variable: cert-manager.prometheus.servicemonitor.enabled
+  default: "false"
+  label: Integrate with Prometheus
+  type: boolean
+  group: "Integrations"
 - variable: cert-manager-approver-policy.app.metrics.service.servicemonitor.enabled
   default: "false"
   label: Integrate with Prometheus
   type: boolean
   group: "Integrations"
+
 
