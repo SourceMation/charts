@@ -5,8 +5,8 @@ global:
 #    enabled: false
 
 cert-manager:
-#  prometheus:
-#    enabled: true
+  prometheus:
+    enabled: true
 #    servicemonitor:
 #      enabled: true
 #  image:

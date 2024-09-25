@@ -7,7 +7,7 @@ questions:
   label: Deploy RBAC (Approval Policy) for cert-manager (beta)
   type: boolean
   group: "Components"
-- variable: "cert-manager.prometheus.enabled&&cert-manager.prometheus.servicemonitor.enabled"
+- variable: "cert-manager.prometheus.servicemonitor.enabled"
   default: "false"
   label: Integrate with Prometheus
   type: boolean
