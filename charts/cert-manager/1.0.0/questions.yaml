@@ -15,7 +15,7 @@ questions:
   default: "false"
   label: Custom chart parameters 
   type: boolean
-  group: "Integrations"
+  group: "Chart"
   show_subquestion_if: "true"
   subquestions:
   - variable: namespaceOverride
@@ -23,13 +23,13 @@ questions:
     description: Set namespace where components of this chart will be deployed
     type: string
     group: "Chart"
-    show_if: "chart.custom=true"
+    show_if: "chartCustom=true"
   - variable: nameOverride
     label: "Release name override"
     description: Overwrite name of release used in components.
     type: string
     group: "Chart"
-    show_if: "chart.custom=true"
+    show_if: "chartCustom=true"
 
 - variable: cert-manager.params.custom
   default: "false"
