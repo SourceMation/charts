@@ -10,12 +10,17 @@ questions:
 #  group: "Components"
 #  show_if: "scope=cluster"
 
+- variable: cert-manager.params.abc
+  default: "false"
+  label: Example
+  type: multiline
+  group: "Integrations"
 - variable: cert-manager.params.custom
   default: "false"
   label: Set custom namespace for cert-manager
   type: boolean
   group: "Integrations"
-  show_subquestion_if: "cert-manager.params.custom=true"
+  show_subquestion_if: "true"
   subquestions:
   - variable: namespaceOverride
     label: "Cert-manager namespace override"
@@ -23,6 +28,7 @@ questions:
     description: Namespace whrere cert-manager is installed
     type: string
     group: "Integrations"
+    show_if: "cert-manager.params.custom=true"
 
 #- variable: cert-manager.params.custom
 #  default: "false"
@@ -73,7 +79,7 @@ questions:
   group: "Issuers"
 
 - variable: selfSigned.enabled
-  default: "false"
+  default: "true"
   label: Deploy SelfSigned Issuer
   type: boolean
   group: "Issuers"
