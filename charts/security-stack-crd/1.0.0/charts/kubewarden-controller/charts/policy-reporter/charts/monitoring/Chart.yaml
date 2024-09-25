@@ -1,7 +1,0 @@
-apiVersion: v2
-appVersion: 0.0.0
-description: Policy Reporter Monitoring with predefined ServiceMonitor and Grafana
-  Dashboards
-name: monitoring
-type: application
-version: 2.8.1

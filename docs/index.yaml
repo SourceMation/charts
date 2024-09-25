@@ -9,7 +9,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2024-09-20T07:51:05.831184428+02:00"
+    created: "2024-09-23T12:46:02.864965551+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: 7b430316ecc0bab82476c486da0a753d678bdccc338745a5018b74584bea4deb
     home: https://linuxpolska.com
@@ -27,24 +27,35 @@ entries:
     version: 0.1.1
   elastic:
   - annotations:
-      catalog.cattle.io/display-name: Elastic Stack
-      catalog.cattle.io/hidden: "true"
+      catalog.cattle.io/display-name: Elastic - Apps (2/3)
+      catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-20T07:51:05.843818167+02:00"
+    created: "2024-09-23T12:46:02.871159458+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
-    description: Elastic stack deployment
-    digest: 82dc96785e663b299e8a0b6c2c704f31d417bdc0d3734fd077c6daa7edd841e1
+    description: Set of elastic, opentelemetry apps
+    digest: 4f475ed402f552ce917df9d5577d9cab376467de45151e72ad79b53f03581e64
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
+    - elasticagent
+    - elastic agent
     - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+    - elasticsearch
+    - kibana
+    - apm
+    - monitoring
+    - enterprise search
+    - fleet
+    - opentelemetry
+    kubeVersion: '>=1.26.0-0 <1.31.0-0'
     maintainers:
     - email: biuro@linuxpolska.com
       name: Linux Polska
@@ -56,24 +67,35 @@ entries:
     - elastic/elastic-1.4.0.tgz
     version: 1.4.0
   - annotations:
-      catalog.cattle.io/display-name: Elastic Stack
-      catalog.cattle.io/hidden: "false"
+      catalog.cattle.io/display-name: Elastic - Apps (2/3)
+      catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: elk
     apiVersion: v2
-    appVersion: 8.13.4
-    created: "2024-09-20T07:51:05.840360548+02:00"
+    appVersion: 8.15.0
+    created: "2024-09-23T12:46:02.869320578+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
-    description: Elastic stack deployment
-    digest: 5b94ba3745c6d8f025b91cda781b0c004626e0b0b78fe380e7f5faf7333810ce
+    description: Set of elastic, opentelemetry apps
+    digest: 97823a5906e35f4fa9abe0e5f3f27a3ca9be5f755d71985477cd715dd2ddd978
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
+    - elasticagent
+    - elastic agent
     - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+    - elasticsearch
+    - kibana
+    - apm
+    - monitoring
+    - enterprise search
+    - fleet
+    - opentelemetry
+    kubeVersion: '>=1.26.0-0 <1.31.0-0'
     maintainers:
     - email: biuro@linuxpolska.com
       name: Linux Polska
@@ -85,24 +107,35 @@ entries:
     - elastic/elastic-1.3.1.tgz
     version: 1.3.1
   - annotations:
-      catalog.cattle.io/display-name: Elastic Stack
-      catalog.cattle.io/hidden: "false"
+      catalog.cattle.io/display-name: Elastic - Apps (2/3)
+      catalog.cattle.io/kube-version: '>=1.25.0-0 < 1.30.0-0'
       catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: elk
     apiVersion: v2
-    appVersion: 8.13.4
-    created: "2024-09-20T07:51:05.838638438+02:00"
+    appVersion: 8.15.0
+    created: "2024-09-23T12:46:02.866819949+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
-    description: Elastic stack deployment
-    digest: 84c2e1845f46410a54dd383da64f3b38114a419d561e814c0ef5f88442d200cb
+    description: Set of elastic, opentelemetry apps
+    digest: f0c0ae39c278be18a39e8bbad4e990a66445c36441307f17c54d87a3921d4887
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
+    - elasticagent
+    - elastic agent
     - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+    - elasticsearch
+    - kibana
+    - apm
+    - monitoring
+    - enterprise search
+    - fleet
+    - opentelemetry
+    kubeVersion: '>=1.25.0-0 <1.30.0-0'
     maintainers:
     - email: biuro@linuxpolska.com
       name: Linux Polska
@@ -115,24 +148,36 @@ entries:
     version: 1.3.0
   elastic-agent:
   - annotations:
-      catalog.cattle.io/display-name: Elastic agent client
-      catalog.cattle.io/hidden: "false"
+      catalog.cattle.io/display-name: Elastic - Agent (3/3)
+      catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic-agent
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-09-20T07:51:05.84577763+02:00"
+    created: "2024-09-23T12:46:02.873376275+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.x.x
-    description: Elastic agent for kubernetes which colecting logs, metrics.
-    digest: 04ed51a6c9d1d8850e1a83717264acb170bd4c4d0e21bef3c27c5027db82e319
+    description: Install once per k8s. Elastic agent for kubernetes which colecting
+      logs, metrics, traces.
+    digest: d54899743b39dac5b40576bf33bade2194ef7912b0e106d55d22f77d209f8de0
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
+    - elasticagent
+    - elastic agent
     - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+    - elasticsearch
+    - kibana
+    - apm
+    - monitoring
+    - enterprise search
+    - fleet
+    - opentelemetry
+    kubeVersion: '>=1.26.0-0 <1.31.0-0'
     maintainers:
     - email: biuro@linuxpolska.com
       name: Linux Polska
@@ -144,24 +189,36 @@ entries:
     - elastic-agent/elastic-agent-1.4.0.tgz
     version: 1.4.0
   - annotations:
-      catalog.cattle.io/display-name: Elastic agent client
-      catalog.cattle.io/hidden: "false"
+      catalog.cattle.io/display-name: Elastic - Agent (3/3)
+      catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic-agent
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-20T07:51:05.845157548+02:00"
+    created: "2024-09-23T12:46:02.872474054+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.x.x
-    description: Elastic agent for kubernetes which colecting logs, metrics.
-    digest: a7c145158ff40ba8d29721009cee959464c7b7521751f615acdde1f99d4063db
+    description: Install once per k8s. Elastic agent for kubernetes which colecting
+      logs, metrics, traces.
+    digest: 5e1d2ce319ab3db2a1d7efbf955b6bbfc0a347ed199f5cdb416034791348c3e5
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
+    - elasticagent
+    - elastic agent
     - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+    - elasticsearch
+    - kibana
+    - apm
+    - monitoring
+    - enterprise search
+    - fleet
+    - opentelemetry
+    kubeVersion: '>=1.26.0-0 <1.31.0-0'
     maintainers:
     - email: biuro@linuxpolska.com
       name: Linux Polska
@@ -173,24 +230,36 @@ entries:
     - elastic-agent/elastic-agent-1.3.1.tgz
     version: 1.3.1
   - annotations:
-      catalog.cattle.io/display-name: Elastic agent client
-      catalog.cattle.io/hidden: "false"
+      catalog.cattle.io/display-name: Elastic - Agent (3/3)
+      catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: elastic-agent
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-09-20T07:51:05.844474445+02:00"
+    created: "2024-09-23T12:46:02.871775572+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.x.x
-    description: Elastic agent for kubernetes which colecting logs, metrics.
-    digest: 7e738aeb42059612b73389e249ab00087a88eb694e24565d30d2c63a837c4b82
+    description: Install once per k8s. Elastic agent for kubernetes which colecting
+      logs, metrics, traces.
+    digest: 9d86803bd5fbd1135dd6bc100a60324d9a3870558656641d5d3ba4fcb48c81e0
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
+    - elasticagent
+    - elastic agent
     - elastic
-    kubeVersion: '>=1.25.0-0 < 1.30.0-0'
+    - elasticsearch
+    - kibana
+    - apm
+    - monitoring
+    - enterprise search
+    - fleet
+    - opentelemetry
+    kubeVersion: '>=1.26.0-0 <1.31.0-0'
     maintainers:
     - email: biuro@linuxpolska.com
       name: Linux Polska
@@ -201,158 +270,68 @@ entries:
     urls:
     - elastic-agent/elastic-agent-1.3.0.tgz
     version: 1.3.0
-  monitoring-stack-app:
+  elastic-operator:
   - annotations:
-      catalog.cattle.io/display-name: Monitoring Stack APP (2/2)
+      catalog.cattle.io/display-name: Elastic - Operators (1/3)
+      catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+      catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: monitoring-stack-app
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
-    appVersion: 1.3.0
-    created: "2024-09-20T07:51:05.852686708+02:00"
+    appVersion: 2.14.0
+    created: "2024-09-23T12:46:02.902029701+02:00"
     dependencies:
-    - condition: global.elasticApp.enabled
-      name: elastic
-      repository: https://sourcemation.github.io/charts
-      version: 1.4.0
-    description: Set of charts for monitoring
-    digest: 93ec4148772d62d871e705ae096d9536060ba2069612b09873d60def0962a178
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - condition: global.elasticCrd.enabled
+      name: eck-operator-crds
+      repository: https://helm.elastic.co
+      version: 2.14.0
+    - condition: global.elasticCrd.enabled
+      name: eck-operator
+      repository: https://helm.elastic.co
+      version: 2.14.0
+    description: Install once per k8s. Set of operators for Elastic - Apps (2/3) chart
+    digest: 2c06a4236235d0dba4cf1c735dfffff3a820573ce193e107e04475bdb59d4569
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
+    - elasticagent
+    - elastic agent
+    - observability
     - elastic
     - elasticsearch
     - kibana
     - apm
     - monitoring
     - enterprise search
+    - enterprisesearch
     - fleet
     kubeVersion: '>=1.26.0-0 <1.31.0-0'
     maintainers:
     - email: biuro@linuxpolska.com
       name: Linux Polska
-    name: monitoring-stack-app
+    name: elastic-operator
     sources:
     - https://github.com/SourceMation/charts.git
     type: application
     urls:
-    - monitoring-stack-app/monitoring-stack-app-1.3.0.tgz
-    version: 1.3.0
+    - elastic-operator/elastic-operator-1.4.0.tgz
+    version: 1.4.0
   - annotations:
-      catalog.cattle.io/display-name: Monitoring Stack APP (2/2)
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: monitoring-stack-app
-    apiVersion: v2
-    appVersion: 1.2.0
-    created: "2024-09-20T07:51:05.849654817+02:00"
-    dependencies:
-    - condition: global.elasticApp.enabled
-      name: elastic
-      repository: https://sourcemation.github.io/charts
-      version: 1.4.0
-    description: Set of charts for monitoring
-    digest: 1694c71ab8dd870547d78ab49cfb9e7478da4aae11c9c8b89da284225d71c543
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    - elasticsearch
-    - kibana
-    - apm
-    - monitoring
-    - fleet
-    kubeVersion: '>=1.26.0-0 <1.31.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: monitoring-stack-app
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - monitoring-stack-app/monitoring-stack-app-1.2.0.tgz
-    version: 1.2.0
-  - annotations:
-      catalog.cattle.io/display-name: Monitoring Stack APP (2/2)
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: monitoring-stack-app
-    apiVersion: v2
-    appVersion: 1.1.0
-    created: "2024-09-20T07:51:05.847660723+02:00"
-    dependencies:
-    - condition: global.elasticApp.enabled
-      name: elastic
-      repository: https://sourcemation.github.io/charts
-      version: 1.4.0
-    description: Set of charts for monitoring
-    digest: ab805ffbf0afea65bebcdb25a32c1f997a1ba22a64c8d15b8b31ac3b024b0fa7
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    - elasticsearch
-    - kibana
-    - apm
-    - monitoring
-    - fleet
-    kubeVersion: '>=1.25.0-0 <1.30.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: monitoring-stack-app
-    sources:
-    - https://github.com/SourceMation/charts.git
-    type: application
-    urls:
-    - monitoring-stack-app/monitoring-stack-app-1.1.0.tgz
-    version: 1.1.0
-  monitoring-stack-crd:
-  - annotations:
-      catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
-      catalog.cattle.io/hidden: "false"
+      catalog.cattle.io/display-name: Elastic - Operators (1/3)
+      catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: monitoring-stack-crd
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
-    appVersion: 1.3.0
-    created: "2024-09-20T07:51:05.878609955+02:00"
-    dependencies:
-    - name: common
-      repository: https://sourcemation.github.io/charts/
-      version: 0.1.x
-    - condition: global.elasticCrd.enabled
-      name: eck-operator-crds
-      repository: https://helm.elastic.co
-      version: 2.14.0
-    - condition: global.elasticCrd.enabled
-      name: eck-operator
-      repository: https://helm.elastic.co
-      version: 2.14.0
-    description: Set of operators and CRDs for LP monitoring
-    digest: e702580b304651bde25cb5e34de84cca82e1d7766b35de356580afa108895c6c
-    home: https://linuxpolska.com
-    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-    keywords:
-    - elastic
-    kubeVersion: '>=1.26.0-0 <1.31.0-0'
-    maintainers:
-    - email: biuro@linuxpolska.com
-      name: Linux Polska
-    name: monitoring-stack-crd
-    sources:
-    - https://sourcemation.github.io/charts/
-    type: application
-    urls:
-    - monitoring-stack-crd/monitoring-stack-crd-1.3.0.tgz
-    version: 1.3.0
-  - annotations:
-      catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
-      catalog.cattle.io/hidden: "false"
-      catalog.cattle.io/namespace: lp-system
-      catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: monitoring-stack-crd
-    apiVersion: v2
-    appVersion: 1.2.0
-    created: "2024-09-20T07:51:05.870281733+02:00"
+    appVersion: 2.13.0
+    created: "2024-09-23T12:46:02.892155575+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -365,32 +344,44 @@ entries:
       name: eck-operator
       repository: https://helm.elastic.co
       version: 2.13.0
-    description: Set of operators and CRDs for LP monitoring
-    digest: 3983eccf86de2e8141e0b0bcb5854a1b83ae899ea56fa5f1f2617819ec8fb3ed
+    description: Install once per k8s. Set of operators for Elastic - Apps (2/3) chart
+    digest: 0f5efb4eb928caea3b3db6dd4ce32be5880b347292f24e31fddadc716158ef74
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
+    - elasticagent
+    - elastic agent
+    - observability
     - elastic
+    - elasticsearch
+    - kibana
+    - apm
+    - monitoring
+    - enterprise search
+    - enterprisesearch
+    - fleet
     kubeVersion: '>=1.26.0-0 <1.31.0-0'
     maintainers:
     - email: biuro@linuxpolska.com
       name: Linux Polska
-    name: monitoring-stack-crd
+    name: elastic-operator
     sources:
-    - https://sourcemation.github.io/charts/
+    - https://github.com/SourceMation/charts.git
     type: application
     urls:
-    - monitoring-stack-crd/monitoring-stack-crd-1.2.0.tgz
-    version: 1.2.0
+    - elastic-operator/elastic-operator-1.3.1.tgz
+    version: 1.3.1
   - annotations:
-      catalog.cattle.io/display-name: Monitoring Stack CRD (1/2)
-      catalog.cattle.io/hidden: "false"
+      catalog.cattle.io/display-name: Elastic - Operators (1/3)
+      catalog.cattle.io/kube-version: '>=1.25.0-0 < 1.30.0-0'
       catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
-      catalog.cattle.io/release-name: monitoring-stack-crd
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
-    appVersion: 1.1.0
-    created: "2024-09-20T07:51:05.861819475+02:00"
+    appVersion: 2.12.1
+    created: "2024-09-23T12:46:02.88394632+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -403,21 +394,32 @@ entries:
       name: eck-operator
       repository: https://helm.elastic.co
       version: 2.12.1
-    description: Set of operators and CRDs for LP monitoring
-    digest: baf44f8496f5b882734bf48a8d19e0d707a1a3e1b248df044e89ccfff5a91bfa
+    description: Install once per k8s. Set of operators for Elastic - Apps (2/3) chart
+    digest: fcfd4e315715003855f9e56e8a1318f4877a862415f517a27799307ce678157e
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
+    - elasticagent
+    - elastic agent
+    - observability
     - elastic
+    - elasticsearch
+    - kibana
+    - apm
+    - monitoring
+    - enterprise search
+    - enterprisesearch
+    - fleet
+    - opentelemetry
     kubeVersion: '>=1.25.0-0 <1.30.0-0'
     maintainers:
     - email: biuro@linuxpolska.com
       name: Linux Polska
-    name: monitoring-stack-crd
+    name: elastic-operator
     sources:
-    - https://sourcemation.github.io/charts/
+    - https://github.com/SourceMation/charts.git
     type: application
     urls:
-    - monitoring-stack-crd/monitoring-stack-crd-1.1.0.tgz
-    version: 1.1.0
-generated: "2024-09-20T07:51:05.830867642+02:00"
+    - elastic-operator/elastic-operator-1.3.0.tgz
+    version: 1.3.0
+generated: "2024-09-23T12:46:02.864648102+02:00"

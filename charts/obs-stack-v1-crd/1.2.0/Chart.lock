@@ -1,0 +1,12 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: eck-operator-crds
+  repository: https://helm.elastic.co
+  version: 2.13.0
+- name: eck-operator
+  repository: https://helm.elastic.co
+  version: 2.13.0
+digest: sha256:53b0dcd3a40ec121bac2d9f2667d56abbc65ce77de7e1a1798b1a876821b3909
+generated: "2024-09-20T01:20:37.339406426+02:00"
