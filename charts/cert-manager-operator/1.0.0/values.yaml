@@ -5,6 +5,10 @@ global:
 #    enabled: false
 
 cert-manager:
+#  prometheus:
+#    enabled: true
+#    servicemonitor:
+#      enabled: true
 #  image:
 #    repository: quay.io/jetstack/cert-manager-controller
 #    tag: 

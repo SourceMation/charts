@@ -5,11 +5,11 @@ dependencies:
 - name: cert-manager
   repository: https://charts.jetstack.io
   version: v1.15.1
+- name: adcs-issuer
+  repository: https://djkormo.github.io/adcs-issuer
+  version: 2.1.1
 - name: cert-manager-approver-policy
   repository: https://charts.jetstack.io
   version: v0.15.1
-- name: trust-manager
-  repository: https://charts.jetstack.io
-  version: v0.12.0
-digest: sha256:7a41366c1889f824f3afc1b2f2d6dc4fd7642f6091c2621a5457b1a3b1831b69
-generated: "2024-09-23T22:00:32.465053412+02:00"
+digest: sha256:ae8a2f91e4a88d65cf4afd05ed39dd755aa13f1d640560e7db74812a1ff0ef14
+generated: "2024-09-25T06:05:57.60296803+02:00"
