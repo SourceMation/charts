@@ -19,10 +19,11 @@ questions:
   show_subquestion_if: true
   subquestions:
   - variable: namespaceOverride
-    label: "Cert-manager's namespace"
+    label: "Cert-manager's namespace override"
     default: "cert-manager"
     description: Namespace whrere cert-manager exists.
     type: string
+    default: "cert-manager"
     group: "Integrations"
   - variable: cert-manager.namespace
     label: "Cert-manager's namespace"
@@ -31,19 +32,19 @@ questions:
     type: string
     group: "Integrations"
   - variable: cert-manager.global.leaderElection.namespace
-    label: "Cert-manager's namespace"
+    label: "Cert-manager's namespace leader election"
     default: "cert-manager"
     description: Namespace whrere cert-manager exists.
     type: string
     group: "Integrations"
   - variable: cert-manager.nameOverride
-    label: "Cert-manager's release name"
+    label: "Cert-manager's release name override"
     default: "cert-manager"
     description: Cert-manager's release name set in a helm.
     type: string
     group: "Integrations"
   - variable: nameOverride
-    label: "Cert-manager's release name"
+    label: "Helm release"
     default: "cert-manager"
     description: Cert-manager's release name set in a helm.
     type: string
