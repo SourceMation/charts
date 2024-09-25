@@ -10,11 +10,6 @@ questions:
 #  group: "Components"
 #  show_if: "scope=cluster"
 
-- variable: cert-manager.params.abc
-  default: "false"
-  label: Example
-  type: multiline
-  group: "Integrations"
 - variable: cert-manager.params.custom
   default: "false"
   label: Set custom namespace for cert-manager
