@@ -17,10 +17,10 @@ dependencies:
   version: v1.15.1
   repository: https://charts.jetstack.io
 
-- condition: global.adcsIssuer.enabled
-  name: adcs-issuer
-  version: 2.1.1
-  repository: https://djkormo.github.io/adcs-issuer
+#- condition: global.adcsIssuer.enabled
+#  name: adcs-issuer
+#  version: 2.1.1
+#  repository: https://djkormo.github.io/adcs-issuer
 
 
 - condition: global.certManagerApproverPolicyCrd.enabled
@@ -34,7 +34,7 @@ dependencies:
 #  repository: https://charts.jetstack.io
 
 
-description: Security. Install once per k8s. Manage TLS certificates via cert-manager operator
+description: Manage TLS certificates via cert-manager operator. Install once per k8s. Security. 
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
