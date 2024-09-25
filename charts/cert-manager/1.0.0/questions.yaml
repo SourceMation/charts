@@ -10,44 +10,57 @@ questions:
 #  group: "Components"
 #  show_if: "scope=cluster"
 
-
 - variable: cert-manager.params.custom
   default: "false"
-  label: Set custom namespace where cert-manager is installed
+  label: Set custom namespace for cert-manager
   type: boolean
   group: "Integrations"
   show_subquestion_if: true
   subquestions:
   - variable: namespaceOverride
-    label: "Cert-manager's namespace override"
+    label: "Cert-manager namespace override"
     default: "cert-manager"
-    description: Namespace whrere cert-manager exists.
+    description: Namespace whrere cert-manager is installed
     type: string
     group: "Integrations"
-  - variable: cert-manager.namespace
-    label: "Cert-manager's namespace"
-    default: "cert-manager"
-    description: Namespace whrere cert-manager exists.
-    type: string
-    group: "Integrations"
-  - variable: cert-manager.global.leaderElection.namespace
-    label: "Cert-manager's namespace leader election"
-    default: "cert-manager"
-    description: Namespace whrere cert-manager exists.
-    type: string
-    group: "Integrations"
-  - variable: cert-manager.nameOverride
-    label: "Cert-manager's release name override"
-    default: "cert-manager"
-    description: Cert-manager's release name set in a helm.
-    type: string
-    group: "Integrations"
-  - variable: nameOverride
-    label: "Helm release"
-    default: "cert-manager"
-    description: Cert-manager's release name set in a helm.
-    type: string
-    group: "Integrations"
+
+#- variable: cert-manager.params.custom
+#  default: "false"
+#  label: Set custom namespace where cert-manager is installed
+#  type: boolean
+#  group: "Integrations"
+#  show_subquestion_if: true
+#  subquestions:
+#  - variable: namespaceOverride
+#    label: "Cert-manager's namespace override"
+#    default: "cert-manager"
+#    description: Namespace whrere cert-manager exists.
+#    type: string
+#    group: "Integrations"
+#  - variable: cert-manager.namespace
+#    label: "Cert-manager's namespace"
+#    default: "cert-manager"
+#    description: Namespace whrere cert-manager exists.
+#    type: string
+#    group: "Integrations"
+#  - variable: cert-manager.global.leaderElection.namespace
+#    label: "Cert-manager's namespace leader election"
+#    default: "cert-manager"
+#    description: Namespace whrere cert-manager exists.
+#    type: string
+#    group: "Integrations"
+#  - variable: cert-manager.nameOverride
+#    label: "Cert-manager's release name override"
+#    default: "cert-manager"
+#    description: Cert-manager's release name set in a helm.
+#    type: string
+#    group: "Integrations"
+#  - variable: nameOverride
+#    label: "Helm release"
+#    default: "cert-manager"
+#    description: Cert-manager's release name set in a helm.
+#    type: string
+#    group: "Integrations"
 
 - variable: scope 
   default: "cluster"
