@@ -10,14 +10,8 @@ questions:
 #  group: "Components"
 #  show_if: "scope=cluster"
 
-- variable: namespaceOverride
-  label: "Set namespace override"
-  default: "cert-manager"
-  description: Set namespace where components of this chart will be deployed
-  type: string
-  group: "Integrations"
 
-- variable: chart.custom
+- variable: chartCustom
   default: "false"
   label: Custom chart parameters 
   type: boolean

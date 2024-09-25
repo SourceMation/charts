@@ -8,6 +8,7 @@ global:
 #    enabled: true
 
 scope: "cluster"
+chartCustom: false
 
 selfSigned:
   enabled: true
