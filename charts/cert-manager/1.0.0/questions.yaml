@@ -17,17 +17,25 @@ questions:
   type: string
   group: "Integrations"
 
-- variable: namespaceOverride
-  label: "Set namespace override"
-  description: Set namespace where components of this chart will be deployed
-  type: string
-  group: "Chart"
-
-- variable: nameOverride
-  label: "Release name override"
-  description: Change nem of this release.
-  type: string
-  group: "Chart"
+- variable: chart.custom
+  default: "false"
+  label: Custom chart parameters 
+  type: boolean
+  group: "Integrations"
+  show_subquestion_if: "true"
+  subquestions:
+  - variable: namespaceOverride
+    label: "Set namespace override"
+    description: Set namespace where components of this chart will be deployed
+    type: string
+    group: "Chart"
+    show_if: "chart.custom=true"
+  - variable: nameOverride
+    label: "Release name override"
+    description: Overwrite name of release used in components.
+    type: string
+    group: "Chart"
+    show_if: "chart.custom=true"
 
 - variable: cert-manager.params.custom
   default: "false"
