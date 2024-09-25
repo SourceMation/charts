@@ -13,7 +13,9 @@ selfSigned:
   enabled: true
   issuerName: "default"
 
-#cert-manager:
+cert-manager:
+  params:
+    custom: false
 
 #cert-manager-approver-policy:
 
