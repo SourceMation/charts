@@ -48,6 +48,7 @@ questions:
     default: "cert-manager"
     description: Cert-manager's release name set in a helm.
     type: string
+    default: "cert-manager"
     group: "Integrations"
 
 - variable: scope 
