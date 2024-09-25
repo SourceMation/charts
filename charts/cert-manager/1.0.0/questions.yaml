@@ -10,14 +10,6 @@ questions:
 #  group: "Components"
 #  show_if: "scope=cluster"
 
-- variable: selfSigned.enabled
-  default: "true"
-  label: Deploy SelfSigned Issuer
-  type: boolean
-  group: "Issuers"
-  show_if: "scope=cluster"
-  show_subquestion_if: true
-  subquestions:
 
 - variable: cert-manager.params.custom
   default: "false"
