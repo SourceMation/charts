@@ -12,7 +12,7 @@ chartCustom: false
 
 selfSigned:
   enabled: true
-  issuerName: "default"
+  issuerName: "default-selfsigned-ca"
 
 cert-manager:
   params:

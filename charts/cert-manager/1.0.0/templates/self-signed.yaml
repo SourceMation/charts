@@ -7,13 +7,13 @@ apiVersion: cert-manager.io/v1
   {{- if eq $.Values.scope "cluster" }}
 kind: ClusterIssuer
 metadata:
-  name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-selfsigned-init
+  name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-init
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
   {{- else }}
 kind: Issuer
 metadata:
-  name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-selfsigned-init
+  name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-init
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
   namespace: {{ include "common.names.namespace" $ }}
@@ -24,39 +24,44 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-selfsigned-ca
+  name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}
   namespace: {{ include "common.names.namespace" $ }}
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   isCA: true
   commonName: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}
-  secretName: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-selfsigned-ca
+  secretName: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}
   privateKey:
     algorithm: ECDSA
     size: 256
   issuerRef:
-    name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-selfsigned-init
+    name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-init
+  {{- if eq $.Values.scope "cluster" }}
     kind: ClusterIssuer
+  {{- else }}
+    kind: Issuer
+  {{- end }} 
+
     group: cert-manager.io
 ---
 apiVersion: cert-manager.io/v1
   {{- if eq $.Values.scope "cluster" }}
 kind: ClusterIssuer
 metadata:
-  name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-selfsigned-issuer
+  name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
   {{- else }}
 kind: Issuer
 metadata:
-  name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-selfsigned-issuer
+  name: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
   namespace: {{ include "common.names.namespace" $ }}
   {{- end }} 
 spec:
   ca:
-    secretName: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}-selfsigned-ca
+    secretName: {{ default ( include "common.names.shortname" $ ) ( .issuerName ) }}
   {{- end }}
 {{- end }}
