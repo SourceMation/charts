@@ -1,0 +1,23 @@
+{{- if .Values.global.sonarqubeApp.enabled }}
+  {{- if and .Values.sonarqube.postgresql.enabled .Values.sonarqube.postgresql.persistence.enabled }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+  name: {{ include "common.names.shortname" $ }}-{{ .Values.sonarqube.postgresql.persistence.claimName }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+spec:
+    {{- with .Values.sonarqube.postgresql.persistence }}
+  accessModes: {{ .accessMode | toYaml | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .size }}
+    {{- if not (empty .storageClass) }}
+  storageClassName: {{ .storageClass }}
+    {{- end }}
+  volumeMode: Filesystem
+    {{- end }}
+  {{- end }}
+{{- end }}

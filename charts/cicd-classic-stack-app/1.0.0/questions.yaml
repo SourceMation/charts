@@ -1,0 +1,1214 @@
+categories:
+- cicd
+questions:
+  # sonarqubeApp
+- variable: global.sonarqubeApp.enabled
+  default: true
+  label: Deploy Sonarqube
+  group: "Components"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.params.customImage.sonarqube
+    default: false
+    label: Change SonarQube image
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.image.registry
+      default: "docker.io"
+      label: SonarQube image registry
+      description: "SonarQube image registry"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.image.repository
+      default: "sonarqube"
+      label: SonarQube image repository
+      description: "SonarQube image repository"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.image.tag
+      label: SonarQube image tag
+      description: "SonarQube image tag"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    #- variable: sonarqube.image.pullSecret
+    #  label: SonarQube image pullSecret
+    #  description: "SonarQube image pullSecret"
+    #  group: "SonarQube settings"
+    #  type: secret
+    #  required: false
+    - variable: sonarqube.image.pullPolicy
+      default: "IfNotPresent"
+      label: SonarQube image pullPolicy
+      description: "SonarQube image pullPolicy"
+      group: "SonarQube settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: sonarqube.account.adminPassword
+    default: "P@ssword1"
+    label: SonarQube admin password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "SonarQube settings"
+    type: password
+    required: false
+  - variable: sonarqube.ingress.enabled
+    label: Enable SonarQube Ingress
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.ingress.hosts.0.name
+      default: "sonarqube.apps.example.com"
+      label: URL
+      description: "SonarQube Ingress URL"
+      group: "SonarQube settings"
+      type: hostname
+      required: true
+  - variable: sonarqube.persistence.enabled
+    default: true
+    label: SonarQube persistent storage
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.persistence.size
+      default: "5Gi"
+      label: SonarQube persistent volume size
+      group: "SonarQube settings"
+      type: string
+      required: true
+    - variable: sonarqube.persistence.storageClass
+      label: SonarQube persistent volume Storage Class
+      group: "SonarQube settings"
+      type: storageclass
+      required: false
+  - variable: sonarqube.params.customResources.sonarqube
+    default: false
+    label: Modify SonarQube resource consumption
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.resources.limits.cpu
+      label: Milicore limit for a SonarQube instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.resources.requests.cpu
+      label: Milicore requests for a SonarQube instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.resources.limits.memory
+      label: Memory limit for a SonarQube instance
+      description: "Memory limit for a SonarQube instance"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    - variable: sonarqube.resources.requests.memory
+      label: Memory requests for a SonarQube instance
+      description: "Memory request, value must be <= memory limit"
+      group: "SonarQube settings"
+      type: string
+      required: false
+  - variable: sonarqube.params.customImage.postgresql
+    default: false
+    label: Change Postgresql image
+    description: "Change Postgresql image"
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.postgresql.image.registry
+      default: "docker.io"
+      label: Postgresql image registry
+      description: "Postgresql image registry"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.image.repository
+      default: "bitnami/postgresql"
+      label: Postgresql image repository
+      description: "Postgresql image repository"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.image.tag
+      label: Postgresql image tag
+      description: "Postgresql image tag"
+      group: "SonarQube settings"
+      type: string
+      required: false
+    #- variable: sonarqube.postgresql.image.pullSecrets
+    #  label: Postgresql image PullSecrets
+    #  description: "Postgresql image PullSecrets"
+    #  group: "SonarQube settings"
+    #  type: secret
+    #  required: false
+    - variable: sonarqube.postgresql.image.pullPolicy
+      default: "IfNotPresent"
+      label: Postgresql image pullPolicy
+      description: "Postgresql image pullPolicy"
+      group: "SonarQube settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: sonarqube.params.customPasswords.postgresql
+    default: false
+    label: Change Postgresql DB configuration
+    description: "Change Postgresql DB configuration"
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.postgresql.postgresqlDatabase
+      default: "sonar"
+      label: SonarQube DB name
+      description: "SonarQube DB name"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.postgresqlUsername
+      default: "sonar"
+      label: SonarQube DB username
+      description: "SonarQube DB username"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.postgresqlPassword
+      default: "P@ssword1"
+      label: SonarQube DB password
+      description: "Default password is 'P@ssword1'. Change it!"
+      group: "SonarQube settings"
+      type: password
+  - variable: sonarqube.params.customResources.postgresql
+    default: false
+    label: Modify Postgresql resource consumption
+    group: "SonarQube settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: sonarqube.postgresql.persistence.size
+      default: "20Gi"
+      label: Postgresql persistent volume size
+      description: "Postgresql persistent volume size"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.persistence.storageClass
+      label: Postgresql persistent Storage Class
+      description: "Postgresql persistent Storage Class"
+      group: "SonarQube settings"
+      type: storageclass
+    - variable: sonarqube.postgresql.resources.limits.cpu
+      default: "2000m"
+      label: Milicore limit for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.resources.requests.cpu
+      default: "100m"
+      label: Milicore requests for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.resources.limits.memory
+      default: "2Gi"
+      label: Memory limit for a Postgresql instance
+      description: "Memory limit for a Postgresql instance"
+      group: "SonarQube settings"
+      type: string
+    - variable: sonarqube.postgresql.resources.requests.memory
+      default: "200Mi"
+      label: Memory requests for a Postgresql instance
+      description: "Memory request, value must be <= memory limit"
+      group: "SonarQube settings"
+      type: string
+  - variable: sonarqube.postgresql.updateStrategy.type
+    default: "RollingUpdate"
+    label: Postgresql update strategy
+    description: "Postgresql update strategy"
+    group: "SonarQube settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
+  - variable: sonarqube.prometheusMonitoring.podMonitor.enabled
+    default: true
+    label: SonarQube metrics
+    description: "SonarQube metrics"
+    group: "SonarQube settings"
+    type: boolean
+  - variable: sonarqube.postgresql.metrics.enabled
+    default: true
+    label: Postgresql metrics
+    description: "Postgresql metrics"
+    group: "SonarQube settings"
+    type: boolean
+
+  # jenkinsApp
+- variable: global.jenkinsApp.enabled
+  default: true
+  label: "Deploy Jenkins"
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: jenkins.controller.admin.username
+    label: Username
+    description: "Username"
+    group: "Jenkins Settings"
+    type: string
+    required: true
+  - variable: jenkins.controller.admin.password
+    label: Password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Jenkins Settings"
+    type: password
+    required: true
+  - variable: jenkins.params.ingress.enabled
+    label: "Enable Ingress"
+    description: "Enable Ingress"
+    group: "Jenkins Settings"
+    type: boolean
+    required: false
+    show_subquestion_if: true
+    subquestions:
+    - variable: jenkins.params.ingress.hostName
+      label: "hostName"
+      description: "hostName"
+      group: "Jenkins Settings"
+      type: hostname
+      required: true
+  - variable: jenkins.controller.customResources
+    default: false
+    label: "Modify resource consumption"
+    type: boolean
+    group: "Jenkins Settings"
+    show_subquestion_if: true
+    subquestions:
+    - variable: jenkins.controller.resources.requests.memory
+      label: "Memory request for Jenkins instance"
+      description: "Memory request for Jenkins instance"
+      group: "Jenkins Settings"
+      type: string
+      required: true
+    - variable: jenkins.controller.resources.requests.cpu
+      label: "Milicore request for Jenkins instance"
+      description: "Milicore request for Jenkins instance"
+      group: "Jenkins Settings"
+      type: string
+      required: true
+    - variable: jenkins.controller.resources.limits.memory
+      label: "Memory limit for Jenkins instance"
+      description: "Memory limit for Jenkins instance"
+      group: "Jenkins Settings"
+      type: string
+      required: true
+    - variable: jenkins.controller.resources.limits.cpu
+      label: "Milicore limit for Jenkins instance"
+      description: "Milicore limit for Jenkins instance"
+      group: "Jenkins Settings"
+      type: string
+      required: true
+    - variable: jenkins.controller.persistence.storageClass
+      label: Jenkins persistent volume Storage Class
+      group: "Jenkins settings"
+      type: storageclass
+      required: false
+    - variable: jenkins.controller.persistence.size
+      label: Jenkins storage size
+      description: "Jenkins storage size"
+      group: "Jenkins Settings"
+      type: string
+      required: true
+
+  # forgejoApp
+- variable: global.forgejoApp.enabled
+  default: "true"
+  label: Deploy Forgejo
+  group: "Components"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.params.customImage.gitea
+    default: false
+    label: Change Forgejo image
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.image.registry
+      default: "code.forgejo.org"
+      label: Forgejo image registry
+      description: "Forgejo image registry"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.image.repository
+      default: "forgejo/forgejo"
+      label: Forgejo image repository
+      description: "Forgejo image repository"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.image.tag
+      default: ""
+      label: Forgejo image tag
+      description: "Forgejo image tag"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    #- variable: forgejo.imagePullSecrets
+    #  label: Forgejo image PullSecrets
+    #  description: "Forgejo image PullSecrets"
+    #  group: "Forgejo settings"
+    #  type: string
+    #  required: false
+    - variable: forgejo.image.pullPolicy
+      default: "IfNotPresent"
+      label: Forgejo image pullPolicy
+      description: "Forgejo image pullPolicy"
+      group: "Forgejo settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: forgejo.gitea.admin.username
+    default: "gitea_admin"
+    label: Forgejo admin username
+    description: "The username 'admin' is reserved. Don't use it."
+    group: "Forgejo settings"
+    type: string
+    required: true
+  - variable: forgejo.gitea.admin.password
+    label: Forgejo admin password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Forgejo settings"
+    type: password
+    required: true
+  - variable: forgejo.gitea.admin.email
+    default: "gitea_admin@example.com"
+    label: Forgejo admin email
+    description: "Forgejo admin email"
+    group: "Forgejo settings"
+    type: string
+    required: true
+  - variable: forgejo.persistence.enabled
+    default: "true"
+    label: Forgejo persistent storage
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.persistence.size
+      default: "10Gi"
+      label: Forgejo persistent volume size
+      group: "Forgejo settings"
+      type: string
+      required: true
+    - variable: forgejo.persistence.storageClass
+      label: Forgejo persistent volume Storage Class
+      group: "Forgejo settings"
+      type: storageclass
+      required: false
+  - variable: forgejo.params.customResources.gitea
+    default: false
+    label: Modify Forgejo resource consumption
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.resources.limits.cpu
+      label: Milicore limit for a Forgejo instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.resources.requests.cpu
+      label: Milicore requests for a Forgejo instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.resources.limits.memory
+      label: Memory limit for a Forgejo instance
+      description: "Memory limit for a Forgejo instance"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.resources.requests.memory
+      label: Memory requests for a Forgejo instance
+      description: "Memory request, value must be <= memory limit"
+      group: "Forgejo settings"
+      type: string
+      required: false
+  - variable: forgejo.ingress.enabled
+    label: Enable Forgejo ingress
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.ingress.hosts.0.host
+      default: "forgejo.apps.example.com"
+      label: URL
+      description: "Forgejo Ingress URL"
+      group: "Forgejo settings"
+      type: hostname
+      required: true
+  - variable: forgejo.strategy.type
+    default: "Recreate"
+    label: Forgejo update strategy
+    description: "Forgejo update strategy"
+    group: "Forgejo settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
+  - variable: forgejo.params.customImage.postgresqlHA
+    default: false
+    label: Change Postgresql image
+    description: "Change Postgresql image"
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.postgresql-ha.postgresql.image.registry
+      default: "docker.io"
+      label: Postgresql image registry
+      description: "Postgresql image registry"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.postgresql.image.repository
+      default: "bitnami/postgresql-repmgr"
+      label: Postgresql image repository
+      description: "Postgresql image repository"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.postgresql.image.tag
+      label: Postgresql image tag
+      description: "Postgresql image tag"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    #- variable: forgejo.postgresql-ha.postgresql.image.pullSecrets
+    #  label: Postgresql image PullSecrets
+    #  description: "Postgresql image PullSecrets"
+    #  group: "Forgejo settings"
+    #  type: string
+    #  required: false
+    - variable: forgejo.postgresql-ha.postgresql.image.pullPolicy
+      default: "IfNotPresent"
+      label: Postgresql image pullPolicy
+      description: "Postgresql image pullPolicy"
+      group: "Forgejo settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: forgejo.params.customPasswords.postgresqlHA
+    default: false
+    label: Change Postgresql DB configuration
+    description: "Change Postgresql DB configuration"
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.postgresql-ha.postgresql.postgresPassword
+      default: "P@ssword1"
+      label: Postgresql admin password
+      description: "Default password is 'P@ssword1'. Change it!"
+      group: "Forgejo settings"
+      type: password
+    - variable: forgejo.postgresql-ha.postgresql.repmgrPassword
+      default: "P@ssword1"
+      label: Postgresql repmgr password
+      description: "Default password is 'P@ssword1'. Change it!"
+      group: "Forgejo settings"
+      type: password
+    - variable: forgejo.postgresql-ha.pgpool.adminPassword
+      default: "P@ssword1"
+      label: Postgresql pgpool admin password
+      description: "Default password is 'P@ssword1'. Change it!"
+      group: "Forgejo settings"
+      type: password
+    - variable: forgejo.postgresql-ha.global.postgresql.database
+      default: "gitea"
+      label: Forgejo DB name
+      description: "Forgejo DB name"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.global.postgresql.username
+      default: "gitea"
+      label: Forgejo DB username
+      description: "Forgejo DB username"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.global.postgresql.password
+      default: "P@ssword1"
+      label: Forgejo DB password
+      description: "Default password is 'P@ssword1'. Change it!"
+      group: "Forgejo settings"
+      type: password
+  - variable: forgejo.params.customResources.postgresqlHA
+    default: false
+    label: Modify Postgresql resource consumption
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.postgresql-ha.persistence.size
+      default: "8Gi"
+      label: Postgresql persistent volume size
+      description: "Postgresql persistent volume size"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.persistence.storageClass
+      label: Postgresql persistent Storage Class
+      description: "Postgresql persistent Storage Class"
+      group: "Forgejo settings"
+      type: storageclass
+    - variable: forgejo.postgresql-ha.resources.limits.cpu
+      default: "500m"
+      label: Milicore limit for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.resources.requests.cpu
+      default: "250m"
+      label: Milicore requests for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.resources.limits.memory
+      default: "512Mi"
+      label: Memory limit for a Postgresql instance
+      description: "Memory limit for a Postgresql instance"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.postgresql-ha.resources.requests.memory
+      default: "256Mi"
+      label: Memory requests for a Postgresql instance
+      description: "Memory request, value must be <= memory limit"
+      group: "Forgejo settings"
+      type: string
+  - variable: forgejo.postgresql-ha.postgresql.updateStrategy.type
+    default: "RollingUpdate"
+    label: Postgresql update strategy
+    description: "Postgresql update strategy"
+    group: "Forgejo settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
+  - variable: forgejo.params.customImage.redisCluster
+    default: false
+    label: Change Redis image
+    description: "Change Redis image"
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.redis-cluster.image.registry
+      default: "docker.io"
+      label: Redis image registry
+      description: "Redis image registry"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.redis-cluster.image.repository
+      default: "bitnami/redis-cluster"
+      label: Redis image repository
+      description: "Redis image repository"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.redis-cluster.image.tag
+      label: Redis image tag
+      description: "Redis image tag"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    #- variable: forgejo.redis-cluster.image.pullSecrets
+    #  label: Redis image PullSecrets
+    #  description: "Redis image PullSecrets"
+    #  group: "Forgejo settings"
+    #  type: string
+    #  required: false
+    - variable: forgejo.redis-cluster.image.pullPolicy
+      default: "IfNotPresent"
+      label: Redis image pullPolicy
+      description: "Redis image pullPolicy"
+      group: "Forgejo settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: forgejo.params.customResources.redisCluster
+    default: false
+    label: Modify Redis resource consumption
+    group: "Forgejo settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: forgejo.redis-cluster.persistence.size
+      default: "8Gi"
+      label: Redis persistent volume size
+      description: "Redis persistent volume size"
+      group: "Forgejo settings"
+      type: string
+    - variable: forgejo.redis-cluster.persistence.storageClass
+      label: Redis persistent Storage Class
+      description: "Redis persistent Storage Class"
+      group: "Forgejo settings"
+      type: storageclass
+    - variable: forgejo.redis-cluster.redis.resources.limits.cpu
+      default: "200m"
+      label: Milicore limit for a Redis instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.redis-cluster.redis.resources.requests.cpu
+      default: "100m"
+      label: Milicore requests for a Redis instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.redis-cluster.redis.resources.limits.memory
+      default: "256Mi"
+      label: Memory limit for a Redis instance
+      description: "Memory limit for a Redis instance"
+      group: "Forgejo settings"
+      type: string
+      required: false
+    - variable: forgejo.redis-cluster.redis.resources.requests.memory
+      default: "128Mi"
+      label: Memory request for a Redis instance
+      description: "Memory request, value must be <= memory limit"
+      group: "Forgejo settings"
+      type: string
+      required: false
+  - variable: forgejo.redis-cluster.redis.updateStrategy.type
+    default: "RollingUpdate"
+    label: Redis update strategy
+    description: "Redis update strategy"
+    group: "Forgejo settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    required: false
+  - variable: forgejo.gitea.metrics.enabled
+    default: "true"
+    label: Forgejo metrics
+    description: "Forgejo metrics"
+    group: "Forgejo settings"
+    type: boolean
+  - variable: forgejo.postgresql-ha.metrics.enabled
+    default: "true"
+    label: Postgresql metrics
+    description: "Postgresql metrics"
+    group: "Forgejo settings"
+    type: boolean
+  - variable: forgejo.redis-cluster.metrics.enabled
+    default: "true"
+    label: Redis metrics
+    description: "Redis metrics"
+    group: "Forgejo settings"
+    type: boolean
+
+  # harborApp
+- variable: global.harborApp.enabled
+  label: "Deploy Harbor"
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  # expose
+  - variable: harbor.expose.type
+    label: "How you will access harbor portal through?"
+    type: enum
+    options:
+    - "ingress"
+    - "clusterIP"
+    - "nodePort"
+    - "loadBalancer"
+    group: "Harbor settings"
+  - variable: harbor.expose.ingress.hosts.core
+    label: "Ingress for harbor portal"
+    type: hostname
+    group: "Harbor settings"
+    show_if: "harbor.expose.type=ingress"
+  - variable: harbor.expose.nodePort.ports.http.nodePort
+    label: "NodePort for harbor portal http protocol"
+    type: int
+    group: "Harbor settings"
+    show_if: "harbor.expose.type=nodePort"
+  - variable: harbor.expose.nodePort.ports.https.nodePort
+    label: "NodePort for harbor portal https protocol"
+    type: int
+    group: "Harbor settings"
+    show_if: "harbor.expose.type=nodePort"
+    # persistence
+  - variable: harbor.questions.advancedPersistenceConfiguration
+    label: "Show advaced persistent storage configuration for harbor app"
+    default: "false"
+    type: boolean
+    group: "Harbor settings"
+    show_subquestion_if: true
+    subquestions:
+    - variable: harbor.persistence.enabled
+      label: "Enable persistent storage"
+      type: boolean
+      group: "Harbor settings"
+    - variable: harbor.persistence.resourcePolicy
+      label: "Do you want to keep all PVCs after helm chart uninstall? If yes, write 'keep'. If no, leave empty line."
+      type: string
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+    - variable: harbor.persistence.persistentVolumeClaim.registry.storageClass
+      label: "Choose storage class for registry PVC."
+      type: storageclass
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+    - variable: harbor.persistence.persistentVolumeClaim.registry.size
+      label: "Size for registry PVC"
+      type: string
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+    - variable: harbor.persistence.persistentVolumeClaim.jobservice.storageClass
+      label: "Choose storage class for jobservice PVC."
+      type: storageclass
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+    - variable: harbor.persistence.persistentVolumeClaim.jobservice.size
+      label: "Size for jobservice PVC"
+      type: string
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+    - variable: harbor.persistence.persistentVolumeClaim.database.storageClass
+      label: "Choose storage class for database PVC."
+      type: storageclass
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+    - variable: harbor.persistence.persistentVolumeClaim.database.size
+      label: "Size for database PVC"
+      type: string
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+    - variable: harbor.persistence.persistentVolumeClaim.redis.storageClass
+      label: "Choose storage class for redis PVC."
+      type: storageclass
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+    - variable: harbor.persistence.persistentVolumeClaim.redis.size
+      label: "Size for redis PVC"
+      type: string
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+    - variable: harbor.persistence.persistentVolumeClaim.trivy.storageClass
+      label: "Choose storage class for trivy PVC."
+      type: storageclass
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+    - variable: harbor.persistence.persistentVolumeClaim.trivy.size
+      label: "Size for trivy PVC"
+      type: string
+      group: "Harbor settings"
+      show_if: "harbor.persistence.enabled=true"
+
+  - variable: harbor.imagePullPolicy
+    label: "Select image pull policy"
+    type: enum
+    options:
+    - "IfNotPresent"
+    - "Always"
+    - "Never"
+    group: "Harbor settings"
+  #- variable: harbor.imagePullSecrets
+  - variable: harbor.updateStrategy.type
+    label: "Select update strategy"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+    group: "Harbor settings"
+
+  - variable: harbor.harborAdminPassword
+    label: "Initial password for 'admin' user (default: P@ssword1)"
+    type: password 
+    group: "Harbor settings"
+  - variable: harbor.registry.credentials.username
+    label: "Username for harbor registry"
+    type: string
+    group: "Harbor settings"
+  - variable: harbor.registry.credentials.password
+    label: "Password for harbor registry (default: P@ssword1)"
+    type: password
+    group: "Harbor settings"
+  - variable: harbor.database.internal.password
+    label: "Password for harbor internal database (default: P@ssword1)"
+    type: password
+    group: "Harbor settings"
+
+  - variable: harbor.questions.advancedImagesConfiguration
+    label: "Show advanced configuration for images used in harbor app"
+    default: "false"
+    type: boolean
+    group: "Harbor settings"
+    show_subquestion_if: true
+    subquestions:
+    - variable: harbor.nginx.image.repository
+      label: "Image source for harbor nginx"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.nginx.image.tag
+      label: "Image tag for harbor nginx"
+      type: string
+      group: "Harbor settings"
+    #- variable: harbor.nginx.nodeSelector
+    #- variable: harbor.nginx.tolerations
+    #- variable: harbor.nginx.affinity
+    - variable: harbor.portal.image.repository
+      label: "Image source for harbor portal"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.portal.image.tag
+      label: "Image tag for harbor portal"
+      type: string
+      group: "Harbor settings"
+    #- variable: harbor.portal.nodeSelector
+    #- variable: harbor.portal.tolerations
+    #- variable: harbor.portal.affinity
+    - variable: harbor.core.image.repository
+      label: "Image source for harbor core"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.core.image.tag
+      label: "Image tag for harbor core"
+      type: string
+      group: "Harbor settings"
+    #- variable: harbor.core.nodeSelector
+    #- variable: harbor.core.tolerations
+    #- variable: harbor.core.affinity
+    - variable: harbor.jobservice.image.repository
+      label: "Image source for harbor jobservice"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.jobservice.image.tag
+      label: "Image tag for harbor jobservice"
+      type: string
+      group: "Harbor settings"
+    #- variable: harbor.jobservice.nodeSelector
+    #- variable: harbor.jobservice.tolerations
+    #- variable: harbor.jobservice.affinity
+    - variable: harbor.registry.registry.image.repository
+      label: "Image source for harbor registry"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.registry.registry.image.tag
+      label: "Image tag for harbor registry"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.registry.controller.image.repository
+      label: "Image source for harbor registry controller"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.registry.controller.image.tag
+      label: "Image tag for harbor registry controller"
+      type: string
+      group: "Harbor settings"
+    #- variable: harbor.registry.nodeSelector
+    #- variable: harbor.registry.tolerations
+    #- variable: harbor.registry.affinity
+    - variable: harbor.trivy.image.repository
+      label: "Image source for harbor trivy"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.trivy.image.tag
+      label: "Image tag for harbor trivy"
+      type: string
+      group: "Harbor settings"
+    #- variable: harbor.trivy.nodeSelector
+    #- variable: harbor.trivy.tolerations
+    #- variable: harbor.trivy.affinity
+    - variable: harbor.database.internal.image.repository
+      label: "Image source for harbor database"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.database.internal.image.tag
+      label: "Image tag for harbor database"
+      type: string
+      group: "Harbor settings"
+    #- variable: harbor.database.internal.nodeSelector
+    #- variable: harbor.database.internal.tolerations
+    #- variable: harbor.database.internal.affinity
+    - variable: harbor.redis.internal.image.repository
+      label: "Image source for harbor redis"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.redis.internal.image.tag
+      label: "Image tag for harbor redis"
+      type: string
+      group: "Harbor settings"
+    #- variable: harbor.redis.internal.nodeSelector
+    #- variable: harbor.redis.internal.tolerations
+    #- variable: harbor.redis.internal.affinity
+    - variable: harbor.exporter.image.repository
+      label: "Image source for harbor exporter"
+      type: string
+      group: "Harbor settings"
+    - variable: harbor.exporter.image.tag
+      label: "Image tag for harbor exporter"
+      type: string
+      group: "Harbor settings"
+    #- variable: harbor.exporter.nodeSelector
+    #- variable: harbor.exporter.tolerations
+    #- variable: harbor.exporter.affinity
+
+  - variable: harbor.metrics.enabled
+    label: "Enable harbor metrics"
+    type: boolean
+    group: "Harbor settings"
+  - variable: harbor.metrics.serviceMonitor.enabled
+    label: "Enable harbor metrics system monitor"
+    type: boolean
+    group: "Harbor settings"
+    show_if: "harbor.metrics.enabled=true"
+  - variable: harbor.trace.enabled
+    label: "Enable harbor trace by otel"
+    type: boolean
+    group: "Harbor settings"
+
+  # coderApp
+- variable: global.coderApp.enabled
+  default: "true"
+  label: Deploy Coder
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: coder.customImage
+    default: false
+    label: Change Coder image
+    group: "Coder settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: coder.coder.image.repo
+      default: "ghcr.io/coder/coder"
+      label: Coder image registry/repository
+      group: "Coder settings"
+      type: string
+    - variable: coder.coder.image.tag
+      default: ""
+      label: Coder image tag
+      description: "Coder image tag"
+      group: "Coder settings"
+      type: string
+    #- variable: coder.coder.image.PullSecrets
+    #  label: Coder image PullSecrets
+    #  description: "Coder image PullSecrets"
+    #  group: "Coder settings"
+    #  type: string
+    #  required: false
+    - variable: coder.coder.image.pullPolicy
+      default: "IfNotPresent"
+      label: Coder image pullPolicy
+      description: "Coder image pullPolicy"
+      group: "Coder settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: postgresql.auth.database
+    label: Coder DB name
+    description: "Coder database name"
+    group: "Coder settings"
+    type: string
+    default: "coder"
+    required: true
+  - variable: postgresql.auth.username
+    label: Coder username
+    description: "Coder DB username"
+    group: "Coder settings"
+    type: string
+    default: "coder"
+    required: true
+  - variable: postgresql.auth.password
+    default: "P@ssword1"
+    label: Coder password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Coder settings"
+    type: password
+    min: 8
+    required: true
+  - variable: coder.coder.ingress.enabled
+    label: Enable Coder Ingress
+    group: "Coder settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: coder.coder.ingress.host
+      label: URL
+      description: "Configure url for coder web-ui"
+      group: "Coder settings"
+      type: hostname
+      default: "coder.apps.example.com"
+      min: 6
+  - variable: coder.customResources
+    default: false
+    label: Modify Coder resource consumption
+    group: "Coder settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: coder.coder.resources.limits.cpu
+      label: Milicore limit for a Coder instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "Coder settings"
+      type: string
+      required: false
+    - variable: coder.coder.resources.requests.cpu
+      label: Milicore requests for a Coder instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "Coder settings"
+      type: string
+      required: false
+    - variable: coder.coder.resources.limits.memory
+      label: Memory limit for a Coder instance
+      description: "Memory limit for a Coder instance"
+      group: "Coder settings"
+      type: string
+      required: false
+    - variable: coder.coder.resources.requests.memory
+      label: Memory requests for a Coder instance
+      description: "Memory request, value must be <= memory limit"
+      group: "Coder settings"
+      type: string
+      required: false
+  - variable: postgresql.customImage
+    default: false
+    label: Change Postgresql image
+    description: "Change Postgresql image"
+    group: "Coder settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: postgresql.image.registry
+      default: "docker.io"
+      label: Postgresql image registry
+      description: "Postgresql image registry"
+      group: "Coder settings"
+      type: string
+    - variable: postgresql.image.repository
+      default: "bitnami/postgresql"
+      label: Postgresql image repository
+      description: "Postgresql image repository"
+      group: "Coder settings"
+      type: string
+    - variable: postgresql.image.tag
+      label: Postgresql image tag
+      description: "Postgresql image tag"
+      group: "Coder settings"
+      type: string
+      required: false
+    #- variable: postgresql.image.pullSecrets
+    #  label: Postgresql image PullSecrets
+    #  description: "Postgresql image PullSecrets"
+    #  group: "Coder settings"
+    #  type: string
+    #  required: false
+    - variable: postgresql.image.pullPolicy
+      default: "IfNotPresent"
+      label: Postgresql image pullPolicy
+      description: "Postgresql image pullPolicy"
+      group: "Coder settings"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: postgresql.customPasswords
+    default: false
+    label: Change Postgresql DB configuration
+    description: "Change Postgresql DB configuration"
+    group: "Coder settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: postgresql.auth.postgresPassword
+      default: "P@ssword1"
+      label: Postgresql admin password
+      description: "Default password is 'P@ssword1'. Change it!"
+      group: "Coder settings"
+      type: password
+  - variable: postgresql.customResources
+    default: false
+    label: Modify Postgresql resource consumption
+    group: "Coder settings"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: postgresql.primary.persistence.size
+      default: "10Gi"
+      label: Postgresql persistent volume size
+      description: "Postgresql persistent volume size"
+      group: "Coder settings"
+      type: string
+    - variable: postgresql.primary.storageClass
+      label: Postgresql persistent Storage Class
+      description: "Postgresql persistent Storage Class"
+      group: "Coder settings"
+      type: storageclass
+    - variable: postgresql.primary.resources.limits.cpu
+      label: Milicore limit for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU"
+      group: "Coder settings"
+      type: string
+    - variable: postgresql.primary.resources.requests.cpu
+      label: Milicore requests for a Postgresql instance
+      description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+      group: "Coder settings"
+      type: string
+    - variable: postgresql.primary.resources.limits.memory
+      label: Memory limit for a Postgresql instance
+      description: "Memory limit for a Postgresql instance"
+      group: "Coder settings"
+      type: string
+    - variable: postgresql.primary.resources.requests.memory
+      label: Memory requests for a Postgresql instance
+      description: "Memory request, value must be <= memory limit"
+      group: "Coder settings"
+      type: string
+  - variable: postgresql.primary.updateStrategy.type
+    default: "RollingUpdate"
+    label: Postgresql update strategy
+    description: "Postgresql update strategy"
+    group: "Coder settings"
+    type: enum
+    options:
+    - "RollingUpdate"
+    - "Recreate"
+  - variable: coder.coder.env[1].value
+    default: "true"
+    label: Coder metrics
+    description: "Coder metrics"
+    group: "Coder settings"
+    type: boolean
+  - variable: postgresql.metrics.enabled
+    default: "true"
+    label: Postgresql metrics
+    description: "Postgresql metrics"
+    group: "Coder settings"
+    type: boolean

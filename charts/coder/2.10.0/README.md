@@ -22,20 +22,22 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install coder-db potgresql \
+
+helm repo update
+
+helm install coder-db bitnami/postgresql \
  -n ${CHART_NAMESPACE} \
  --set auth.username=${CODER_USER} \
  --set auth.password=${CODER_PASSWORD} \
  --set auth.database=${CODER_DATABASE} \
- --set persistence.size=10Gi \
- --repo https://charts.bitnami.com/bitnami postgresql
+ --set persistence.size=10Gi
 ```
 
 ## Create secret with db url / Stwórz secret z db url
 
 ```bash
 kubectl create secret generic coder-db-url -n ${CHART_NAMESPACE} \
-   --from-literal=url="postgres://coder:coder@coder-db-postgresql.coder.svc.cluster.local:5432/coder?sslmode=disable"
+   --from-literal=url="postgres://${CODER_USER}:${CODER_PASSWORD}@coder-db-postgresql.${CHART_NAMESPACE}.svc.cluster.local:5432/${CODER_DATABASE}?sslmode=disable"
 ```
 
 ## Installation via helm / Instalacja przy użyciu helm
