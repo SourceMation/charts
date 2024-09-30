@@ -1,0 +1,102 @@
+
+coder:
+  coder:
+    env:
+      # - name: CODER_PG_CONNECTION_URL
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: "coder-db-url"
+      #       key: "url"
+      # https://coder.com/docs/admin/prometheus
+      - name: CODER_PROMETHEUS_ENABLE
+        value: "true"
+    image:
+      repo: "ghcr.io/coder/coder"
+      tag: "v2.13.2"
+      pullPolicy: "IfNotPresent"
+      pullSecrets: []
+    ingress:
+      enable: true
+      host: "coder.apps.example.com"
+      tls:
+        enable: false
+        secretName: ""
+    resources: {}
+    service:
+      enable: true
+      type: "ClusterIP"
+      externalTrafficPolicy: "Cluster"
+      # if service.type LoadBalancer
+      loadBalancerIP: ""
+    serviceAccount:
+      name: "coder"
+    certs:
+      secrets: []
+    volumes: []
+    affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                  - key: "app.kubernetes.io/instance"
+                    operator: "In"
+                    values:
+                      - "coder"
+              topologyKey: "kubernetes.io/hostname"
+            weight: 1
+    #nameOverride: "coder"
+    nodeSelector: {}
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      seccompProfile:
+        type: "RuntimeDefault"
+      allowPrivilegeEscalation: false
+
+postgresql:
+  architecture: standalone
+  auth:
+    username: "coder"
+    password: "P@ssword1"
+    database: "coder"
+    postgresPassword: "P@ssword1"
+  image:
+    registry: "docker.io"
+    repository: "bitnami/postgresql"
+    #tag: 16.3.0-debian-12-r22
+    pullPolicy: "IfNotPresent"
+    pullSecrets: []
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  primary:
+    affinity: {}
+    nodeSelector: {}
+    networkPolicy:
+      enabled: true
+      allowExternal: true
+      allowExternalEgress: true
+    persistence:
+      enabled: true
+      accessModes:
+        - "ReadWriteOnce"
+      existingClaim: ""
+      storageClass: ""
+      size: "10Gi"
+      #volumeName: "data"
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: "Retain"
+      whenDeleted: "Delete"
+    resources: {}
+    service:
+      type: "ClusterIP"
+      ports:
+        postgresql: 5432
+    updateStrategy:
+      type: "RollingUpdate"
+  nameOverride: "coder-postgresql"
+  fullnameOverride: ""
