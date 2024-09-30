@@ -1,38 +1,55 @@
-## Generic
+## General
 
-Based on: https://github.com/cert-manager/cert-manager.git
-Doc: https://cert-manager.io/docs/
-Source: https://github.com/SourceMation/charts.git
+### Are you looking for more information?
+
+1. Based on: https://github.com/cert-manager/cert-manager.git
+2. Documentation: https://cert-manager.io/docs/
+3. Chart Source: https://github.com/SourceMation/charts.git
 
 
 ## Before Installation
 
 1. Install following charts
 
+> **Note:**
+> no action required
+
+OR
+
 ```bash 
 
 helm upgrade install ...
 
 ```
-OR 
-
-no action required
 
 ## After Installation
 
-no action required
+> **Note:**
+> no action required
 
 ## Before Upgrade
 
-no action required
+> **Note:**
+> no action required
 
 ## After Upgrade
 
-no action required
+> **Note:**
+> no action required
+
+
+## Tips and Tricks
+
+> **Note:**
+> no tips and tricks
 
 
 ## Known Issues
 
+> **Note:**
+> Notify us: https://github.com/SourceMation/charts/issues
+
+OR
 
 #### Error: Unable to continue with install: CustomResourceDefinition "*.cert-manager.io" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "": current value is ""
 
@@ -40,9 +57,11 @@ Reason: cert-manager is installed in another namespace
 
 Soloution:
 
-1. Do not deploy this operator
+1. Skip the operator's depthyment
 
-2. If do not have cert-manager, just clean resources
+OR
+
+2. If do not have cert-manager installed, just clean resources
 
 ```bash 
 kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
