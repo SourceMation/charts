@@ -1,0 +1,17 @@
+questionsSpec:
+  kibanaApp:
+    ingress:
+      host: 
+      - url: kibana.example.com
+    service:
+      annotations:
+        kube-vip.io/loadbalancerIPs: 172.0.0.1
+
+  reference:
+    subquectionHostname:
+    - myHost: myservice.namespace.svc
+    mapString:
+      default: values
+    yaml: |
+      - defaultone: value
+        defaulttwo: value
