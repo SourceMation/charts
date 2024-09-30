@@ -2,7 +2,7 @@
 global:
   argocdApp:
     enabled: true
-  tektonoperatorApp:
+  tektonApp:
     enabled: false
   shipwrightcliApp:
     enabled: false
@@ -17,6 +17,52 @@ global:
   coderApp:
     enabled: true
 
+
+tekton:
+# missing:
+# - overrideNamespace
+# - ingress (hosts,enabled)
+# - serviceType
+# - strategyType
+# - pvc
+  nameOverride: ""
+  openshift:
+    enabled: false
+  installCRDs: true
+  operator:
+    image:
+      tag: ""
+      pullPolicy: IfNotPresent
+    autoInstallComponents: true
+    defaultTargetNamespace: ""
+  pruner:
+    image:
+      tag: "95c3ec1f6f442b4d14070e0c421e16eca919754a78c2df11e30be975b971ebe5"
+  webhook:
+    hostNetwork: false
+    dnsPolicy: ""
+    httpsWebhookPort: 8443
+    image:
+      tag: ""
+      pullPolicy: IfNotPresent
+  webhookProxy:
+    image:
+      tag: ""
+  service:
+    createServiceMonitor: true
+    metricsDomain: tekton.dev/operator
+  ingress:
+    enabled: true
+    host: "tekton-operator.apps.example.com"
+  affinity: {}
+  imagePullSecrets: []
+  securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
 sonarqube:
 # missing:

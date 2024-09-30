@@ -37,11 +37,6 @@ dependencies:
   repository: https://argoproj.github.io/argo-helm
   version: 7.5.2
 
-#- condition: global.tektonoperatorApp.enabled
-#  name: tektonoperator
-#  repository: https://SonarSource.github.io/helm-chart-sonarqube
-#  version: 10.6.1+3163
-
 #- condition: global.shipwrightcliApp.enabled
 #  name: shipwrightcli
 #  repository: https://SonarSource.github.io/helm-chart-sonarqube
