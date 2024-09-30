@@ -9,12 +9,12 @@
 
 ## Before Installation
 
-1. Install following charts
 
 > **Note:**
 > no action required
 
 OR
+1. Install following charts
 
 ```bash 
 
@@ -49,7 +49,7 @@ helm upgrade install ...
 > **Note:**
 > Notify us: https://github.com/SourceMation/charts/issues
 
-OR
+  OR
 
 #### Error: Unable to continue with install: CustomResourceDefinition "*.cert-manager.io" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "": current value is ""
 
@@ -57,11 +57,7 @@ Reason: cert-manager is installed in another namespace
 
 Soloution:
 
-1. Skip the operator's depthyment
-
-OR
-
-2. If do not have cert-manager installed, just clean resources
+1. Skip the operator's depthyment or if do not have cert-manager installed, just clean resources
 
 ```bash 
 kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
