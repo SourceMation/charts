@@ -1,10 +1,6 @@
-## Coder
+## Overview
 
-
-This chart is based on the following upstream charts:
-- **Coder** as development environment
-
-For more information on how to use the feature, refer to our [docs](https://github.com/sourcemation/charts).
+Coder enables organizations to set up development environments in their public or private cloud infrastructure.
 
 
 ## Prerequisites
