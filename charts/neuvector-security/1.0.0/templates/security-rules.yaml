@@ -1,0 +1,681 @@
+{{- /*
+  {{- if and .enabled .component.appNameTools }} 
+---
+apiVersion: neuvector.com/v1
+    {{- if eq .scope "cluster" }}
+kind: NvClusterSecurityRule
+metadata:
+  name: cluster.{{ include "common.names.shortname" $ }}-ppr-app-name-tools.{{ include "common.names.namespace" $ }}
+  namespace: ''
+    {{ else }}
+kind: NvSecurityRule
+metadata:
+  name: nv.{{ include "common.names.shortname" $ }}-ppr-app-name-tools.{{ include "common.names.namespace" $ }}
+  namespace: {{ include "common.names.namespace" $ }}
+    {{- end }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+spec:
+  dlp:
+    settings: []
+    status: true
+  egress: []
+  file: []
+  ingress: []
+  process:
+  - action: deny
+    allow_update: false
+    name: 
+    path: '*'
+  process_profile:
+    baseline: zero-drift
+  target:
+    policymode: N/A
+    selector:
+      comment: ""
+      {{- if not $.Values.securityRules.selector }}
+      criteria: 
+        {{ $.Values.questionsSpec.securityRules.selector | toYaml | replace "|-" "" | replace "|" "" | nindent 6 }}
+      {{ else }}
+      criteria: 
+        {{- with .selector }}
+          {{-  toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
+      name: cluster.{{ include "common.names.shortname" $ }}-ppr-app-name-tools.{{ include "common.names.namespace" $ }}
+      original_name: ""
+    {{ else }}
+  target:
+    policymode: {{ default "Monitor" .policyMode }}
+    selector:
+      comment: ""
+      criteria:
+      - key: domain
+        op: =
+        value: {{ include "common.names.namespace" $ }}
+      name: nv.{{ include "common.names.shortname" $ }}-ppr-app-name-tools.{{ include "common.names.namespace" $ }}
+      original_name: ""
+    {{- end }}
+  waf:
+    settings: []
+    status: true
+  {{- end }}
+
+#  {{- if and .enabled .component.postExplorationTools }} 
+#---
+#apiVersion: neuvector.com/v1
+#    {{- if eq .scope "cluster" }}
+#kind: NvClusterSecurityRule
+#metadata:
+#  name: cluster.{{ include "common.names.shortname" $ }}-ppr-post-exploration-tools.{{ include "common.names.namespace" $ }}
+#  namespace: ''
+#    {{ else }}
+#kind: NvSecurityRule
+#metadata:
+#  name: nv.{{ include "common.names.shortname" $ }}-ppr-post-exploration-tools.{{ include "common.names.namespace" $ }}
+#  namespace: {{ include "common.names.namespace" $ }}
+#    {{- end }}
+#  labels:
+#    {{- include "common.labels.labels" $ | nindent 4 }}
+#spec:
+#  dlp:
+#    settings: []
+#    status: true
+#  egress: []
+#  file: []
+#  ingress: []
+#  process:
+#  - action: deny
+#    allow_update: false
+#    name: dns2tcp
+#    path: '*'
+#  process_profile:
+#    baseline: zero-drift
+#  target:
+#    policymode: N/A
+#    selector:
+#      comment: ""
+#      {{- if not $.Values.securityRules.selector }}
+#      criteria: 
+#        {{ $.Values.questionsSpec.securityRules.selector | toYaml | replace "|-" "" | replace "|" "" | nindent 6 }}
+#      {{ else }}
+#      criteria: 
+#        {{- with .selector }}
+#          {{-  toYaml . | nindent 8 }}
+#        {{- end }}
+#      {{- end }}
+#      name: cluster.{{ include "common.names.shortname" $ }}-ppr-post-exploration-tools.{{ include "common.names.namespace" $ }}
+#      original_name: ""
+#    {{ else }}
+#  target:
+#    policymode: {{ default "Monitor" .policyMode }}
+#    selector:
+#      comment: ""
+#      criteria:
+#      - key: domain
+#        op: =
+#        value: {{ include "common.names.namespace" $ }}
+#      name: nv.{{ include "common.names.shortname" $ }}-ppr-post-exploration-tools.{{ include "common.names.namespace" $ }}
+#      original_name: ""
+#    {{- end }}
+#  waf:
+#    settings: []
+#    status: true
+#  {{- end }}
+#
+#
+#  {{- if and .enabled .component.protectTools }} 
+#---
+#apiVersion: neuvector.com/v1
+#    {{- if eq .scope "cluster" }}
+#kind: NvClusterSecurityRule
+#metadata:
+#  name: cluster.{{ include "common.names.shortname" $ }}-ppr-protect-tools.{{ include "common.names.namespace" $ }}
+#  namespace: ''
+#    {{ else }}
+#kind: NvSecurityRule
+#metadata:
+#  name: nv.{{ include "common.names.shortname" $ }}-ppr-protect-tools.{{ include "common.names.namespace" $ }}
+#  namespace: {{ include "common.names.namespace" $ }}
+#    {{- end }}
+#  labels:
+#    {{- include "common.labels.labels" $ | nindent 4 }}
+#spec:
+#  dlp:
+#    settings: []
+#    status: true
+#  egress: []
+#  file: []
+#  ingress: []
+#  process:
+#  - action: deny
+#    allow_update: false
+#    name: clamav
+#    path: '*'
+#  process_profile:
+#    baseline: zero-drift
+#  target:
+#    policymode: N/A
+#    selector:
+#      comment: ""
+#      {{- if not $.Values.securityRules.selector }}
+#      criteria: 
+#        {{ $.Values.questionsSpec.securityRules.selector | toYaml | replace "|-" "" | replace "|" "" | nindent 6 }}
+#      {{ else }}
+#      criteria: 
+#        {{- with .selector }}
+#          {{-  toYaml . | nindent 8 }}
+#        {{- end }}
+#      {{- end }}
+#      name: cluster.{{ include "common.names.shortname" $ }}-ppr-protect-tools.{{ include "common.names.namespace" $ }}
+#      original_name: ""
+#    {{ else }}
+#  target:
+#    policymode: {{ default "Monitor" .policyMode }}
+#    selector:
+#      comment: ""
+#      criteria:
+#      - key: domain
+#        op: =
+#        value: {{ include "common.names.namespace" $ }}
+#      name: nv.{{ include "common.names.shortname" $ }}-ppr-protect-tools.{{ include "common.names.namespace" $ }}
+#      original_name: ""
+#    {{- end }}
+#  waf:
+#    settings: []
+#    status: true
+#  {{- end }}
+#
+#  {{- if and .enabled .component.recoverTools }} 
+#---
+#apiVersion: neuvector.com/v1
+#    {{- if eq .scope "cluster" }}
+#kind: NvClusterSecurityRule
+#metadata:
+#  name: cluster.{{ include "common.names.shortname" $ }}-ppr-recover-tools.{{ include "common.names.namespace" $ }}
+#  namespace: ''
+#    {{ else }}
+#kind: NvSecurityRule
+#metadata:
+#  name: nv.{{ include "common.names.shortname" $ }}-ppr-recover-tools.{{ include "common.names.namespace" $ }}
+#  namespace: {{ include "common.names.namespace" $ }}
+#    {{- end }}
+#  labels:
+#    {{- include "common.labels.labels" $ | nindent 4 }}
+#spec:
+#  dlp:
+#    settings: []
+#    status: true
+#  egress: []
+#  file: []
+#  ingress: []
+#  process:
+#  - action: deny
+#    allow_update: false
+#    name: ddrescue
+#    path: '*'
+#  process_profile:
+#    baseline: zero-drift
+#  target:
+#    policymode: N/A
+#    selector:
+#      comment: ""
+#      {{- if not $.Values.securityRules.selector }}
+#      criteria: 
+#        {{ $.Values.questionsSpec.securityRules.selector | toYaml | replace "|-" "" | replace "|" "" | nindent 6 }}
+#      {{ else }}
+#      criteria: 
+#        {{- with .selector }}
+#          {{-  toYaml . | nindent 8 }}
+#        {{- end }}
+#      {{- end }}
+#      name: cluster.{{ include "common.names.shortname" $ }}-ppr-recover-tools.{{ include "common.names.namespace" $ }}
+#      original_name: ""
+#    {{ else }}
+#  target:
+#    policymode: {{ default "Monitor" .policyMode }}
+#    selector:
+#      comment: ""
+#      criteria:
+#      - key: domain
+#        op: =
+#        value: {{ include "common.names.namespace" $ }}
+#      name: nv.{{ include "common.names.shortname" $ }}-ppr-recover-tools.{{ include "common.names.namespace" $ }}
+#      original_name: ""
+#    {{- end }}
+#  waf:
+#    settings: []
+#    status: true
+#  {{- end }}
+#
+#
+#  {{- if and .enabled .component.appNameTools }} 
+#---
+#apiVersion: neuvector.com/v1
+#    {{- if eq .scope "cluster" }}
+#kind: NvClusterSecurityRule
+#metadata:
+#  name: cluster.{{ include "common.names.shortname" $ }}-ppr-reporting-tools.{{ include "common.names.namespace" $ }}
+#  namespace: ''
+#    {{ else }}
+#kind: NvSecurityRule
+#metadata:
+#  name: nv.{{ include "common.names.shortname" $ }}-ppr-reporting-tools.{{ include "common.names.namespace" $ }}
+#  namespace: {{ include "common.names.namespace" $ }}
+#    {{- end }}
+#  labels:
+#    {{- include "common.labels.labels" $ | nindent 4 }}
+#spec:
+#  dlp:
+#    settings: []
+#    status: true
+#  egress: []
+#  file: []
+#  ingress: []
+#  process:
+#  - action: deny
+#    allow_update: false
+#    name: cutycapt
+#    path: '*'
+#  process_profile:
+#    baseline: zero-drift
+#  target:
+#    policymode: N/A
+#    selector:
+#      comment: ""
+#      {{- if not $.Values.securityRules.selector }}
+#      criteria: 
+#        {{ $.Values.questionsSpec.securityRules.selector | toYaml | replace "|-" "" | replace "|" "" | nindent 6 }}
+#      {{ else }}
+#      criteria: 
+#        {{- with .selector }}
+#          {{-  toYaml . | nindent 8 }}
+#        {{- end }}
+#      {{- end }}
+#      name: cluster.{{ include "common.names.shortname" $ }}-ppr-reporting-tools.{{ include "common.names.namespace" $ }}
+#      original_name: ""
+#    {{ else }}
+#  target:
+#    policymode: {{ default "Monitor" .policyMode }}
+#    selector:
+#      comment: ""
+#      criteria:
+#      - key: domain
+#        op: =
+#        value: {{ include "common.names.namespace" $ }}
+#      name: nv.{{ include "common.names.shortname" $ }}-ppr-reporting-tools.{{ include "common.names.namespace" $ }}
+#      original_name: ""
+#    {{- end }}
+#  waf:
+#    settings: []
+#    status: true
+#  {{- end }}
+#
+#
+#
+#
+#
+#
+#  {{- if and .enabled .component.topTenTools }} 
+#---
+#apiVersion: neuvector.com/v1
+#    {{- if eq .scope "cluster" }}
+#kind: NvClusterSecurityRule
+#metadata:
+#  name: cluster.{{ include "common.names.shortname" $ }}-ppr-top-ten-tools.{{ include "common.names.namespace" $ }}
+#  namespace: ''
+#    {{ else }}
+#kind: NvSecurityRule
+#metadata:
+#  name: nv.{{ include "common.names.shortname" $ }}-ppr-top-ten-tools.{{ include "common.names.namespace" $ }}
+#  namespace: {{ include "common.names.namespace" $ }}
+#    {{- end }}
+#  labels:
+#    {{- include "common.labels.labels" $ | nindent 4 }}
+#spec:
+#  dlp:
+#    settings: []
+#    status: true
+#  egress: []
+#  file: []
+#  ingress: []
+#  process:
+#  - action: deny
+#    allow_update: false
+#    name: aircrack-ng
+#    path: '*'
+#  - action: deny
+#    allow_update: false
+#    name: john
+#    path: '*'
+#  - action: deny
+#    allow_update: false
+#    name: nmap
+#    path: '*'
+#  - action: deny
+#    allow_update: false
+#    name: burpsuite
+#    path: '*'
+#  - action: deny
+#    allow_update: false
+#    name: wireshark
+#    path: '*'
+#  - action: deny
+#    allow_update: false
+#    name: metasploit-framework
+#    path: '*'
+#  - action: deny
+#    allow_update: false
+#    name: responder
+#    path: '*'
+#  - action: deny
+#    allow_update: false
+#    name: hydra
+#    path: '*'
+#  - action: deny
+#    allow_update: false
+#    name: netexec
+#    path: '*'
+#  - action: deny
+#    allow_update: false
+#    name: sqlmap
+#    path: '*'
+#    {{- if eq .scope "cluster" }}
+#  process_profile:
+#    baseline: zero-drift
+#  target:
+#    policymode: N/A
+#    selector:
+#      comment: ""
+#      {{- if not $.Values.securityRules.selector }}
+#      criteria: 
+#        {{ $.Values.questionsSpec.securityRules.selector | toYaml | replace "|-" "" | replace "|" "" | nindent 6 }}
+#      {{ else }}
+#      criteria: 
+#        {{- with .selector }}
+#          {{-  toYaml . | nindent 8 }}
+#        {{- end }}
+#      {{- end }}
+#      name: cluster.{{ include "common.names.shortname" $ }}-ppr-top-ten-tools.{{ include "common.names.namespace" $ }}
+#      original_name: ""
+#    {{ else }}
+#  target:
+#    policymode: {{ default "Monitor" .policyMode }}
+#    selector:
+#      comment: ""
+#      criteria:
+#      - key: domain
+#        op: =
+#        value: {{ include "common.names.namespace" $ }}
+#      name: nv.{{ include "common.names.shortname" $ }}-ppr-top-ten-tools.{{ include "common.names.namespace" $ }}
+#      original_name: ""
+#    {{- end }}
+#  waf:
+#    settings: []
+#    status: true
+#  {{- end }}
+*/}}
+
+
+
+
+{{- with $.Values.securityRules }}
+
+
+
+  {{- if and .enabled .component.informationGatheringTools }} 
+---
+apiVersion: neuvector.com/v1
+    {{- if eq .scope "cluster" }}
+kind: NvClusterSecurityRule
+metadata:
+  name: cluster.{{ include "common.names.shortname" $ }}-ppr-information-gathering-tools
+  namespace: ''
+    {{ else }}
+kind: NvSecurityRule
+metadata:
+  name: nv.{{ include "common.names.shortname" $ }}-ppr-information-gathering-tools.{{ include "common.names.namespace" $ }}
+  namespace: {{ include "common.names.namespace" $ }}
+    {{- end }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+spec:
+  dlp:
+    settings: []
+    status: true
+  egress: []
+  file: []
+  ingress: []
+  process:
+  - action: deny
+    allow_update: false
+    name: 0trace
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: arping
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: braa
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: dmitry
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: dnsenum
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: dnsmap
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: dnsrecon
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: dnstracer
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: dnswalk
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: enum4linux
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: fierce
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: firewalk
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: fping
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: fragrouter
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: ftester
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: hping3
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: ike-scan
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: intrace
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: iputils-arping
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: irpas
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: lbd
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: legion
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: maltego
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: masscan
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: metagoofil
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: nbtscan
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: ncat
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: netdiscover
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: netmask
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: nmap
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: onesixtyone
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: p0f
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: qsslcaudit
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: recon-ng
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: smbmap
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: smtp-user-enum
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: snmpcheck
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: ssldump
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: sslh
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: sslscan
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: sslyze
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: swaks
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: thc-ipv6
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: theharvester
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: tlssled
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: twofi
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: unicornscan
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: urlcrazy
+    path: '*'
+  - action: deny
+    allow_update: false
+    name: wafw00f
+    path: '*'
+    {{- if eq .scope "cluster" }}
+  process_profile:
+    baseline: zero-drift
+  target:
+    policymode: N/A
+    selector:
+      comment: ""
+      {{- if not $.Values.securityRules.selector }}
+      criteria: 
+        {{ $.Values.questionsSpec.securityRules.selector | toYaml | replace "|-" "" | replace "|" "" | nindent 6 }}
+      {{ else }}
+      criteria: 
+        {{- with .selector }}
+          {{-  toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
+      name: cluster.{{ include "common.names.shortname" $ }}-ppr-information-gathering-tools
+      original_name: ""
+    {{ else }}
+  target:
+    policymode: {{ default "Monitor" .policyMode }}
+    selector:
+      comment: ""
+      criteria:
+      - key: domain
+        op: =
+        value: {{ include "common.names.namespace" $ }}
+      name: nv.{{ include "common.names.shortname" $ }}-ppr-information-gathering-tools.{{ include "common.names.namespace" $ }}
+      original_name: ""
+    {{- end }}
+  waf:
+    settings: []
+    status: true
+  {{- end }}
+
+{{- end }}
