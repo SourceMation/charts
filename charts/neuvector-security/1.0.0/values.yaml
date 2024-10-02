@@ -1,0 +1,33 @@
+securityRules:
+  enabled: true
+  scope: cluster
+  policyMode: "Protect"
+  selector: []
+#  - key: container
+#    op: '='
+#    value: '*'
+  component:
+    informationGatheringTools: true
+    postExplorationTools: false
+    protectTools: false
+    recoverTools: false
+    reportingTools: false
+    respondTools: false
+    reverseEngineeringTools: false
+    rfidTools: false
+    sdrTools: false
+    sniffingSpoofingTools: false
+    socialEngineeringTools: false
+    topTenTools: false
+    voipTools: false
+    vulnerabilityTools: false
+    webTools: false
+    windowsResourcesTools: false
+    wirelessTools: false
+
+questionsSpec:
+  securityRules:
+    selector: |-
+      - key: namespace
+        op: '='
+        value: '*'

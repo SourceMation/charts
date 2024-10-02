@@ -1,0 +1,175 @@
+categories:
+- security
+#namespace: example-namespace
+questions:
+
+
+# Components
+- variable: securityRules.enabled
+  default: "true"
+  label: "Create Group with Process Profile Rules"
+  description: "Create Group in Policy Section"
+  tooltip: "Create Group in Policy Section"
+  type: boolean
+  group: "Components"
+  show_subquestions_if: "true"
+  subquestions:
+
+# Group Policies
+
+- variable: securityRules.scope
+  type: radio
+  tooltip: "No help available."
+  label: Scope of the Group
+  description: 'Cluster - deploy groups for whole kubernetes cluster, Namespace - deploy rules in namespace where chart is installed'
+  default: "cluster"
+  group: "Groups"
+  options:
+    cluster: Cluster
+    namespace: Namespace
+  show_if: "securityRules.enabled=true"
+  show_subquestions_if: "true" 
+
+- variable: securityRules.switchMode
+  type: radio
+  tooltip: "No help available."
+  label: Switch Mode for Group
+  description: 'Select mode for all following groups'
+  default: "Protect"
+  group: "Groups"
+  options:
+    Protect: Protect
+    Monitor: Monitor
+    Discover: Discover
+  show_if: "securityRules.enabled=true&&securityRules.scope=namespace"
+  show_subquestions_if: "true" 
+
+- variable: questionsSpec.securityRules.selector
+  type: yaml
+  tooltip: 'Sample: namespace=*, container=myServer, namespace!=default, node=ubuntu*, image=*nginx*, address=216.58.194.0/24, address=0.0.0.0/0, address=0.0.0.0-255.255.255.255, address=*.neuvector.com, container~k8s_zoo[12] or key=value for label ("=" exactly match, "!" not, "? and *" wildcards, "~" regex)'
+  label: Click on below black box to show custom Criteria
+#  default: defaultOneLine
+  group: "Groups"
+  options: []
+  show_if: "securityRules.enabled=true&&securityRules.scope=cluster"
+  show_subquestions_if: "true" 
+
+- variable: securityRules.component.informationGatheringTools
+  default: "true"
+  group: "Groups"
+  label: "Create Information Gathering Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+  description: "0trace, arping, iputils-arping, braa, dmitry, dnsenum, dnsmap, dnsrecon, dnstracer, dnswalk, enum4linux, fierce, firewalk, fping, fragrouter, ftester, hping3, ike-scan, intrace, irpas, lbd, legion, maltego, masscan, metagoofil, nbtscan, ncat, netdiscover, netmask, nmap, onesixtyone, p0f, qsslcaudit, recon-ng, smbmap, smtp-user-enum, snmpcheck, ssldump, sslh, sslscan, sslyze, swaks, thc-ipv6, theharvester, tlssled, twofi, unicornscan, urlcrazy, wafw00f"
+
+- variable: securityRules.component.postExplorationTools
+  default: "false"
+  group: "Groups"
+  label: "Create Post Exploration Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.protectTools
+  default: "false"
+  group: "Groups"
+  label: "Create Protect Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.recoverTools
+  default: "false"
+  group: "Groups"
+  label: "Create Recover Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.reportingTools
+  default: "false"
+  group: "Groups"
+  label: "Create Reporting Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.respondTools
+  default: "false"
+  group: "Groups"
+  label: "Create Respond Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+- variable: securityRules.component.reverseEngineeringTools
+  default: "false"
+  group: "Groups"
+  label: "Create Reverse Engineering Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.rfidTools
+  default: "false"
+  group: "Groups"
+  label: "Create Rfid Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.sdrTools
+  default: "false"
+  group: "Groups"
+  label: "Create SDR Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+
+- variable: securityRules.component.sniffingSpoofingTools
+  default: "false"
+  group: "Groups"
+  label: "Create Sniffing Spoofing Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.socialEngineeringTools
+  default: "false"
+  group: "Groups"
+  label: "Create Social Engineering Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.topTenTools
+  default: "false"
+  group: "Groups"
+  label: "Create Top Ten Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.voipTools
+  default: "false"
+  group: "Groups"
+  label: "Create VoIP Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.vulnerabilityTools
+  default: "false"
+  group: "Groups"
+  label: "Create Vulnerability Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.webTools
+  default: "false"
+  group: "Groups"
+  label: "Create Web Tools Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.windowsResourcesTools
+  default: "false"
+  group: "Groups"
+  label: "Create Windows Resources Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
+
+- variable: securityRules.component.wirelessTools
+  default: "false"
+  group: "Groups"
+  label: "Create Wireless Group"
+  type: boolean
+  show_if: "securityRules.enabled=true"
