@@ -1,0 +1,80 @@
+categories:
+- cicd
+namespace: jenkins-namespace
+questions:
+
+- variable: jenkins.params.ingress.enabled
+  default: true
+  label: "Deploy Jenkins"
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: jenkins.controller.admin.username
+    label: Username
+    description: "Username"
+    group: "Jenkins Settings"
+    type: string
+    required: true
+  - variable: jenkins.controller.admin.password
+    label: Password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Jenkins Settings"
+    type: password
+    required: true
+  - variable: jenkins.params.ingress.enabled
+    label: "Enable Ingress"
+    description: "Enable Ingress"
+    group: "Jenkins Settings"
+    type: boolean
+    required: false
+    show_subquestion_if: true
+    subquestions:
+    - variable: jenkins.params.ingress.hostName
+      label: "hostName"
+      description: "hostName"
+      group: "Jenkins Settings"
+      type: hostname
+      required: true
+  - variable: jenkins.controller.customResources
+    default: false
+    label: "Modify resource consumption"
+    type: boolean
+    group: "Jenkins Settings"
+    show_subquestion_if: true
+    subquestions:
+    - variable: jenkins.controller.resources.requests.memory
+      label: "Memory request for Jenkins instance"
+      description: "Memory request for Jenkins instance"
+      group: "Jenkins Settings"
+      type: string
+      required: true
+    - variable: jenkins.controller.resources.requests.cpu
+      label: "Milicore request for Jenkins instance"
+      description: "Milicore request for Jenkins instance"
+      group: "Jenkins Settings"
+      type: string
+      required: true
+    - variable: jenkins.controller.resources.limits.memory
+      label: "Memory limit for Jenkins instance"
+      description: "Memory limit for Jenkins instance"
+      group: "Jenkins Settings"
+      type: string
+      required: true
+    - variable: jenkins.controller.resources.limits.cpu
+      label: "Milicore limit for Jenkins instance"
+      description: "Milicore limit for Jenkins instance"
+      group: "Jenkins Settings"
+      type: string
+      required: true
+    - variable: jenkins.controller.persistence.storageClass
+      label: Jenkins persistent volume Storage Class
+      group: "Jenkins settings"
+      type: storageclass
+      required: false
+    - variable: jenkins.controller.persistence.size
+      label: Jenkins storage size
+      description: "Jenkins storage size"
+      group: "Jenkins Settings"
+      type: string
+      required: true

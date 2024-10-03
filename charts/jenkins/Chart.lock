@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: jenkins
+  repository: https://charts.jenkins.io
+  version: 5.7.2
+digest: sha256:0862e53314543b62d8124cb23f01e95b310722852a297dcd8cff00f176b59c22
+generated: "2024-10-03T07:44:32.551666498+02:00"

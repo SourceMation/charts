@@ -1,0 +1,28 @@
+apiVersion: v2
+appVersion: 1.0.0
+version: 1.0.0
+name: jenkins
+description: "Jenkins is an open-source automation server that enables developers to build, test, and deploy their software efficiently. It supports continuous integration (CI) and continuous delivery (CD) by automating parts of the software development process, including code integration, testing, and deployment to production environments."
+type: application
+annotations:
+  catalog.cattle.io/display-name: Jenkins
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
+  catalog.cattle.io/release-name: jenkins
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+keywords:
+- cicd
+sources:
+- https://github.com/SourceMation/charts.git
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.x
+- name: jenkins
+  repository: https://charts.jenkins.io
+  version: 5.7.2
+kubeVersion: '>=1.26.0-0 <1.31.0-0'
+maintainers:
+- email: jaroslaw.mazurkiewicz@linuxpolska.com
+  name: Jarosław Mazurkiewicz
