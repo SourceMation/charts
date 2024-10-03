@@ -9,8 +9,7 @@
 
 ## Before Installation
 
-> **Note:**
-> no action required
+The installation of cert-manager is required according to the instructions provided in the README file of the latest version: https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 
 ## After Installation
 
@@ -45,8 +44,9 @@
 
 export STACK_NAME=coder
 export CHART_VERSION=1.0.0
-export K8S_NAMESPACE=lp-app
-export CODER_URL=coder.apps.example.com
+export CHART_NAMESPACE=coder-namespace
+export CHART_URL=coder.apps.example.com
+export CERT_SECRET_NAME=default-secret-name
 
 kubectl create ns ${CHART_NAMESPACE}
 
@@ -58,8 +58,9 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 
 ``` bash
 
-helm -n ${K8S_NAMESPACE} upgrade --install ${STACK_NAME} \
---set "coder.coder.ingress.host=${CODER_URL}" \
+helm -n ${CHART_NAMESPACE} upgrade --install ${STACK_NAME} \
+--set "coder.coder.ingress.host=${CHART_URL}" \
+--set "coder.coder.ingress.tls.secretName=${CERT_SECRET_NAME}"\
 --repo https://sourcemation.github.io/charts/ ${STACK_NAME} \
 --version ${CHART_VERSION}
 

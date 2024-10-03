@@ -19,8 +19,8 @@ coder:
       enable: true
       host: "coder.apps.example.com"
       tls:
-        enable: false
-        secretName: ""
+        enable: true
+        secretName: "default-secret-name"
     resources: {}
     service:
       enable: true
