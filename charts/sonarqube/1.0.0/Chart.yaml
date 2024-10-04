@@ -1,5 +1,5 @@
 apiVersion: v2
-name: cicd-classic-stack-app
+name: Sonarqube
 description: A Helm chart for Kubernetes
 type: application
 version: 1.0.0
@@ -7,16 +7,15 @@ version: 1.0.0
 appVersion: "1.0.0"
 
 annotations:
-  catalog.cattle.io/display-name: "CI/CD Classic Stack"
+  catalog.cattle.io/display-name: "Sonarqube"
   catalog.cattle.io/os: linux
-  catalog.cattle.io/release-name: cicd-classic
+  catalog.cattle.io/release-name: sonarqube
 
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 
 keywords:
-- cicd-classic-stack-app
-- cicd
+- sonarqube
 
 kubeVersion: '>=1.19.0-0'
 
@@ -32,7 +31,6 @@ dependencies:
   repository: https://sourcemation.github.io/charts/
   version: 0.1.x
 
-- condition: global.sonarqubeApp.enabled
-  name: sonarqube
+- name: sonarqube
   repository: https://SonarSource.github.io/helm-chart-sonarqube
   version: 10.6.1+3163

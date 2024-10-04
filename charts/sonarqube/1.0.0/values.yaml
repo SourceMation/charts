@@ -1,9 +1,4 @@
 
-global:
-  sonarqubeApp:
-    enabled: true
-
-
 sonarqube:
 # missing:
 # - nameOverride, namespaceOverride
