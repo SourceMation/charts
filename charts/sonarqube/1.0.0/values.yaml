@@ -1,0 +1,100 @@
+
+global:
+  sonarqubeApp:
+    enabled: true
+
+
+sonarqube:
+# missing:
+# - nameOverride, namespaceOverride
+  affinity: {}
+  nodeSelector: {}
+  seccompProfile: {}
+  deploymentStrategy: {}
+  securityContext:
+    fsGroup: 0
+  account:
+    adminPassword: "P@ssword1"
+  image:
+    registry: "docker.io"
+    repository: "sonarqube"
+    #tag: 10.6.0-{{ .Values.edition }}
+    pullPolicy: "IfNotPresent"
+    #pullSecrets: []
+  ingress:
+    enabled: true
+    hosts:
+      - name: "sonarqube.apps.example.com"
+  networkPolicy:
+    enabled: false
+  persistence:
+    enabled: true
+    size: "5Gi"
+    storageClass: ""
+    accessMode: "ReadWriteOnce"
+  plugins:
+    # Define the list of plugins to install. Example:
+    # install:
+    #   - https://example.com/plugin/ver1.0/plugin.jar"
+    install: []
+  prometheusMonitoring:
+    podMonitor:
+      enabled: true
+  resources:
+    limits:
+      cpu: "800m"
+      memory: "6144Mi"
+      ephemeral-storage: "50Gi"
+    requests:
+      cpu: "400m"
+      memory: "2048Mi"
+      ephemeral-storage: "512Mi"
+  service:
+    type: "ClusterIP"
+    externalPort: 9000
+    internalPort: 9000
+  postgresql:
+    enabled: true
+    primary:
+      affinity: {}
+      nodeSelector: {}
+    image:
+      registry: "docker.io"
+      repository: "bitnami/postgresql"
+      #tag: 11.14.0-debian-10-r22
+      pullPolicy: "IfNotPresent"
+      #pullSecrets: 
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    nameOverride: ""
+    networkPolicy:
+      enabled: false
+    postgresqlUsername: "sonar"
+    postgresqlPassword: "P@ssword1"
+    postgresqlDatabase: "sonar"
+    persistence:
+      enabled: true
+      existingClaim: "{{ .Release.Name }}-data-sonar-postgresql-0"
+      claimName: "data-sonar-postgresql-0"
+      size: "20Gi"
+      storageClass: ""
+      accessMode:
+      - "ReadWriteOnce"
+    resources:
+      limits:
+        cpu: "2000m"
+        memory: "2Gi"
+      requests:
+        cpu: "100m"
+        memory: "200Mi"
+    securityContext:
+      enabled: true
+      fsGroup: 1001
+    service:
+      port: 5432
+      type: "ClusterIP"
+    updateStrategy:
+      type: "RollingUpdate"
+
