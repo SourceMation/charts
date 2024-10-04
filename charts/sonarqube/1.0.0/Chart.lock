@@ -5,20 +5,5 @@ dependencies:
 - name: sonarqube
   repository: https://SonarSource.github.io/helm-chart-sonarqube
   version: 10.6.1+3163
-- name: harbor
-  repository: https://helm.goharbor.io
-  version: 1.14.2
-- name: forgejo
-  repository: oci://codeberg.org/forgejo-contrib
-  version: 7.0.3
-- name: coder
-  repository: https://helm.coder.com/v2
-  version: 2.13.2
-- name: postgresql
-  repository: https://charts.bitnami.com/bitnami
-  version: 15.5.19
-- name: jenkins
-  repository: https://charts.jenkins.io
-  version: 5.5.1
-digest: sha256:4284d12c7522e984f2b7bd3211deac8a612a6fa80a9ffcb001eab7397820a815
-generated: "2024-08-01T21:28:13.102643783+02:00"
+digest: sha256:f1118b8f4a0339c0f40b8012c93a007200cd297ce98b240c5b189266d94a87e3
+generated: "2024-10-04T08:49:39.541503165+02:00"
