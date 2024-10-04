@@ -17,16 +17,19 @@ questions:
     default: ""
     label: Coder image tag
     description: "Coder image tag"
+    group: "Components"
     type: string
   #- variable: coder.coder.image.PullSecrets
   #  label: Coder image PullSecrets
   #  description: "Coder image PullSecrets"
+  #  group: "Components"
   #  type: string
   #  required: false
   - variable: coder.coder.image.pullPolicy
     default: "IfNotPresent"
     label: Coder image pullPolicy
     description: "Coder image pullPolicy"
+    group: "Components"
     type: enum
     options:
     - "Always"
@@ -44,26 +47,31 @@ questions:
     default: "docker.io"
     label: Postgresql image registry
     description: "Postgresql image registry"
+    group: "Components"
     type: string
   - variable: postgresql.image.repository
     default: "bitnami/postgresql"
     label: Postgresql image repository
     description: "Postgresql image repository"
+    group: "Components"
     type: string
   - variable: postgresql.image.tag
     label: Postgresql image tag
     description: "Postgresql image tag"
+    group: "Components"
     type: string
     required: false
   #- variable: postgresql.image.pullSecrets
   #  label: Postgresql image PullSecrets
   #  description: "Postgresql image PullSecrets"
+  #  group: "Components"
   #  type: string
   #  required: false
   - variable: postgresql.image.pullPolicy
     default: "IfNotPresent"
     label: Postgresql image pullPolicy
     description: "Postgresql image pullPolicy"
+    group: "Components"
     type: enum
     options:
     - "Always"
@@ -94,6 +102,7 @@ questions:
   - variable: coder.coder.ingress.host
     label: URL
     description: "Configure url for coder web-ui"
+    group: "Service Discovery"
     type: hostname
     default: "coder.apps.example.com"
     min: 6
@@ -110,26 +119,32 @@ questions:
     default: "10Gi"
     label: Postgresql persistent volume size
     description: "Postgresql persistent volume size"
+    group: "Storage"
     type: string
   - variable: postgresql.primary.storageClass
     label: Postgresql persistent Storage Class
     description: "Postgresql persistent Storage Class"
+    group: "Storage"
     type: storageclass
   - variable: postgresql.primary.resources.limits.cpu
     label: Milicore limit for a Postgresql instance
     description: "1000m(milicores) = 1vCPU"
+    group: "Storage"
     type: string
   - variable: postgresql.primary.resources.requests.cpu
     label: Milicore requests for a Postgresql instance
     description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Storage"
     type: string
   - variable: postgresql.primary.resources.limits.memory
     label: Memory limit for a Postgresql instance
     description: "Memory limit for a Postgresql instance"
+    group: "Storage"
     type: string
   - variable: postgresql.primary.resources.requests.memory
     label: Memory requests for a Postgresql instance
     description: "Memory request, value must be <= memory limit"
+    group: "Storage"
     type: string
 - variable: coder.customResources
   default: false
@@ -141,21 +156,25 @@ questions:
   - variable: coder.coder.resources.limits.cpu
     label: Milicore limit for a Coder instance
     description: "1000m(milicores) = 1vCPU"
+    group: "Storage"
     type: string
     required: false
   - variable: coder.coder.resources.requests.cpu
     label: Milicore requests for a Coder instance
     description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Storage"
     type: string
     required: false
   - variable: coder.coder.resources.limits.memory
     label: Memory limit for a Coder instance
     description: "Memory limit for a Coder instance"
+    group: "Storage"
     type: string
     required: false
   - variable: coder.coder.resources.requests.memory
     label: Memory requests for a Coder instance
     description: "Memory request, value must be <= memory limit"
+    group: "Storage"
     type: string
     required: false
 
@@ -195,6 +214,7 @@ questions:
     default: "P@ssword1"
     label: Postgresql admin password
     description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
     type: password
 
 # Others
