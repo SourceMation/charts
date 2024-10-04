@@ -38,7 +38,7 @@ jenkins:
       storageClass: ""
       size: "8Gi"
     prometheus:
-      enabled: true
+      enabled: false
     resources:
       requests:
         memory: "512Mi"
@@ -55,6 +55,3 @@ jenkins:
       -Dorg.jenkinsci.plugins.casc.ConfigurationAsCode.systemConfig=/var/jenkins_home/casc_configs/jenkins-casc.yaml
     jenkinsUrl: "https://jenkins.apps.example.com"
     updateStrategy: {}
-  nameOverride: ""
-  fullnameOverride: ""
-  namespaceOverride: ""

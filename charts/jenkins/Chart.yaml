@@ -2,7 +2,7 @@ apiVersion: v2
 appVersion: 1.0.0
 version: 1.0.0
 name: jenkins
-description: "Jenkins is an open-source automation server that enables developers to build, test, and deploy their software efficiently. It supports continuous integration (CI) and continuous delivery (CD) by automating parts of the software development process, including code integration, testing, and deployment to production environments."
+description: "The open-source automation server that enables developers to build, test, and deploy their CI/CD software efficiently."
 type: application
 annotations:
   catalog.cattle.io/display-name: Jenkins
