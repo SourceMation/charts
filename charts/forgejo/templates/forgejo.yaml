@@ -1,0 +1,22 @@
+{{- if and .Values.forgejo.persistence.enabled (not .Values.forgejo.persistence.create) }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  annotations:
+  name: {{ .Values.forgejo.persistence.claimName }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+spec:
+  {{- with .Values.forgejo.persistence }}
+  accessModes:
+    {{- toYaml .accessModes | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .size }}
+    {{- if .storageClass }}
+  storageClassName: {{ .storageClass }}
+    {{- end }}
+  volumeMode: Filesystem
+  {{- end }}
+{{- end }}

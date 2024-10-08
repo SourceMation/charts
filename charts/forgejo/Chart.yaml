@@ -1,0 +1,34 @@
+apiVersion: v2
+appVersion: 1.0.0
+version: 1.0.0
+name: forgejo
+description: "Lightweight, self-hosted Git service built for collaborative software development. It is an open-source project designed as a fork of Gitea, focused on providing a stable, secure, and performance-driven platform for managing Git repositories."
+type: application
+annotations:
+  catalog.cattle.io/display-name: Forgejo
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
+  catalog.cattle.io/release-name: forgejo
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+keywords:
+- cicd
+sources:
+- https://github.com/SourceMation/charts.git
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.x
+- name: forgejo
+  repository: oci://codeberg.org/forgejo-contrib
+  version: 9.0.0
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.0.1
+kubeVersion: '>=1.26.0-0 <1.31.0-0'
+maintainers:
+- email: jaroslaw.mazurkiewicz@linuxpolska.com
+  name: Jarosław Mazurkiewicz
+- email: marek.janosz@linuxpolska.com
+  name: Marek Janosz
+  

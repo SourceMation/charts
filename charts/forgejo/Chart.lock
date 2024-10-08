@@ -1,0 +1,12 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: forgejo
+  repository: oci://codeberg.org/forgejo-contrib
+  version: 9.0.0
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 16.0.1
+digest: sha256:a8b7ed10b9016c29448c4aaf7629e7bc9db41a5e3c167c5e0328ac7f51ae68bd
+generated: "2024-10-08T14:58:23.117624911+02:00"

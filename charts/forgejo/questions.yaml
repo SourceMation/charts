@@ -1,0 +1,379 @@
+categories:
+- cicd
+namespace: forgejo-namespace
+
+questions:
+- variable: forgejo.gitea.admin.username
+  default: "gitea_admin"
+  label: Forgejo admin username
+  description: "The username 'admin' is reserved. Don't use it."
+  group: "Workloads"
+  type: string
+  required: true
+- variable: forgejo.gitea.admin.password
+  label: Forgejo admin password
+  description: "Default password is 'P@ssword1'. Change it!"
+  group: "Workloads"
+  type: password
+  required: true
+- variable: forgejo.gitea.admin.email
+  default: "gitea_admin@example.com"
+  label: Forgejo admin email
+  description: "Forgejo admin email"
+  group: "Workloads"
+  type: string
+  required: true
+- variable: forgejo.params.customImage.gitea
+  default: false
+  label: Change Forgejo image
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.image.registry
+    default: "code.forgejo.org"
+    label: Forgejo image registry
+    description: "Forgejo image registry"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.image.repository
+    default: "forgejo/forgejo"
+    label: Forgejo image repository
+    description: "Forgejo image repository"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.image.tag
+    default: ""
+    label: Forgejo image tag
+    description: "Forgejo image tag"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: forgejo.image.pullPolicy
+    default: "IfNotPresent"
+    label: Forgejo image pullPolicy
+    description: "Forgejo image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "If NotPresent"
+    - "Never"
+- variable: forgejo.params.customResources.gitea
+  default: false
+  label: Modify Forgejo resource consumption
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.resources.limits.cpu
+    label: Milicore limit for a Forgejo instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: forgejo.resources.requests.cpu
+    label: Milicore requests for a Forgejo instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: forgejo.resources.limits.memory
+    label: Memory limit for a Forgejo instance
+    description: "Memory limit for a Forgejo instance"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: forgejo.resources.requests.memory
+    label: Memory requests for a Forgejo instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+    required: false
+- variable: forgejo.strategy.type
+  default: "Recreate"
+  label: Forgejo update strategy
+  description: "Forgejo update strategy"
+  group: "Workloads"
+  type: enum
+  options:
+  - "RollingUpdate"
+  - "Recreate"
+  required: false
+- variable: forgejo.params.customImage.postgresqlHA
+  default: false
+  label: Change Postgresql image
+  description: "Change Postgresql image"
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.postgresql-ha.postgresql.image.registry
+    default: "docker.io"
+    label: Postgresql image registry
+    description: "Postgresql image registry"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.postgresql-ha.postgresql.image.repository
+    default: "bitnami/postgresql-repmgr"
+    label: Postgresql image repository
+    description: "Postgresql image repository"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.postgresql-ha.postgresql.image.tag
+    label: Postgresql image tag
+    description: "Postgresql image tag"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: forgejo.postgresql-ha.postgresql.image.pullPolicy
+    default: "IfNotPresent"
+    label: Postgresql image pullPolicy
+    description: "Postgresql image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "If NotPresent"
+    - "Never"
+- variable: forgejo.params.customPasswords.postgresqlHA
+  default: false
+  label: Change Postgresql DB configuration
+  description: "Change Postgresql DB configuration"
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.postgresql-ha.postgresql.postgresPassword
+    default: "P@ssword1"
+    label: Postgresql admin password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
+    type: password
+  - variable: forgejo.postgresql-ha.postgresql.repmgrPassword
+    default: "P@ssword1"
+    label: Postgresql repmgr password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
+    type: password
+  - variable: forgejo.postgresql-ha.pgpool.adminPassword
+    default: "P@ssword1"
+    label: Postgresql pgpool admin password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
+    type: password
+  - variable: forgejo.postgresql-ha.global.postgresql.database
+    default: "gitea"
+    label: Forgejo DB name
+    description: "Forgejo DB name"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.postgresql-ha.global.postgresql.username
+    default: "gitea"
+    label: Forgejo DB username
+    description: "Forgejo DB username"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.postgresql-ha.global.postgresql.password
+    default: "P@ssword1"
+    label: Forgejo DB password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
+    type: password
+- variable: forgejo.params.customResources.postgresqlHA
+  default: false
+  label: Modify Postgresql resource consumption
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.postgresql-ha.persistence.size
+    default: "8Gi"
+    label: Postgresql persistent volume size
+    description: "Postgresql persistent volume size"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.postgresql-ha.persistence.storageClass
+    label: Postgresql persistent Storage Class
+    description: "Postgresql persistent Storage Class"
+    group: "Workloads"
+    type: storageclass
+  - variable: forgejo.postgresql-ha.resources.limits.cpu
+    default: "500m"
+    label: Milicore limit for a Postgresql instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.postgresql-ha.resources.requests.cpu
+    default: "250m"
+    label: Milicore requests for a Postgresql instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.postgresql-ha.resources.limits.memory
+    default: "512Mi"
+    label: Memory limit for a Postgresql instance
+    description: "Memory limit for a Postgresql instance"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.postgresql-ha.resources.requests.memory
+    default: "256Mi"
+    label: Memory requests for a Postgresql instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+- variable: forgejo.postgresql-ha.postgresql.updateStrategy.type
+  default: "RollingUpdate"
+  label: Postgresql update strategy
+  description: "Postgresql update strategy"
+  group: "Workloads"
+  type: enum
+  options:
+  - "RollingUpdate"
+  - "Recreate"
+  required: false
+- variable: forgejo.params.customImage.redisCluster
+  default: false
+  label: Change Redis image
+  description: "Change Redis image"
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.redis-cluster.image.registry
+    default: "docker.io"
+    label: Redis image registry
+    description: "Redis image registry"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.redis-cluster.image.repository
+    default: "bitnami/redis-cluster"
+    label: Redis image repository
+    description: "Redis image repository"
+    group: "Workloads"
+    type: string
+  - variable: forgejo.redis-cluster.image.tag
+    label: Redis image tag
+    description: "Redis image tag"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: forgejo.redis-cluster.image.pullPolicy
+    default: "IfNotPresent"
+    label: Redis image pullPolicy
+    description: "Redis image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "If NotPresent"
+    - "Never"
+- variable: forgejo.redis-cluster.redis.updateStrategy.type
+  default: "RollingUpdate"
+  label: Redis update strategy
+  description: "Redis update strategy"
+  group: "Workloads"
+  type: enum
+  options:
+  - "RollingUpdate"
+  - "Recreate"
+  required: false
+
+- variable: forgejo.ingress.enabled
+  label: Enable Forgejo ingress
+  group: "Service Discovery"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.ingress.hosts.0.host
+    default: "forgejo.apps.example.com"
+    label: URL
+    description: "Forgejo Ingress URL"
+    group: "Service Discovery"
+    type: hostname
+    required: true
+
+- variable: forgejo.persistence.enabled
+  default: "true"
+  label: Forgejo persistent storage
+  group: "Storage"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.persistence.size
+    default: "10Gi"
+    label: Forgejo persistent volume size
+    group: "Storage"
+    type: string
+    required: true
+  - variable: forgejo.persistence.storageClass
+    label: Forgejo persistent volume Storage Class
+    group: "Storage"
+    type: storageclass
+    required: false
+
+- variable: forgejo.params.customResources.redisCluster
+  default: false
+  label: Modify Redis resource consumption
+  group: "Storage"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: forgejo.redis-cluster.persistence.size
+    default: "8Gi"
+    label: Redis persistent volume size
+    description: "Redis persistent volume size"
+    group: "Storage"
+    type: string
+  - variable: forgejo.redis-cluster.persistence.storageClass
+    label: Redis persistent Storage Class
+    description: "Redis persistent Storage Class"
+    group: "Storage"
+    type: storageclass
+  - variable: forgejo.redis-cluster.redis.resources.limits.cpu
+    default: "200m"
+    label: Milicore limit for a Redis instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Storage"
+    type: string
+    required: false
+  - variable: forgejo.redis-cluster.redis.resources.requests.cpu
+    default: "100m"
+    label: Milicore requests for a Redis instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Storage"
+    type: string
+    required: false
+  - variable: forgejo.redis-cluster.redis.resources.limits.memory
+    default: "256Mi"
+    label: Memory limit for a Redis instance
+    description: "Memory limit for a Redis instance"
+    group: "Storage"
+    type: string
+    required: false
+  - variable: forgejo.redis-cluster.redis.resources.requests.memory
+    default: "128Mi"
+    label: Memory request for a Redis instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Storage"
+    type: string
+    required: false
+
+- variable: forgejo.gitea.metrics.enabled
+  default: "true"
+  label: Forgejo metrics
+  description: "Forgejo metrics"
+  group: "Integrations"
+  type: boolean
+- variable: forgejo.postgresql-ha.metrics.enabled
+  default: "true"
+  label: Postgresql metrics
+  description: "Postgresql metrics"
+  group: "Integrations"
+  type: boolean
+- variable: forgejo.redis-cluster.metrics.enabled
+  default: "true"
+  label: Redis metrics
+  description: "Redis metrics"
+  group: "Integrations"
+  type: boolean
