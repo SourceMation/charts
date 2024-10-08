@@ -46,6 +46,7 @@ export STACK_NAME=sonarqube
 export CHART_VERSION=1.0.0
 export CHART_NAMESPACE=sonarqube-namespace
 export CHART_URL=sonarqube.apps.example.com
+export CERT_SECRET_NAME=default-secret-name
 
 kubectl create ns ${CHART_NAMESPACE}
 
@@ -58,7 +59,8 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 ``` bash
 
 helm -n ${CHART_NAMESPACE} upgrade --install ${STACK_NAME} \
---set "sonarqube.ingress.hosts[0].name=${CHART_URL}" \
+--set "sonarqube.ingress.tls[0].hosts[0].name=${CHART_URL}" \
+--set "sonarqube.ingress.tls[0].secretName=${CERT_SECRET_NAME}"\
 --repo https://sourcemation.github.io/charts/ ${STACK_NAME} \
 --version ${CHART_VERSION}
 
