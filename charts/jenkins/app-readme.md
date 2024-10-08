@@ -1,3 +1,3 @@
 ## Overview
 
-Jenkins is an open-source automation server that enables developers to build, test, and deploy their software efficiently. It supports continuous integration (CI) and continuous delivery (CD) by automating parts of the software development process, including code integration, testing, and deployment to production environments.
+Jenkins is a powerful tool used to manage and automate development pipelines. It offers extensive customization through plugins, allowing teams to tailor their workflows to specific needs. With its flexible architecture, Jenkins supports a wide range of development environments and processes.

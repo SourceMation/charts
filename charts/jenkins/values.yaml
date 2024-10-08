@@ -17,12 +17,12 @@ jenkins:
       repository: "jenkins/jenkins"
       tag: ""
       tagLabel: "jdk17"
-      pullPolicy: "Always"
+      pullPolicy: "IfNotPresent"
     imagePullSecretName: ""
     installPlugins:
       - kubernetes:4290.v93ea_4b_b_26a_61
       - workflow-aggregator:600.vb_57cdd26fdd7
-      - git:5.5.1
+      - git:5.5.2
       - configuration-as-code:1850.va_a_8c31d3158b_
       - cloudbees-disk-usage-simple:203.v3f46a_7462b_1a_
       - prometheus:787.v52e8f47488fc
@@ -31,7 +31,6 @@ jenkins:
       - pipeline-utility-steps:2.17.0
       - generic-webhook-trigger:2.2.2
       - rebuild:332.va_1ee476d8f6d
-    customResources: false
     persistence:
       enabled: true
       accessMode: "ReadWriteOnce"
@@ -55,3 +54,8 @@ jenkins:
       -Dorg.jenkinsci.plugins.casc.ConfigurationAsCode.systemConfig=/var/jenkins_home/casc_configs/jenkins-casc.yaml
     jenkinsUrl: "https://jenkins.apps.example.com"
     updateStrategy: {}
+
+questionsSpec:
+  jenkinsApp:
+    customImage: false
+    customResources: false
