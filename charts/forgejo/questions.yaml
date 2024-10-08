@@ -57,7 +57,7 @@ questions:
     type: enum
     options:
     - "Always"
-    - "If NotPresent"
+    - "IfNotPresent"
     - "Never"
 - variable: forgejo.params.customResources.gitea
   default: false
@@ -134,7 +134,7 @@ questions:
     type: enum
     options:
     - "Always"
-    - "If NotPresent"
+    - "IfNotPresent"
     - "Never"
 - variable: forgejo.params.customPasswords.postgresqlHA
   default: false
@@ -266,7 +266,7 @@ questions:
     type: enum
     options:
     - "Always"
-    - "If NotPresent"
+    - "IfNotPresent"
     - "Never"
 - variable: forgejo.redis-cluster.redis.updateStrategy.type
   default: "RollingUpdate"
