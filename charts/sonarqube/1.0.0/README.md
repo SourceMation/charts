@@ -59,8 +59,9 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 ``` bash
 
 helm -n ${CHART_NAMESPACE} upgrade --install ${STACK_NAME} \
---set "sonarqube.ingress.tls[0].hosts[0].name=${CHART_URL}" \
---set "sonarqube.ingress.tls[0].secretName=${CERT_SECRET_NAME}"\
+--set "sonarqube.ingress.hosts[0].name=${CHART_URL}" \
+--set "sonarqube.ingress.tls[0].hosts[0]=${CHART_URL}" \
+--set "sonarqube.ingress.tls[0].secretName=${CERT_SECRET_NAME}" \
 --repo https://sourcemation.github.io/charts/ ${STACK_NAME} \
 --version ${CHART_VERSION}
 

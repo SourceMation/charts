@@ -108,10 +108,17 @@ questions:
   type: boolean
   show_subquestion_if: true
   subquestions:
-  - variable: sonarqube.ingress.tls.0.hosts.0.name
+  - variable: sonarqube.ingress.hosts.0.name
     default: "sonarqube.apps.example.com"
     label: URL
     description: "SonarQube Ingress URL"
+    group: "Service Discovery"
+    type: hostname
+    required: true
+  - variable: sonarqube.ingress.tls.0.hosts.0
+    default: "sonarqube.apps.example.com"
+    label: URL
+    description: "SonarQube TLS URL"
     group: "Service Discovery"
     type: hostname
     required: true

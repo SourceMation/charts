@@ -18,10 +18,12 @@ sonarqube:
     #pullSecrets: []
   ingress:
     enabled: true
+    hosts:
+    - name: "sonarqube.apps.example.com"
     tls: 
-      - secretName: "default-secret-name"
-        hosts:
-          - name: "sonarqube.apps.example.com"
+    - secretName: "default-secret-name"
+      hosts:
+        - "sonarqube.apps.example.com"
 
   networkPolicy:
     enabled: false
