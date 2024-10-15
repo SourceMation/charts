@@ -1,0 +1,221 @@
+
+global:
+  tektonOperator:
+    enabled: false
+  tektonDashboard:
+    enabled: true
+  tektonPipelines:
+    enabled: true
+  tektonTriggers:
+    enabled: true
+
+# missing:
+# - overrideNamespace
+# - pvc
+tekton:
+# ======================== M A I N ========================
+# =========================================================
+  nameOverride: ""
+
+  fullnameOverride: ""
+
+  version: 
+
+  podSecurityPolicy:
+    enabled: true
+
+  rbac:
+    create: true
+    annotations: {}
+    serviceAccount:
+      name: ""
+
+  config:
+    artifactBucket: {}
+    artifactPvc: {}
+    # defaults: _example
+    featureFlags:
+      disable-home-env-overwrite: "false"
+      disable-working-directory-overwrite: "false"
+    leaderElection:
+      resourceLock: "leases"
+      leaseDuration: "15s"
+      renewDeadline: "10s"
+      retryPeriod: "2s"
+    logging:
+      # zap-logger-config: config
+      loglevel.controller: "info"
+      loglevel.webhook: "info"
+      loglevel.eventlistener: "info"
+    # observability: _example
+
+  webhook:
+    hostNetwork: false
+    dnsPolicy: ""
+    httpsWebhookPort: 8443
+    image:
+      repository: ""
+      # repository: gcr.io/tekton-releases/github.com/tektoncd/triggers/cmd/webhook
+      # repository: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/webhook
+      pullPolicy: IfNotPresent
+      tag: ""
+    annotations:
+      cluster-autoscaler.kubernetes.io/safe-to-evict: 'false'
+    certSecret:
+      name: ""
+      useExistingSecret: ""
+    logLevel: info
+    resources:
+      requests:
+        cpu: 0.5
+        memory: 128m
+      limits:
+        cpu: 0.5
+        memory: 128m
+    replicas: 3
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: webhook
+                app.kubernetes.io/instance: my-pipeline
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: webhook
+                app.kubernetes.io/instance: my-triggers
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+    service:
+      type: ClusterIP
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9090'
+    metrics:
+      enabled: true
+      port: 9090
+      portName: metrics
+    profiling:
+      enabled: true
+      port: 8008
+      portName: http-profiling
+    podDisruptionBudget:
+      ennabled: true
+      minAvailable: 1
+      maxUnavailable: 1
+    updateStrategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxUnavailable: 1
+        maxSurge: 1
+    nodeSelector: {}
+    tolerations: []
+    securityContext: {}
+
+  controller:
+    image:
+      # repository: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/controller
+      # repository: gcr.io/tekton-releases/github.com/tektoncd/triggers/cmd/controller
+      tag:
+      pullPolicy: IfNotPresent
+    annotations:
+      cluster-autoscaler.kubernetes.io/safe-to-evict: 'false'
+    nodeSelector: {}
+    affinity: {}
+    tolerations: []
+    securityContext: {}
+    # args: multiple args
+    resources:
+      requests:
+        cpu: 0.5
+        memory: 128m
+      limits:
+        cpu: 0.5
+        memory: 128m
+    service:
+      type: ClusterIP
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9090'
+    metrics:
+      enabled: true
+      port: 9090
+      portName: metrics
+
+  # ==================== O P E R A T O R ====================
+  # =========================================================
+
+  openshift:
+    enabled: false
+
+  installCRDs: false
+
+  controllers: "tektonconfig,tektonpipeline,tektontrigger,tektonhub,tektonchain,tektonresult,tektondashboard,manualapprovalgate"
+
+  operator:
+    operatorName: ""
+    image:
+      repository: ""
+      pullPolicy: IfNotPresent
+      tag: ""
+    autoInstallComponents: true
+    defaultTargetNamespace: ""
+    logLevel: info
+    resources: {}
+    deployment:
+      customLabels: ""
+      podTemplateCustomLabels: ""
+
+  pruner:
+    image:
+      repository: "gcr.io/tekton-releases/dogfooding/tkn"
+      tag: "8d4383ff675cdf42b0006fca9b5b3b0c1d6180ff0013805242c877352e03a359"
+
+  webhookProxy:
+    image:
+      repository: ""
+      tag: ""
+
+  service:
+    createServiceMonitor: false
+    metricsDomain: tekton.dev/operator
+
+  imagePullSecrets: []
+  podAnnotations: {}
+  podSecurityContext: {}
+  securityContext: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+
+  # =================== D A S H B O A R D ===================
+  # =========================================================
+
+  dashboard:
+    image:
+      repository: gcr.io/tekton-releases/github.com/tektoncd/dashboard/cmd/dashboard
+      tag:
+      pullPolicy: IfNotPresent
+    readOnly: false
+    annotations:
+      cluster-autoscaler.kubernetes.io/safe-to-evict: 'false'
+    nodeSelector: {}
+    affinity: {}
+    tolerations: []
+    resources: {}
+    securityContext: {}
+
+    service:
+      type: ClusterIP
+      annotations: {}
+      port: 9097
+      portName: http
+
+    ingress:
+      enabled: true
+      host: "tekton-operator.apps.example.com"
+      annotations: {}
+      hosts: []
+
+  extensions: []

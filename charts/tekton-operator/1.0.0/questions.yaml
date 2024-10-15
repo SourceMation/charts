@@ -1,0 +1,191 @@
+questions:
+# Components
+- variable: global.tektonOperator.enabled
+  default: true
+  label: Install Tekton Operator
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: tekton.customOperatorImage
+    default: false
+    label: Change Tekton Operator image
+    group: "Components"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: tekton.operator.image.repository
+      default: "gcr.io/tekton-releases/github.com/tektoncd/operator/cmd/operator"
+      label: Tekton operator image registry/repository
+      type: string
+    - variable: tekton.operator.image.tag
+      default: ""
+      label: Tekton operator image tag
+      description: "Tekton operator image tag"
+      group: "Components"
+      type: string
+    - variable: tekton.operator.image.pullPolicy
+      default: "IfNotPresent"
+      label: Tekton operator image pullPolicy
+      description: "Tekton operator image pullPolicy"
+      group: "Components"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: tekton.openshift.enabled
+    default: false
+    label: Tekton for OpenShift
+    type: boolean
+    group: "Components"
+  - variable: tekton.installCRDs
+    default: true
+    label: Create CRDs
+    type: boolean
+    group: "Components"
+- variable: global.tektonDashboard.enabled
+  default: true
+  label: Install Tekton Dashboard
+  type: boolean
+  group: "Components"
+  show_subquestion_if: true
+  subquestions:
+  - variable: tekton.customDashboardImage
+    default: false
+    label: Change Tekton Dashboard image
+    group: "Components"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: tekton.dashboard.image.repository
+      default: "gcr.io/tekton-releases/github.com/tektoncd/dashboard/cmd/dashboard"
+      label: Tekton dashboard image registry/repository
+      type: string
+    - variable: tekton.dashboard.image.tag
+      default: ""
+      label: Tekton dashboard image tag
+      description: "Tekton dashboard image tag"
+      group: "Components"
+      type: string
+    - variable: tekton.dashboard.image.pullPolicy
+      default: "IfNotPresent"
+      label: Tekton dashboard image pullPolicy
+      description: "Tekton dashboard image pullPolicy"
+      group: "Components"
+      type: enum
+      options:
+      - "Always"
+      - "If NotPresent"
+      - "Never"
+  - variable: tekton.dashboard.ingress.enabled
+    label: Enable Tekton Dashboard Ingress
+    group: "Service Discovery"
+    type: boolean
+    show_subquestion_if: true
+    subquestions:
+    - variable: tekton.dashboard.ingress.host
+      label: URL
+      description: "Configure url for tekton dashboard web-ui"
+      group: "Service Discovery"
+      type: hostname
+      default: "tekton.apps.example.com"
+      min: 6
+- variable: global.tektonPipelines.enabled
+  default: true
+  label: Install Tekton Pipelines
+  type: boolean
+  group: "Components"
+- variable: global.tektonTriggers.enabled
+  default: true
+  label: Install Tekton Triggers
+  type: boolean
+  group: "Components"
+
+# Integrations
+- variable: tekton.controller.metrics.enabled
+  default: "true"
+  label: Tekton Controller metrics
+  description: "Tekton Controller metrics"
+  group: "Integrations"
+  type: boolean
+- variable: tekton.webhook.metrics.enabled
+  default: "true"
+  label: Tekton Webhook metrics
+  description: "Tekton Webhook metrics"
+  group: "Integrations"
+  type: boolean
+
+
+# Service Discovery
+# subquestion in tekton.dashboard.enabled = true
+
+# Storage
+- variable: tekton.webhook.customResources
+  default: false
+  label: Modify Tekton Webhook resource consumption
+  group: "Storage"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: tekton.webhook.resources.limits.cpu
+    label: Milicore limit for a Tekton Webhook instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Storage"
+    type: string
+  - variable: tekton.webhook.resources.requests.cpu
+    label: Milicore requests for a Tekton Webhook instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Storage"
+    type: string
+  - variable: tekton.webhook.resources.limits.memory
+    label: Memory limit for a Tekton Webhook instance
+    description: "Memory limit for a Tekton Webhook instance"
+    group: "Storage"
+    type: string
+  - variable: tekton.webhook.resources.requests.memory
+    label: Memory requests for a Tekton Webhook instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Storage"
+    type: string
+- variable: tekton.controller.customResources
+  default: false
+  label: Modify Tekton Controller resource consumption
+  group: "Storage"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: tekton.controller.resources.limits.cpu
+    label: Milicore limit for a Tekton Controller instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Storage"
+    type: string
+  - variable: tekton.controller.resources.requests.cpu
+    label: Milicore requests for a Tekton Controller instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Storage"
+    type: string
+  - variable: tekton.controller.resources.limits.memory
+    label: Memory limit for a Tekton Controller instance
+    description: "Memory limit for a Tekton Controller instance"
+    group: "Storage"
+    type: string
+  - variable: tekton.controller.resources.requests.memory
+    label: Memory requests for a Tekton Controller instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Storage"
+    type: string
+
+# Workloads
+# none
+
+# Others
+- variable: tekton.webhook.updateStrategy.type
+  default: "RollingUpdate"
+  label: Tekton Webhook update strategy
+  description: "Tekton Webhook update strategy"
+  group: "Others"
+  type: enum
+  options:
+  - "RollingUpdate"
+  - "Recreate"
