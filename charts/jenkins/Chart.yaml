@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 1.0.0
+appVersion: 5.7.6
 version: 1.0.0
 name: jenkins
 description: "The open-source automation server that enables developers to build, test, and deploy their CI/CD software efficiently."
