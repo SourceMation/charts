@@ -96,6 +96,7 @@ questions:
 - variable: coder.coder.ingress.enabled
   label: Enable Coder Ingress
   group: "Service Discovery"
+  default: "true"
   type: boolean
   show_subquestion_if: true
   subquestions:
@@ -106,6 +107,12 @@ questions:
     type: hostname
     default: "coder.apps.example.com"
     min: 6
+  - variable: coder.coder.ingress.tls.secretName
+    label: Secret Name
+    description: "Configure secret name for coder"
+    group: "Service Discovery"
+    type: string
+    default: "default-secret-name"
 
 # Storage
 - variable: postgresql.customResources
