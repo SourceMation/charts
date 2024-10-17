@@ -91,6 +91,12 @@ questions:
       type: hostname
       default: "tekton.apps.example.com"
       min: 6
+    - variable: tekton.webhook.secretName
+      label: Secret Name
+      description: "Configure secret name for tekton"
+      group: "Service Discovery"
+      type: string
+      default: "default-secret-name"
 - variable: global.tektonPipelines.enabled
   default: true
   label: Install Tekton Pipelines

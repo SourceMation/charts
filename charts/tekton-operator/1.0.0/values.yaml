@@ -111,6 +111,7 @@ tekton:
     nodeSelector: {}
     tolerations: []
     securityContext: {}
+    secretName: "default-secret-name"
 
   controller:
     image:

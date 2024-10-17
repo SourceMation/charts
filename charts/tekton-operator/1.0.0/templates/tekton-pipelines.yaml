@@ -3489,9 +3489,13 @@ spec:
             - name: WEBHOOK_SERVICE_NAME
               value: tekton-pipelines-webhook
             - name: WEBHOOK_SECRET_NAME
-              value: webhook-certs
+              value: {{ .Values.tekton.webhook.secretName }} # Updated to use cert-manager secret
             - name: METRICS_DOMAIN
               value: tekton.dev/pipeline
+            - name: TLS_CERT
+              value: /etc/webhook/certs/tls.crt
+            - name: TLS_KEY
+              value: /etc/webhook/certs/tls.key
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
@@ -3531,6 +3535,10 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 5
+      volumes:
+        - name: tls-cert
+          secret:
+            secretName: {{ .Values.tekton.webhook.secretName }}  # This is the cert-manager generated secret
 ---
 apiVersion: v1
 kind: Service
