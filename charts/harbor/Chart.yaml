@@ -1,0 +1,28 @@
+annotations:
+  catalog.cattle.io/os: linux
+apiVersion: v2
+appVersion: v1.15.1
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.x
+- name: harbor
+  repository: https://helm.goharbor.io
+  version: 1.15.1
+
+description: Harbor - container registry. Containers/Registry.
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+keywords:
+- containers
+- registry
+maintainers:
+- email: pawel.piasek@linuxpolska.pl
+  name: paadpi
+- email: kamil.kwiatkowski@linuxpolska.com
+  name: Qwiatu
+name: harbor
+sources:
+- https://github.com/SourceMation/charts/tree/main/charts/harbor
+type: application
+version: v1.15.1
