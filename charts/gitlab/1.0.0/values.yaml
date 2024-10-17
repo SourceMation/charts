@@ -1,0 +1,493 @@
+gitlab:
+  auth:
+    gitlab_password: "P@ssword1"
+    postgresql_password: "P@ssword1"
+    postgresql_postgres_password: "P@ssword1"
+  global:
+    edition: ce
+    #gitlabVersion: "17.3.1"
+    hosts:
+      domain: "apps.example.com"
+      hostSuffix: ""
+      https: true
+      gitlab:
+        https: true
+      registry:
+        https: true
+      minio:
+        https: true
+      smartcard: {}
+      pages:
+        https: true
+      kas: {}
+    ingress:
+      enabled: true
+      configureCertmanager: false
+      tls:
+        enabled: true
+        secretName: "gitlab-server-tls"
+    minio:
+      enabled: true
+    monitoring:
+      enabled: true
+    praefect:
+      enabled: false
+    spamcheck:
+      enabled: false
+  upgradeCheck:
+    enabled: false
+    resources:
+      requests:
+        cpu: "50m"
+  certmanager:
+    install: false
+    installCRDs: false
+  nginx-ingress:
+    enabled: true
+    #nameOverride: ""
+    #fullnameOverride: ""
+    controller:
+      replicaCount: 1
+      affinity: {}
+      #nodeSelector: {}
+      image:
+        registry: registry.gitlab.com
+        image: gitlab-org/cloud-native/mirror/images/ingress-nginx/controller
+        #tag: "v1.3.1"
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "100Mi"
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      service:
+        enabled: true
+        externalIPs: []
+        type: LoadBalancer
+      updateStrategy: {}
+  redis:
+    install: true
+    architecture: "standalone"
+    nameOverride: ""
+    fullnameOverride: ""
+    cluster:
+      enabled: false
+    image:
+      registry: docker.io
+      repository: bitnami/redis
+      #tag: 6.2.7-debian-11-r11
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    master:
+      affinity: {}
+      nodeSelector: {}
+      persistence:
+        enabled: true
+        #claimName: ""
+        #existingClaim: ""
+        size: "8Gi"
+        storageClass: ""
+        accessMode:
+        - "ReadWriteOnce"
+      resources: {}
+      service:
+        type: "ClusterIP"
+        ports:
+          redis: 6379
+      updateStrategy:
+        type: RollingUpdate
+        rollingUpdate: {}
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    networkPolicy:
+      enabled: false
+  registry:
+    enabled: true
+    # missing:
+    # - nameOverride, namespaceOverride
+    affinity: {}
+    nodeSelector: {}
+    deployment:
+      strategy: {}
+    image:
+      repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-container-registry
+      #tag: 'v4.6.0-gitlab'
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    networkpolicy:
+      enabled: false
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "32Mi"
+    service:
+      type: "ClusterIP"
+      externalPort: 5000
+      internalPort: 5000
+  minio:
+    # missing:
+    # - affinity
+    # - nameOverride, namespaceOverride
+    # - image.registry
+    nodeSelector: {}
+    defaultBuckets:
+      - name: "registry"
+      - name: "git-lfs"
+      - name: "runner-cache"
+      - name: "gitlab-uploads"
+      - name: "gitlab-artifacts"
+      - name: "gitlab-backups"
+      - name: "gitlab-packages"
+      - name: "tmp"
+      - name: "gitlab-mr-diffs"
+      - name: "gitlab-terraform-state"
+      - name: "gitlab-ci-secure-files"
+      - name: "gitlab-dependency-proxy"
+      - name: "gitlab-pages"
+    image: "minio/minio"
+    #imageTag: "RELEASE.2017-12-28T01-21-00Z"
+    imagePullPolicy: IfNotPresent
+    deployment:
+      strategy:
+        type: Recreate
+    pullSecrets: []
+    persistence:
+      enabled: true
+      size: "10Gi"
+      storageClass: ""
+      accessMode: "ReadWriteOnce"
+    networkPolicy:
+      enabled: false
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+    serviceType: ClusterIP
+    servicePort: 9000
+  postgresql:
+    install: true
+    architecture: standalone
+    nameOverride: ""
+    fullnameOverride: ""
+    image:
+      registry: docker.io
+      repository: bitnami/postgresql
+      #tag: 15.3.0-debian-11-r0
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    networkPolicy:
+      enabled: false
+    primary:
+      affinity: {}
+      nodeSelector: {}
+      persistence:
+        enabled: true
+        size: "8Gi"
+        #existingClaim: ""
+        #claimName: ""
+        storageClass: ""
+        accessMode:
+        - "ReadWriteOnce"
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "250m"
+      service:
+        type: ClusterIP
+        port:
+          postgresql: 5432
+      updateStrategy:
+        type: RollingUpdate
+        rollingUpdate: {}
+  shared-secrets:
+    enabled: true
+    # missing:
+    # - affinity, nodeSelector
+    # - updateStrategy
+    rbac:
+      create: true
+    selfsign:
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/cfssl-self-sign
+        #tag: master
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+      keyAlgorithm: "rsa"
+      keySize: "4096"
+      expiry: "3650d"
+      caSubject: "GitLab Helm Chart"
+    env: production
+    resources:
+      requests:
+        cpu: 50m
+  gitlab-runner:
+    install: true
+    # missing:
+    # - nameOverride, namespaceOverride
+    affinity: {}
+    nodeSelector: {}
+    certsSecretName: "gitlab-server-tls"
+    image:
+      registry: registry.gitlab.com
+      image: gitlab-org/gitlab-runner
+      #tag: alpine-v{{.Chart.AppVersion}}
+    imagePullPolicy: IfNotPresent
+    imagePullSecrets: []
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        type: "ClusterIP"
+    resources: {}
+    service:
+      enabled: true
+      type: ClusterIP
+    strategy: {}
+  gitlab:
+    gitlab-exporter:
+      enabled: true
+      # missing:
+      # - nodeSelector
+      # - nameOverride, namespaceOverride
+      affinity: {}
+      deployment:
+        strategy: {}
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-exporter
+        # tag: master
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      resources:
+        requests:
+          cpu: "75m"
+          memory: "100M"
+      service:
+        type: "ClusterIP"
+        externalPort: 9168
+        internalPort: 9168
+    gitlab-pages:
+      global:
+        pages:
+          enabled: false
+      affinity: {}
+      deployment:
+        strategy: {}
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-pages
+        #tag: master
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      networkpolicy:
+        enabled: false
+      resources:
+        requests:
+          cpu: 900m
+          memory: 2G
+      service:
+        type: "ClusterIP"
+        externalPort: 8090
+        internalPort: 8090
+    gitlab-shell:
+      enabled: true
+      maxUnavailable: 1
+      minReplicas: 2
+      maxReplicas: 10
+      affinity: {}
+      deployment:
+        strategy: {}
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-shell
+        #tag: master
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+      sshDaemon: "openssh"
+      metrics:
+        # Metrics are not supported for the sshDaemon="openssh"
+        enabled: false
+        serviceMonitor:
+          enabled: true
+      networkpolicy:
+        enabled: false
+      resources:
+        requests:
+          cpu: "0"
+          memory: "6M"
+      service:
+        type: "ClusterIP"
+        internalPort: 2222
+        externalTrafficPolicy: Cluster
+    gitaly:
+      affinity: {}
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitaly
+        #tag: master
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      persistence:
+        enabled: true
+        size: "40Gi"
+        storageClass: ""
+        accessMode: "ReadWriteOnce"
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "200Mi"
+      service:
+        type: ClusterIP
+        externalPort: 8075
+        internalPort: 8075
+        tls:
+          externalPort: 8076
+          internalPort: 8076
+      statefulset:
+        strategy: {}
+    kas:
+      maxReplicas: 10
+      maxUnavailable: 1
+      minReplicas: 2
+      affinity: {}
+      deployment:
+        strategy: {}
+      image:
+        repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-kas
+        #tag: latest
+        pullPolicy: IfNotPresent
+        pullSecrets: []
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      networkpolicy:
+        enabled: false
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "100M"
+      service:
+        type: "ClusterIP"
+        externalPort: 8150
+        internalPort: 8150
+    migrations:
+      enabled: true
+      image: {}
+        #repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-toolbox-ee
+        #tag: master
+        #pullPolicy: IfNotPresent
+        #pullSecrets: []
+      resources:
+        requests:
+          cpu: "250m"
+          memory: "200Mi"
+    sidekiq:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 10
+      affinity: {}
+      nodeSelector: {}
+      deployment:
+        strategy: {}
+      image: {}
+        #repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-sidekiq-ee
+        #tag: master
+        #pullPolicy: IfNotPresent
+        #pullSecrets: []
+      metrics:
+        enabled: true
+        podMonitor:
+          enabled: true
+      networkpolicy:
+        enabled: false
+      resources:
+        requests:
+          cpu: "900m"
+          memory: "2G"
+    toolbox:
+      enabled: true
+      replicas: 1
+      affinity: {}
+      antiAffinityLabels:
+        matchLabels:
+          app: gitaly
+      deployment:
+        strategy:
+          type: Recreate
+      image: {}
+        #repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-toolbox-ee
+        #tag: master
+        #pullPolicy: IfNotPresent
+        #pullSecrets: []
+      persistence:
+        enabled: false
+        size: "10Gi"
+        storageClass: ""
+      resources:
+        requests:
+          cpu: "50m"
+          memory: "350M"
+    webservice:
+      enabled: true
+      maxUnavailable: 1
+      minReplicas: 2
+      maxReplicas: 10
+      affinity: {}
+      deployment:
+        strategy: {}
+      image: {}
+        #repository: registry.gitlab.com/gitlab-org/build/cng/gitlab-webservice-ee
+        #tag: master
+        #pullPolicy: IfNotPresent
+        #pullSecrets: []
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+      networkpolicy:
+        enabled: false
+      resources:
+        requests:
+          cpu: "300m"
+          memory: "2.5G"
+      service:
+        type: "ClusterIP"
+        externalPort: 8080
+        internalPort: 8080
+        workhorseExternalPort: 8181
+        workhorseInternalPort: 8181
+        tls:
+          externalPort: 8081
+          internalPort: 8081
+  gitlab-zoekt:
+    install: false
+  haproxy:
+    install: false
+  nginx-ingress-geo:
+    enabled: false
+  prometheus:
+    install: false
+  traefik:
+    install: false

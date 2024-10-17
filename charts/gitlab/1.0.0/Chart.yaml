@@ -1,0 +1,32 @@
+annotations:
+  catalog.cattle.io/display-name: "GitLab"
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
+  catalog.cattle.io/release-name: gitlab
+
+apiVersion: v2
+appVersion: 8.3.1
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.x
+- name: gitlab
+  repository: https://charts.gitlab.io/
+  version: 8.3.1
+
+name: gitlab
+description: Open-source DevOps platform providing Git SCM, CI/CD and more. Install once per namespace. 
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+keywords:
+- gitlab
+- git
+- cicd
+kubeVersion: '>=1.26.0-0 <1.31.0-0'
+maintainers:
+- email: marek.janosz@linuxpolska.com
+  name: jmmaro
+sources:
+- https://github.com/SourceMation/charts.git
+type: application
+version: 1.0.0

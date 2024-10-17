@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: gitlab
+  repository: https://charts.gitlab.io/
+  version: 8.3.1
+digest: sha256:b46db3b6bb1769eca8ed2366616410e25b5b6b6c20525f8245fda92df31916d9
+generated: "2024-10-14T18:03:42.621671496+02:00"

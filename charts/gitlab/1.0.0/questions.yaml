@@ -1,0 +1,494 @@
+categories:
+- cicd
+questions:
+
+# Components
+- variable: gitlab.redis.install
+  default: "true"
+  label: "Deploy Redis"
+  type: boolean
+  group: "Components"
+- variable: gitlab.registry.enabled
+  default: "true"
+  label: "Deploy GitLab Container Registry"
+  type: boolean
+  group: "Components"
+- variable: gitlab.global.minio.enabled
+  default: "true"
+  label: "Deploy Minio Object Storage"
+  type: boolean
+  group: "Components"
+- variable: gitlab.postgresql.install
+  default: "true"
+  label: "Deploy PostgreSQL Database"
+  type: boolean
+  group: "Components"
+- variable: gitlab.gitlab-runner.install
+  default: "true"
+  label: "Deploy GitLab Runner"
+  type: boolean
+  group: "Components"
+- variable: gitlab.gitlab.gitlab-shell.enabled
+  default: "true"
+  label: "Deploy GitLab Shell"
+  type: boolean
+  group: "Components"
+
+# Integrations
+- variable: gitlab.nginx-ingress.controller.metrics.enabled
+  default: true
+  label: Ingress metrics
+  group: "Integrations"
+  type: boolean
+- variable: gitlab.redis.metrics.enabled
+  default: true
+  label: Redis metrics
+  group: "Integrations"
+  type: boolean
+- variable: gitlab.registry.metrics.enabled
+  default: true
+  label: GitLab Registry metrics
+  group: "Integrations"
+  type: boolean
+- variable: gitlab.postgresql.metrics.enabled
+  default: true
+  label: PostgreSQL metrics
+  group: "Integrations"
+  type: boolean
+- variable: gitlab.gitlab-runner.metrics.enabled
+  default: true
+  label: GitLab Runner metrics
+  group: "Integrations"
+  type: boolean
+- variable: gitlab.gitlab.gitlab-exporter.metrics.enabled
+  default: true
+  label: GitLab Exporter metrics
+  group: "Integrations"
+  type: boolean
+- variable: gitlab.gitlab.gitaly.metrics.enabled
+  default: true
+  label: Gitaly metrics
+  group: "Integrations"
+  type: boolean
+- variable: gitlab.gitlab.kas.metrics.enabled
+  default: true
+  label: Kas metrics
+  group: "Integrations"
+  type: boolean
+- variable: gitlab.gitlab.sidekiq.metrics.enabled
+  default: true
+  label: Sidekiq metrics
+  group: "Integrations"
+  type: boolean
+- variable: gitlab.gitlab.webservice.metrics.enabled
+  default: true
+  label: Webservice metrics
+  group: "Integrations"
+  type: boolean
+
+# Service Discovery
+- variable: gitlab.global.ingress.enabled
+  label: Enable Ingress for GitLab Stack
+  group: "Service Discovery"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: gitlab.global.hosts.domain
+    default: "apps.example.com"
+    label: GitLab Domain
+    group: "Service Discovery"
+    type: hostname
+    required: true
+  - variable: gitlab.global.hosts.hostSuffix
+    default: "prod"
+    label: GitLab suffix
+    group: "Service Discovery"
+    type: hostname
+    required: false
+  - variable: gitlab.global.ingress.tls.secretName
+    default: "gitlab-server-tls"
+    label: Secret with TLS certificate
+    group: "Service Discovery"
+    type: reference[secret]
+    required: true
+  - variable: gitlab.gitlab-runner.certsSecretName
+    default: "gitlab-server-tls"
+    label: Secret with TLS certificate for GitLab Runner
+    tooltip: "It's used to populate the /home/gitlab-runner/.gitlab-runner/certs/ directory."
+    group: "Service Discovery"
+    type: reference[secret]
+    show_if: "gitlab.gitlab-runner.install=true"
+    required: true
+
+# Storage
+- variable: gitlab.gitlab.gitaly.persistence.enabled
+  default: true
+  label: Gitaly persistent storage
+  group: "Storage"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: gitlab.gitlab.gitaly.persistence.size
+    default: "40Gi"
+    label: Gitaly persistent volume size
+    group: "Storage"
+    type: string
+    required: true
+  - variable: gitlab.gitlab.gitaly.persistence.storageClass
+    label: Gitaly persistent volume Storage Class
+    group: "Storage"
+    type: storageclass
+    required: false
+  - variable: gitlab.gitlab.gitaly.persistence.accessMode
+    default: "ReadWriteOnce"
+    label: Gitaly persistent volume access mode
+    group: "Storage"
+    type: enum
+    options:
+      - "ReadWriteOnce"
+      - "ReadOnlyMany"
+      - "ReadWriteMany"
+      - "ReadWriteOncePod"
+    required: false
+- variable: gitlab.redis.master.persistence.enabled
+  default: true
+  label: Redis persistent storage
+  group: "Storage"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: gitlab.redis.master.persistence.size
+    default: "8Gi"
+    label: Redis persistent volume size
+    group: "Storage"
+    type: string
+    required: true
+  - variable: gitlab.redis.master.persistence.storageClass
+    label: Redis persistent volume Storage Class
+    group: "Storage"
+    type: storageclass
+    required: false
+  - variable: gitlab.redis.master.persistence.accessMode
+    default: "ReadWriteOnce"
+    label: Redis persistent volume access mode
+    group: "Storage"
+    type: enum
+    options:
+      - "ReadWriteOnce"
+      - "ReadOnlyMany"
+      - "ReadWriteMany"
+      - "ReadWriteOncePod"
+    required: false
+- variable: gitlab.minio.persistence.enabled
+  default: true
+  label: Minio persistent storage
+  group: "Storage"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: gitlab.minio.persistence.size
+    default: "10Gi"
+    label: Minio persistent volume size
+    group: "Storage"
+    type: string
+    required: true
+  - variable: gitlab.minio.persistence.storageClass
+    label: Minio persistent volume Storage Class
+    group: "Storage"
+    type: storageclass
+    required: false
+  - variable: gitlab.minio.persistence.accessMode
+    default: "ReadWriteOnce"
+    label: Minio persistent volume access mode
+    group: "Storage"
+    type: enum
+    options:
+      - "ReadWriteOnce"
+      - "ReadOnlyMany"
+      - "ReadWriteMany"
+      - "ReadWriteOncePod"
+    required: false
+- variable: gitlab.postgresql.primary.persistence.enabled
+  default: true
+  label: Minio persistent storage
+  group: "Storage"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: gitlab.postgresql.primary.persistence.size
+    default: "8Gi"
+    label: Minio persistent volume size
+    group: "Storage"
+    type: string
+    required: true
+  - variable: gitlab.postgresql.primary.persistence.storageClass
+    label: Minio persistent volume Storage Class
+    group: "Storage"
+    type: storageclass
+    required: false
+  - variable: gitlab.postgresql.primary.persistence.accessMode
+    default: "ReadWriteOnce"
+    label: Minio persistent volume access mode
+    group: "Storage"
+    type: enum
+    options:
+      - "ReadWriteOnce"
+      - "ReadOnlyMany"
+      - "ReadWriteMany"
+      - "ReadWriteOncePod"
+    required: false
+
+# Workloads
+  - variable: gitlab.global.edition
+    default: "ce"
+    label: GitLab Edition (Community/Enterprise)
+    group: "Workloads"
+    type: enum
+    options:
+      - "ce"
+      - "ee"
+    required: true
+  - variable: gitlab.global.gitlabVersion
+    default: "17.3.1"
+    label: Gitlab version
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: gitlab.auth.gitlab_password
+    label: Gitlab initial root password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
+    type: password
+    min_length: 8
+    required: true
+  - variable: gitlab.auth.postgresql_password
+    label: Postgresql gitlab user password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
+    type: password
+    min_length: 8
+    required: true
+  - variable: gitlab.auth.postgresql_postgres_password
+    label: Postgresql postgres user password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
+    type: password
+    min_length: 8
+    required: true
+
+- variable: gitlab.redis.master.customResources.limits.enabled
+  label: Custom resource consumption for Redis
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.redis.master.resources.limits.cpu
+    type: string
+    label: Limit Milicores for Redis (1000 = 1vCPU)
+    description: 'Limit Milicores for Redis (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.redis.master.resources.limits.memory
+    type: string
+    label: Limit RAM for Redis (MiB)
+    description: 'Limit RAM for Redis (MiB)'
+    required: false
+- variable: gitlab.registry.customResources.limits.enabled
+  label: Custom resource consumption for GitLab Registry
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.registry.resources.limits.cpu
+    type: string
+    label: Limit Milicores for GitLab Registry (1000 = 1vCPU)
+    description: 'Limit Milicores for GitLab Registry (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.registry.resources.limits.memory
+    type: string
+    label: Limit RAM for GitLab Registry (MiB)
+    description: 'Limit RAM for GitLab Registry (MiB)'
+    required: false
+- variable: gitlab.minio.customResources.limits.enabled
+  label: Custom resource consumption for Minio
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.minio.resources.limits.cpu
+    type: string
+    label: Limit Milicores for Minio (1000 = 1vCPU)
+    description: 'Limit Milicores for Minio (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.minio.resources.limits.memory
+    type: string
+    label: Limit RAM for Minio (MiB)
+    description: 'Limit RAM for Minio (MiB)'
+    required: false
+- variable: gitlab.postgresql.primary.customResources.limits.enabled
+  label: Custom resource consumption for PostgreSQL
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.postgresql.primary.resources.limits.cpu
+    type: string
+    label: Limit Milicores for PostgreSQL (1000 = 1vCPU)
+    description: 'Limit Milicores for PostgreSQL (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.postgresql.primary.resources.limits.memory
+    type: string
+    label: Limit RAM for PostgreSQL (MiB)
+    description: 'Limit RAM for PostgreSQL (MiB)'
+    required: false
+- variable: gitlab.runner.customResources.limits.enabled
+  label: Custom resource consumption for GitLab Runner
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.gitlab-runner.resources.limits.cpu
+    type: string
+    label: Limit Milicores for GitLab Runner (1000 = 1vCPU)
+    description: 'Limit Milicores for GitLab Runner (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.gitlab-runner.resources.limits.memory
+    type: string
+    label: Limit RAM for GitLab Runner (MiB)
+    description: 'Limit RAM for GitLab Runner (MiB)'
+    required: false
+- variable: gitlab.gitlab.exporter.customResources.limits.enabled
+  label: Custom resource consumption for GitLab Exporter
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.gitlab.gitlab-exporter.resources.limits.cpu
+    type: string
+    label: Limit Milicores for GitLab Exporter (1000 = 1vCPU)
+    description: 'Limit Milicores for GitLab Exporter (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.gitlab.gitlab-exporter.resources.limits.memory
+    type: string
+    label: Limit RAM for GitLab Exporter (MiB)
+    description: 'Limit RAM for GitLab Exporter (MiB)'
+    required: false
+- variable: gitlab.gitlab.shell.customResources.limits.enabled
+  label: Custom resource consumption for GitLab shell
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.gitlab.gitlab-shell.resources.limits.cpu
+    type: string
+    label: Limit Milicores for GitLab shell (1000 = 1vCPU)
+    description: 'Limit Milicores for GitLab shell (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.gitlab.gitlab-shell.resources.limits.memory
+    type: string
+    label: Limit RAM for GitLab shell (MiB)
+    description: 'Limit RAM for GitLab shell (MiB)'
+    required: false
+- variable: gitlab.gitlab.gitaly.customResources.limits.enabled
+  label: Custom resource consumption for Gitaly
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.gitlab.gitaly.resources.limits.cpu
+    type: string
+    label: Limit Milicores for Gitaly (1000 = 1vCPU)
+    description: 'Limit Milicores for Gitaly (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.gitlab.gitaly.resources.limits.memory
+    type: string
+    label: Limit RAM for Gitaly (MiB)
+    description: 'Limit RAM for Gitaly (MiB)'
+    required: false
+- variable: gitlab.gitlab.kas.customResources.limits.enabled
+  label: Custom resource consumption for KAS
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.gitlab.kas.resources.limits.cpu
+    type: string
+    label: Limit Milicores for KAS (1000 = 1vCPU)
+    description: 'Limit Milicores for KAS (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.gitlab.kas.resources.limits.memory
+    type: string
+    label: Limit RAM for KAS (MiB)
+    description: 'Limit RAM for KAS (MiB)'
+    required: false
+- variable: gitlab.gitlab.sidekiq.customResources.limits.enabled
+  label: Custom resource consumption for Sidekiq
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.gitlab.sidekiq.resources.limits.cpu
+    type: string
+    label: Limit Milicores for Sidekiq (1000 = 1vCPU)
+    description: 'Limit Milicores for Sidekiq (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.gitlab.sidekiq.resources.limits.memory
+    type: string
+    label: Limit RAM for Sidekiq (MiB)
+    description: 'Limit RAM for Sidekiq (MiB)'
+    required: false
+- variable: gitlab.gitlab.toolbox.customResources.limits.enabled
+  label: Custom resource consumption for GitLab Toolbox
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.gitlab.toolbox.resources.limits.cpu
+    type: string
+    label: Limit Milicores for GitLab Toolbox (1000 = 1vCPU)
+    description: 'Limit Milicores for GitLab Toolbox (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.gitlab.toolbox.resources.limits.memory
+    type: string
+    label: Limit RAM for GitLab Toolbox (MiB)
+    description: 'Limit RAM for GitLab Toolbox (MiB)'
+    required: false
+- variable: gitlab.gitlab.webservice.customResources.limits.enabled
+  label: Custom resource consumption for GitLab Webservice
+  type: boolean
+  default: "false"
+  group: "Workloads"
+  show_subquestions_if: "true" 
+  subquestions:
+  - variable: gitlab.gitlab.webservice.resources.limits.cpu
+    type: string
+    label: Limit Milicores for GitLab Webservice (1000 = 1vCPU)
+    description: 'Limit Milicores for GitLab Webservice (1000 = 1vCPU)'
+    tooltip: "1000 = 1vCPU"
+    required: false
+  - variable: gitlab.gitlab.webservice.resources.limits.memory
+    type: string
+    label: Limit RAM for GitLab Webservice (MiB)
+    description: 'Limit RAM for GitLab Webservice (MiB)'
+    required: false
