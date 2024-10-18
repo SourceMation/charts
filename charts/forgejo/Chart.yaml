@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 1.0.0
+appVersion: 8.0.3
 version: 1.0.0
 name: forgejo
 description: "Lightweight, self-hosted Git service built for collaborative software development. It is an open-source project designed as a fork of Gitea, focused on providing a stable, secure, and performance-driven platform for managing Git repositories."
