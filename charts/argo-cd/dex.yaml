@@ -1,0 +1,50 @@
+- variable: questionsSpec.dexApp.customImage
+  default: false
+  label: Change Redis image
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: redis.image.repository
+    default: "redis/redis"
+    label: Redis image repository
+    description: "Redis image repository"
+    group: "Workloads"
+    type: string
+  - variable: redis.image.tag
+    default: ""
+    label: Redis image tag
+    description: "Redis image tag"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: redis.image.imagePullPolicy
+    default: "IfNotPresent"
+    label: Redis image pullPolicy
+    description: "Redis image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+- variable: questionsSpec.redisApp.customResources
+  default: false
+  label: Modify Redis resource consumption
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: redis.controller.resources.limits.cpu
+    label: Milicore limit for a Redis instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: redis.controller.resources.requests.cpu
+    label: Milicore requests for a Redis instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: redis.controller.resources.limits.memory

@@ -1,0 +1,170 @@
+categories:
+- cicd
+namespace: argo-cd-namespace
+
+questions:
+- variable: argo-cd.configs.secret.argocdServerAdminPassword
+  label: Argo CD admin (bcrypt) password
+  description: "bcrypt encryption examples in the ./scripts directory"
+  group: "Workloads"
+  type: string
+  required: true
+- variable: questionsSpec.argocdApp.customImage
+  default: false
+  label: Change Argo CD image
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: argo-cd.image.repository
+    default: "argo-cd/argo-cd"
+    label: Argo CD image repository
+    description: "Argo CD image repository"
+    group: "Workloads"
+    type: string
+  - variable: argo-cd.image.tag
+    default: ""
+    label: Argo CD image tag
+    description: "Argo CD image tag"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: argo-cd.image.imagePullPolicy
+    default: "IfNotPresent"
+    label: Argo CD image pullPolicy
+    description: "Argo CD image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+- variable: questionsSpec.argocdApp.customResources
+  default: false
+  label: Modify Argo CD resource consumption
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: argo-cd.controller.resources.limits.cpu
+    label: Milicore limit for a Argo CD instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: argo-cd.controller.resources.requests.cpu
+    label: Milicore requests for a Argo CD instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: argo-cd.controller.resources.limits.memory
+    label: Memory limit for a Argo CD instance
+    description: "Memory limit for a Argo CD instance"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: argo-cd.controller.resources.requests.memory
+    label: Memory requests for a Argo CD instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+    required: false
+- variable: argo-cd.global.deploymentStrategy.type
+  default: "RollingUpdate"
+  label: Argo CD deployment strategy
+  description: "Argo CD deployment strategy"
+  group: "Workloads"
+  type: enum
+  options:
+  - "RollingUpdate"
+  - "Recreate"
+  required: false
+- variable: questionsSpec.dexApp.customImage
+  default: false
+  label: Change Dex image
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: argo-cd.dex.image.repository
+    default: "dex/dex"
+    label: Dex image repository
+    description: "Dex image repository"
+    group: "Workloads"
+    type: string
+  - variable: argo-cd.dex.image.tag
+    default: ""
+    label: Dex image tag
+    description: "Dex image tag"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: argo-cd.dex.image.imagePullPolicy
+    default: "IfNotPresent"
+    label: Dex image pullPolicy
+    description: "Dex image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+- variable: questionsSpec.redisApp.customImage
+  default: false
+  label: Change Redis image
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: argo-cd.redis.image.repository
+    default: "redis/redis"
+    label: Redis image repository
+    description: "Redis image repository"
+    group: "Workloads"
+    type: string
+  - variable: argo-cd.redis.image.tag
+    default: ""
+    label: Redis image tag
+    description: "Redis image tag"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: argo-cd.redis.image.imagePullPolicy
+    default: "IfNotPresent"
+    label: Redis image pullPolicy
+    description: "Redis image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+
+- variable: argo-cd.server.ingress.enabled
+  label: Enable Argo CD ingress
+  group: "Service Discovery"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: argo-cd.global.domain
+    default: "argo-cd.apps.example.com"
+    label: URL
+    description: "Argo CD Ingress URL"
+    group: "Service Discovery"
+    type: hostname
+    required: false
+
+- variable: argo-cd.controller.metrics.enabled
+  label: "Integrate Argo CD with Prometheus"
+  description: "Argo CD metrics"
+  group: "Integrations"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: argo-cd.controller.metrics.serviceMonitor.enabled
+    label: Enable a Prometheus ServiceMonitor
+    description: "Enable a Prometheus ServiceMonitor"
+    group: "Integrations"
+    type: boolean
+

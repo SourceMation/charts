@@ -1,0 +1,27 @@
+apiVersion: v2
+appVersion: 2.8.3
+version: 1.0.0
+name: argo-cd
+description: "Argo CD is a declarative, GitOps-based continuous delivery tool for Kubernetes, allowing users to manage application deployments."
+type: application
+annotations:
+  catalog.cattle.io/display-name: Argo CD
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
+  catalog.cattle.io/release-name: argo-cd
+home: https://argo-cd.readthedocs.io
+icon: ""
+keywords:
+  - gitops
+  - ci/cd
+  - kubernetes
+sources:
+  - https://github.com/argoproj/argo-helm
+dependencies:
+  - name: common
+    repository: https://sourcemation.github.io/charts/
+    version: 0.1.x
+  - name: argo-cd
+    repository: https://argoproj.github.io/argo-helm
+    version: 7.6.8
+kubeVersion: '>=1.26.0-0 <1.31.0-0'
