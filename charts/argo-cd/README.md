@@ -54,16 +54,9 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 
 ``` bash
 
-cat << EOF > /tmp/values.yaml
-argo-cd:
-  global:
-    domain: "${CHART_URL}"
-EOF
-
 
 cd charts/charts/argo-cd/
-helm upgrade --install argo-cd -n ${CHART_NAMESPACE} -f /tmp/values.yaml .
-
+helm upgrade --install argo-cd -n ${CHART_NAMESPACE} --set argo-cd.global.domain="${CHART_URL}" .
 
 ```
 
