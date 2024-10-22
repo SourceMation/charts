@@ -1,12 +1,23 @@
 questionsSpec: {}
+
+certManager:
+  ingress:
+    # Enable cert-manager TLS managing for harbor ingress.
+    enabled: false
+    # cert-manager.io issuer kind, usually `ClusterIssuer`.
+    issuerKind: ClusterIssuer
+    # Name of cert-manager issuer.
+    issuerName: default-selfsigned-ca
+    # Default duration of generated TLS certificte.
+    duration: 2160h # 90d
+    # Max time period in which cert-manager renew TLS cert.
+    renewBefore: 360h # 15d
+
 harbor:
   expose:
     # Set how to expose the service. Set the type as "ingress", "clusterIP", "nodePort" or "loadBalancer"
     # and fill the information in the corresponding section
     type: ingress
-    #type: clusterIP
-    #type: nodePort
-    #type: loadBalancer
     tls:
       # The source of the tls certificate. Set as "auto", "secret"
       # or "none" and fill the information in the corresponding section
@@ -16,8 +27,6 @@ harbor:
       # 3) none: configure no tls certificate for the ingress. If the default
       # tls certificate is configured in the ingress controller, choose this option
       certSource: auto
-      #certSource: secret
-      #certSource: none
       auto:
         # The common name used to generate the certificate, it's necessary
         # when the type isn't "ingress"
@@ -29,8 +38,7 @@ harbor:
         secretName: ""
     ingress:
       hosts:
-        #core: core.harbor.domain
-        core: pp-harbor.apps.dev0.lab.linuxpolska.pl
+        core: core.harbor.domain
       # set to the type of ingress controller if it has specific requirements.
       # leave as `default` for most ingress controllers.
       # set to `gce` if using the GCE ingress controller
@@ -40,8 +48,6 @@ harbor:
       controller: default
       className: ""
       annotations:
-        # cert-manager releted annotation
-        cert-manager.io/cluster-issuer: "default-selfsigned-ca"
         # note different ingress controllers may require a different ssl-redirect annotation
         # for Envoy, use ingress.kubernetes.io/force-ssl-redirect: "true" and remove the nginx lines below
         ingress.kubernetes.io/ssl-redirect: "true"
@@ -111,7 +117,7 @@ harbor:
   # the IP address of k8s node
   #
   # If Harbor is deployed behind the proxy, set it as the URL of proxy
-  externalURL: https://pp-harbor.apps.dev0.lab.linuxpolska.pl
+  externalURL: https://core.harbor.domain
 
   # The persistence is enabled by default and a default StorageClass
   # is needed in the k8s cluster to provision volumes dynamically.
@@ -1058,4 +1064,3 @@ harbor:
     #   whenUnsatisfiable: DoNotSchedule
     cacheDuration: 23
     cacheCleanInterval: 14400
-
