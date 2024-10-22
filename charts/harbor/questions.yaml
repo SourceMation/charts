@@ -688,6 +688,32 @@ questions:
     label: (harbor.trace.sample_rate)
     description: set sample_rate to 1 if you wanna sampling 100% of trace data. set 0.5 if you wanna sampling 50% of trace data, and so forth.
 
+## cert-manager
+- variable: certManager.ingress.enabled
+  type: boolean
+  label: (certManager.ingress.enabled)
+  description: Enable cert-manager TLS managing for harbor ingress.
+  group: Integrations
+  show_if: "harbor.expose.type=ingress"
+  show_subquestions_if: true
+  subquestions:
+  - variable: certManager.ingress.issuerKind
+    type: string
+    label: (certManager.ingress.issuerKind)
+    description: cert-manager.io issuer kind, usually `ClusterIssuer`.
+  - variable: certManager.ingress.issuerName
+    type: string
+    label: (certManager.ingress.issuerName)
+    description: Name of cert-manager issuer.
+  - variable: certManager.ingress.duration
+    type: string
+    label: (certManager.ingress.duration)
+    description: Default duration of generated TLS certificte.
+  - variable: certManager.ingress.renewBefore
+    type: string
+    label: (certManager.ingress.renewBefore)
+    description: Max time period in which cert-manager renew TLS cert.
+
 # Components
 ## nginx
 - variable: questionsSpec.show.harbor.nginx
