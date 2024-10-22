@@ -4,8 +4,8 @@ namespace: argo-cd-namespace
 
 questions:
 - variable: argo-cd.configs.secret.argocdServerAdminPassword
-  label: Argo CD admin (bcrypt) password
-  description: "bcrypt encryption examples in the ./scripts directory"
+  label: Argo CD admin (bcrypt) password - check ./scripts directory
+  description: "Default password is 'P@ssword1'. Change it!"
   group: "Workloads"
   type: string
   required: true

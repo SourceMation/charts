@@ -56,7 +56,7 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 
 
 cd charts/charts/argo-cd/
-helm upgrade --install argo-cd -n ${CHART_NAMESPACE} --set argo-cd.global.domain="${CHART_URL}" .
+helm upgrade --install argo-cd -n ${CHART_NAMESPACE} --set argo-cd.global.domain=${CHART_URL} .
 
 ```
 
