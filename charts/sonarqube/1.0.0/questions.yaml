@@ -111,16 +111,23 @@ questions:
   - variable: sonarqube.ingress.hosts.0.name
     default: "sonarqube.apps.example.com"
     label: URL
-    description: "SonarQube Ingress URL"
+    description: "Configure SonarQube Ingress URL"
     group: "Service Discovery"
     type: hostname
     required: true
   - variable: sonarqube.ingress.tls.0.hosts.0
     default: "sonarqube.apps.example.com"
     label: URL
-    description: "SonarQube TLS URL"
+    description: "Configure SonarQube TLS URL"
     group: "Service Discovery"
     type: hostname
+    required: true
+  - variable: sonarqube.ingress.tls.0.secretName
+    default: "default-secret-name"
+    label: Secret Name
+    description: "Configure secret name for SonarQube"
+    group: "Service Discovery"
+    type: string
     required: true
 
 # Storage
