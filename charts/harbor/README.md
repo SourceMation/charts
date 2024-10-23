@@ -9,39 +9,32 @@
 
 ## Before Installation
 
+### Integrate with **cert-manager**
 
-> **Note:**
-> no action required
+To take advantage on cert-manager integration, ensure that it is installed and configured in the kubernetes cluster. [See](https://github.com/SourceMation/charts/tree/main/charts/cert-manager).
 
-OR
-1. Install following charts
+To integrate harbor ingress with cert-manager for ingress tls managment the following values must be properly set:
+- `certManager.ingress.enabled=true`
+- `certManager.issuerKind` choose `ClusterIssuer` or `Issuer` if namespaced issuer is configured in same namespace as harbor. Usually `ClusterIssuer` is used.
+- `certManager.issuerName` set name to same issuer which is configured.
 
-```bash 
+### Integration with **Prometheus**
 
-helm upgrade install ...
+To take advantage on Prometheus integration, ensure that it is installed and configured in the kubernetes cluster. [See](https://github.com/SourceMation/charts/tree/main/charts/prometheus).
 
-```
+To integrate harbor with Promethus, configure values in `harbor.metrics.*`. Minimal configuration which enables this integration contains setting:
+- `harbor.metrics.enabled=true`
+- `harbor.metrics.serviceMonitor.enabled=true`
 
-## After Installation
+### Data traceing
 
-> **Note:**
-> no action required
-
-## Before Upgrade
-
-> **Note:**
-> no action required
-
-## After Upgrade
-
-> **Note:**
-> no action required
+Harbor facilitates integration with data tracers like **otel** or **jaeger**. Configuration is contained in values `harbor.trace.*`.
 
 
 ## Tips and Tricks
 
 > **Note:**
-> no tips and tricks
+> After uninstallation of the harbor helm chart. PVCs remains. You might want to delete them manually. See, *## CLI removing* section.
 
 
 ## Known Issues
@@ -54,46 +47,63 @@ helm upgrade install ...
 
 ### Preparation
 
+#### Create namespace.
 ```bash
-
-export CHART_NAMESPACE=harbor
-
-kubectl create ns ${CHART_NAMESPACE}
-
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+NAMESPACE=harbor
+kubectl create ns $NAMESPACE
 
 ```
 
 ### Go go helm
 
+To make harbor functional, configure at least:
+- `harbor.expose.ingress.hosts.core`
+- `harbor.externalURL`
+
+To configure fields from above and other, you may:
+- edit `values.yaml`
+- use `--set` option. Example:
+```
+NAMESPACE=harbor
+RELEASENAME=harbor
+FQDN=harbor.example.com
+helm -n $NAMESPACE upgade --install $RELEASENAME . --set "harbor.expose.ingress.hosts.core=$FQDN" --set "harbor.externalURL=https://$FQDN"
+```
+
+Example for upgrade / install with `values-override.yaml` file:
 ``` bash
-cat << EOF > /tmp/values.yaml
+NAMESPACE=harbor
+RELEASENAME=harbor
+FQDN=harbor.example.com
 
-EOF 
+cat << EOF > values-override.yaml
+harbor:
+  expose:
+    ingress:
+      hosts:
+        core: $FQDN
+  externalURL: https://$FQDN
+EOF
 
-
-helm -n ${CHART_NAMESPACE} upgrade --install harbor \
---repo https://sourcemation.github.io/charts/ \
-harbor \
--f /tmp/values.yaml
-
+helm -n $NAMESPACE upgrade --install $RELEASENAME \
+--repo https://sourcemation.github.io/charts/ harbor \
+-f values-override.yaml
 ```
 
 ### Validation and Testing
 
 ```bash
-
-kubectl -n ${CHART_NAMESPACE} get po
-
+NAMESPACE=harbor
+kubectl -n $NAMESPACE get po
 ```
 
 ## CLI removing
 
 ```bash
-
-helm -n ${CHART_NAMESPACE} uninstall harbor
-
-kubectl -n ${CHART_NAMESPACE} get pvc | sed -n '/harbor/s/ .*//p' | xargs kubectl delete pvc -n ${CHART_NAMESPACE}
-
+NAMESPACE=harbor
+RELEASENAME=harbor
+helm -n $NAMESPACE uninstall $RELEASENAME
+# Delete remaining PVCs
+kubectl -n $NAMESPACE get pvc | sed -n '/'"$RELEASENAME"'/s/ .*//p' | xargs kubectl delete pvc -n $NAMESPACE
 ```
 
