@@ -64,6 +64,7 @@ helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
 --set "gitlab.global.hosts.domain=${URL_DOMAIN}" \
 --set "gitlab.global.hosts.hostSuffix=${URL_SUFFIX}" \
 --set "gitlab.global.ingress.tls.secretName=${CERT_SECRET_NAME}" \
+--set "gitlab.gitlab-runner.certsSecretName=${CERT_SECRET_NAME}" \
 --repo https://sourcemation.github.io/charts/ ${CHART_NAME} \
 --version ${CHART_VERSION}
 
