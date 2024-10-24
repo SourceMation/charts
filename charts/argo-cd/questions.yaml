@@ -160,7 +160,7 @@ questions:
   group: "Integrations"
   type: boolean
 - variable: argo-cd.redis.enabled
-  label: Enable Dex server
+  label: Enable Redis server
   group: "Integrations"
   type: boolean
 - variable: argo-cd.controller.metrics.enabled
