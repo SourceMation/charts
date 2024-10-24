@@ -14,13 +14,13 @@ jenkins:
       password: "P@ssword1"
     image:
       registry: "docker.io"
-      repository: "jenkins/jenkins"
+      repository: "sourcemation/jenkins"
       tag: ""
       tagLabel: "jdk17"
-      pullPolicy: "IfNotPresent"
+      pullPolicy: "Always"
     imagePullSecretName: ""
     installPlugins:
-      - kubernetes:4292.v11898cf8fa_66
+      - kubernetes:4295.v7fa_01b_309c95
       - workflow-aggregator:600.vb_57cdd26fdd7
       - git:5.5.2
       - configuration-as-code:1850.va_a_8c31d3158b_
@@ -29,7 +29,7 @@ jenkins:
     additionalPlugins:
       - pipeline-stage-view:2.34
       - pipeline-utility-steps:2.18.0
-      - generic-webhook-trigger:2.2.3
+      - generic-webhook-trigger:2.2.5
       - rebuild:332.va_1ee476d8f6d
     persistence:
       enabled: true
