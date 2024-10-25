@@ -1,14 +1,14 @@
 apiVersion: v2
 appVersion: 2.462.3
 version: 1.0.1
-name: jenkins
-description: "The open-source automation server that enables developers to build, test, and deploy their CI/CD software efficiently."
+name: jenkins-by-lp
+description: "The open-source automation server that enables developers to build, test, and deploy their CI/CD software efficiently. Preconfigured by LinuxPolska"
 type: application
 annotations:
   catalog.cattle.io/display-name: Jenkins
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
-  catalog.cattle.io/release-name: jenkins
+  catalog.cattle.io/release-name: jenkins-by-lp
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
