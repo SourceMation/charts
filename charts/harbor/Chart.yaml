@@ -1,7 +1,7 @@
 annotations:
   catalog.cattle.io/os: linux
 apiVersion: v2
-appVersion: v1.15.1
+appVersion: v2.11.1
 dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/

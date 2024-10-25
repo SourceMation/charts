@@ -3,15 +3,6 @@ categories:
 - monitoring
 - container registry
 
-namespace: example-namespace
-
-# Components
-#- variable: questionsSpec.harbor.enabled
-#  label: "Deploy Harbor"
-#  type: boolean
-#  group: "Components"
-
-
 questions:
 
 # Service Discovery
@@ -81,12 +72,21 @@ questions:
   description: Choose specific ingress class if you want to use different than default. Note that different ingress controllers might require changing `harbor.expose.ingress.annotations`.
   group: "Service Discovery"
   show_if: "harbor.expose.type=ingress"
-#- variable: harbor.expose.ingress.annotations
-#  group: "Service Discovery"
-#  show_if: "harbor.expose.type=ingress"
-#- variable: harbor.expose.ingress.labels
-#  group: "Service Discovery"
-#  show_if: "harbor.expose.type=ingress"
+- variable: harbor.expose.ingress.annotations
+  type: map[string]
+  label: (harbor.expose.ingress.annotations)
+  description: |
+    Annotations for harbor ingress.
+    Note different ingress controllers may require a different ssl-redirect annotation.
+    For Envoy, use ingress.kubernetes.io/force-ssl-redirect: "true" and remove the nginx lines below,
+  group: "Service Discovery"
+  show_if: "harbor.expose.type=ingress"
+- variable: harbor.expose.ingress.labels
+  type: map[string]
+  label: (harbor.expose.ingress.labels)
+  description: Ingress labels.
+  group: "Service Discovery"
+  show_if: "harbor.expose.type=ingress"
 
 ## ClusterIP
 - variable: harbor.expose.clusterIP.name
@@ -113,12 +113,18 @@ questions:
   description: The service port Harbor listens on when serving HTTPS.
   group: "Service Discovery"
   show_if: "harbor.expose.type=clusterIP"
-#- variable: harbor.expose.clusterIP.annotations
-#  group: "Service Discovery"
-#  show_if: "harbor.expose.type=clusterIP"
-#- variable: harbor.expose.clusterIP.labels
-#  group: "Service Discovery"
-#  show_if: "harbor.expose.type=clusterIP"
+- variable: harbor.expose.clusterIP.annotations
+  type: map[string]
+  label: (harbor.expose.clusterIP.annotations)
+  description: ClusterIP SVC annotations.
+  group: "Service Discovery"
+  show_if: "harbor.expose.type=clusterIP"
+- variable: harbor.expose.clusterIP.labels
+  type: map[string]
+  label: (harbor.expose.clusterIP.labels)
+  description: ClusterIP SVC labels.
+  group: "Service Discovery"
+  show_if: "harbor.expose.type=clusterIP"
 
 ## NodePort
 - variable: harbor.expose.nodePort.name
@@ -151,12 +157,18 @@ questions:
   description: The node port Harbor listens on when serving HTTPS
   group: "Service Discovery"
   show_if: "harbor.expose.type=nodePort"
-#- variable: harbor.expose.nodePort.annotations
-#  group: "Service Discovery"
-#  show_if: "harbor.expose.type=nodePort"
-#- variable: harbor.expose.nodePort.labels
-#  group: "Service Discovery"
-#  show_if: "harbor.expose.type=nodePort"
+- variable: harbor.expose.nodePort.annotations
+  type: map[string]
+  label: (harbor.expose.nodePort.annotations)
+  description: NodePort SVC annotations.
+  group: "Service Discovery"
+  show_if: "harbor.expose.type=nodePort"
+- variable: harbor.expose.nodePort.labels
+  type: map[string]
+  label: (harbor.expose.nodePort.labels)
+  description: NodePort SVC labels.
+  group: "Service Discovery"
+  show_if: "harbor.expose.type=nodePort"
 
 ## LoadBalancer
 - variable: harbor.expose.loadBalancer.name
@@ -183,13 +195,22 @@ questions:
   description: The service port Harbor listens on when serving HTTPS.
   group: "Service Discovery"
   show_if: "harbor.expose.type=loadBalancer"
-#- variable: harbor.expose.loadBalancer.annotations
-#  group: "Service Discovery"
-#  show_if: "harbor.expose.type=loadBalancer"
-#- variable: harbor.expose.loadBalancer.labels
-#  group: "Service Discovery"
-#  show_if: "harbor.expose.type=loadBalancer"
+- variable: harbor.expose.loadBalancer.annotations
+  type: map[string]
+  label: (harbor.expose.loadBalancer.annotations)
+  description: LoadBalancer SVC annotations.
+  group: "Service Discovery"
+  show_if: "harbor.expose.type=loadBalancer"
+- variable: harbor.expose.loadBalancer.labels
+  type: map[string]
+  label: (harbor.expose.loadBalancer.labels)
+  description: LodBalancer SVC labels.
+  group: "Service Discovery"
+  show_if: "harbor.expose.type=loadBalancer"
 #- variable: harbor.expose.loadBalancer.sourceRanges
+#  type: array[string] # How to manage lists??
+#  label: (harbor.expose.loadBalancer.sourceRanges`)
+#  description: LoadBalancer SVC source ranges.
 #  group: "Service Discovery"
 #  show_if: "harbor.expose.type=loadBalancer"
 
@@ -219,7 +240,9 @@ questions:
   - variable: harbor.persistence.resourcePolicy
     type: string
     label: (harbor.persistence.resourcePolicy)
-    description: Setting it to "keep" to avoid removing PVCs during a helm delete operation. Leaving it empty will delete PVCs after the chart deleted (this does not apply for PVCs that are created for internal database and redis components, i.e. they are never deleted automatically).
+    description: |
+      Setting it to "keep" to avoid removing PVCs during a helm delete operation.
+      Leaving it empty will delete PVCs after the chart deleted (this does not apply for PVCs that are created for internal database and redis components, i.e. they are never deleted automatically).
 
   ## registry pvc
   - variable: questionsSpec.show.harbor.persistence.persistentVolumeClaim.registry
@@ -248,6 +271,10 @@ questions:
       type: string
       label: (harbor.persistence.persistentVolumeClaim.registry.size)
       description: Set size for PVC.
+    - variable: harbor.persistence.persistentVolumeClaim.registry.annotations
+      type: map[string]
+      label: (harbor.persistence.persistentVolumeClaim.registry.annotations)
+      description: Annotations for PVC.
 
   ## jobservice pvc
   - variable: questionsSpec.show.harbor.persistence.persistentVolumeClaim.jobservice
@@ -276,6 +303,10 @@ questions:
       type: string
       label: (harbor.persistence.persistentVolumeClaim.jobservice.jobLog.size)
       description: Set size for PVC.
+    - variable: harbor.persistence.persistentVolumeClaim.jobservice.jobLog.annotations
+      type: map[string]
+      label: (harbor.persistence.persistentVolumeClaim.jobservice.jobLog.annotations)
+      description: Annotations for PVC.
 
   ## database pvc
   - variable: questionsSpec.show.harbor.persistence.persistentVolumeClaim.database
@@ -304,6 +335,10 @@ questions:
       type: string
       label: (harbor.persistence.persistentVolumeClaim.database.size)
       description: Set size for PVC.
+    - variable: harbor.persistence.persistentVolumeClaim.database.annotations
+      type: map[string]
+      label: (harbor.persistence.persistentVolumeClaim.database.annotations)
+      description: Annotations for PVC.
 
   ## redis pvc
   - variable: questionsSpec.show.harbor.persistence.persistentVolumeClaim.redis
@@ -332,6 +367,10 @@ questions:
       type: string
       label: (harbor.persistence.persistentVolumeClaim.redis.size)
       description: Set size for PVC.
+    - variable: harbor.persistence.persistentVolumeClaim.redis.annotations
+      type: map[string]
+      label: (harbor.persistence.persistentVolumeClaim.redis.annotations)
+      description: Annotations for PVC.
 
   ## trivy pvc
   - variable: questionsSpec.show.harbor.persistence.persistentVolumeClaim.trivy
@@ -360,6 +399,10 @@ questions:
       type: string
       label: (harbor.persistence.persistentVolumeClaim.trivy.size)
       description: Set size for PVC.
+    - variable: harbor.persistence.persistentVolumeClaim.trivy.annotations
+      type: map[string]
+      label: (harbor.persistence.persistentVolumeClaim.trivy.annotations)
+      description: Annotations for PVC.
 
   ## imageChartStorage
   - variable: questionsSpec.show.harbor.persistence.imageChartStorage
@@ -382,9 +425,9 @@ questions:
       - filesystem
       - azure
       - gcs
-      #- s3
-      #- swift
-      #- oss
+      - s3
+      - swift
+      - oss
       label: (harbor.persistence.imageChartStorage.type)
       description: |
         Specify the type of storage: `filesystem`, `azure`, `gcs`, `s3`, `swift`, `oss`.
@@ -423,9 +466,69 @@ questions:
       label: (harbor.persistence.imageChartStorage.gcs.encodedkey)
       description: The base64 encoded json file which contains the key.
       show_if: "harbor.persistence.imageChartStorage.type=gcs"
-    ### s3 - TODO
-    ### swift - TODO
-    ### oss - TODO
+    ### s3
+    - variable: harbor.persistence.imageChartStorage.s3.region
+      type: string
+      label: (harbor.persistence.imageChartStorage.s3.region)
+      description: Select s3 service region.
+      show_if: "harbor.persistence.imageChartStorage.type=s3"
+    - variable: harbor.persistence.imageChartStorage.s3.bucket
+      type: string
+      label: (harbor.persistence.imageChartStorage.s3.bucket)
+      description: Select s3 bucket.
+      show_if: "harbor.persistence.imageChartStorage.type=s3"
+    - variable: harbor.persistence.imageChartStorage.s3.accesskey
+      type: string
+      label: (harbor.persistence.imageChartStorage.s3.accesskey)
+      description: Access key to s3 service.
+      show_if: "harbor.persistence.imageChartStorage.type=s3"
+    - variable: harbor.persistence.imageChartStorage.s3.secretkey
+      type: password
+      label: (harbor.persistence.imageChartStorage.s3.secretkey)
+      description: Secret key to s3 service.
+      show_if: "harbor.persistence.imageChartStorage.type=s3"
+    ### swift
+    - variable: harbor.persistence.imageChartStorage.swift.authurl
+      type: string
+      label: (harbor.persistence.imageChartStorage.swift.authurl)
+      description: Auth URL for swift storage service.
+      show_if: "harbor.persistence.imageChartStorage.type=swift"
+    - variable: harbor.persistence.imageChartStorage.swift.username
+      type: string
+      label: (harbor.persistence.imageChartStorage.swift.username)
+      description: User name for swift storage service.
+      show_if: "harbor.persistence.imageChartStorage.type=swift"
+    - variable: harbor.persistence.imageChartStorage.swift.password
+      type: password
+      label: (harbor.persistence.imageChartStorage.swift.password)
+      description: Password for chosen username.
+      show_if: "harbor.persistence.imageChartStorage.type=swift"
+    - variable: harbor.persistence.imageChartStorage.swift.container
+      type: string
+      label: (harbor.persistence.imageChartStorage.swift.container)
+      description: Container name of used continer in swift storage service.
+      show_if: "harbor.persistence.imageChartStorage.type=swift"
+    ### oss
+    - variable: harbor.persistence.imageChartStorage.oss.accesskeyid
+      type: string
+      label: (harbor.persistence.imageChartStorage.oss.accesskeyid)
+      description: OSS access key id.
+      show_if: "harbor.persistence.imageChartStorage.type=oss"
+    - variable: harbor.persistence.imageChartStorage.oss.accesskeysecret
+      type: password
+      label: (harbor.persistence.imageChartStorage.oss.accesskeysecret)
+      description: OSS access key secret.
+      show_if: "harbor.persistence.imageChartStorage.type=oss"
+    - variable: harbor.persistence.imageChartStorage.oss.region
+      type: string
+      label: (harbor.persistence.imageChartStorage.region)
+      description: OSS region.
+      show_if: "harbor.persistence.imageChartStorage.type=oss"
+    - variable: harbor.persistence.imageChartStorage.oss.bucket
+      type: string
+      label: (harbor.persistence.imageChartStorage.oss.bucket)
+      description: OSS bucket.
+      show_if: "harbor.persistence.imageChartStorage.type=oss"
 
 # Workloads
 ## Custom Default Credentials for Harbor
@@ -568,6 +671,7 @@ questions:
   label: (harbor.ipFamily.ipv4.enabled)
   description: Enable ipv6 in nginx related component.
   group: Workloads
+
 ## imagePullPolicy
 - variable: harbor.imagePullPolicy
   type: enum
@@ -577,6 +681,12 @@ questions:
   label: (harbor.imagePullPolicy)
   description: Set image pull strategy.
   group: Workloads
+
+## imagePullSecrets - TODO
+#- variable: harbor.imagePullSecrets
+#  type: list # How put list in questions??
+#  label: (harbor.imagePullSecrets)
+#  description: Set imagePullSecrets for registries which service containers deployed by harbor helm chart.
 
 ## updateStrategy
 - variable: harbor.updateStrategy.type
@@ -659,6 +769,38 @@ questions:
   group: Integrations
   show_subquestions_if: true
   subquestions:
+  - variable: harbor.metrics.core.path
+    type: string
+    label: (harbor.metrics.core.path)
+    description: Path under which metrics are served for core pod.
+  - variable: harbor.metrics.core.port
+    type: int
+    label: (harbor.metrics.core.port)
+    description: Port under which metrics are served for core pod.
+  - variable: harbor.metrics.registry.path
+    type: string
+    label: (harbor.metrics.registry.path)
+    description: Path under which metrics are served for registry pod.
+  - variable: harbor.metrics.registry.port
+    type: int
+    label: (harbor.metrics.registry.port)
+    description: Port under which metrics are served for registry pod.
+  - variable: harbor.metrics.jobservice.path
+    type: string
+    label: (harbor.metrics.jobservice.path)
+    description: Path under which metrics are served for jobservice pod.
+  - variable: harbor.metrics.jobservice.port
+    type: int
+    label: (harbor.metrics.jobservice.port)
+    description: Port under which metrics are served for jobservice pod.
+  - variable: harbor.metrics.exporter.path
+    type: string
+    label: (harbor.metrics.exporter.path)
+    description: Path under which metrics are served for exporter pod.
+  - variable: harbor.metrics.exporter.port
+    type: int
+    label: (harbor.metrics.exporter.port)
+    description: Port under which metrics are served for exporter pod.
   - variable: harbor.metrics.serviceMonitor.enabled
     type: boolean
     label: (harbor.metrics.serviceMonitor.enabled)
@@ -732,6 +874,14 @@ questions:
     type: string
     label: (harbor.nginx.image.tag)
     description: Image tag for nginx.
+  - variable: harbor.nginx.serviceAccountName
+    type: string
+    label: (harbor.nginx.serviceAccountName)
+    description: Service Account mapped to nginx pod. `default` if left empty.
+  - variable: harbor.nginx.automountServiceAccountToken
+    type: boolean
+    label: (harbor.nginx.automountServiceAccountToken)
+    description: Automount Service Accout Token in nginx pod containers.
   - variable: harbor.nginx.replicas
     type: int
     label: (harbor.nginx.replicas)
@@ -752,6 +902,14 @@ questions:
     type: string
     label: (harbor.portal.image.tag)
     description: Image tag for portal.
+  - variable: harbor.portal.serviceAccountName
+    type: string
+    label: (harbor.portal.serviceAccountName)
+    description: Service Account mapped to portal pod. `default` if left empty.
+  - variable: harbor.portal.automountServiceAccountToken
+    type: boolean
+    label: (harbor.portal.automountServiceAccountToken)
+    description: Automount Service Accout Token in portal pod containers.
   - variable: harbor.portal.replicas
     type: int
     label: (harbor.portal.replicas)
@@ -772,10 +930,32 @@ questions:
     type: string
     label: (harbor.core.image.tag)
     description: Image tag for core.
+  - variable: harbor.core.serviceAccountName
+    type: string
+    label: (harbor.core.serviceAccountName)
+    description: Service Account mapped to jobservice pod. `default` if left empty.
+  - variable: harbor.core.automountServiceAccountToken
+    type: boolean
+    label: (harbor.core.automountServiceAccountToken)
+    description: Automount Service Accout Token in core pod containers.
   - variable: harbor.core.replicas
     type: int
     label: (harbor.core.replicas)
     description: Number of replicas for core pod.
+  - variable: harbor.core.quotaUpdateProvider
+    type: enum
+    options:
+    - db
+    - redis
+    label: (harbor.core.quotaUpdateProvider)
+    description: |
+      The provider for updating project quota(usage), there are 2 options, redis or db.
+      By default it is implemented by db but you can configure it to redis which
+      can improve the performance of high concurrent pushing to the same project,
+      and reduce the database connections spike and occupies.
+      Using redis will bring up some delay for quota usage updation for display, so only
+      suggest switch provider to redis if you were ran into the db connections spike around
+      the scenario of high concurrent pushing to same project, no improvment for other scenes.
 ## jobservice
 - variable: questionsSpec.show.harbor.jobservice
   type: boolean
@@ -792,6 +972,14 @@ questions:
     type: string
     label: (harbor.jobservice.image.tag)
     description: Image tag for jobservice.
+  - variable: harbor.jobservice.serviceAccountName
+    type: string
+    label: (harbor.jobservice.serviceAccountName)
+    description: Service Account mapped to jobservice pod. `default` if left empty.
+  - variable: harbor.jobservice.automountServiceAccountToken
+    type: boolean
+    label: (harbor.jobservice.automountServiceAccountToken)
+    description: Automount Service Accout Token in jobservice pod containers.
   - variable: harbor.jobservice.replicas
     type: int
     label: (harbor.jobservice.replicas)
@@ -819,6 +1007,14 @@ questions:
     type: string
     label: (harbor.registry.controller.image.tag)
     description: Image tag for registry.controller.
+  - variable: harbor.registry.serviceAccountName
+    type: string
+    label: (harbor.registry.serviceAccountName)
+    description: Service Account mapped to registry pod. `default` if left empty.
+  - variable: harbor.registry.automountServiceAccountToken
+    type: boolean
+    label: (harbor.registry.automountServiceAccountToken)
+    description: Automount Service Accout Token in registry pod containers.
   - variable: harbor.registry.replicas
     type: int
     label: (harbor.registry.replicas)
@@ -853,6 +1049,14 @@ questions:
     type: string
     label: (harbor.trivy.image.tag)
     description: Image tag for trivy.
+  - variable: harbor.trivy.serviceAccountName
+    type: string
+    label: (harbor.trivy.serviceAccountName)
+    description: Service Account mapped to trivy pod. `default` if left empty.
+  - variable: harbor.trivy.automountServiceAccountToken
+    type: boolean
+    label: (harbor.trivy.automountServiceAccountToken)
+    description: Automount Service Accout Token in trivy pod containers.
   - variable: harbor.trivy.replicas
     type: int
     label: (harbor.trivy.replicas)
@@ -923,6 +1127,14 @@ questions:
     label: (harbor.database.internal.image.tag)
     description: Image tag for database.
     show_if: "harbor.database.type=internal"
+  - variable: harbor.datbase.internal.serviceAccountName
+    type: string
+    label: (harbor.database.internal.serviceAccountName)
+    description: Service Account mapped to database pod. `default` if left empty.
+  - variable: harbor.database.internal.automountServiceAccountToken
+    type: boolean
+    label: (harbor.database.internal.automountServiceAccountToken)
+    description: Automount Service Accout Token in database pod containers.
   - variable: harbor.database.internal.password
     type: password
     label: (harbor.database.internal.password)
@@ -1012,6 +1224,14 @@ questions:
     label: (harbor.redis.internal.image.tag)
     description: Image tag for redis.
     show_if: "harbor.redis.type=internal"
+  - variable: harbor.redis.internal.serviceAccountName
+    type: string
+    label: (harbor.redis.internal.serviceAccountName)
+    description: Service Account mapped to redis pod. `default` if left empty.
+  - variable: harbor.redis.internal.automountServiceAccountToken
+    type: boolean
+    label: (harbor.redis.internal.automountServiceAccountToken)
+    description: Automount Service Accout Token in nginx pod containers.
   ### external redis config
   - variable: harbor.redis.external.addr
     type: string
@@ -1052,6 +1272,14 @@ questions:
     type: string
     label: (harbor.exporter.image.tag)
     description: Image tag for exporter.
+  - variable: harbor.exporter.serviceAccountName
+    type: string
+    label: (harbor.exporter.serviceAccountName)
+    description: Service Account mapped to exporter pod. `default` if left empty.
+  - variable: harbor.exporter.automountServiceAccountToken
+    type: boolean
+    label: (harbor.exporter.automountServiceAccountToken)
+    description: Automount Service Accout Token in exporter pod containers.
   - variable: harbor.exporter.replicas
     type: int
     label: (harbor.exporter.replicas)
