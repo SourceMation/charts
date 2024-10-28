@@ -50,8 +50,7 @@ export CHART_NAMESPACE=gitlab-namespace
 export CHART_VERSION=1.0.0
 export URL_DOMAIN="apps.example.com"
 export URL_SUFFIX="prod"
-export WILDCARD_SECRET_NAME="gitlab-stack-tls"
-export CERT_SECRET_NAME="${CHART_NAME}-webservice-tls"
+export CLUSTER_ISSUER="default-selfsigned-ca"
 
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
@@ -64,8 +63,7 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
 --set "gitlab.global.hosts.domain=${URL_DOMAIN}" \
 --set "gitlab.global.hosts.hostSuffix=${URL_SUFFIX}" \
---set "gitlab.global.ingress.tls.secretName=${WILDCARD_SECRET_NAME}" \
---set "gitlab.gitlab-runner.certsSecretName=${CERT_SECRET_NAME}" \
+--set "gitlab.global.ingress.tls.clusterIssuer=${CLUSTER_ISSUER}" \
 --repo https://sourcemation.github.io/charts/ ${CHART_NAME} \
 --version ${CHART_VERSION}
 

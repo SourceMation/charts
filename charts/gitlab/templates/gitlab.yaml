@@ -52,7 +52,7 @@ spec:
     - "*.{{ .Release.Namespace }}.svc.cluster.local"
     - "*.{{ .Release.Namespace }}.svc"
   issuerRef:
-    name: default-selfsigned-ca
+    name: {{ .Values.gitlab.global.ingress.tls.clusterIssuer }}
     kind: ClusterIssuer
 {{- end }}
 

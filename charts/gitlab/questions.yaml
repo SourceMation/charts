@@ -100,19 +100,12 @@ questions:
     group: "Service Discovery"
     type: hostname
     required: false
-  - variable: gitlab.global.ingress.tls.secretName
-    default: "gitlab-stack-tls"
-    label: Secret with TLS certificate
+  - variable: gitlab.global.ingress.tls.clusterIssuer
+    default: "default-selfsigned-ca"
+    label: Cluster certificate issuer name
+    tooltip: "Use 'kubectl get clusterIssuer' to get the list of issuers."
     group: "Service Discovery"
-    type: reference[secret]
-    required: true
-  - variable: gitlab.gitlab-runner.certsSecretName
-    default: "gitlab-webservice-tls"
-    label: Secret with TLS certificate for GitLab Runner
-    tooltip: "It's used to populate the /home/gitlab-runner/.gitlab-runner/certs/ directory."
-    group: "Service Discovery"
-    type: reference[secret]
-    show_if: "gitlab.gitlab-runner.install=true"
+    type: string
     required: true
 
 # Storage

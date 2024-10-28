@@ -27,6 +27,7 @@ gitlab:
       configureCertmanager: false
       tls:
         enabled: true
+        clusterIssuer: "default-selfsigned-ca"
         secretName: "gitlab-stack-tls"
     minio:
       enabled: true
