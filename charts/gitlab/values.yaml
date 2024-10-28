@@ -22,10 +22,12 @@ gitlab:
       kas: {}
     ingress:
       enabled: true
+      class: "nginx"
+      provider: "nginx"
       configureCertmanager: false
       tls:
         enabled: true
-        secretName: "gitlab-server-tls"
+        secretName: "gitlab-stack-tls"
     minio:
       enabled: true
     monitoring:
@@ -43,31 +45,7 @@ gitlab:
     install: false
     installCRDs: false
   nginx-ingress:
-    enabled: true
-    #nameOverride: ""
-    #fullnameOverride: ""
-    controller:
-      replicaCount: 1
-      affinity: {}
-      #nodeSelector: {}
-      image:
-        registry: registry.gitlab.com
-        image: gitlab-org/cloud-native/mirror/images/ingress-nginx/controller
-        #tag: "v1.3.1"
-        pullPolicy: IfNotPresent
-      resources:
-        requests:
-          cpu: "100m"
-          memory: "100Mi"
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-      service:
-        enabled: true
-        externalIPs: []
-        type: LoadBalancer
-      updateStrategy: {}
+    enabled: false
   redis:
     install: true
     architecture: "standalone"
@@ -239,7 +217,7 @@ gitlab:
     # - nameOverride, namespaceOverride
     affinity: {}
     nodeSelector: {}
-    certsSecretName: "gitlab-server-tls"
+    certsSecretName: "gitlab-webservice-tls"
     image:
       registry: registry.gitlab.com
       image: gitlab-org/gitlab-runner

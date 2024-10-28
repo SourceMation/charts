@@ -35,11 +35,6 @@ questions:
   group: "Components"
 
 # Integrations
-- variable: gitlab.nginx-ingress.controller.metrics.enabled
-  default: true
-  label: Ingress metrics
-  group: "Integrations"
-  type: boolean
 - variable: gitlab.redis.metrics.enabled
   default: true
   label: Redis metrics
@@ -106,13 +101,13 @@ questions:
     type: hostname
     required: false
   - variable: gitlab.global.ingress.tls.secretName
-    default: "gitlab-server-tls"
+    default: "gitlab-stack-tls"
     label: Secret with TLS certificate
     group: "Service Discovery"
     type: reference[secret]
     required: true
   - variable: gitlab.gitlab-runner.certsSecretName
-    default: "gitlab-server-tls"
+    default: "gitlab-webservice-tls"
     label: Secret with TLS certificate for GitLab Runner
     tooltip: "It's used to populate the /home/gitlab-runner/.gitlab-runner/certs/ directory."
     group: "Service Discovery"
