@@ -40,21 +40,25 @@ questions:
   label: Redis metrics
   group: "Integrations"
   type: boolean
+  show_if: "gitlab.redis.install=true"
 - variable: gitlab.registry.metrics.enabled
   default: true
   label: GitLab Registry metrics
   group: "Integrations"
   type: boolean
+  show_if: "gitlab.registry.enabled=true"
 - variable: gitlab.postgresql.metrics.enabled
   default: true
   label: PostgreSQL metrics
   group: "Integrations"
   type: boolean
+  show_if: "gitlab.postgresql.install=true"
 - variable: gitlab.gitlab-runner.metrics.enabled
   default: true
   label: GitLab Runner metrics
   group: "Integrations"
   type: boolean
+  show_if: "gitlab.gitlab-runner.install=true"
 - variable: gitlab.gitlab.gitlab-exporter.metrics.enabled
   default: true
   label: GitLab Exporter metrics
@@ -143,6 +147,7 @@ questions:
   label: Redis persistent storage
   group: "Storage"
   type: boolean
+  show_if: "gitlab.redis.install=true"
   show_subquestion_if: true
   subquestions:
   - variable: gitlab.redis.master.persistence.size
@@ -172,6 +177,7 @@ questions:
   label: Minio persistent storage
   group: "Storage"
   type: boolean
+  show_if: "gitlab.global.minio.enabled=true"
   show_subquestion_if: true
   subquestions:
   - variable: gitlab.minio.persistence.size
@@ -198,25 +204,26 @@ questions:
     required: false
 - variable: gitlab.postgresql.primary.persistence.enabled
   default: true
-  label: Minio persistent storage
+  label: PostgreSQL persistent storage
   group: "Storage"
   type: boolean
+  show_if: "gitlab.postgresql.install=true"
   show_subquestion_if: true
   subquestions:
   - variable: gitlab.postgresql.primary.persistence.size
     default: "8Gi"
-    label: Minio persistent volume size
+    label: PostgreSQL persistent volume size
     group: "Storage"
     type: string
     required: true
   - variable: gitlab.postgresql.primary.persistence.storageClass
-    label: Minio persistent volume Storage Class
+    label: PostgreSQL persistent volume Storage Class
     group: "Storage"
     type: storageclass
     required: false
   - variable: gitlab.postgresql.primary.persistence.accessMode
     default: "ReadWriteOnce"
-    label: Minio persistent volume access mode
+    label: PostgreSQL persistent volume access mode
     group: "Storage"
     type: enum
     options:
@@ -227,48 +234,51 @@ questions:
     required: false
 
 # Workloads
-  - variable: gitlab.global.edition
-    default: "ce"
-    label: GitLab Edition (Community/Enterprise)
-    group: "Workloads"
-    type: enum
-    options:
-      - "ce"
-      - "ee"
-    required: true
-  - variable: gitlab.global.gitlabVersion
-    default: "17.3.1"
-    label: Gitlab version
-    group: "Workloads"
-    type: string
-    required: false
-  - variable: gitlab.auth.gitlab_password
-    label: Gitlab initial root password
-    description: "Default password is 'P@ssword1'. Change it!"
-    group: "Workloads"
-    type: password
-    min_length: 8
-    required: true
-  - variable: gitlab.auth.postgresql_password
-    label: Postgresql gitlab user password
-    description: "Default password is 'P@ssword1'. Change it!"
-    group: "Workloads"
-    type: password
-    min_length: 8
-    required: true
-  - variable: gitlab.auth.postgresql_postgres_password
-    label: Postgresql postgres user password
-    description: "Default password is 'P@ssword1'. Change it!"
-    group: "Workloads"
-    type: password
-    min_length: 8
-    required: true
+- variable: gitlab.global.edition
+  default: "ce"
+  label: GitLab Edition (Community/Enterprise)
+  group: "Workloads"
+  type: enum
+  options:
+    - "ce"
+    - "ee"
+  required: true
+- variable: gitlab.global.gitlabVersion
+  default: "17.3.1"
+  label: Gitlab version
+  group: "Workloads"
+  type: string
+  required: false
+- variable: gitlab.auth.gitlab_password
+  label: Gitlab initial root password
+  description: "Default password is 'P@ssword1'. Change it!"
+  group: "Workloads"
+  type: password
+  min_length: 8
+  required: true
+- variable: gitlab.auth.postgresql_password
+  label: Postgresql gitlab user password
+  description: "Default password is 'P@ssword1'. Change it!"
+  group: "Workloads"
+  type: password
+  min_length: 8
+  required: true
+  show_if: "gitlab.postgresql.install=true"
+- variable: gitlab.auth.postgresql_postgres_password
+  label: Postgresql postgres user password
+  description: "Default password is 'P@ssword1'. Change it!"
+  group: "Workloads"
+  type: password
+  min_length: 8
+  required: true
+  show_if: "gitlab.postgresql.install=true"
 
 - variable: gitlab.redis.master.customResources.limits.enabled
   label: Custom resource consumption for Redis
   type: boolean
   default: "false"
   group: "Workloads"
+  show_if: "gitlab.redis.install=true"
   show_subquestions_if: "true" 
   subquestions:
   - variable: gitlab.redis.master.resources.limits.cpu
@@ -287,6 +297,7 @@ questions:
   type: boolean
   default: "false"
   group: "Workloads"
+  show_if: "gitlab.registry.enabled=true"
   show_subquestions_if: "true" 
   subquestions:
   - variable: gitlab.registry.resources.limits.cpu
@@ -305,6 +316,7 @@ questions:
   type: boolean
   default: "false"
   group: "Workloads"
+  show_if: "gitlab.global.minio.enabled=true"
   show_subquestions_if: "true" 
   subquestions:
   - variable: gitlab.minio.resources.limits.cpu
@@ -323,6 +335,7 @@ questions:
   type: boolean
   default: "false"
   group: "Workloads"
+  show_if: "gitlab.postgresql.install=true"
   show_subquestions_if: "true" 
   subquestions:
   - variable: gitlab.postgresql.primary.resources.limits.cpu
@@ -341,6 +354,7 @@ questions:
   type: boolean
   default: "false"
   group: "Workloads"
+  show_if: "gitlab.gitlab-runner.install=true"
   show_subquestions_if: "true" 
   subquestions:
   - variable: gitlab.gitlab-runner.resources.limits.cpu
@@ -377,6 +391,7 @@ questions:
   type: boolean
   default: "false"
   group: "Workloads"
+  show_if: "gitlab.gitlab.gitlab-shell.enabled=true"
   show_subquestions_if: "true" 
   subquestions:
   - variable: gitlab.gitlab.gitlab-shell.resources.limits.cpu
