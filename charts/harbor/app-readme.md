@@ -1,3 +1,7 @@
 ## Overview
 
-harbor deploys harbor registry
+Deploys harbor registry.
+
+## Minimum configuration
+
+To make harbor functional, configure fields in **Service Discovery**.

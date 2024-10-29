@@ -25,4 +25,4 @@ name: harbor
 sources:
 - https://github.com/SourceMation/charts/tree/main/charts/harbor
 type: application
-version: v1.15.1
+version: 1.0.0

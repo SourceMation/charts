@@ -51,7 +51,6 @@ Harbor facilitates integration with data tracers like **otel** or **jaeger**. Co
 ```bash
 NAMESPACE=harbor
 kubectl create ns $NAMESPACE
-
 ```
 
 ### Go go helm
