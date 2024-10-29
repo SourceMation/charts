@@ -9,8 +9,8 @@ annotations:
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
   catalog.cattle.io/release-name: argo-cd
-home: https://argo-cd.readthedocs.io
-icon: ""
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
   - gitops
   - ci/cd
@@ -20,7 +20,7 @@ sources:
 dependencies:
   - name: common
     repository: https://sourcemation.github.io/charts/
-    version: 0.1.x
+    version: 0.1.1
   - name: argo-cd
     repository: https://argoproj.github.io/argo-helm
     version: 7.6.8
