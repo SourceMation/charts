@@ -18,6 +18,8 @@ sonarqube:
     #pullSecrets: []
   ingress:
     enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "default-selfsigned-ca"
     hosts:
     - name: "sonarqube.apps.example.com"
     tls: 
@@ -53,6 +55,7 @@ sonarqube:
     type: "ClusterIP"
     externalPort: 9000
     internalPort: 9000
+
   postgresql:
     enabled: true
     primary:
