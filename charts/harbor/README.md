@@ -20,7 +20,7 @@ To integrate harbor ingress with cert-manager for ingress tls managment the foll
 
 ### Integration with **Prometheus**
 
-To take advantage on Prometheus integration, ensure that it is installed and configured in the kubernetes cluster. [See](https://github.com/SourceMation/charts/tree/main/charts/prometheus).
+To take advantage on Prometheus integration, ensure that it is installed and configured in the kubernetes cluster. [See](https://ranchermanager.docs.rancher.com/integrations-in-rancher/monitoring-and-alerting).
 
 To integrate harbor with Promethus, configure values in `harbor.metrics.*`. Minimal configuration which enables this integration contains setting:
 - `harbor.metrics.enabled=true`
