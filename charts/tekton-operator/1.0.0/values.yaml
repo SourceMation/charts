@@ -1,4 +1,3 @@
-
 global:
   tektonOperator:
     enabled: false
@@ -216,7 +215,7 @@ tekton:
     ingress:
       enabled: true
       host: "tekton-operator.apps.example.com"
-      annotations: {}
+      secretName: "default-secret-name"
       hosts: []
 
   extensions: []

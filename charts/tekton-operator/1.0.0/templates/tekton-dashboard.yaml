@@ -341,7 +341,13 @@ kind: Ingress
 metadata:
   name: tekton-dashboard
   namespace: tekton-pipelines
+  annotations:
+    cert-manager.io/cluster-issuer: "default-selfsigned-ca"
 spec:
+  tls:
+  - hosts:
+    - {{ .Values.tekton.dashboard.ingress.host }}
+    secretName: {{ .Values.tekton.dashboard.ingress.secretName }}
   rules:
   - host: {{ .Values.tekton.dashboard.ingress.host }}
     http:
