@@ -1,0 +1,67 @@
+global:
+  certManagerCrd:
+    enabled: true
+#  certManagerApproverPolicyCrd:
+#    enabled: false
+
+cert-manager:
+  prometheus:
+    enabled: true
+#    servicemonitor:
+#      enabled: true
+#  image:
+#    repository: quay.io/jetstack/cert-manager-controller
+#    tag: 
+  global:
+#    imagePullSecrets: []
+    leaderElection:
+      namespace: cert-manager
+#  disableAutoApproval: true
+  namespace: cert-manager
+  crds:
+    enabled: true
+    keep: false
+  replicaCount: 2
+#  prometheus:
+#    enabled: false
+  enableCertificateOwnerRef: true
+  podDisruptionBudget:
+    enabled: true
+    minAvailable: 1
+
+cert-manager-approver-policy:
+  crds:
+    keep: false
+  replicaCount: 2
+#  image:
+#    repository: quay.io/jetstack/cert-manager-approver-policy
+#    tag: 
+  app:
+    logFormat: json
+#    metrics:
+#      service:
+#        servicemonitor:
+#          enabled: false
+    webhook:
+      timeoutSeconds: 30
+    approveSignerNames:
+    - issuers.cert-manager.io/*
+    - clusterissuers.cert-manager.io/*
+    - adcsissuers.adcs.certmanager.csf.nokia.com/*
+    - clusteradcsissuer.adcs.certmanager.csf.nokia.com/*
+    - googlecasclusterissuers.cas-issuer.jetstack.io/*
+    - googlecasissuers.cas-issuer.jetstack.io/*
+    - awspcaclusterissuers.awspca.cert-manager.io/*
+    - awspcaissuers.awspca.cert-manager.io/*
+#  tolerations: []
+  podDisruptionBudget:
+    minAvailable: 1
+#  podAnnotations: {}
+
+
+#trust-manager:
+#  namespace: "cert-manager"
+#  app:
+#    logFormat: json
+
+
