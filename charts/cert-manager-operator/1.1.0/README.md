@@ -1,32 +1,42 @@
-## Generic
+## General
 
-Based on: https://github.com/cert-manager/cert-manager.git
-Doc: https://cert-manager.io/docs/
-Source: https://github.com/SourceMation/charts.git
+### Are you looking for more information?
 
-## Requirements
+1. Based on: https://github.com/cert-manager/cert-manager.git
+2. Documentation: https://cert-manager.io/docs/
+3. Chart Source: https://github.com/SourceMation/charts.git
 
-lack of informations
 
 ## Before Installation
 
-no action required
+
+> **Note:**
+> no action required
+
 
 ## After Installation
 
-no action required
+> **Note:**
+> no action required
 
 ## Before Upgrade
 
-no action required
+> **Note:**
+> no action required
 
 ## After Upgrade
 
-no action required
+> **Note:**
+> no action required
+
+
+## Tips and Tricks
+
+> **Note:**
+> no tips and tricks
 
 
 ## Known Issues
-
 
 #### Error: Unable to continue with install: CustomResourceDefinition "*.cert-manager.io" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "": current value is ""
 
@@ -48,6 +58,10 @@ kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
 Reason:
 
 1. cert-manager do not start on time
+
+Solution:
+
+1. Re-deploy installation 
 
 
 ## CLI installation
@@ -81,10 +95,18 @@ kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,chall
 
 ```
 
+### Validation and Testing
+
+```bash
+
+kubectl -n ${CHART_NAMESPACE} get po
+
+```
 
 ## CLI removing
 
 ```bash
+
 
 helm -n ${CHART_NAMESPACE} uninstall cert-manager-operator
 
@@ -95,4 +117,3 @@ kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
 kubectl -n ${CHART_NAMESPACE} delete secret/trust-manager-tls
 
 ```
-

@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: Cert-manager - Operator (1/2)
+  catalog.cattle.io/display-name: Cert-manager (1/2) - Operator
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
   catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
@@ -7,26 +7,24 @@ annotations:
   catalog.cattle.io/release-name: cert-manager
   catalog.cattle.io/namespace: cert-manager
 apiVersion: v2
-appVersion: 1.15.1
+appVersion: v1.16.1
 dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/
   version: 0.1.x
 - condition: global.certManagerCrd.enabled
   name: cert-manager
-  version: v1.15.1
+  version: v1.16.1
+  repository: https://charts.jetstack.io
+- condition: global.certManagerApproverPolicyCrd.enabled
+  name: cert-manager-approver-policy
+  version: v0.16.0
   repository: https://charts.jetstack.io
 
 #- condition: global.adcsIssuer.enabled
 #  name: adcs-issuer
 #  version: 2.1.1
 #  repository: https://djkormo.github.io/adcs-issuer
-
-
-- condition: global.certManagerApproverPolicyCrd.enabled
-  name: cert-manager-approver-policy
-  version: v0.15.1
-  repository: https://charts.jetstack.io
 
 #- condition: global.certManagerCrd.enabled
 #  name: trust-manager
@@ -49,4 +47,4 @@ name: cert-manager-operator
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 1.0.0
+version: 1.1.0

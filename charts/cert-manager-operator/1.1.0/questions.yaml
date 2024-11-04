@@ -3,19 +3,27 @@ categories:
 namespace: cert-manager
 questions:
 - variable: global.certManagerApproverPolicyCrd.enabled
-  default: "false"
+  default: "true"
   label: Deploy RBAC (Approval Policy) for cert-manager (beta)
   type: boolean
   group: "Components"
+
+- variable: cert-manager.disableAutoApproval
+  default: "false"
+  label: Disable Auto Approval
+  description: "Uncheck if you disabled Deploy RBAC (Approval Policy)"
+  type: boolean
+  show_if: "global.certManagerApproverPolicyCrd.enabled=false"
+  group: "Others"
+  
 - variable: "cert-manager.prometheus.servicemonitor.enabled"
   default: "false"
-  label: Integrate with Prometheus
+  label: Integrate Cert Manager with Prometheus
   type: boolean
   group: "Integrations"
-#- variable: cert-manager-approver-policy.app.metrics.service.servicemonitor.enabled
-#  default: "false"
-#  label: Integrate with Prometheus
-#  type: boolean
-#  group: "Integrations"
-
-
+- variable: cert-manager-approver-policy.app.metrics.service.servicemonitor.enabled
+  default: "false"
+  label: Integrate RBAC (Approval Policy) with Prometheus
+  type: boolean
+  show_if: "global.certManagerApproverPolicyCrd.enabled=true"
+  group: "Integrations"
