@@ -1,0 +1,26 @@
+{{- if .Values.simulator.exampleCertificate.enabled }}
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.simulator.exampleCertificate.name | default "adcs-sim-certificate" }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  commonName: {{ .Values.simulator.exampleCertificate.commonName | default "example.com" }}
+  dnsNames:
+    - {{ .Values.simulator.exampleCertificate.dnsName1 | default "adcs1.example.com" }}
+    - {{ .Values.simulator.exampleCertificate.dnsName2 | default "adcs2.example.com" }}
+  issuerRef:
+    group: adcs.certmanager.csf.nokia.com
+    kind: ClusterAdcsIssuer
+    name: {{ .Values.simulator.clusterIssuerName | default "adcs-sim-adcsclusterissuer" }}
+  duration: {{ .Values.simulator.exampleCertificate.duration | default "2160h" }} # 90d
+  renewBefore: {{ .Values.simulator.exampleCertificate.renewBefore | default "360h" }} # 15d
+  subject:
+    organizations:
+      - {{ .Values.simulator.exampleCertificate.organization | default "Your Organization" }}
+  secretName: {{ .Values.simulator.secretName | default "adcs-sim-secret" }}
+
+{{- end }}

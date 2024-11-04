@@ -1,0 +1,17 @@
+{{- if .Values.simulator.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.simulator.serviceName | default "adcs-sim-service" }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.simulator.servicePort | default 8443 }}
+      targetPort: {{ .Values.simulator.containerPort | default 8443 }}
+  selector:
+    control-plane: adcs-sim
+
+{{- end }}
