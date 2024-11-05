@@ -292,6 +292,13 @@ questions:
     group: "Service Discovery"
     type: hostname
     required: true
+  - variable: forgejo.ingress.tls.0.hosts.0
+    default: "forgejo.apps.example.com"
+    label: URL
+    description: "Forgejo SSL URL"
+    group: "Service Discovery"
+    type: hostname
+    required: true
 
 - variable: forgejo.persistence.enabled
   default: "true"
