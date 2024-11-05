@@ -58,12 +58,15 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 cat << EOF > /tmp/values.yaml
 forgejo:
   ingress:
-    enabled: true
     hosts:
       - host: "${CHART_URL}"
         paths:
-        - path: "/"
-          pathType: "Prefix"
+          - path: "/"
+            pathType: "Prefix"
+    tls:
+      - hosts:
+          - "${CHART_URL}"
+        secretName: "forgejo-tls"
 EOF
 
 cd charts/charts/forgejo/
