@@ -1,7 +1,7 @@
 {{- /*
 */}}
 
-{{- if eq $.Values.issuerType "selfSigned" }}
+{{- if eq $.Values.type "selfSigned" }}
   {{- with $.Values.selfSigned }}
 ---
 apiVersion: cert-manager.io/v1

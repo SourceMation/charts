@@ -1,36 +1,49 @@
-## Generic
+## General
 
-Based on: https://github.com/cert-manager/cert-manager.git
-Doc: https://cert-manager.io/docs/
-Source: https://github.com/SourceMation/charts.git
+### Are you looking for more information?
 
-## Requirements
+1. Based on: https://github.com/cert-manager/cert-manager.git
 
-lack of informations
+2. Documentation: 
+* https://cert-manager.io/docs/
+* https://github.com/nokia/adcs-issuer
+
+3. Chart Source:
+* https://github.com/nokia/adcs-issuer 
+
 
 ## Before Installation
 
-1. Install chart via Apps: Cert-manager - Operator (1/2)
+1. Install chart via Apps: Cert-manager (1/3) - Operator
+2. Install chart via Apps: Cert-manager (2/3) - Add-ons
+
 
 ## After Installation
 
-no action required
+> **Note:**
+> no action required
 
 ## Before Upgrade
 
-no action required
+> **Note:**
+> no action required
 
 ## After Upgrade
 
-no action required
+> **Note:**
+> no action required
+
 
 ## Tips and Tricks
 
-lack of informations
+> **Note:**
+> no tips and tricks
+
 
 ## Known Issues
 
-lack of informations
+> **Note:**
+> Notify us: https://github.com/SourceMation/charts/issues
 
 
 ## CLI installation
@@ -40,7 +53,7 @@ lack of informations
 ```bash
 
 export CHART_NAMESPACE=cert-manager
-export CHART_VERSION=1.0.0
+export CHART_VERSION=1.1.0
 
 kubectl create ns ${CHART_NAMESPACE}
 
@@ -54,23 +67,23 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 
 helm -n ${CHART_NAMESPACE} upgrade --install cert-manager \
 --repo https://sourcemation.github.io/charts/ \
-cert-manager-config /
+default-issuer /
 --version ${CHART_VERSION}
-
-
-kubectl -n ${CHART_NAMESPACE} get po
-
-kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,challenges -A
 
 ```
 
+### Validation and Testing
+
+```bash
+
+kubectl get clusterissuer,issuer,clusteradcsissuer,adcsissuer,cert,crp -A
+
+```
 
 ## CLI removing
 
 ```bash
 
-helm -n ${CHART_NAMESPACE} uninstall cert-manager-config
-
+helm -n ${CHART_NAMESPACE} uninstall default-issuer
 
 ```
-
