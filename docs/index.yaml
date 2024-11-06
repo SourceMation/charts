@@ -2,6 +2,39 @@ apiVersion: v1
 entries:
   cert-manager:
   - annotations:
+      catalog.cattle.io/display-name: Cert-manager (3/3) - Configuration
+      catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+      catalog.cattle.io/release-name: cert-manager-config
+    apiVersion: v2
+    appVersion: v1.16.1
+    created: "2024-11-06T07:34:12.825732229+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    description: Cert-manager configuration. Install many times per k8s. Security.
+    digest: 5ae01d47619a446299de106ed154e4bd843f0b2eb43197c36ffc6392bb1efbf6
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - security
+    - cert manager
+    - cert-manager
+    kubeVersion: '>=1.26.0-0 <1.31.0-0'
+    maintainers:
+    - email: biuro@linuxpolska.com
+      name: Linux Polska
+    name: cert-manager
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - cert-manager/cert-manager-1.1.0.tgz
+    version: 1.1.0
+  - annotations:
       catalog.cattle.io/display-name: Cert-manager - Configuration (2/2)
       catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/os: linux
@@ -10,7 +43,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-config
     apiVersion: v2
     appVersion: 1.15.1
-    created: "2024-11-04T06:44:21.000779006+01:00"
+    created: "2024-11-06T07:34:12.824807221+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -45,7 +78,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-add-ons
     apiVersion: v2
     appVersion: 1.1.0
-    created: "2024-11-04T06:44:21.002192442+01:00"
+    created: "2024-11-06T07:34:12.827680001+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -55,7 +88,7 @@ entries:
       repository: https://djkormo.github.io/adcs-issuer
       version: 3.0.0
     description: Add-ons for cert-manager operator. Install once per k8s. Security.
-    digest: 2fa9b3c81e55e6bfd8767bcb20df7fe68f709572f34956846659d2bdee767b96
+    digest: 6d5465bd6a19514e44d7d95ddeb7d95b5e25e52e968cc86b6ca4996c0e36baf8
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -75,7 +108,7 @@ entries:
     version: 1.1.0
   cert-manager-operator:
   - annotations:
-      catalog.cattle.io/display-name: Cert-manager (1/2) - Operator
+      catalog.cattle.io/display-name: Cert-manager (1/3) - Operator
       catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
       catalog.cattle.io/namespace: cert-manager
       catalog.cattle.io/os: linux
@@ -84,7 +117,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager
     apiVersion: v2
     appVersion: v1.16.1
-    created: "2024-11-04T06:44:21.017291259+01:00"
+    created: "2024-11-06T07:34:12.842137688+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -99,7 +132,7 @@ entries:
       version: v0.16.0
     description: Manage TLS certificates via cert-manager operator. Install once per
       k8s. Security.
-    digest: 76bfa2d239ecc07663e8b3b87e9f3f9e7c6005275cca6bd14719000e7cdc06a9
+    digest: bd9f2e589682bb468891c994f8c8fb21807df316a4890a8ce27e432e99ffb215
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -127,7 +160,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager
     apiVersion: v2
     appVersion: 1.15.1
-    created: "2024-11-04T06:44:21.008663048+01:00"
+    created: "2024-11-06T07:34:12.834832773+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -169,7 +202,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2024-11-04T06:44:21.017505469+01:00"
+    created: "2024-11-06T07:34:12.842399178+01:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: 7b430316ecc0bab82476c486da0a753d678bdccc338745a5018b74584bea4deb
     home: https://linuxpolska.com
@@ -195,7 +228,7 @@ entries:
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-11-04T06:44:21.023497109+01:00"
+    created: "2024-11-06T07:34:12.848550889+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -235,7 +268,7 @@ entries:
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-11-04T06:44:21.02083935+01:00"
+    created: "2024-11-06T07:34:12.846163431+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -275,7 +308,7 @@ entries:
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-11-04T06:44:21.019089499+01:00"
+    created: "2024-11-06T07:34:12.844144611+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -316,7 +349,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2024-11-04T06:44:21.025529581+01:00"
+    created: "2024-11-06T07:34:12.850576539+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -357,7 +390,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-11-04T06:44:21.024893999+01:00"
+    created: "2024-11-06T07:34:12.849920906+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -398,7 +431,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2024-11-04T06:44:21.024238+01:00"
+    created: "2024-11-06T07:34:12.849221288+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -441,7 +474,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.14.0
-    created: "2024-11-04T06:44:21.052088984+01:00"
+    created: "2024-11-06T07:34:12.877765775+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -491,7 +524,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.13.0
-    created: "2024-11-04T06:44:21.043441712+01:00"
+    created: "2024-11-06T07:34:12.868201061+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -541,7 +574,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.12.1
-    created: "2024-11-04T06:44:21.034581984+01:00"
+    created: "2024-11-06T07:34:12.859622516+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -590,7 +623,7 @@ entries:
       catalog.cattle.io/release-name: jenkins-by-lp
     apiVersion: v2
     appVersion: 2.462.3
-    created: "2024-11-04T06:44:21.056343884+01:00"
+    created: "2024-11-06T07:34:12.882208828+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -625,7 +658,7 @@ entries:
       catalog.cattle.io/release-name: neuvector-sec
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2024-11-04T06:44:21.057015536+01:00"
+    created: "2024-11-06T07:34:12.882847202+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -652,4 +685,4 @@ entries:
     urls:
     - neuvector-security/neuvector-security-1.0.0.tgz
     version: 1.0.0
-generated: "2024-11-04T06:44:21.000101998+01:00"
+generated: "2024-11-06T07:34:12.8239414+01:00"
