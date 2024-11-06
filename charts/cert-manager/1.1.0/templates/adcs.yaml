@@ -1,0 +1,139 @@
+{{- /*
+*/}}
+
+{{- if eq $.Values.issuerType "adcs" }}
+  {{- with $.Values.adcs }}
+---
+apiVersion: v1
+kind: Secret
+  {{- if eq $.Values.scope "cluster" }}
+metadata:
+  name: {{ include "common.names.shortname" $ }}-creds
+  namespace: {{ .auth.operatorNamespace }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  {{- else }}
+metadata:
+  name: {{ include "common.names.shortname" $ }}-creds
+  namespace: {{ include "common.names.namespace" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  {{- end }}
+type: Opaque
+stringData:
+  password: {{ .auth.password }}
+  username: {{ .auth.username }}
+---
+apiVersion: adcs.certmanager.csf.nokia.com/v1
+  {{- if eq $.Values.scope "cluster" }}
+kind: ClusterAdcsIssuer
+metadata:
+  name: {{ include "common.names.shortname" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  {{- else }}
+kind: AdcsIssuer
+metadata:
+  name: {{ include "common.names.shortname" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  namespace: {{ include "common.names.namespace" $ }}
+  {{- end }}
+spec:
+  credentialsRef:
+    name: {{ include "common.names.shortname" $ }}-creds
+  statusCheckInterval: 1m
+  retryInterval: 8h
+  url: {{ .url }}
+  caBundle: {{ .auth.caBundle | b64enc  }}
+  templateName: {{ .templateName }}
+
+
+    {{- if $.Values.global.certManagerApproverPolicyCrd.enabled }}
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+  {{- if eq $.Values.scope "cluster" }}
+metadata:
+  name: {{ include "common.names.shortname" $ }}-{{ $.Values.scope }}-policy:allow-all
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  {{- else }}
+metadata:
+  name: {{ include "common.names.shortname" $ }}-{{ include "common.names.namespace" $ }}-policy:allow-all
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  {{- end }}
+rules:
+  - apiGroups:
+    - "policy.cert-manager.io"
+    resources: 
+    - "certificaterequestpolicies"
+    verbs: ["use"]
+    # Name of the CertificateRequestPolicies to be used.
+    resourceNames: 
+  {{- if eq $.Values.scope "cluster" }}
+    - "{{ include "common.names.shortname" $ }}-{{ $.Values.scope }}"
+  {{- else }}
+    - "{{ include "common.names.shortname" $ }}-{{ include "common.names.namespace" $ }}"
+  {{- end }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+  {{- if eq $.Values.scope "cluster" }}
+metadata:
+  name: {{ include "common.names.shortname" $ }}-{{ $.Values.scope }}-policy:allow-all
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  {{- else }}
+metadata:
+  name: {{ include "common.names.shortname" $ }}-{{ include "common.names.namespace" $ }}-policy:allow-all
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  {{- if eq $.Values.scope "cluster" }}
+  name: {{ include "common.names.shortname" $ }}-{{ $.Values.scope }}-policy:allow-all
+  {{- else }}
+  name: {{ include "common.names.shortname" $ }}-{{ include "common.names.namespace" $ }}-policy:allow-all
+  {{- end }}
+subjects:
+- kind: Group
+  name: system:authenticated
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: policy.cert-manager.io/v1alpha1
+kind: CertificateRequestPolicy
+metadata:
+  {{- if eq $.Values.scope "cluster" }}
+  name: {{ include "common.names.shortname" $ }}-{{ $.Values.scope }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  {{- else }}
+  name: {{ include "common.names.shortname" $ }}-{{ include "common.names.namespace" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+  {{- if eq $.Values.scope "cluster" }}
+    issuerRef:
+      group: "adcs.certmanager.csf.nokia.com"
+      name: "{{ include "common.names.shortname" $ }}"
+      kind: "ClusterAdcsIssuer"
+  {{- else }}
+    namespace:
+      matchNames:
+      - "{{ include "common.names.namespace" $ }}"
+  {{- end }}
+  {{- $.Values.policy | nindent 2 }}
+
+    {{- end }}
+
+
+
+  {{- end }}
+{{- end }}
