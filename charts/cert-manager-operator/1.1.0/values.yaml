@@ -67,15 +67,15 @@ cert-manager-approver-policy:
 #          enabled: false
     webhook:
       timeoutSeconds: 30
-    approveSignerNames:
-    - issuers.cert-manager.io/*
-    - clusterissuers.cert-manager.io/*
-    - adcsissuers.adcs.certmanager.csf.nokia.com/*
-    - clusteradcsissuer.adcs.certmanager.csf.nokia.com/*
-    - googlecasclusterissuers.cas-issuer.jetstack.io/*
-    - googlecasissuers.cas-issuer.jetstack.io/*
-    - awspcaclusterissuers.awspca.cert-manager.io/*
-    - awspcaissuers.awspca.cert-manager.io/*
+    approveSignerNames: []
+#    - issuers.cert-manager.io/*
+#    - clusterissuers.cert-manager.io/*
+#    - adcsissuers.adcs.certmanager.csf.nokia.com/*
+#    - clusteradcsissuer.adcs.certmanager.csf.nokia.com/*
+#    - googlecasclusterissuers.cas-issuer.jetstack.io/*
+#    - googlecasissuers.cas-issuer.jetstack.io/*
+#    - awspcaclusterissuers.awspca.cert-manager.io/*
+#    - awspcaissuers.awspca.cert-manager.io/*
   podDisruptionBudget:
     minAvailable: 1
 
