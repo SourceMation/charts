@@ -21,8 +21,8 @@ metadata:
   {{- end }}
 type: Opaque
 stringData:
-  password: {{ .auth.password }}
-  username: {{ .auth.username }}
+  password: {{ .auth.password | squote }}
+  username: {{ .auth.username | squote }}
 ---
 apiVersion: adcs.certmanager.csf.nokia.com/v1
   {{- if eq $.Values.scope "cluster" }}
@@ -44,9 +44,9 @@ spec:
     name: {{ include "common.names.shortname" $ }}-creds
   statusCheckInterval: 1m
   retryInterval: 8h
-  url: {{ .url }}
+  url: {{ .url | squote }}
   caBundle: {{ .auth.caBundle | b64enc  }}
-  templateName: {{ .templateName }}
+  templateName: {{ .templateName | squote }}
 
 
     {{- if $.Values.global.certManagerApproverPolicyCrd.enabled }}

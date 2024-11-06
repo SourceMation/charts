@@ -8,8 +8,8 @@ questions:
   description: Select type of issuer used to sign TLS.
   type: enum
   options:
-  - selfSigned: Generate own CA
-  - adcs: Active Directory Certificate Service via CAWE
+  - selfSigned
+  - adcs
   group: "Integrations"
 
 - variable: global.certManagerApproverPolicyCrd.enabled
