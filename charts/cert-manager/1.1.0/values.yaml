@@ -96,5 +96,5 @@ policy: |-
 
 questionsSpec:
 
-nameOverride: ''
-namespaceOverride: ''
+#nameOverride: ''
+#namespaceOverride: ''

@@ -3,19 +3,15 @@
 ### Are you looking for more information?
 
 1. Based on: https://github.com/cert-manager/cert-manager.git
-
-2. Documentation: 
-* https://cert-manager.io/docs/
-* https://github.com/nokia/adcs-issuer
-
-3. Chart Source:
-* https://github.com/nokia/adcs-issuer 
+2. Documentation: https://cert-manager.io/docs/
+3. Chart Source: https://github.com/SourceMation/charts.git
 
 
 ## Before Installation
 
-1. Install chart via Apps: Cert-manager (1/3) - Operator
-2. Install chart via Apps: Cert-manager (2/3) - Add-ons
+
+> **Note:**
+> no action required
 
 
 ## After Installation
@@ -42,8 +38,30 @@
 
 ## Known Issues
 
-> **Note:**
-> Notify us: https://github.com/SourceMation/charts/issues
+#### Error: Unable to continue with install: CustomResourceDefinition "*.cert-manager.io" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "": current value is ""
+
+Reason: cert-manager is installed in another namespace
+
+Soloution:
+
+1. Do not deploy this operator
+
+2. If do not have cert-manager, just clean resources
+
+```bash 
+kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
+
+```
+
+#### Internal error occurred: failed calling webhook "webhook.cert-manager.io": failed to call webhook: Post "": no endpoints available for service "cert-manager-webhook"
+
+Reason:
+
+1. cert-manager do not start on time
+
+Solution:
+
+1. Re-deploy installation 
 
 
 ## CLI installation
@@ -67,8 +85,13 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 
 helm -n ${CHART_NAMESPACE} upgrade --install cert-manager \
 --repo https://sourcemation.github.io/charts/ \
-default-issuer /
+cert-manager-operator /
 --version ${CHART_VERSION}
+
+
+kubectl -n ${CHART_NAMESPACE} get po
+
+kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,challenges -A
 
 ```
 
@@ -76,7 +99,7 @@ default-issuer /
 
 ```bash
 
-kubectl get clusterissuer,issuer,clusteradcsissuer,adcsissuer,cert,crp -A
+kubectl -n ${CHART_NAMESPACE} get po
 
 ```
 
@@ -84,6 +107,13 @@ kubectl get clusterissuer,issuer,clusteradcsissuer,adcsissuer,cert,crp -A
 
 ```bash
 
-helm -n ${CHART_NAMESPACE} uninstall default-issuer
+
+helm -n ${CHART_NAMESPACE} uninstall cert-manager-operator
+
+kubectl delete apiservice v1beta1.webhook.cert-manager.io
+
+kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
+
+kubectl -n ${CHART_NAMESPACE} delete secret/trust-manager-tls
 
 ```
