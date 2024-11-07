@@ -44,7 +44,6 @@ https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 
 export CHART_NAMESPACE=jenkins-namespace
 export CHART_URL=jenkins.apps.example.com
-export CHART_VERSION=1.0.1
 
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
@@ -64,12 +63,8 @@ jenkins:
     jenkinsUrl: "https://${CHART_URL}"
 EOF
 
-
-helm -n ${CHART_NAMESPACE} upgrade --install jenkins \
---repo https://sourcemation.github.io/charts/ \
-jenkins \
--f /tmp/values.yaml \
---version ${CHART_VERSION}
+cd charts/charts/jenkins
+helm -n ${CHART_NAMESPACE} upgrade --install jenkins -f /tmp/values.yaml .
 
 ```
 
