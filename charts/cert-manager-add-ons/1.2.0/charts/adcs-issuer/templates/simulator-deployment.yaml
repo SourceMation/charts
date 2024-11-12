@@ -1,0 +1,85 @@
+{{- if .Values.simulator.enabled }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.simulator.deploymentName | default "adcs-sim-deployment" }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.simulator.replicas | default 1 }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      control-plane: adcs-sim
+  template:
+    metadata:
+      labels:
+        control-plane: adcs-sim
+        {{- include "chart.selectorLabels" . | nindent 8 }}
+    spec:
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: "topology.kubernetes.io/zone"
+          whenUnsatisfiable: ScheduleAnyway
+      securityContext:
+        {{- toYaml .Values.simulator.podSecurityContext | nindent 8 }}
+      containers:
+        - name: manager
+          image: {{ .Values.simulator.image.repository }}:{{ .Values.simulator.image.tag }}
+          imagePullPolicy: Always
+          command:
+            - /usr/local/adcs-sim/manager
+          {{- if .Values.simulator.arguments }}
+          args:
+            {{- range $key, $value := .Values.simulator.arguments }}
+            - --{{ $key }}{{ if $value }}={{ $value }}{{ end }}
+            {{- end }}
+          {{- end }}
+          env:
+            - name: ENABLE_DEBUG
+              value: {{ .Values.simulator.environment.ENABLE_DEBUG | quote }}
+          ports:
+            - containerPort: {{ .Values.simulator.containerPort | default 8443 }}
+              name: adcs-sim
+              protocol: TCP
+          volumeMounts:
+            - name: csr
+              mountPath: "/usr/local/adcs-sim/ca"
+            - name: certs
+              mountPath: "/usr/local/adcs-sim/ca"
+              readOnly: true
+              subPath: root.pem
+          resources:
+            {{- toYaml .Values.simulator.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.simulator.containerSecurityContext | nindent 12 }}
+          {{- with .Values.simulator.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.simulator.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: csr
+          emptyDir:
+            sizeLimit: 50Mi
+        - name: certs
+          secret:
+            secretName: {{ .Values.simulator.certificateSecretName | default "adcs-sim-ca-secret" }}
+            items:
+            - key: tls.crt
+              path: root.pem
+            - key: tls.key
+              path: root.key
+      {{- with .Values.simulator.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+{{- end }}
