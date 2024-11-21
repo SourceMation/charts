@@ -1,0 +1,608 @@
+categories:
+- security
+- monitoring
+- container registry
+
+questions:
+
+# Service Discovery
+## Ingress
+- variable: harbor.expose.ingress.hosts.core
+  type: hostname
+  label: (harbor.expose.ingress.hosts.core)
+  description: FQDN for harbor ingress.
+  group: "Service Discovery"
+## ExternalURL
+- variable: harbor.externalURL
+  type: string
+  label: (harbor.externalURL)
+  description: |
+    The external URL for Harbor core service. It is used to:
+    1) populate the docker/helm commands showed on portal;
+    2) populate the token service URL returned to docker client.
+    Format: protocol://domain[:port]. Usually:
+    if `expose.type` is `ingress`, the `domain` should be the value of `expose.ingress.hosts.core`.
+  group: "Service Discovery"
+
+# Storage
+- variable: harbor.persistence.enabled
+  type: boolean
+  label: (harbor.persistence.enabled)
+  description: Disable to make all storage ephemeral / not persistent.
+  group: "Storage"
+  show_subquestions_if: "true"
+  subquestions:
+  - variable: harbor.persistence.resourcePolicy
+    type: string
+    label: (harbor.persistence.resourcePolicy)
+    description: |
+      Setting it to "keep" to avoid removing PVCs during a helm delete operation.
+      Leaving it empty will delete PVCs after the chart deleted (this does not apply for PVCs that are created for internal database and redis components, i.e. they are never deleted automatically).
+
+  ## registry pvc
+  - variable: questionsSpec.show.harbor.persistence.persistentVolumeClaim.registry
+    type: boolean
+    label: Show advanced configuration for registry PVC.
+    default: "false"
+    show_subquestions_if: "true"
+    subquestions:
+    - variable: harbor.persistence.persistentVolumeClaim.registry.storageClass
+      type: storageclass
+      label: (harbor.persistence.persistentVolumeClaim.registry.storageClass)
+      description: Specify the StorageClass used to provision the volume. Or the default StorageClass will be used (the default).
+    - variable: harbor.persistence.persistentVolumeClaim.registry.accessMode
+      type: string
+      label: (harbor.persistence.persistentVolumeClaim.registry.accessMode)
+      description: Set PVC access mode. Usually `ReadWriteOnce` or `ReadWriteMany`.
+    - variable: harbor.persistence.persistentVolumeClaim.registry.size
+      type: string
+      label: (harbor.persistence.persistentVolumeClaim.registry.size)
+      description: Set size for PVC.
+
+  ## jobservice pvc
+  - variable: questionsSpec.show.harbor.persistence.persistentVolumeClaim.jobservice
+    type: boolean
+    label: Show advanced configuration for jobservice PVC.
+    default: "false"
+    show_subquestions_if: "true"
+    subquestions:
+    - variable: harbor.persistence.persistentVolumeClaim.jobservice.jobLog.storageClass
+      type: storageclass
+      label: (harbor.persistence.persistentVolumeClaim.jobservice.jobLog.storageClass)
+      description: Specify the StorageClass used to provision the volume. Or the default StorageClass will be used (the default).
+    - variable: harbor.persistence.persistentVolumeClaim.jobservice.jobLog.accessMode
+      type: string
+      label: (harbor.persistence.persistentVolumeClaim.jobservice.jobLog.accessMode)
+      description: Set PVC access mode. Usually `ReadWriteOnce` or `ReadWriteMany`.
+    - variable: harbor.persistence.persistentVolumeClaim.jobservice.jobLog.size
+      type: string
+      label: (harbor.persistence.persistentVolumeClaim.jobservice.jobLog.size)
+      description: Set size for PVC.
+
+  ## database pvc
+  - variable: questionsSpec.show.harbor.persistence.persistentVolumeClaim.database
+    type: boolean
+    label: Show advanced configuration for database PVC.
+    default: "false"
+    show_subquestions_if: "true"
+    subquestions:
+    - variable: harbor.persistence.persistentVolumeClaim.database.storageClass
+      type: storageclass
+      label: (harbor.persistence.persistentVolumeClaim.database.storageClass)
+      description: Specify the StorageClass used to provision the volume. Or the default StorageClass will be used (the default).
+    - variable: harbor.persistence.persistentVolumeClaim.database.accessMode
+      type: string
+      label: (harbor.persistence.persistentVolumeClaim.database.accessMode)
+      description: Set PVC access mode. Usually `ReadWriteOnce` or `ReadWriteMany`.
+    - variable: harbor.persistence.persistentVolumeClaim.database.size
+      type: string
+      label: (harbor.persistence.persistentVolumeClaim.database.size)
+      description: Set size for PVC.
+
+  ## redis pvc
+  - variable: questionsSpec.show.harbor.persistence.persistentVolumeClaim.redis
+    type: boolean
+    label: Show advanced configuration for redis PVC.
+    default: "false"
+    show_subquestions_if: "true"
+    subquestions:
+    - variable: harbor.persistence.persistentVolumeClaim.redis.storageClass
+      type: storageclass
+      label: (harbor.persistence.persistentVolumeClaim.redis.storageClass)
+      description: Specify the StorageClass used to provision the volume. Or the default StorageClass will be used (the default).
+    - variable: harbor.persistence.persistentVolumeClaim.redis.accessMode
+      type: string
+      label: (harbor.persistence.persistentVolumeClaim.redis.accessMode)
+      description: Set PVC access mode. Usually `ReadWriteOnce` or `ReadWriteMany`.
+    - variable: harbor.persistence.persistentVolumeClaim.redis.size
+      type: string
+      label: (harbor.persistence.persistentVolumeClaim.redis.size)
+      description: Set size for PVC.
+
+  ## trivy pvc
+  - variable: questionsSpec.show.harbor.persistence.persistentVolumeClaim.trivy
+    type: boolean
+    label: Show advanced configuration for trivy PVC.
+    default: "false"
+    show_subquestions_if: "true"
+    subquestions:
+    - variable: harbor.persistence.persistentVolumeClaim.trivy.storageClass
+      type: storageclass
+      label: (harbor.persistence.persistentVolumeClaim.trivy.storageClass)
+      description: Specify the StorageClass used to provision the volume. Or the default StorageClass will be used (the default).
+    - variable: harbor.persistence.persistentVolumeClaim.trivy.accessMode
+      type: string
+      label: (harbor.persistence.persistentVolumeClaim.trivy.accessMode)
+      description: Set PVC access mode. Usually `ReadWriteOnce` or `ReadWriteMany`.
+    - variable: harbor.persistence.persistentVolumeClaim.trivy.size
+      type: string
+      label: (harbor.persistence.persistentVolumeClaim.trivy.size)
+      description: Set size for PVC.
+
+
+# Workloads
+## Custom Default Credentials for Harbor
+- variable: harbor.harborAdminPassword
+  type: password
+  label: (harbor.harborAdminPassword)
+  description: The initial password of Harbor admin. Default is `P@ssword1`. Change it from portal after launching Harbor.
+  group: Workloads
+- variable: harbor.registry.credentials.username
+  type: string
+  label: (harbor.registry.credentials.username)
+  description: Harbor registry user name.
+  group: Workloads
+- variable: harbor.registry.credentials.password
+  type: password
+  label: (harbor.registry.credentials.password)
+  description: Harbor registry password. Default is `P@ssword1`.
+  group: Workloads
+
+## imagePullPolicy
+- variable: harbor.imagePullPolicy
+  type: enum
+  options:
+  - IfNotPresent
+  - Always
+  label: (harbor.imagePullPolicy)
+  description: Set image pull strategy.
+  group: Workloads
+
+## updateStrategy
+- variable: harbor.updateStrategy.type
+  type: enum
+  optins:
+  - RollingUpdate
+  - Recreate
+  label: (harbor.updateStrategy.type)
+  description: |
+    The update strategy for deployments with persistent volumes(jobservice, registry).
+    Set it as `Recreate` when `RWM` for volumes isn't supported.
+  group: Workloads
+
+## logLevel
+- variable: harbor.logLevel
+  type: enum
+  options:
+  - debug
+  - info
+  - warning
+  - error
+  - fatal
+  label: (harbor.logLevel)
+  description: Set log level.
+  group: Workloads
+
+## secretKey
+- variable: harbor.secretKey
+  type: password
+  label: (harbor.secretKey)
+  description: The secret key used for encryption. Must be a string of 16 chars. Default is `not-a-secure-key`. CHANGE IT!
+  group: Workloads
+
+## cache
+- variable: harbor.cache.enabled
+  type: boolean
+  label: (harbor.cache.enabled)
+  description: |
+    Cache layer configurations.
+    If this feature enabled, harbor will cache the resource `project/project_metadata/repository/artifact/manifest` in the redis which help to improve the performance of high concurrent pulling manifest.
+  group: Workloads
+  show_subquestions_if: true
+  subquestions:
+  - variable: harbor.cache.expireHours
+    type: int
+    label: (harbor.cache.expireHours)
+    description: Time to keep cache in hours.
+
+# Integrations
+## metrics
+- variable: harbor.metrics.enabled
+  type: boolean
+  label: (harbor.metrics.enabled)
+  description: Enable metrics for components.
+  group: Integrations
+  show_subquestions_if: true
+  subquestions:
+  - variable: harbor.metrics.core.path
+  - variable: harbor.metrics.serviceMonitor.enabled
+    type: boolean
+    label: (harbor.metrics.serviceMonitor.enabled)
+    description: Create prometheus serviceMonitor to scrape harbor metrics. This requires the `monitoring.coreos.com/v1` CRD.
+    show_subquestions_if: true
+    subquestions:
+    - variable: harbor.metrics.serviceMonitor.interval
+      type: string
+      label: (harbor.metrics.serviceMonitor.interval)
+      description: Scrape interval. If not set, the Prometheus default scrape interval is used.
+
+## trace
+- variable: harbor.trace.enabled
+  type: boolean
+  label: (harbor.trace.enabled)
+  description: Enable trace provider - jaeger or otel.
+  group: Integrations
+  show_subquestions_if: true
+  subquestions:
+  - variable: harbor.trace.provider
+    type: enum
+    options:
+    - jaeger
+    - otel
+  - variable: harbor.trace.sample_rate
+    type: string
+    label: (harbor.trace.sample_rate)
+    description: set sample_rate to 1 if you wanna sampling 100% of trace data. set 0.5 if you wanna sampling 50% of trace data, and so forth.
+
+## cert-manager
+- variable: certManager.ingress.enabled
+  type: boolean
+  label: (certManager.ingress.enabled)
+  description: Enable cert-manager TLS managing for harbor ingress.
+  group: Integrations
+  show_subquestions_if: true
+  subquestions:
+  - variable: certManager.ingress.issuerKind
+    type: string
+    label: (certManager.ingress.issuerKind)
+    description: cert-manager.io issuer kind, usually `ClusterIssuer`.
+  - variable: certManager.ingress.issuerName
+    type: string
+    label: (certManager.ingress.issuerName)
+    description: Name of cert-manager issuer.
+  - variable: certManager.ingress.duration
+    type: string
+    label: (certManager.ingress.duration)
+    description: Default duration of generated TLS certificte.
+  - variable: certManager.ingress.renewBefore
+    type: string
+    label: (certManager.ingress.renewBefore)
+    description: Max time period in which cert-manager renew TLS cert.
+
+# Components
+## portal
+- variable: questionsSpec.show.harbor.portal
+  type: boolean
+  default: false
+  label: Show configuration for portal.
+  show_subquestions_if: true
+  group: Components
+  subquestions:
+  - variable: harbor.portal.image.repository
+    type: string
+    label: (harbor.portal.image.repository)
+    description: Repository from which portal image is pulled from.
+  - variable: harbor.portal.image.tag
+    type: string
+    label: (harbor.portal.image.tag)
+    description: Image tag for portal.
+  - variable: harbor.portal.replicas
+    type: int
+    label: (harbor.portal.replicas)
+    description: Number of replicas for portal pod.
+## core
+- variable: questionsSpec.show.harbor.core
+  type: boolean
+  default: false
+  label: Show configuration for core.
+  group: Components
+  show_subquestions_if: true
+  subquestions:
+  - variable: harbor.core.image.repository
+    type: string
+    label: (harbor.core.image.repository)
+    description: Repository from which core image is pulled from.
+  - variable: harbor.core.image.tag
+    type: string
+    label: (harbor.core.image.tag)
+    description: Image tag for core.
+  - variable: harbor.core.replicas
+    type: int
+    label: (harbor.core.replicas)
+    description: Number of replicas for core pod.
+  - variable: harbor.core.quotaUpdateProvider
+    type: enum
+    options:
+    - db
+    - redis
+    label: (harbor.core.quotaUpdateProvider)
+    description: |
+      The provider for updating project quota(usage), there are 2 options, redis or db.
+      By default it is implemented by db but you can configure it to redis which
+      can improve the performance of high concurrent pushing to the same project,
+      and reduce the database connections spike and occupies.
+      Using redis will bring up some delay for quota usage updation for display, so only
+      suggest switch provider to redis if you were ran into the db connections spike around
+      the scenario of high concurrent pushing to same project, no improvment for other scenes.
+## jobservice
+- variable: questionsSpec.show.harbor.jobservice
+  type: boolean
+  default: false
+  label: Show configuration for jobservice.
+  group: Components
+  show_subquestions_if: true
+  subquestions:
+  - variable: harbor.jobservice.image.repository
+    type: string
+    label: (harbor.jobservice.image.repository)
+    description: Repository from which jobservice image is pulled from.
+  - variable: harbor.jobservice.image.tag
+    type: string
+    label: (harbor.jobservice.image.tag)
+    description: Image tag for jobservice.
+  - variable: harbor.jobservice.replicas
+    type: int
+    label: (harbor.jobservice.replicas)
+    description: Number of replicas for jobservice pod.
+## registry
+- variable: questionsSpec.show.harbor.registry
+  type: boolean
+  default: false
+  label: Show configuration for registry.
+  group: Components
+  show_subquestions_if: true
+  subquestions:
+  - variable: harbor.registry.registry.image.repository
+    type: string
+    label: (harbor.registry.registry.image.repository)
+    description: Repository from which registry.registry image is pulled from.
+  - variable: harbor.registry.registry.image.tag
+    type: string
+    label: (harbor.registry.registry.image.tag)
+  - variable: harbor.registry.controller.image.repository
+    type: string
+    label: (harbor.registry.controller.image.repository)
+    description: Repository from which registry.controller image is pulled from.
+  - variable: harbor.registry.controller.image.tag
+    type: string
+    label: (harbor.registry.controller.image.tag)
+    description: Image tag for registry.controller.
+  - variable: harbor.registry.replicas
+    type: int
+    label: (harbor.registry.replicas)
+    description: Number of replicas for registry pod.
+## trivy
+- variable: questionsSpec.show.harbor.trivy
+  type: boolean
+  default: false
+  label: Show configuration for trivy.
+  show_subquestions_if: true
+  group: Components
+  subquestions:
+  - variable: harbor.trivy.enabled
+    type: boolean
+    label: (harbor.trivy.enabled)
+    description: Enable Trivy scanner.
+    show_subquestion_if: true
+    subquestions:
+    - variable: harbor.trivy.image.repository
+      type: string
+      label: (harbor.trivy.image.repository)
+      description: Repository from which trivy image is pulled from.
+    - variable: harbor.trivy.image.tag
+      type: string
+      label: (harbor.trivy.image.tag)
+      description: Image tag for trivy.
+    - variable: harbor.trivy.replicas
+      type: int
+      label: (harbor.trivy.replicas)
+      description: Number of replicas for trivy pod.
+    - variable: harbor.trivy.resources.requests.cpu
+      type: string
+      label: (harbor.trivy.resources.requests.cpu)
+      description: CPU resurce request for trivy.
+    - variable: harbor.trivy.resources.requests.memory
+      type: string
+      label: (harbor.trivy.resources.requests.memory)
+      description: Memory resurce request for trivy.
+    - variable: harbor.trivy.resources.limits.cpu
+      type: string
+      label: (harbor.trivy.resources.limits.cpu)
+      description: CPU resurce limit for trivy.
+    - variable: harbor.trivy.resources.limits.memory
+      type: string
+      label: (harbor.trivy.resources.limits.memory)
+      description: Memory resurce limit for trivy.
+    - variable: harbor.trivy.debugMode
+      type: boolean
+      label: (harbor.trivy.debugMode)
+      description: The flag to enable Trivy debug mode with more verbose scanning log.
+    - variable: harbor.trivy.vulnType
+      type: string
+      label: (harbor.trivy.vulnType)
+      description: A comma-separated list of vulnerability types. Possible values are `os` and `library`.
+    - variable: harbor.trivy.severity
+      type: string
+      label: (harbor.trivy.severity)
+      description: A comma-separated list of severities to be checked.
+    - variable: harbor.trivy.ignoreUnfixed
+      type: boolean
+      label: (harbor.trivy.ignoreUnfixed)
+      describtion: The flag to display only fixed vulnerabilities.
+    - variable: harbor.trivy.securityCheck
+      type: string
+      label: (harbor.trivy.securityCheck)
+      description: Comma-separated list of what security issues to detect. Possible values are `vuln`, `config` and `secret`.
+    - variable: harbor.trivy.timeout
+      type: string
+      label: (harbor.trivy.timeout)
+      description: The duration to wait for scan completion.
+## database
+- variable: questionsSpec.show.harbor.database
+  type: boolean
+  default: false
+  label: Show configuration for database.
+  show_subquestions_if: true
+  group: Components
+  subquestions:
+  - variable: harbor.database.type
+    type: enum
+    options:
+    - internal
+    - external
+    label: (harbor.database.type)
+    description: Internal - create new database StatefulSet. External - connect to existing database.
+  ### internal db config
+  - variable: harbor.database.internal.image.repository
+    type: string
+    label: (harbor.database.internal.image.repository)
+    description: Repository from which database internal.image is pulled from.
+    show_if: "harbor.database.type=internal"
+  - variable: harbor.database.internal.image.tag
+    type: string
+    label: (harbor.database.internal.image.tag)
+    description: Image tag for database.
+    show_if: "harbor.database.type=internal"
+  - variable: harbor.database.internal.password
+    type: password
+    label: (harbor.database.internal.password)
+    description: Initial superuser password to internal database. Default is `P@ssword1`.
+    show_if: "harbor.database.type=internal"
+  - variable: harbor.database.internal.shmSizeLimit
+    type: string
+    label: (harbor.database.internal.shmSizeLimit)
+    description: The size limit for Shared memory, pgSQL use it for shared_buffer.
+    show_if: "harbor.database.type=internal"
+  ### external db config
+  - variable: harbor.database.external.host
+    type: string
+    label: (harbor.database.external.host)
+    description: IP or domain name for external database.
+    show_if: "harbor.database.type=external"
+  - variable: harbor.database.external.port
+    type: int
+    label: (harbor.database.external.port)
+    description: Port number to external database.
+    show_if: "harbor.database.type=external"
+  - variable: harbor.database.external.username
+    type: string
+    label: (harbor.database.external.username)
+    description: Username which has acces to external database.
+    show_if: "harbor.database.type=external"
+  - variable: harbor.database.external.password
+    type: password
+    label: (harbor.database.external.password)
+    description: User password to external database. Default set is `P@ssword1`.
+    show_if: "harbor.database.type=external"
+  - variable: harbor.database.external.coreDatabase
+    type: string
+    label: (harbor.database.external.coreDatabase)
+    description: Core database name. It has to be changed if name `registry` has been taken already.
+    show_if: "harbor.database.type=external"
+  - variable: harbor.database.external.sslmode
+    type: enum
+    options:
+    - disable
+    - require
+    - verify-ca
+    - verify-full
+    label: (harbor.database.external.sslmode)
+    description: |
+      `disable` - No SSL.
+      `require` - Always SSL (skip verification).
+      `verify-ca` - Always SSL (verify that the certificate presented by the server was signed by a trusted CA).
+      `verify-full` - Always SSL (verify that the certification presented by the server was signed by a trusted CA and the server host name matches the one in the certificate).
+    show_if: "harbor.database.type=external"
+  - variable: harbor.database.maxIdleConns
+    type: int
+    label: (harbor.database.maxIdleConns)
+    description: |
+      The maximum number of connections in the idle connection pool per pod (core+exporter).
+      If it <=0, no idle connections are retained.
+  - variable: harbor.database.maxOpenConns
+    type: int
+    label: (harbor.database.maxOpenConns)
+    description: |
+      The maximum number of open connections to the database per pod (core+exporter).
+      If it <= 0, then there is no limit on the number of open connections.
+      Note: the default number of connections is 1024 for harbor's postgres.
+## redis
+- variable: questionsSpec.show.harbor.redis
+  type: boolean
+  default: false
+  label: Show configuration for redis.
+  show_subquestions_if: true
+  group: Components
+  subquestions:
+  - variable: harbor.redis.type
+    type: enum
+    options:
+    - internal
+    - external
+    label: (harbor.redis.type)
+    description: Internal - create new redis StatefulSet. External - connect to existing redis.
+  ### internal redis config
+  - variable: harbor.redis.internal.image.repository
+    type: string
+    label: (harbor.redis.internal.image.repository)
+    description: Repository from which redis internal.image is pulled from.
+    show_if: "harbor.redis.type=internal"
+  - variable: harbor.redis.internal.image.tag
+    type: string
+    label: (harbor.redis.internal.image.tag)
+    description: Image tag for redis.
+    show_if: "harbor.redis.type=internal"
+  ### external redis config
+  - variable: harbor.redis.external.addr
+    type: string
+    label: (harbor.redis.external.addr)
+    description: |
+      IP addres for external redis. Format:
+      (1) addr for redis: `<host_redis>:<port_redis>`;
+      (2) addr for redis+sentinel: `<host_sentinel1><port_sentinel1>,<host_sentinel2>:<port_sentinel2>,<host_sentinel3>:<port_sentinel3>`.
+    show_if: "harbor.redis.type=external"
+  - variable: harbor.redis.external.sentinelMasterSet
+    type: string
+    label: (harbor.redis.external.sentinelMasterSet)
+    description: The name of the set of Redis instances to monitor, it must be set to support redis+sentinel.
+    show_if: "harbor.redis.type=external"
+  - variable: harbor.redis.external.username
+    type: string
+    label: (harbor.redis.external.username)
+    description: Username field can be an empty string, and it will be authenticated against the default user.
+    show_if: "harbor.redis.type=external"
+  - variable: harbor.redis.external.password
+    type: password
+    label: (harbor.redis.external.password)
+    description: Default password is set to `P@ssword1`.
+    show_if: "harbor.redis.type=external"
+## exporter
+- variable: questionsSpec.show.harbor.exporter
+  type: boolean
+  default: false
+  label: Show configuration for exporter.
+  group: Components
+  show_subquestions_if: true
+  subquestions:
+  - variable: harbor.exporter.image.repository
+    type: string
+    label: (harbor.exporter.image.repository)
+    description: Repository from which exporter image is pulled from.
+  - variable: harbor.exporter.image.tag
+    type: string
+    label: (harbor.exporter.image.tag)
+    description: Image tag for exporter.
+  - variable: harbor.exporter.replicas
+    type: int
+    label: (harbor.exporter.replicas)
+    description: Number of replicas for exporter pod.
