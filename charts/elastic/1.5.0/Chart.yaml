@@ -36,4 +36,4 @@ name: elastic
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 1.4.0
+version: 1.5.0

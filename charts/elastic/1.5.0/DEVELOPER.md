@@ -3,7 +3,7 @@
 
 ```bash
                                                                                                      
-export CHART_VER=1.4.0                                                                                  
+export CHART_VER=1.5.0                                                                                  
 export CHART_RELEASE_NAME=elk
 export CHART_NAMESPACE=elastic-tst                  
                                                     
