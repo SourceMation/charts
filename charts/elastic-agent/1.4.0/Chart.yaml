@@ -10,7 +10,7 @@ annotations:
 #  catalog.cattle.io/namespace: kube-system
 #  catalog.cattle.io/auto-install: monitoring-stack-crd=match
 apiVersion: v2
-appVersion: 8.15.0
+appVersion: 8.16.0
 dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/
