@@ -50,6 +50,7 @@ no action required
 
 ```bash
 
+export CHART_NAMESPACE=elastic-tst
 kubectl create secret generic eck-license --from-file=elastic-license.json -n ${CHART_NAMESPACE} 
 kubectl label secret eck-license "license.k8s.elastic.co/scope"=operator -n ${CHART_NAMESPACE}
 

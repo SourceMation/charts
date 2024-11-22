@@ -15,7 +15,7 @@ Kubernetes: 1.26-1.30
 ```bash
 
 export CHART_NAMESPACE=lp-system
-export CHART_VERSION=1.4.0
+export CHART_VERSION=1.5.0
 
 kubectl create ns ${CHART_NAMESPACE}
 
@@ -53,7 +53,7 @@ kubectl get mutatingwebhookconfiguration -o name | grep -i open | xargs kubectl 
 
 ```bash
 
-export CHART_VERSION=1.4.0
+export CHART_VERSION=1.5.0
 export CHART_NAMESPACE=lp-system
 
 cd charts/elastic-operator/${CHART_VERSION}
