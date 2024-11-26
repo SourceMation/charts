@@ -62,7 +62,7 @@ lack of known issues
 
 ```bash
 
-export CHART_VER=1.5.0
+export CHART_VER=1.4.1
 export CHART_RELEASE_NAME=elk
 export CHART_NAMESPACE=kube-system
 

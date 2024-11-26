@@ -4,7 +4,7 @@
  
 ```bash 
  
-export CHART_VERSION=1.5.0 
+export CHART_VERSION=1.4.1 
 export CHART_NAMESPACE=lp-system 
  
 cd charts/elastic-operator/${CHART_VERSION} 

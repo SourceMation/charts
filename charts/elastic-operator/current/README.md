@@ -1,27 +1,53 @@
-# Useful links / Przydatne linki
+## Generic
 
-- https://istio.io
-- https://github.com/rancher/charts
+Based on: https://github.com/elastic/cloud-on-k8s.git
+Doc: https://www.elastic.co/guide/en/cloud-on-k8s/current/index.html
+Source: https://github.com/SourceMation/charts.git
 
-# Supprted versions
+## Requirements
 
-Kubernetes: 1.26-1.30
+lack of informations
+
+## Before Installation
+
+no action required
+
+## After Installation
+
+no action required
+
+## Before Upgrade
+
+no action required
+
+## After Upgrade
+
+no action required
 
 
-# Installation / Instalacja
+## Known Issues
 
-## Preparation / Przygotowanie
+lack of known issues
+
+
+
+
+## CLI installation
+
+### Preparation
 
 ```bash
 
 export CHART_NAMESPACE=lp-system
-export CHART_VERSION=1.5.0
+export CHART_VERSION=1.4.1
 
 kubectl create ns ${CHART_NAMESPACE}
 
+kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+
 ```
 
-## Installation via helm / Instalacja przy użyciu helm
+### Go go helm
 
 ``` bash
 
@@ -31,36 +57,21 @@ helm -n ${CHART_NAMESPACE} upgrade --install elastic-operator \
 
 ```
 
-# Remove / Usuwanie
+
+## CLI removing
 
 ```bash
 
 helm -n ${CHART_NAMESPACE} uninstall elastic-operator
-kubectl get crd -o name | grep -i istio | xargs kubectl delete
-kubectl get crd -o name | grep -i jaeger | xargs kubectl delete 
-kubectl get crd -o name | grep -i opentelemetry | xargs kubectl delete 
-kubectl get validatingwebhookconfiguration -o name | grep -i istio | xargs kubectl delete 
-kubectl get mutatingwebhookconfiguration -o name | grep -i istio | xargs kubectl delete
 
 kubectl get validatingwebhookconfiguration -o name | grep -i open | xargs kubectl delete
 kubectl get mutatingwebhookconfiguration -o name | grep -i open | xargs kubectl delete
 
-```
 
-# For developers / Dla deweloperow
-
-## Installing from repo / Instalacja z repo
-
-```bash
-
-export CHART_VERSION=1.5.0
-export CHART_NAMESPACE=lp-system
-
-cd charts/elastic-operator/${CHART_VERSION}
-
-
-helm -n ${CHART_NAMESPACE} upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
-elastic-operator . 
+#kubectl get crd -o name | grep -i istio | xargs kubectl delete
+#kubectl get crd -o name | grep -i jaeger | xargs kubectl delete 
+#kubectl get crd -o name | grep -i opentelemetry | xargs kubectl delete 
+#kubectl get validatingwebhookconfiguration -o name | grep -i istio | xargs kubectl delete 
+#kubectl get mutatingwebhookconfiguration -o name | grep -i istio | xargs kubectl delete
 
 ```
-
