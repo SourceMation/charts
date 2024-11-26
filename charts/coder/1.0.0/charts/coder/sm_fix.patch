@@ -1,0 +1,162 @@
+diff --git a/charts/libcoder/templates/_coder.yaml b/charts/libcoder/templates/_coder.yaml
+index 77cdbb2..3d32531 100644
+--- a/charts/libcoder/templates/_coder.yaml
++++ b/charts/libcoder/templates/_coder.yaml
+@@ -2,7 +2,7 @@
+ apiVersion: apps/v1
+ kind: Deployment
+ metadata:
+-  name: {{ include "coder.name" .}}
++  name: {{ include "coder.fullname" . | quote }}
+   labels:
+     {{- include "coder.labels" . | nindent 4 }}
+     {{- with .Values.coder.labels }}
+@@ -24,7 +24,7 @@ spec:
+       annotations:
+         {{- toYaml .Values.coder.podAnnotations | nindent 8  }}
+     spec:
+-      serviceAccountName: {{ .Values.coder.serviceAccount.name | quote }}
++      serviceAccountName: {{ include "coder.fullname" . | quote }}
+       restartPolicy: Always
+       {{- with .Values.coder.image.pullSecrets }}
+       imagePullSecrets:
+@@ -55,7 +55,7 @@ spec:
+ {{- end -}}
+ 
+ {{- define "libcoder.containerspec.tpl" -}}
+-name: coder
++name: {{ include "coder.fullname" . | quote }}
+ image: {{ include "coder.image" . | quote }}
+ imagePullPolicy: {{ .Values.coder.image.pullPolicy }}
+ command:
+@@ -75,7 +75,7 @@ securityContext: {{ toYaml .Values.coder.securityContext | nindent 2 }}
+ apiVersion: v1
+ kind: ServiceAccount
+ metadata:
+-  name: {{ .Values.coder.serviceAccount.name | quote }}
++  name: {{ include "coder.fullname" . | quote }}
+   annotations: {{ toYaml .Values.coder.serviceAccount.annotations | nindent 4 }}
+   labels:
+     {{- include "coder.labels" . | nindent 4 }}
+diff --git a/charts/libcoder/templates/_helpers.tpl b/charts/libcoder/templates/_helpers.tpl
+index 9a6c5df..d948415 100644
+--- a/charts/libcoder/templates/_helpers.tpl
++++ b/charts/libcoder/templates/_helpers.tpl
+@@ -5,6 +5,16 @@ Expand the name of the chart.
+ {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+ {{- end }}
+ 
++{{/*
++Create a default fully qualified app name.
++We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
++If release name contains chart name it will be used as a full name.
++*/}}
++{{- define "coder.fullname" -}}
++  {{- $name := default .Chart.Name .Values.nameOverride -}}
++  {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
++{{- end -}}
++
+ {{/*
+ Create chart name and version as used by the chart label.
+ */}}
+@@ -85,7 +95,7 @@ https
+ {{- else -}}
+ http
+ {{- end -}}
+-://coder.{{ .Release.Namespace }}.svc.cluster.local
++://{{ include "coder.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+ {{- end }}
+ 
+ {{/*
+diff --git a/charts/libcoder/templates/_rbac.yaml b/charts/libcoder/templates/_rbac.yaml
+index 1320c65..99a4ed2 100644
+--- a/charts/libcoder/templates/_rbac.yaml
++++ b/charts/libcoder/templates/_rbac.yaml
+@@ -4,7 +4,7 @@
+ apiVersion: rbac.authorization.k8s.io/v1
+ kind: Role
+ metadata:
+-  name: {{ .Values.coder.serviceAccount.name }}-workspace-perms
++  name: "{{ template "coder.fullname" . }}-workspace-perms"
+ rules:
+   - apiGroups: [""]
+     resources: ["pods"]
+@@ -50,13 +50,13 @@ rules:
+ apiVersion: rbac.authorization.k8s.io/v1
+ kind: RoleBinding
+ metadata:
+-  name: {{ .Values.coder.serviceAccount.name | quote }}
++  name: {{ include "coder.fullname" . | quote }}
+ subjects:
+   - kind: ServiceAccount
+-    name: {{ .Values.coder.serviceAccount.name | quote }}
++    name: {{ include "coder.fullname" . | quote }}
+ roleRef:
+   apiGroup: rbac.authorization.k8s.io
+   kind: Role
+-  name: {{ .Values.coder.serviceAccount.name }}-workspace-perms
++  name: "{{ template "coder.fullname" . }}-workspace-perms"
+ {{- end }}
+ {{- end -}}
+diff --git a/templates/ingress.yaml b/templates/ingress.yaml
+index 7dd2a13..2eccce0 100644
+--- a/templates/ingress.yaml
++++ b/templates/ingress.yaml
+@@ -4,7 +4,7 @@
+ apiVersion: networking.k8s.io/v1
+ kind: Ingress
+ metadata:
+-  name: coder
++  name: {{ template "coder.fullname" . }}
+   labels:
+     {{- include "coder.labels" . | nindent 4 }}
+   annotations:
+@@ -23,7 +23,7 @@ spec:
+             pathType: Prefix
+             backend:
+               service:
+-                name: coder
++                name: {{ template "coder.fullname" . }}
+                 port:
+                   name: "http"
+ 
+@@ -35,7 +35,7 @@ spec:
+             pathType: Prefix
+             backend:
+               service:
+-                name: coder
++                name: {{ template "coder.fullname" . }}
+                 port:
+                   name: "http"
+     {{- end }}
+diff --git a/templates/service.yaml b/templates/service.yaml
+index 1881f99..a9299c2 100644
+--- a/templates/service.yaml
++++ b/templates/service.yaml
+@@ -3,7 +3,7 @@
+ apiVersion: v1
+ kind: Service
+ metadata:
+-  name: coder
++  name: {{ include "coder.fullname" . }}
+   labels:
+     {{- include "coder.labels" . | nindent 4 }}
+   annotations:
+diff --git a/values.yaml b/values.yaml
+index dcf32c6..d3c2238 100644
+--- a/values.yaml
++++ b/values.yaml
+@@ -112,7 +112,6 @@ coder:
+     # coder.serviceAccount.annotations -- The Coder service account annotations.
+     annotations: {}
+     # coder.serviceAccount.name -- The service account name
+-    name: coder
+ 
+   # coder.securityContext -- Fields related to the container's security
+   # context (as opposed to the pod). Some fields are also present in the pod
+@@ -342,3 +341,4 @@ extraTemplates:
+   #      name: my-configmap
+   #    data:
+   #      key: {{ .Values.myCustomValue | quote }}
++nameOverride: "coder"
+\ No newline at end of file

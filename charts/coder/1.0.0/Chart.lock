@@ -1,0 +1,12 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: coder
+  repository: file://./charts/coder
+  version: 2.13.2
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.5.19
+digest: sha256:424257a72c72777f82e6ea6cf00646ba624c93516ea7fc33ecdafd6f965038b5
+generated: "2024-09-30T11:36:24.294942403+02:00"
