@@ -1,0 +1,36 @@
+apiVersion: v2
+name: Sonarqube
+description: A Helm chart for Kubernetes
+type: application
+version: 1.0.0
+
+appVersion: "10.6.1"
+
+annotations:
+  catalog.cattle.io/display-name: "Sonarqube"
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/release-name: sonarqube
+
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+
+keywords:
+- sonarqube
+
+kubeVersion: '>=1.19.0-0'
+
+maintainers:
+- email: biuro@linuxpolska.com
+  name: Linux Polska
+sources:
+- https://github.com/linuxpolska/ezd-rp.git
+
+
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.x
+
+- name: sonarqube
+  repository: https://SonarSource.github.io/helm-chart-sonarqube
+  version: 10.6.1+3163
