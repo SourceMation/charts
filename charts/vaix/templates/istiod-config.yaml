@@ -1,0 +1,11 @@
+{{- $namespace := .Release.Namespace }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: istiod-mesh-config
+  namespace: {{ .Values.global.istioNamespace }}
+data:
+  mesh: |-
+    {{- $meshConfigYaml := toYaml .Values.istiod.meshConfig }}
+    {{- $meshConfigYaml = $meshConfigYaml | replace "$NAMESPACE" $namespace }}
+    {{ $meshConfigYaml | nindent 4 }}

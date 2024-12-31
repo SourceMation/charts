@@ -1,0 +1,52 @@
+global:
+  istioNamespace: istio-system
+  logAsJson: true
+
+istiod:
+  meshConfig:
+    enableTracing: true
+    defaultConfig:
+      tracing:
+        sampling: 99
+        zipkin:
+          address: "jaeger-collector.istio-system.svc.cluster.local:9411"
+    extensionProviders:
+      - name: zipkin-tracing
+        zipkin:
+          service: "jaeger-collector.istio-system.svc.cluster.local"
+          port: 9411
+
+jaeger:
+  storage:
+    type: cassandra
+  cassandra:
+    host: vaix-cassandra
+    port: 9042
+  fullnameOverride: jaeger
+  collector:
+    annotations:
+      sidecar.istio.io/inject: "true"
+    zipkin:
+      enabled: true
+      httpPort: 9411
+      host-port: 9411
+    service:
+      zipkin:
+        port: 9411
+      ports:
+        - name: zipkin
+          port: 9411
+          targetPort: 9411
+          protocol: TCP
+  query:
+    ingress:
+      enabled: false
+  persistence:
+    enabled: true
+    accessMode: "ReadWriteOnce"
+    storageClass: ""
+    size: "8Gi"
+
+questionsSpec:
+  istiodJaegerApp:
+    customResources: false

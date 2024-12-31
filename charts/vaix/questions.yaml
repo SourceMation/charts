@@ -1,0 +1,56 @@
+categories:
+  - service-mesh
+  - tracing
+namespace: istio-system
+
+questions:
+  - variable: global.istioNamespace
+    default: "istio-system"
+    description: "Namespace where Istio components will be deployed"
+    group: "Global Settings"
+    label: "Istio Namespace"
+    type: string
+    required: true
+  - variable: istiod.meshConfig.enableTracing
+    default: true
+    description: "Enable tracing in Istio mesh configuration"
+    group: "Istiod Settings"
+    label: "Enable Tracing"
+    type: boolean
+    required: true
+  - variable: istiod.meshConfig.defaultConfig.tracing.sampling
+    default: 99
+    description: "Sampling rate for tracing"
+    group: "Istiod Settings"
+    label: "Tracing Sampling Rate"
+    type: int
+    required: true
+  - variable: jaeger.query.ingress.enabled
+    default: true
+    description: "Enable Ingress for Jaeger Query"
+    group: "Jaeger Settings"
+    label: "Enable Jaeger Ingress"
+    type: boolean
+    required: true
+    show_subquestion_if: true
+    subquestions:
+      - variable: jaeger.query.ingress.hosts[0]
+        default: "jaeger.example.com"
+        description: "Hostname for Jaeger Ingress"
+        group: "Jaeger Settings"
+        label: "Jaeger Ingress Host"
+        type: hostname
+        required: true
+  - variable: jaeger.persistence.storageClass
+    description: "Storage class for Jaeger persistent volume"
+    group: "Storage"
+    label: "Jaeger Storage Class"
+    type: storageclass
+    required: false
+  - variable: jaeger.persistence.size
+    default: "8Gi"
+    description: "Size of the persistent volume for Jaeger"
+    group: "Storage"
+    label: "Jaeger Storage Size"
+    type: string
+    required: true
