@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: argo-cd
+  repository: https://argoproj.github.io/argo-helm
+  version: 7.6.8
+digest: sha256:2714abb2c768d0b7c3bd65ed0f1903b0cfdb27f004a679bf9f4b75a73b935e85
+generated: "2024-10-29T12:00:13.610549094+01:00"
