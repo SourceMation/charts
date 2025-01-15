@@ -24,8 +24,9 @@ questions:
   type: boolean
   group: "Components"
 - variable: gitlab.gitlab-runner.install
-  default: "true"
+  default: "false"
   label: "Deploy GitLab Runner"
+  tooltip: "We recommend disabling gitlab-runner during initial deployment. After that you can enable it and upgrade the chart."
   type: boolean
   group: "Components"
 - variable: gitlab.gitlab.gitlab-shell.enabled

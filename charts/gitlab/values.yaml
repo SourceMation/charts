@@ -213,7 +213,7 @@ gitlab:
       requests:
         cpu: 50m
   gitlab-runner:
-    install: true
+    install: false
     # missing:
     # - nameOverride, namespaceOverride
     affinity: {}
