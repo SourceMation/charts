@@ -40,6 +40,9 @@ metadata:
   namespace: {{ include "common.names.namespace" $ }}
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "1"
 spec:
   secretName: {{ .Values.gitlab.global.ingress.tls.secretName }}
   isCA: false
@@ -52,33 +55,36 @@ spec:
     - "*.{{ .Release.Namespace }}.svc.cluster.local"
     - "*.{{ .Release.Namespace }}.svc"
   issuerRef:
+    group: cert-manager.io
     name: {{ .Values.gitlab.global.ingress.tls.clusterIssuer }}
     kind: ClusterIssuer
 {{- end }}
 
-{{- if index .Values.gitlab "gitlab-runner" "install" }}
+{{- if and (index .Values.gitlab "gitlab-runner" "install") .Values.gitlab.global.ingress.tls.enabled }}
 ---
 apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ include "common.names.shortname" $ }}-create-ghrunner-secret
+  namespace: {{ include "common.names.namespace" $ }}
   annotations:
     "helm.sh/hook": post-install,pre-upgrade
+    "helm.sh/hook-weight": "0"
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   ttlSecondsAfterFinished: 10
   template:
     spec:
       initContainers:
-      - name: wait-for-webservice
+      - name: wait-for-secret
         image: bitnami/kubectl:latest
         command: ["/bin/sh"]
         args:
         - -c
         - |
-          while [[ $(kubectl get pods -l app=webservice -o jsonpath='{.items[0].status.conditions[?(@.type=="Ready")].status}') != "True" ]]; do
-            echo "Waiting for webservice to be ready"
-            sleep 2
+          until kubectl get secret {{ .Values.gitlab.global.ingress.tls.secretName }} -n {{ .Release.Namespace }}; do
+            echo "Waiting for {{ .Values.gitlab.global.ingress.tls.secretName }} secret..."
+            sleep 5
           done
       containers:
       - name: create-ghrunner-secret
@@ -87,14 +93,16 @@ spec:
         args: 
         - -c
         - |
-          {{- if .Values.gitlab.global.hosts.hostSuffix }}
-          openssl s_client -showcerts -connect gitlab-{{ .Values.gitlab.global.hosts.hostSuffix }}.{{ .Values.gitlab.global.hosts.domain }}:443 </dev/null 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /tmp/ca.crt || false
-          kubectl create secret generic {{ .Release.Name }}-webservice-tls --from-file=gitlab-{{ .Values.gitlab.global.hosts.hostSuffix }}.{{ .Values.gitlab.global.hosts.domain }}.crt=/tmp/ca.crt || true
-          {{- else }}
-          openssl s_client -showcerts -connect gitlab.{{ .Values.gitlab.global.hosts.domain }}:443 </dev/null 2>/dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > /tmp/ca.crt || false
-          kubectl create secret generic {{ .Release.Name }}-webservice-tls --from-file=gitlab.{{ .Values.gitlab.global.hosts.domain }}.crt=/tmp/ca.crt || true
-          {{- end }}
-      serviceAccountName: {{ include "common.names.shortname" $ }}-gitlab-runner
+          TLS_CRT=$(kubectl get secret {{ .Values.gitlab.global.ingress.tls.secretName }} -n {{ .Release.Namespace }} -o jsonpath='{.data.tls\.crt}'| base64 -d )
+          kubectl create secret generic {{ index .Values.gitlab "gitlab-runner" "certsSecretName" }} \
+            -n {{ .Release.Namespace }} \
+            {{- if .Values.gitlab.global.hosts.hostSuffix }}
+            --from-literal=gitlab-{{ .Values.gitlab.global.hosts.hostSuffix }}.{{ .Values.gitlab.global.hosts.domain }}.crt="$TLS_CRT" \
+            {{- else }}
+            --from-literal=gitlab.{{ .Values.gitlab.global.hosts.domain }}.crt="$TLS_CRT" \
+            {{- end }}
+            --dry-run=client -o yaml | kubectl apply -f -
+      serviceAccountName: {{ include "common.names.shortname" $ }}-shared-secrets
       restartPolicy: Never
   backoffLimit: 2
 {{- end }}
