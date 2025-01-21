@@ -12,12 +12,6 @@ jenkins:
     admin:
       username: "admin"
       password: "P@ssword1"
-    image:
-      registry: "docker.io"
-      repository: "sourcemation/jenkins"
-      tag: ""
-      tagLabel: "jdk17"
-      pullPolicy: "Always"
     imagePullSecretName: ""
     installPlugins:
       - kubernetes:4295.v7fa_01b_309c95
