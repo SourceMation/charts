@@ -4,10 +4,10 @@
 
 
 <p align="center">
-    <a><img src="https://badgen.net/github/stars/SourceMation/charts?icon=github" /></a>
-    <a><img src="https://badgen.net/github/forks/SourceMation/charts?icon=github" /></a>
-    <a><img src="https://badgen.net/github/watchers/SourceMation/charts?icon=github" /></a>
-    <a href="https://sourcemation.com" ><img src="https://badgen.net/static/https/sourcemation.com/yellow" /></a>
+    <a href="https://github.com/SourceMation/charts"><img src="https://badgen.net/github/stars/SourceMation/charts?icon=github"/></a>
+    <a href="https://github.com/SourceMation/charts"><img src="https://badgen.net/github/forks/SourceMation/charts?icon=github"/></a>
+    <a href="https://github.com/SourceMation/charts"><img src="https://badgen.net/github/watchers/SourceMation/charts?icon=github"/></a>
+    <a href="https://sourcemation.com"><img src="https://badgen.net/static/https/sourcemation.com/yellow"/></a>
 </p>
 
 
