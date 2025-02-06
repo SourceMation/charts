@@ -1,15 +1,17 @@
 <p align="center">
-    <img width="300px" height=auto src="https://github.com/linuxpolska/ezd-rp/blob/release/1.0.0/docs/LinuxPolska-icon.png" />
+    <img width="300px" height=auto src="https://sourcemation.com/assets/logo_poziom_linia.svg" />
 </p>
 
 
 <p align="center">
-    <a href="https://github.com/bitnami/charts"><img src="https://badgen.net/github/stars/SourceMation/charts?icon=github" /></a>
-    <a href="https://github.com/bitnami/charts"><img src="https://badgen.net/github/forks/SourceMation/charts?icon=github" /></a>
+    <a><img src="https://badgen.net/github/stars/SourceMation/charts?icon=github" /></a>
+    <a><img src="https://badgen.net/github/forks/SourceMation/charts?icon=github" /></a>
+    <a><img src="https://badgen.net/github/watchers/SourceMation/charts?icon=github" /></a>
+    <a href="https://sourcemation.com" ><img src="https://badgen.net/static/https/sourcemation.com/yellow" /></a>
 </p>
 
 
-# The Linux Polska Charts for Kubernetes
+# The SourceMation Charts for Kubernetes
 
 
 Our repository contains set of helm charts which allow you to install desired services on Kubernetes using [Helm](https://github.com/helm/helm).
@@ -52,6 +54,6 @@ Please use the following to reach members of the community:
 
 
 - GitHub:  If you have any questions start a [discussion](https://github.com/sourcemation/charts/discussions) or if you want make changes open an [issue](https://github.com/sourcemation/charts/issues)  
-- Web Page: If you need commercial support [contact with us](https://linuxpolska.com/pl/kontakt/)
+- Web Page: If you need commercial support [contact with us](https://sourcemation.com/about-us)
 
-We are supporting polish and english language.
+We support Polish and English language.
