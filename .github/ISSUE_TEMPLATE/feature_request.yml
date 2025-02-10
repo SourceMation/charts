@@ -1,33 +1,55 @@
-# Copyright VMware, Inc.
-# SPDX-License-Identifier: APACHE-2.0
-
-name: "\U0001F680 Feature request"
-description: Suggest an idea for this project
-labels: ["feature-request"]
+name: "\U0001F680 Feature Request"
+description: Suggest a new feature or enhancement
+labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thank you for suggesting an idea to improve Linux Polska Helm charts.
-        Please fill in as much of the following form as you're able.
+        Thank you for taking the time to suggest a new feature for SourceMation Helm charts!
+        Please fill in as much information as you can.
+  - type: checkboxes
+    attributes:
+      label: Before you start
+      description: Please confirm the following
+      options:
+        - label: I have searched for similar feature requests
+          required: true
+        - label: I have tested with the latest chart version
+          required: true
+        - label: I have considered backward compatibility
+          required: true
+        - label: I am willing to submit a PR for this feature
   - type: input
     attributes:
-      label: Name and Version
-      description: Name and version of the affected chart
-      placeholder: 'for example: sourcemation/istio 1.0.0'
+      label: Chart name and version, if applicable
+      description: Name and version of a chart
+      placeholder: 'example: sourcemation/elastic-1.4.0'
+  - type: textarea
+    attributes:
+      label: Short feature description
+      description: A clear and concise description of the feature you'd like to see added
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Implementation Details
+      description: What kind of changes would this feature require?
+      options:
+      - label: Changes to values.yaml
+      - label: New templates required
+      - label: Modifications to existing templates
+      - label: Documentation updates
+      - label: Breaking changes expected
+  - type: textarea
+    attributes:
+      label: Use Case description
+      description: Describe the specific scenarios where this feature would be useful
     validations:
       required: true
   - type: textarea
     attributes:
-      label: What is the problem this feature will solve?
-    validations:
-      required: true
-  - type: textarea
+      label: Additional Context
+      description: Add any other context, links, or screenshots about the feature request here
+  - type: markdown
     attributes:
-      label: What is the feature you are proposing to solve the problem?
-      description: Describe the requests. If you already have something in mind... PRs are welcome!
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: What alternatives have you considered?
+      value: "Thanks for taking the time to fill out this feature request!"
