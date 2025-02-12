@@ -1,0 +1,59 @@
+core:
+  #registry: docker.io
+  #global:
+  #  cattle:
+  #    url: https://neuvector.example.com
+  #  imagePullSecrets:
+  #  - name: registry-auth
+  controller:
+    enabled: true
+    strategy:
+      rollingUpdate: null
+      type: Recreate
+    replicas: 1
+    ranchersso:
+      enabled: true
+    pvc:
+      enabled: true
+      accessModes:
+        - ReadWriteOnce
+  #    storageClass: bs-vsphere-c1
+      capacity: 5Gi
+  #  apisvc:
+  #    type: "LoadBalancer"
+  #    annotations:
+  #      kube-vip.io/loadbalancerIPs: ""
+  #  federation:
+  #    managedsvc:
+  #      type: "LoadBalancer"
+  #      annotations:
+  #        kube-vip.io/loadbalancerIPs: ""
+  enforcer:
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/infra
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+  manager:
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/infra
+      operator: Exists
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/master
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/control-plane
+    route:
+      enabled: false
+    ingress:
+      enabled: true
+      host: neuvector.example.com
+      ingressClassName: ""
+      path: "/"
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      tls: true
+      secretName: ingress-default-cert
