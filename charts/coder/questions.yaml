@@ -1,0 +1,248 @@
+categories:
+- cicd
+questions:
+
+# Components
+- variable: coder.customImage
+  default: false
+  label: Change Coder image
+  group: "Components"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: coder.coder.image.repo
+    default: "ghcr.io/coder/coder"
+    label: Coder image registry/repository
+    type: string
+  - variable: coder.coder.image.tag
+    default: ""
+    label: Coder image tag
+    description: "Coder image tag"
+    group: "Components"
+    type: string
+  #- variable: coder.coder.image.PullSecrets
+  #  label: Coder image PullSecrets
+  #  description: "Coder image PullSecrets"
+  #  group: "Components"
+  #  type: string
+  #  required: false
+  - variable: coder.coder.image.pullPolicy
+    default: "IfNotPresent"
+    label: Coder image pullPolicy
+    description: "Coder image pullPolicy"
+    group: "Components"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+- variable: postgresql.customImage
+  default: false
+  label: Change Postgresql image
+  description: "Change Postgresql image"
+  group: "Components"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: postgresql.image.registry
+    default: "docker.io"
+    label: Postgresql image registry
+    description: "Postgresql image registry"
+    group: "Components"
+    type: string
+  - variable: postgresql.image.repository
+    default: "bitnami/postgresql"
+    label: Postgresql image repository
+    description: "Postgresql image repository"
+    group: "Components"
+    type: string
+  - variable: postgresql.image.tag
+    label: Postgresql image tag
+    description: "Postgresql image tag"
+    group: "Components"
+    type: string
+    required: false
+  #- variable: postgresql.image.pullSecrets
+  #  label: Postgresql image PullSecrets
+  #  description: "Postgresql image PullSecrets"
+  #  group: "Components"
+  #  type: string
+  #  required: false
+  - variable: postgresql.image.pullPolicy
+    default: "IfNotPresent"
+    label: Postgresql image pullPolicy
+    description: "Postgresql image pullPolicy"
+    group: "Components"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+
+# Integrations
+- variable: coder.coder.env[1].value
+  default: "true"
+  label: Coder metrics
+  description: "Coder metrics"
+  group: "Integrations"
+  type: boolean
+- variable: postgresql.metrics.enabled
+  default: "true"
+  label: Postgresql metrics
+  description: "Postgresql metrics"
+  group: "Integrations"
+  type: boolean
+
+# Service Discovery
+- variable: coder.coder.ingress.enable
+  label: Enable Coder Ingress
+  group: "Service Discovery"
+  default: "true"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: coder.coder.ingress.host
+    label: URL
+    description: "Configure url for coder web-ui"
+    group: "Service Discovery"
+    type: hostname
+    default: "coder.apps.example.com"
+    min: 6
+  - variable: "coder.coder.ingress.tls.issuerName"
+    default: "default-selfsigned-ca"
+    label: Certificate issuer name
+    tooltip: "Use 'kubectl get Issuer,clusterIssuer' to get the list of issuers."
+    group: "Service Discovery"
+    type: string
+    required: true
+  - variable: "coder.coder.ingress.tls.issuerKind"
+    default: "ClusterIssuer"
+    label: Certificate issuer kind
+    group: "Service Discovery"
+    type: enum
+    options:
+    - "ClusterIssuer"
+    - "Issuer"
+    required: true
+  - variable: coder.coder.ingress.tls.secretName
+    label: Secret Name
+    description: "Configure secret name for coder"
+    group: "Service Discovery"
+    type: string
+    default: "coder-tls-cert"
+
+# Storage
+- variable: postgresql.primary.persistence.size
+  default: "10Gi"
+  label: Postgresql persistent volume size
+  description: "Postgresql persistent volume size"
+  group: "Storage"
+  type: string
+- variable: postgresql.primary.storageClass
+  label: Postgresql persistent Storage Class
+  description: "Postgresql persistent Storage Class"
+  group: "Storage"
+  type: storageclass
+
+# Workloads
+- variable: postgresql.auth.database
+  label: Coder DB name
+  description: "Coder database name"
+  group: "Workloads"
+  type: string
+  default: "coder"
+  required: true
+- variable: postgresql.auth.username
+  label: Coder username
+  description: "Coder DB username"
+  group: "Workloads"
+  type: string
+  default: "coder"
+  required: true
+- variable: postgresql.auth.password
+  default: "P@ssword1"
+  label: Coder password
+  description: "Default password is 'P@ssword1'. Change it!"
+  group: "Workloads"
+  type: password
+  min: 8
+  required: true
+- variable: postgresql.customPasswords
+  default: false
+  label: Change Postgresql DB configuration
+  description: "Change Postgresql DB configuration"
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: postgresql.auth.postgresPassword
+    default: "P@ssword1"
+    label: Postgresql admin password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
+    type: password
+- variable: coder.customResources
+  default: false
+  label: Modify Coder resource consumption
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: coder.coder.resources.limits.cpu
+    label: Milicore limit for a Coder instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+  - variable: coder.coder.resources.requests.cpu
+    label: Milicore requests for a Coder instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+  - variable: coder.coder.resources.limits.memory
+    label: Memory limit for a Coder instance
+    description: "Memory limit for a Coder instance"
+    group: "Workloads"
+    type: string
+  - variable: coder.coder.resources.requests.memory
+    label: Memory requests for a Coder instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+- variable: postgresql.customResources
+  default: false
+  label: Modify Postgresql resource consumption
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: postgresql.primary.resources.limits.cpu
+    label: Milicore limit for a Postgresql instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+  - variable: postgresql.primary.resources.requests.cpu
+    label: Milicore requests for a Postgresql instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+  - variable: postgresql.primary.resources.limits.memory
+    label: Memory limit for a Postgresql instance
+    description: "Memory limit for a Postgresql instance"
+    group: "Workloads"
+    type: string
+  - variable: postgresql.primary.resources.requests.memory
+    label: Memory requests for a Postgresql instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+
+# Others
+- variable: postgresql.primary.updateStrategy.type
+  default: "RollingUpdate"
+  label: Postgresql update strategy
+  description: "Postgresql update strategy"
+  group: "Others"
+  type: enum
+  options:
+  - "RollingUpdate"
+  - "Recreate"

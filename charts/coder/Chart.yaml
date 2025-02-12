@@ -1,0 +1,38 @@
+apiVersion: v2
+
+annotations:
+  catalog.cattle.io/display-name: "Coder"
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
+  catalog.cattle.io/release-name: coder
+
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.x
+- name: coder
+  repository: https://helm.coder.com/v2
+  version: 2.18.5
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.5.37
+
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+
+name: coder
+appVersion: 2.18.5
+kubeVersion: '>=1.26.0-0'
+description: Self-serve portal for remote development in Kubernetes.
+keywords:
+- coder
+- development
+- terraform
+sources:
+- https://github.com/SourceMation/charts.git
+maintainers:
+- email: marek.janosz@linuxpolska.com
+  name: jmmaro
+
+type: application
+version: 1.0.0
