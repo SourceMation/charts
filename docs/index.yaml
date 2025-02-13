@@ -122,6 +122,7 @@ entries:
     apiVersion: v2
     appVersion: 1.1.0
     created: "2025-02-12T16:02:33.587519607+01:00"
+
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -235,6 +236,45 @@ entries:
     type: application
     urls:
     - cert-manager-operator/cert-manager-operator-1.0.0.tgz
+    version: 1.0.0
+  cnpg-operator:
+  - annotations:
+      catalog.cattle.io/display-name: Postgresql CNPG (1/2) - Operator
+      catalog.cattle.io/namespace: lp-systems
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: cnpg
+    apiVersion: v2
+    appVersion: 1.24.1
+    created: "2025-02-13T20:28:04.348313931+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - condition: global.cnpgOperatorCrd.enabled
+      name: cloudnative-pg
+      repository: https://cloudnative-pg.github.io/charts
+      version: 0.22.1
+    description: CloudNativePG is operator designed to manage PostgreSQL workloads.
+      Install only once on kubernetes. Databases.
+    digest: 960677cc92a0d2abd9fe119278c78d2c2646962c08e1b19922cd20026bac9d73
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - databases
+    - cloudnativepg
+    - postgresql
+    - postgres
+    - db
+    maintainers:
+    - email: kamil.kwiatkowski@linuxpolska.com
+      name: Qwiatu
+    name: cnpg-operator
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - cnpg-operator/cnpg-operator-1.0.0.tgz
     version: 1.0.0
   common:
   - annotations:

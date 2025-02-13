@@ -1,0 +1,93 @@
+categories:
+- databases
+namespace: lp-systems
+questions:
+
+
+
+# Components
+- variable: global.cnpgOperatorCrd.enabled
+  default: "true"
+  label: "Deploy CNPG Operator"
+  type: boolean
+  group: "Components"
+
+
+# Integrations 
+
+
+- variable: questionsSpec.k8sPlatform
+  type: enum
+  tooltip: "No help available."
+  label: Kubernetes Platform
+  description: 'Kubernetes Platform'
+  default: "rke2"
+  group: "Integrations"
+  options:
+    rke2: RKE2
+  show_if: "true"
+  show_subquestions_if: "true" 
+
+#- variable: questionsSpec.kibanaApp.integrations.otel.enabled
+#  label: Integrate Kibana with OTEL
+#  description: ''
+#  type: boolean
+#  default: "false"
+#  group: "Integrations"
+#  options: []
+#  show_if: "questionsSpec.kibanaApp.enabled=true"
+#  show_subquestions_if: "true" 
+#  subquestions:
+#  - variable: questionsSpec.kibanaApp.integrations.otel.serviceName
+#    type: string
+#    tooltip: "No help available."
+#    label: Service Name OTEL
+#    description: 'Service Name OTEL'
+#    required: false
+#    default: "otel.kube-system.svc:4444"
+#    tooltip: "No help available."
+#  #  valid_chars: "^[a-z]+$"
+#  #  invalid_chars: "[0-9]"
+#    min_length: 1
+#  #  max_length: 9
+#    options: []
+#    show_if: "true"
+#    show_subquestions_if: "true" 
+#  - variable: questionsSpec.kibanaApp.integrations.otel.username
+#    type: string
+#    tooltip: "No help available."
+#    label: Username OTEL
+#    description: 'Username OTEL'
+#    required: false
+#    default: "admin"
+#    tooltip: "No help available."
+#  #  valid_chars: "^[a-z]+$"
+#  #  invalid_chars: "[0-9]"
+#    min_length: 1
+#  #  max_length: 9
+#    options: []
+#    show_if: "true"
+#    show_subquestions_if: "true" 
+#  - variable: questionsSpec.kibanaApp.integrations.otel.password
+#    type: password
+#    tooltip: "No help available."
+#    label: Password / Token OTEL
+#    description: 'Default Password / Token: P@ssword1'
+#    default: "P@ssword1"
+#    min_length: 5
+#    options: []
+#    show_if: "true"
+#    show_subquestions_if: "true" 
+
+- variable: cnpg.monitoring.podMonitorEnabled
+  label: Integrate Kibana with Prometheus
+  description: ''
+  type: boolean
+  default: "false"
+  group: "Integrations"
+  options: []
+  show_if: "global.cnpgOperatorCrd.enabled=true"
+  show_subquestions_if: "true" 
+  subquestions:
+
+
