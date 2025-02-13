@@ -1,0 +1,20 @@
+global:
+  cnpgOperatorCrd:
+    enabled: true
+
+cnpg:
+  image:
+#    repository: ghcr.io/cloudnative-pg/cloudnative-pg
+    pullPolicy: IfNotPresent
+   
+#  monitoring:
+#    podMonitorEnabled: true
+#  imagePullSecrets:
+#  - name: registry-auth
+   
+  containerSecurityContext:
+    seccompProfile: {}
+   
+  podSecurityContext:
+    seccompProfile: {}
+
