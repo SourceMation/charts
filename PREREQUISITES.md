@@ -20,6 +20,7 @@ Please refer to the [Quick Start guide](https://helm.sh/docs/intro/quickstart/) 
 
 Useful Helm Client Commands:
 
+- Add SourceMation chart repo: `helm repo add sourcemation https://sourcemation.github.io/charts/`
 - Install a chart: `helm install my-release sourcemation/<chart>`
 - Upgrade your application: `helm upgrade my-release sourcemation/<chart>`
 
