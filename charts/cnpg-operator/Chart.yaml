@@ -13,7 +13,7 @@ dependencies:
   repository: https://sourcemation.github.io/charts/
   version: 0.1.x
 - condition: global.cnpgOperatorCrd.enabled
-- name: cloudnative-pg
+  name: cloudnative-pg
   version: 0.22.1
   repository: https://cloudnative-pg.github.io/charts
 
