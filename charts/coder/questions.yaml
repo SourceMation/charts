@@ -36,48 +36,6 @@ questions:
     - "Always"
     - "IfNotPresent"
     - "Never"
-- variable: postgresql.customImage
-  default: false
-  label: Change Postgresql image
-  description: "Change Postgresql image"
-  group: "Components"
-  type: boolean
-  show_subquestion_if: true
-  subquestions:
-  - variable: postgresql.image.registry
-    default: "docker.io"
-    label: Postgresql image registry
-    description: "Postgresql image registry"
-    group: "Components"
-    type: string
-  - variable: postgresql.image.repository
-    default: "bitnami/postgresql"
-    label: Postgresql image repository
-    description: "Postgresql image repository"
-    group: "Components"
-    type: string
-  - variable: postgresql.image.tag
-    label: Postgresql image tag
-    description: "Postgresql image tag"
-    group: "Components"
-    type: string
-    required: false
-  #- variable: postgresql.image.pullSecrets
-  #  label: Postgresql image PullSecrets
-  #  description: "Postgresql image PullSecrets"
-  #  group: "Components"
-  #  type: string
-  #  required: false
-  - variable: postgresql.image.pullPolicy
-    default: "IfNotPresent"
-    label: Postgresql image pullPolicy
-    description: "Postgresql image pullPolicy"
-    group: "Components"
-    type: enum
-    options:
-    - "Always"
-    - "IfNotPresent"
-    - "Never"
 
 # Integrations
 - variable: coder.coder.env[1].value
@@ -86,10 +44,10 @@ questions:
   description: "Coder metrics"
   group: "Integrations"
   type: boolean
-- variable: postgresql.metrics.enabled
+- variable: cnpg.cluster.metrics.enablePodMonitor
   default: "true"
-  label: Postgresql metrics
-  description: "Postgresql metrics"
+  label: PostgreSQL cluster metrics
+  description: "PostgreSQL cluster metrics"
   group: "Integrations"
   type: boolean
 
@@ -132,34 +90,34 @@ questions:
     default: "coder-tls-cert"
 
 # Storage
-- variable: postgresql.primary.persistence.size
+- variable: cnpg.cluster.spec.storage.size
   default: "10Gi"
-  label: Postgresql persistent volume size
-  description: "Postgresql persistent volume size"
+  label: PostgreSQL persistent volume size
+  description: "PostgreSQL persistent volume size"
   group: "Storage"
   type: string
-- variable: postgresql.primary.storageClass
-  label: Postgresql persistent Storage Class
-  description: "Postgresql persistent Storage Class"
+- variable: cnpg.cluster.spec.storage.storageClass
+  label: PostgreSQL persistent Storage Class
+  description: "PostgreSQL persistent Storage Class"
   group: "Storage"
   type: storageclass
 
 # Workloads
-- variable: postgresql.auth.database
+- variable: cnpg.cluster.auth.database
   label: Coder DB name
   description: "Coder database name"
   group: "Workloads"
   type: string
   default: "coder"
   required: true
-- variable: postgresql.auth.username
+- variable: cnpg.cluster.auth.username
   label: Coder username
   description: "Coder DB username"
   group: "Workloads"
   type: string
   default: "coder"
   required: true
-- variable: postgresql.auth.password
+- variable: cnpg.cluster.auth.password
   default: "P@ssword1"
   label: Coder password
   description: "Default password is 'P@ssword1'. Change it!"
@@ -167,17 +125,23 @@ questions:
   type: password
   min: 8
   required: true
-- variable: postgresql.customPasswords
+- variable: cnpg.cluster.customPasswords
   default: false
-  label: Change Postgresql DB configuration
-  description: "Change Postgresql DB configuration"
+  label: Change PostgreSQL DB configuration
+  description: "Change PostgreSQL DB configuration"
   group: "Workloads"
   type: boolean
   show_subquestion_if: true
   subquestions:
-  - variable: postgresql.auth.postgresPassword
+  - variable: cnpg.cluster.auth.suUsername
+    default: "postgres"
+    label: PostgreSQL admin user
+    description: "PostgreSQL admin user"
+    group: "Workloads"
+    type: string
+  - variable: cnpg.cluster.auth.suPassword
     default: "P@ssword1"
-    label: Postgresql admin password
+    label: PostgreSQL admin password
     description: "Default password is 'P@ssword1'. Change it!"
     group: "Workloads"
     type: password
@@ -208,41 +172,38 @@ questions:
     description: "Memory request, value must be <= memory limit"
     group: "Workloads"
     type: string
-- variable: postgresql.customResources
+- variable: cnpg.cluster.customResources
   default: false
-  label: Modify Postgresql resource consumption
+  label: Modify PostgreSQL resource consumption
   group: "Workloads"
   type: boolean
   show_subquestion_if: true
   subquestions:
-  - variable: postgresql.primary.resources.limits.cpu
-    label: Milicore limit for a Postgresql instance
+  - variable: cnpg.cluster.spec.resources.limits.cpu
+    label: Milicore limit for a PostgreSQL instance
     description: "1000m(milicores) = 1vCPU"
     group: "Workloads"
     type: string
-  - variable: postgresql.primary.resources.requests.cpu
-    label: Milicore requests for a Postgresql instance
+  - variable: cnpg.cluster.spec.resources.requests.cpu
+    label: Milicore requests for a PostgreSQL instance
     description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
     group: "Workloads"
     type: string
-  - variable: postgresql.primary.resources.limits.memory
-    label: Memory limit for a Postgresql instance
-    description: "Memory limit for a Postgresql instance"
+  - variable: cnpg.cluster.spec.resources.limits.memory
+    label: Memory limit for a PostgreSQL instance
+    description: "Memory limit for a PostgreSQL instance"
     group: "Workloads"
     type: string
-  - variable: postgresql.primary.resources.requests.memory
-    label: Memory requests for a Postgresql instance
+  - variable: cnpg.cluster.spec.resources.requests.memory
+    label: Memory requests for a PostgreSQL instance
     description: "Memory request, value must be <= memory limit"
     group: "Workloads"
     type: string
 
 # Others
-- variable: postgresql.primary.updateStrategy.type
-  default: "RollingUpdate"
-  label: Postgresql update strategy
-  description: "Postgresql update strategy"
+- variable: cnpg.cluster.metadata.name
+  default: "cnpg-cluster"
+  label: PostgreSQL cluster name
+  description: "PostgreSQL cluster name"
   group: "Others"
-  type: enum
-  options:
-  - "RollingUpdate"
-  - "Recreate"
+  type: hostname

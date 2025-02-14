@@ -1,7 +1,7 @@
 ---
 apiVersion: v1
 stringData:
-  url: postgres://{{ $.Values.postgresql.auth.username }}:{{ $.Values.postgresql.auth.password }}@{{ include "common.names.shortname" . }}-coder-postgresql/{{ .Values.postgresql.auth.database }}?sslmode=require
+  url: postgres://{{ $.Values.cnpg.cluster.auth.username }}:{{ $.Values.cnpg.cluster.auth.password }}@{{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}-rw/{{ .Values.cnpg.cluster.auth.database }}?sslmode=require
 kind: Secret
 metadata:
   name: coder-db-url
@@ -49,3 +49,62 @@ spec:
     app.kubernetes.io/instance: {{ include "common.names.shortname" . }}
     app.kubernetes.io/name: coder
   type: ClusterIP
+
+---
+apiVersion: v1
+data:
+  password: {{ .Values.cnpg.cluster.auth.password | b64enc}}
+  username: {{ .Values.cnpg.cluster.auth.username | b64enc}}
+kind: Secret
+metadata:
+  name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}-user
+type: kubernetes.io/basic-auth
+
+---
+apiVersion: v1
+data:
+  password: {{ .Values.cnpg.cluster.auth.suPassword | b64enc}}
+  username: {{ .Values.cnpg.cluster.auth.suUsername | b64enc}}
+kind: Secret
+metadata:
+  name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}-superuser
+type: kubernetes.io/basic-auth
+
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}
+spec:
+  instances: {{ .Values.cnpg.cluster.spec.instances }}
+
+  bootstrap:
+    initdb:
+      database: {{ .Values.cnpg.cluster.auth.database }}
+      owner: {{ .Values.cnpg.cluster.auth.username }}
+      secret:
+        name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}-user
+
+  superuserSecret:
+    name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}-superuser
+
+  resources:
+    requests:
+      memory: {{ .Values.cnpg.cluster.spec.resources.requests.memory }}
+      cpu: {{ .Values.cnpg.cluster.spec.resources.requests.cpu }}
+    limits:
+      memory: {{ .Values.cnpg.cluster.spec.resources.limits.memory }}
+      cpu: {{ .Values.cnpg.cluster.spec.resources.limits.cpu }}
+
+  storage:
+    size: {{ .Values.cnpg.cluster.spec.storage.size }}
+    pvcTemplate:
+      accessModes: {{- .Values.cnpg.cluster.spec.storage.accessModes | toYaml | nindent 8 }}
+      resources:
+        requests:
+          storage: {{ .Values.cnpg.cluster.spec.storage.size }}
+      storageClassName: {{ .Values.cnpg.cluster.spec.storage.storageClass }}
+      #volumeMode: Filesystem
+
+  monitoring:
+    enablePodMonitor: {{ .Values.cnpg.cluster.metrics.enablePodMonitor }}
