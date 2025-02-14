@@ -9,7 +9,9 @@
 
 ## Before Installation
 
-The installation of cert-manager is required according to the instructions provided in the README file of the latest version: https://github.com/SourceMation/charts/tree/main/charts/cert-manager
+Installation of [**cert-manager**](https://github.com/SourceMation/charts/tree/main/charts/cert-manager) and [**cnpg-operator**](https://github.com/SourceMation/charts/tree/main/charts/cnpg-operator) is required.  
+Follow the instructions in the README file of the latest versions.
+
 
 ## After Installation
 
@@ -48,6 +50,18 @@ export CHART_URL=coder.apps.example.com
 export CERT_ISSUER_NAME=default-selfsigned-ca
 export CERT_ISSUER_KIND=ClusterIssuer
 export CERT_SECRET_NAME=coder-tls-cert
+
+
+cat <<EOF> /tmp/coder-values.yaml
+coder:
+  coder:
+    ingress:
+      host: "${CHART_URL}"
+      tls:
+        issuerName: "${CERT_ISSUER_NAME}"
+        issuerKind: "${CERT_ISSUER_KIND}"
+        secretName: "${CERT_SECRET_NAME}"
+EOF
 ```
 
 ```bash
@@ -59,10 +73,7 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 
 ``` bash
 helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
---set "coder.coder.ingress.host=${CHART_URL}" \
---set "coder.coder.ingress.tls.issuerName=${CERT_ISSUER_NAME}" \
---set "coder.coder.ingress.tls.issuerKind=${CERT_ISSUER_KIND}" \
---set "coder.coder.ingress.tls.secretName=${CERT_SECRET_NAME}"\
+--values /tmp/coder-values.yaml \
 --repo https://sourcemation.github.io/charts/ ${CHART_NAME} \
 --version ${CHART_VERSION}
 ```
@@ -77,5 +88,5 @@ kubectl -n ${CHART_NAMESPACE} get po
 
 ```bash
 helm -n ${CHART_NAMESPACE} uninstall ${CHART_NAME}
-kubectl -n ${CHART_NAMESPACE} delete $(kubectl get pvc -o name|grep -e '${CHART_NAME}')
+kubectl -n ${CHART_NAMESPACE} delete cert ${CERT_SECRET_NAME}
 ```
