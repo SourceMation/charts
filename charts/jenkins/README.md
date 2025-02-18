@@ -84,9 +84,3 @@ helm -n ${CHART_NAMESPACE} uninstall jenkins
 
 
 ```
-
-## Image
-
-A copy of the image is already in place to protect our clients against hostile
-takeovers or project shutdowns, providing an additional layer of security.
-
