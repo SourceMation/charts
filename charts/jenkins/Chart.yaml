@@ -1,6 +1,6 @@
 apiVersion: v2
 appVersion: 2.462.3
-version: 1.0.1
+version: 1.0.2
 name: jenkins-by-lp
 description: "The open-source automation server that enables developers to build, test, and deploy their CI/CD software efficiently. Preconfigured by LinuxPolska"
 type: application
@@ -12,17 +12,17 @@ annotations:
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
-- cicd
+  - cicd
 sources:
-- https://github.com/SourceMation/charts.git
+  - https://github.com/SourceMation/charts.git
 dependencies:
-- name: common
-  repository: https://sourcemation.github.io/charts/
-  version: 0.1.x
-- name: jenkins
-  repository: https://charts.jenkins.io
-  version: 5.7.8
+  - name: common
+    repository: https://sourcemation.github.io/charts/
+    version: 0.1.x
+  - name: jenkins
+    repository: https://charts.jenkins.io
+    version: 5.7.9
 kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
-- email: jaroslaw.mazurkiewicz@linuxpolska.com
-  name: Jarosław Mazurkiewicz
+  - email: jaroslaw.mazurkiewicz@linuxpolska.com
+    name: Jarosław Mazurkiewicz
