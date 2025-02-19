@@ -1,43 +1,44 @@
 jenkins:
-  metadata:
-    annotations:
-      kubernetes.io/ingress.class: "nginx"
-  params:
-    ingress:
-      enabled: true
-      hostName: "jenkins.apps.example.com"
   controller:
     affinity: {}
     nodeSelector: {}
     admin:
       username: "admin"
       password: "P@ssword1"
+    disableRememberMe: false
     image:
-      registry: "docker.io"
-      repository: "sourcemation/jenkins"
-      tag: ""
-      tagLabel: "jdk17"
+      #registry: ""
+      #repository: ""
+      #tag: ""
+      #tagLabel: ""
       pullPolicy: "Always"
     imagePullSecretName: ""
+    ingress:
+      enabled: true
+      apiVersion: "networking.k8s.io/v1"
+      ingressClassName: ""
+      cert:
+        issuerName: "default-selfsigned-ca"
+        issuerKind: "ClusterIssuer"
+      hostName: "jenkins.apps.example.com"
+      tls:
+        - secretName: "jenkins-tls-cert"
+          hosts:
+            - "{{ .Values.controller.ingress.hostName }}"
     installPlugins:
-      - kubernetes:4295.v7fa_01b_309c95
+      - kubernetes:4306.vc91e951ea_eb_d
       - workflow-aggregator:600.vb_57cdd26fdd7
       - git:5.5.2
-      - configuration-as-code:1850.va_a_8c31d3158b_
-      - cloudbees-disk-usage-simple:205.v47f4ee8803d1
-      - prometheus:787.v52e8f47488fc
+      - configuration-as-code:1873.vea_5814ca_9c93
+      - cloudbees-disk-usage-simple:232.v713eeed2e1f4
+      - prometheus:795.v995762102f28
     additionalPlugins:
       - pipeline-stage-view:2.34
       - pipeline-utility-steps:2.18.0
       - generic-webhook-trigger:2.2.5
       - rebuild:332.va_1ee476d8f6d
-    persistence:
-      enabled: true
-      accessMode: "ReadWriteOnce"
-      storageClass: ""
-      size: "8Gi"
     prometheus:
-      enabled: false
+      enabled: true
     resources:
       requests:
         memory: "512Mi"
@@ -52,10 +53,9 @@ jenkins:
       -Xmx2g
       -Djenkins.install.runSetupWizard=false
       -Dorg.jenkinsci.plugins.casc.ConfigurationAsCode.systemConfig=/var/jenkins_home/casc_configs/jenkins-casc.yaml
-    jenkinsUrl: "https://jenkins.apps.example.com"
     updateStrategy: {}
-
-questionsSpec:
-  jenkinsApp:
-    customImage: false
-    customResources: false
+  persistence:
+    enabled: true
+    accessMode: "ReadWriteOnce"
+    storageClass: ""
+    size: "8Gi"
