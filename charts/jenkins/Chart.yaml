@@ -1,28 +1,31 @@
-apiVersion: v2
-appVersion: 2.462.3
-version: 1.0.1
-name: jenkins-by-lp
-description: "The open-source automation server that enables developers to build, test, and deploy their CI/CD software efficiently. Preconfigured by LinuxPolska"
-type: application
 annotations:
-  catalog.cattle.io/display-name: Jenkins
+  catalog.cattle.io/display-name: Jenkins (1/1) - App
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
-  catalog.cattle.io/release-name: jenkins-by-lp
-home: https://linuxpolska.com
-icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
-keywords:
-- cicd
-sources:
-- https://github.com/SourceMation/charts.git
+#  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+#  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+  catalog.cattle.io/release-name: jenkins
+apiVersion: v2
+appVersion: 5.7.9
 dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/
   version: 0.1.x
 - name: jenkins
   repository: https://charts.jenkins.io
-  version: 5.7.8
-kubeVersion: '>=1.26.0-0 <1.31.0-0'
+  version: 5.7.9
+
+description: "An automation server that enables developers to build, test, and deploy. Install many times on kubernetes. CI/CD."
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+keywords:
+- cicd
+#kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
-- email: jaroslaw.mazurkiewicz@linuxpolska.com
-  name: Jarosław Mazurkiewicz
+- email: marek.janosz@linuxpolska.com
+  name: jmmaro
+name: jenkins
+sources:
+- https://github.com/SourceMation/charts.git
+type: application
+version: 1.0.2
