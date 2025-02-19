@@ -41,52 +41,48 @@ https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 ### Preparation
 
 ```bash
-
+export CHART_NAME=jenkins
+export CHART_VERSION=1.0.1
 export CHART_NAMESPACE=jenkins-namespace
 export CHART_URL=jenkins.apps.example.com
+export CERT_ISSUER_NAME=default-selfsigned-ca
+export CERT_ISSUER_KIND=ClusterIssuer
+export CERT_SECRET_NAME=jenkins-tls-cert
 
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 
+cat << EOF > /tmp/values.yaml
+jenkins:
+  controller:
+    ingress:
+      hostName: "${CHART_URL}"
+      tls:
+        - secretName: "${CERT_SECRET_NAME}$"
+      cert:
+        issuerKind: "${CERT_ISSUER_KIND}$"
+        issuerName: "${CERT_ISSUER_NAME}$
+EOF
 ```
 
 ### Go go helm
 
-``` bash
-
-cat << EOF > /tmp/values.yaml
-jenkins:
-  params:
-    ingress:
-      hostName: "${CHART_URL}"
-  controller:
-    jenkinsUrl: "https://${CHART_URL}"
-EOF
-
-cd charts/charts/jenkins
-helm -n ${CHART_NAMESPACE} upgrade --install jenkins -f /tmp/values.yaml .
-
+```bash
+helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME}$ \
+--repo https://sourcemation.github.io/charts/  ${CHART_NAME} \
+--values /tmp/values.yaml  \
+--version ${CHART_VERSION}
 ```
 
 ### Validation and Testing
 
 ```bash
-
 kubectl -n ${CHART_NAMESPACE} get po
-
 ```
 
 ## CLI removing
 
 ```bash
-
 helm -n ${CHART_NAMESPACE} uninstall jenkins
-
-
+kubectl delete certificate "${CHART_NAME}-tls-cert"
 ```
-
-## Image
-
-A copy of the image is already in place to protect our clients against hostile
-takeovers or project shutdowns, providing an additional layer of security.
-
