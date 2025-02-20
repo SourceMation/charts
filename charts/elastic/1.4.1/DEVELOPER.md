@@ -3,7 +3,7 @@
 
 ```bash
                                                                                                      
-export CHART_VER=1.4.0                                                                                  
+export CHART_VER=1.4.1
 export CHART_RELEASE_NAME=elk
 export CHART_NAMESPACE=elastic-tst                  
                                                     
@@ -31,4 +31,3 @@ helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace ${CHART_RELEASE_
 --set "agentFleet.params.ingress.hostname=${FLEET_URL}"
 
 ```
-

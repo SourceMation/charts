@@ -1,0 +1,158 @@
+{{- /*
+https://www.elastic.co/guide/en/cloud-on-k8s/master/k8s-logstash.html
+*/}}
+
+
+{{- if .Values.logstash.enabled }}
+
+{{- with .Values.logstash.params }}
+
+---
+apiVersion: {{ include "common.capabilities.logstash.apiVersion" $ }}
+kind: Logstash
+metadata:
+  name:  {{ include "common.names.shortname" $ }}
+  namespace: {{ include "common.names.namespace" $ }}
+  labels:
+    scrape: ls-{{ include "common.names.namespace" $ }}
+    {{- include "common.labels.labels" $ | nindent 4 }}
+
+spec:
+  count: 1
+  version: {{ default $.Chart.AppVersion }}
+  image: {{ .image.registry }}/{{ .image.repository }}:{{ .image.tag | default $.Chart.AppVersion }}
+  elasticsearchRefs:
+  - clusterName:  eck
+    name: {{ include "common.names.shortname" $ }}
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
+        namespace: {{ include "common.names.namespace" $ }}
+    logs:
+      elasticsearchRefs:
+      - name: {{ include "common.names.shortname" $ }}
+        namespace: {{ include "common.names.namespace" $ }}
+
+  pipelines:
+  {{- with .pipelines }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+    - pipeline.id: main
+      config.string: |
+        input {
+          beats {
+            port => 5044
+          }
+        }
+        output {
+          elasticsearch {
+            hosts => [ "${ECK_ES_HOSTS}" ]
+            user => "${ECK_ES_USER}"
+            password => "${ECK_ES_PASSWORD}"
+            ssl_certificate_authorities => "${ECK_ES_SSL_CERTIFICATE_AUTHORITY}"
+          }
+        }
+  services:
+  - name: beats
+    service:
+      {{- with .service.annotations }}
+      metadata:
+        annotations:
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
+      spec:
+        type: LoadBalancer
+        selector:
+          common.k8s.elastic.co/type: logstash
+          logstash.k8s.elastic.co/name: {{ include "common.names.shortname" $ }}
+        ports:
+          - port: 5044
+            name: "filebeat"
+            protocol: TCP
+            targetPort: 5044
+  podTemplate:
+    spec:
+      initContainers:
+      - name: wait-for
+        image: quay.io/eurolinux/eurolinux-9:latest
+        command:
+        - /bin/sh
+        - -c
+        - >
+          set -x;
+          until curl -f -k -L https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
+
+#      initContainers:
+#      - name: wait-for
+#        image: busybox:latest
+#        command:
+#        - /bin/sh
+#        - -c
+#        - >
+#          set -x;
+#          until wget -q --spider --no-check-certificate https://{{ include "common.names.shortname" $ -}}-kb-http:5601; do sleep 2; done
+      containers:
+      - name: logstash
+        env:
+        - name: LS_JAVA_OPTS   
+          value: "-Xmx2g -Xms2g"
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+          limits:
+            cpu: 2
+            memory: 2Gi
+      {{- with .tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      volumes:
+      - name: logstash-data
+        persistentVolumeClaim:
+          claimName: logstash-data-{{- include "common.names.shortname" $ -}}-ls-0
+#        emptyDir: {}
+{{- /*
+# eck operator do not remove pvc after helm uninstall
+    volumeClaimTemplates:
+    - metadata:
+        name: logstash-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .storage.size }}
+         {{- if .storageClass }}
+         storageClassName: {{ .storage.storageClass }}
+         {{- end }}
+*/}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  labels:
+    common.k8s.elastic.co/type: elasticsearch
+    elasticsearch.k8s.elastic.co/cluster-name: elka-elastic
+    elasticsearch.k8s.elastic.co/statefulset-name: elka-elastic-es-master
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  name: logstash-data-{{- include "common.names.shortname" $ -}}-ls-0
+  namespace: {{ include "common.names.namespace" $ }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .storage.size }}
+   {{- if .storage.storageClass }}
+   storageClassName: {{ .storage.storageClass }}
+   {{- end }}
+
+{{- end }}
+{{- end }}
