@@ -20,7 +20,7 @@
 - [neuvector](https://github.com/sourcemation/charts/tree/main/charts/neuvector/current/README.md)
 - [sealed-secrets](https://github.com/sourcemation/charts/tree/main/charts/sealed-secrets/current/README.md)
 - [rancher-monitoring](https://github.com/sourcemation/charts/tree/main/charts/rancher-monitoring/current/README.md)
-- [jenkins](https://github.com/sourcemation/charts/tree/main/charts/jenkins/current/README.md)
+- [jenkins](https://github.com/sourcemation/charts/tree/main/charts/jenkins/README.md)
 - [sonarqube](https://github.com/sourcemation/charts/tree/main/charts/sonarqube/current/README.md)
 - [agrocd](https://github.com/sourcemation/charts/tree/main/charts/argocd/current/README.md)
 - [shipwright-cli](https://github.com/sourcemation/charts/tree/main/charts/shipwright-cli/current/README.md)
