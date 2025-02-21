@@ -1,26 +1,88 @@
 jenkins:
+  agent:
+    enabled: true
+    #alwaysPullImage: false
+    #jnlpregistry:
+    #image:
+    #  repository: "jenkins/inbound-agent"
+    #  tag: ""
+    imagePullSecretName: ""
+    nodeSelector: {}
+  
   controller:
     affinity: {}
-    nodeSelector: {}
+      #nodeAffinity:
+      #  requiredDuringSchedulingIgnoredDuringExecution:
+      #    nodeSelectorTerms:
+      #    - matchExpressions:
+      #      - key: node-role.kubernetes.io/infra
+      #        operator: Exists
+    #nodeSelector: {}
+    #tolerations:
+    #  - effect: NoSchedule
+    #    key: node-role.kubernetes.io/infra
+    #    operator: Exists`
     admin:
       username: "admin"
       password: "P@ssword1"
     disableRememberMe: false
-    image:
-      #registry: ""
-      #repository: ""
-      #tag: ""
-      #tagLabel: ""
-      pullPolicy: "Always"
+    #containerSecurityContext:
+    #  runAsUser: 1000
+    #  runAsGroup: 1000
+    #containerEnv:
+    #  - name: http_proxy
+    #    value: forti-prod.net.mgmt:8080
+    #  - name: https_proxy
+    #    value: forti-prod.net.mgmt:8080
+    #  - name: no_proxy
+    #    value: localhost,.example.pl,.example.ad.intra
+    #initContainerEnv:
+    #  - name: http_proxy
+    #    value: forti-prod.net.mgmt:8080
+    #  - name: https_proxy
+    #    value: forti-prod.net.mgmt:8080
+    #  - name: no_proxy
+    #    value: localhost,.example.pl,.example.ad.intra
+    #  - name: JAVA_OPTS
+    #    value: -Djava.net.preferIPv4Stack=true -Dhttp.proxyHost=forti-prod.net.mgmt -Dhttp.proxyPort=8080 -Dhttps.proxyHost=forti-prod.net.mgmt -Dhttps.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|.example.com|.example.ad.intra
+    #image:
+    #  registry: "docker.io"
+    #  repository: "jenkins/jenkins"
+    #  tag: ""
+    #  tagLabel: ""
+    #  pullPolicy: "Always"
     imagePullSecretName: ""
+    #httpsKeyStore:
+    #  enable: true
+    #  jenkinsHttpsJksPasswordSecretName: ""      
+    #  jenkinsHttpsJksPasswordSecretKey: "https-jks-password"
+    #  jenkinsHttpsJksSecretName: ""
+    #  jenkinsHttpsJksSecretKey: "jenkins-jks-file"
+    #  disableSecretMount: false
+    #  httpPort: 8443
+    #  path: "/var/jenkins_keystore"
+    #  fileName: "keystore.jks"
+    #  password: "P@ssword1"
+    sidecars:
+      configAutoReload:
+        enabled: true
+        #image:
+        #  registry: "docker.io"
+        #  repository: "kiwigrid/k8s-sidecar"
+        #  tag: ""
+        #imagePullPolicy: IfNotPresent
+        resources: {}
     ingress:
       enabled: true
+      #annotations:
+      #  route.openshift.io/termination: edge
       apiVersion: "networking.k8s.io/v1"
       ingressClassName: ""
       cert:
         issuerName: "default-selfsigned-ca"
         issuerKind: "ClusterIssuer"
       hostName: "jenkins.apps.example.com"
+      #paths: []
       tls:
         - secretName: "jenkins-tls-cert"
           hosts:
@@ -37,6 +99,11 @@ jenkins:
       - pipeline-utility-steps:2.18.0
       - generic-webhook-trigger:2.2.5
       - rebuild:332.va_1ee476d8f6d
+    #  - ssh-slaves:2.973.v0fa_8c0dea_f9f
+    #  - swarm:3.47
+    #  - gitea:234.v60def593ec50
+    #  - bitbucket:254.v9d8ec33a_7a_42
+    #  - atlassian-bitbucket-server-integration:4.1.4
     prometheus:
       enabled: true
     resources:
@@ -47,13 +114,20 @@ jenkins:
         memory: "4Gi"
         cpu: "2000m"
     serviceType: ClusterIP
+    #serviceType: LoadBalancer
     servicePort: 8080
     targetPort: 8080
     javaOpts: >
       -Xmx2g
       -Djenkins.install.runSetupWizard=false
       -Dorg.jenkinsci.plugins.casc.ConfigurationAsCode.systemConfig=/var/jenkins_home/casc_configs/jenkins-casc.yaml
+    #  -Djava.net.preferIPv4Stack=true -Dhttp.proxyHost=forti-prod.net.mgmt -Dhttp.proxyPort=8080 -Dhttps.proxyHost=forti-prod.net.mgmt -Dhttps.proxyPort=8080 -Dhttp.nonProxyHosts=localhost|.example.com|.example.ad.intra
+    #jenkinsUrl: https://jenkins.apps.example.com
+    #jenkinsUrlProtocol: https
+    #jenkinsUriPrefix: /jenkins
+    numExecutors: 1
     updateStrategy: {}
+  
   persistence:
     enabled: true
     accessMode: "ReadWriteOnce"
