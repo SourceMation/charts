@@ -58,17 +58,17 @@ jenkins:
     ingress:
       hostName: "${CHART_URL}"
       tls:
-        - secretName: "${CERT_SECRET_NAME}$"
+        - secretName: "${CERT_SECRET_NAME}"
       cert:
-        issuerKind: "${CERT_ISSUER_KIND}$"
-        issuerName: "${CERT_ISSUER_NAME}$
+        issuerKind: "${CERT_ISSUER_KIND}"
+        issuerName: "${CERT_ISSUER_NAME}"
 EOF
 ```
 
 ### Go go helm
 
 ```bash
-helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME}$ \
+helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
 --repo https://sourcemation.github.io/charts/  ${CHART_NAME} \
 --values /tmp/values.yaml  \
 --version ${CHART_VERSION}
