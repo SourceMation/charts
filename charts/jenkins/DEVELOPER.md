@@ -8,7 +8,6 @@ cd charts/charts/jenkins/
 
 
 export CHART_NAME=jenkins
-export CHART_VERSION=1.0.2
 export CHART_NAMESPACE=jenkins-namespace
 export CHART_URL=jenkins.apps.example.com
 export CERT_ISSUER_NAME=default-selfsigned-ca
