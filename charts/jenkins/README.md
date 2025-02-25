@@ -79,6 +79,7 @@ helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
 
 ```bash
 kubectl -n ${CHART_NAMESPACE} get po
+helm -n ${CHART_NAMESPACE} test ${CHART_NAME}
 ```
 
 ## CLI removing
