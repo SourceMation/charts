@@ -7,14 +7,14 @@ annotations:
   #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: jenkins
 apiVersion: v2
-appVersion: 5.7.10
+appVersion: 2.479.1
 dependencies:
   - name: common
     repository: https://sourcemation.github.io/charts/
     version: 0.1.x
   - name: jenkins
     repository: https://charts.jenkins.io
-    version: 5.7.10
+    version: 5.7.11
 description: "An automation server that enables developers to build, test, and deploy. Install many times on kubernetes. CI/CD."
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
@@ -28,4 +28,4 @@ name: jenkins
 sources:
   - https://github.com/SourceMation/charts.git
 type: application
-version: 0.1.1
+version: 0.1.2
