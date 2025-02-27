@@ -88,21 +88,22 @@ jenkins:
           hosts:
             - "{{ .Values.controller.ingress.hostName }}"
     installPlugins:
-      - kubernetes:4306.vc91e951ea_eb_d
+      - kubernetes:4313.va_9b_4fe2a_0e34
       - workflow-aggregator:600.vb_57cdd26fdd7
-      - git:5.5.2
-      - configuration-as-code:1873.vea_5814ca_9c93
+      - git:5.7.0
+      - git-client:6.1.2
+      - configuration-as-code:1932.v75cb_b_f1b_698d
       - cloudbees-disk-usage-simple:232.v713eeed2e1f4
-      - prometheus:795.v995762102f28
+      - prometheus:819.v50953a_c560dd
     additionalPlugins:
-      - pipeline-stage-view:2.34
+      - pipeline-stage-view:2.37
       - pipeline-utility-steps:2.18.0
-      - generic-webhook-trigger:2.2.5
-      - rebuild:332.va_1ee476d8f6d
-    #  - ssh-slaves:2.973.v0fa_8c0dea_f9f
-    #  - swarm:3.47
-    #  - gitea:234.v60def593ec50
-    #  - bitbucket:254.v9d8ec33a_7a_42
+      - generic-webhook-trigger:2.3.1
+      - rebuild:338.va_0a_b_50e29397
+    #  - ssh-slaves:3.1031.v72c6b_883b_869
+    #  - swarm:3.49
+    #  - gitea:238.v626a_cf5e1940
+    #  - bitbucket:263.v7f6ef03c9ef8
     #  - atlassian-bitbucket-server-integration:4.1.4
     prometheus:
       enabled: true
