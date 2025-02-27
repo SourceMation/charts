@@ -91,6 +91,7 @@ jenkins:
       - kubernetes:4306.vc91e951ea_eb_d
       - workflow-aggregator:600.vb_57cdd26fdd7
       - git:5.5.2
+      - git-client:5.0.3
       - configuration-as-code:1873.vea_5814ca_9c93
       - cloudbees-disk-usage-simple:232.v713eeed2e1f4
       - prometheus:795.v995762102f28
