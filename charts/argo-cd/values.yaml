@@ -1,0 +1,77 @@
+argo-cd:
+  global:
+    domain: "argocd.example.com"
+    deploymentStrategy: {}
+  image:
+    repository: quay.io/argoproj/argocd
+    tag: ""
+    imagePullPolicy: IfNotPresent
+  controller:
+    resources: 
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    metrics:
+      enabled: false
+      serviceMonitor:
+        enabled: false
+
+  configs:
+    secret:
+      createSecret: true
+      # password bcrypt examples in the ./scripts directory
+      argocdServerAdminPassword: "$2y$10$OXWYhMgV/dkpdMGCj88TJ.MHYIUGfLo7HyKh2KurlrMly9Z595gbq"
+      # admin with token generation capability
+    cm:
+      accounts.admin: apiKey
+    rbac:
+      policy.default: |
+        p, role:admin, capabilities, [apiKey]
+  crds:
+    keep: false
+
+  server:
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        cert-manager.io/cluster-issuer: "default-selfsigned-ca"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      tls: true
+
+  redis:
+    enabled: true
+    image:
+      repository: public.ecr.aws/docker/library/redis
+      tag: 7.2.4-alpine
+      imagePullPolicy: ""
+    resources: 
+      limits:
+        cpu: 200m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+
+  dex:
+    enabled: false
+    name: dex-server
+    metrics:
+      enabled: false
+    image:
+      repository: ghcr.io/dexidp/dex
+      tag: v2.38.0
+      imagePullPolicy: ""
+
+questionsSpec:
+  argocdApp:
+    customImage: false
+    customResources: false
+  dexApp:
+    customImage: false
+  redisApp:
+    customImage: false
+
