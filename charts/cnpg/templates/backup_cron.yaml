@@ -1,0 +1,14 @@
+{{- if .Values.global.backup.enabled }}
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: {{ .Values.cnpg.cluster.metadata.name }}
+  namespace: {{ .Values.cnpg.cluster.metadata.namespace }}
+spec:
+  schedule: "0 0 0 * * *"
+  backupOwnerReference: self
+  immediate: true
+  suspend: false
+  cluster:
+    name: {{ .Values.cnpg.cluster.metadata.name }}
+{{- end }}

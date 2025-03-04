@@ -1,0 +1,16 @@
+# {{- if .Values.global.eurodb-full.enabled }}
+# apiVersion: postgresql.cnpg.io/v1
+# kind: Pooler
+# metadata:
+#   name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.pooler.metadata.name }}
+# spec:
+#   cluster:
+#     name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}
+#   instances: {{ .Values.cnpg.pooler.spec.instances }}
+#   type: {{ .Values.cnpg.pooler.spec.type }}
+#   pgbouncer:
+#     poolMode: {{ .Values.cnpg.pooler.spec.pgbouncer.poolMode }}
+#     parameters:
+#       max_client_conn: {{ .Values.cnpg.pooler.spec.pgbouncer.parameters.max_client_conn | quote }}
+#       default_pool_size: {{ .Values.cnpg.pooler.spec.pgbouncer.parameters.default_pool_size | quote }}
+# {{- end }}
