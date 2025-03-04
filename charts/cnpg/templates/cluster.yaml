@@ -79,7 +79,7 @@ spec:
   bootstrap:
     recovery:
       source: {{ .Values.global.recovery.serverName }}
-      owner: ${PG_APP_USERNAME}
+      owner: {{ .Values.global.users.pgAppUser }}
       secret:
         name: postgresql-app-{{ .Values.cnpg.cluster.metadata.name }}
     {{- if .Values.global.recovery.pitr.enabled }}
