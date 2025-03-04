@@ -1,4 +1,3 @@
-{{- if .Values.global.import.enabled }}
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
@@ -29,6 +28,18 @@ spec:
     limits:
       memory: "512Mi"
       cpu: 500m
+  {{- if .Values.global.create.enabled }}
+  bootstrap:
+    initdb:
+      database: {{ .Values.cnpg.cluster.metadata.name }}
+      owner: {{ .Values.global.users.pgAppUser }}
+      secret:
+        name: postgresql-app-{{ .Values.cnpg.cluster.metadata.name }}
+      localeCollate: 'pl_PL.utf8'
+      localeCType: 'pl_PL.utf8'
+      dataChecksums: false
+  {{- end }}
+  {{- if .Values.global.import.enabled }}
   externalClusters:
   - name: source-cluster
     connectionParameters:
@@ -48,6 +59,34 @@ spec:
         - {{ .Values.global.import.sourceName }}
         source:
           externalCluster: source-cluster
+  {{- end }}
+  {{- if and .Values.global.recovery.enabled .Values.global.backup.enabled }}
+  externalClusters:
+  - name: {{ .Values.global.recovery.serverName }}
+    barmanObjectStore:
+      destinationPath: "s3://{{ .Values.global.backup.s3bucket }}/{{ .Values.cnpg.cluster.metadata.namespace }}/postgresql/"
+      endpointCA:
+        name: "postgresql-s3-ca"
+        key: "ca-bundle.crt"
+      endpointURL: {{ .Values.global.backup.s3url }}
+      s3Credentials:
+        accessKeyId:
+          name: postgresql-s3-{{ .Values.cnpg.cluster.metadata.name }}
+          key: AWS_ACCESS_KEY_ID
+        secretAccessKey:
+          name: postgresql-s3-{{ .Values.cnpg.cluster.metadata.name }}
+          key: AWS_SECRET_ACCESS_KEY
+  bootstrap:
+    recovery:
+      source: {{ .Values.global.recovery.serverName }}
+      owner: ${PG_APP_USERNAME}
+      secret:
+        name: postgresql-app-{{ .Values.cnpg.cluster.metadata.name }}
+    {{- if .Values.global.recovery.pitr.enabled }}
+    recoveryTarget:
+        targetTime: {{ .Values.global.recovery.pitr.datetime }}
+    {{- end }}
+  {{- end }}
   managed:
     roles:
     - name: {{ .Values.global.users.pgAppUser }}
@@ -75,17 +114,21 @@ spec:
   walStorage:
     size: 1Gi
     resizeInUseVolumes: True
-
   {{- if .Values.global.backup.enabled }}
   backup:
+    {{- if or .Values.global.create.enabled .Values.global.import.enabled }}
     target: "prefer-standby"
+    {{- end }}
     retentionPolicy: "3d"
     barmanObjectStore:
       destinationPath: "s3://{{ .Values.global.backup.s3bucket }}/{{ .Values.cnpg.cluster.metadata.namespace }}/postgresql/"
       endpointCA:
         name: "postgresql-s3-ca"
         key: "ca-bundle.crt"
-      endpointURL: "{{ .Values.global.backup.s3url }}"
+      endpointURL: {{ .Values.global.backup.s3url }}
+      {{- if .Values.global.recovery.enabled }}
+      serverName: "{{ .Values.cnpg.cluster.metadata.name }}-{{ .Values.global.recovery.nameSuffix }}"
+      {{- end }}
       s3Credentials:
         accessKeyId:
           name: postgresql-s3-{{ .Values.cnpg.cluster.metadata.name }}
@@ -101,4 +144,3 @@ spec:
         immediateCheckpoint: true
         jobs: 2
   {{- end }}
-{{- end }}
