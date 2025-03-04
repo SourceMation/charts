@@ -1,0 +1,42 @@
+annotations:
+  catalog.cattle.io/display-name: redis-operator (1/2) - Operator/Config/App
+  catalog.cattle.io/os: linux
+  catalog.cattle.io/permits-os: linux
+#  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+#  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+  catalog.cattle.io/release-name: redis-operator
+  catalog.cattle.io/namespace: example-namespace
+apiVersion: v2
+appVersion: 0.19.1
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.x
+#- condition: global.appCrd.enabled
+#  name: cert-manager
+#  version: v1.15.1
+#  repository: https://charts.jetstack.io
+#- condition: global.appCrd.enabled
+#  name: cert-manager
+#  version: v1.15.1
+#  repository: file://../charts/cert-manager
+
+description: SHORT-DESCRIPTION. Install only once on kubernetes / Install many times on kubernetes. Security/Monitoring/CICD Classic.
+home: https://linuxpolska.com
+icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+keywords:
+# dodać nazwy komponentów oraz nazwę kategorii
+- security
+- cert manager
+- cert-manager
+kubeVersion: '>=1.26.0-0 <1.31.0-0'
+#kubeVersion: '>=1.26.0-0 <1.31.0-0'
+maintainers:
+# podaj swoje dane
+- email: kamil.kwiatkowski@linuxpolska.com
+  name: Qwiatu
+name: redis-operator
+sources:
+- https://github.com/SourceMation/charts.git
+type: application
+version: 1.0.0
