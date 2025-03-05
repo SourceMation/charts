@@ -1,20 +1,22 @@
-# apiVersion: postgresql.cnpg.io/v1
-# kind: Cluster
-# metadata:
-#   name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}
-# spec:
-#   instances: {{ .Values.cnpg.cluster.spec.instances }}
-#   {{- if or .Values.global.eurodb-dev.enabled .Values.global.eurodb-full.enabled }}
-#   imageName: ghcr.io/cloudnative-pg/postgis:16-3.4
-#   bootstrap:
-#     initdb:
-#       postInitTemplateSQL:
-#         - CREATE EXTENSION postgis;
-#         - CREATE EXTENSION postgis_topology;
-#         - CREATE EXTENSION fuzzystrmatch;
-#         - CREATE EXTENSION postgis_tiger_geocoder;
-#   {{- end }}
-#   storage:
-#     size: {{ .Values.cnpg.cluster.spec.storage.size }}
-#   monitoring:
-#     enablePodMonitor: true
+{{- /*
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}
+spec:
+  instances: {{ .Values.cnpg.cluster.spec.instances }}
+  {{- if or .Values.global.eurodb-dev.enabled .Values.global.eurodb-full.enabled }}
+  imageName: ghcr.io/cloudnative-pg/postgis:16-3.4
+  bootstrap:
+    initdb:
+      postInitTemplateSQL:
+        - CREATE EXTENSION postgis;
+        - CREATE EXTENSION postgis_topology;
+        - CREATE EXTENSION fuzzystrmatch;
+        - CREATE EXTENSION postgis_tiger_geocoder;
+  {{- end }}
+  storage:
+    size: {{ .Values.cnpg.cluster.spec.storage.size }}
+  monitoring:
+    enablePodMonitor: true
+*/}}

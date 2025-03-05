@@ -1,40 +1,21 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: {{ .Values.cnpg.cluster.metadata.name }}
-  namespace: {{ .Values.cnpg.cluster.metadata.namespace }}
+  name: {{ include "common.names.shortname" $ }}
+  namespace: {{ include "common.names.namespace" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+{{- with .Values.cnpg }}
 spec:
-  instances: {{ .Values.cnpg.cluster.spec.instances }}
-  minSyncReplicas: {{ .Values.cnpg.cluster.spec.minSyncReplicas }}
-  maxSyncReplicas: {{ .Values.cnpg.cluster.spec.maxSyncReplicas }}
-  replicationSlots:
-    highAvailability:
-      enabled: true
-  # imageName: default
-  monitoring:
-    enablePodMonitor: true
-  postgresql:
-    pg_hba:
-    - host all all all password
-    parameters:
-      max_connections: "100"
-      superuser_reserved_connections: "3"
-      shared_buffers: "256MB"
-      timezone: "Europe/Warsaw"
-  resources:
-    requests:
-      memory: "512Mi"
-      cpu: 500m
-    limits:
-      memory: "512Mi"
-      cpu: 500m
+  {{- toYaml . | nindent 2 }}
+{{- end }}
   {{- if .Values.global.create.enabled }}
   bootstrap:
     initdb:
-      database: {{ .Values.cnpg.cluster.metadata.name }}
+      database: {{ include "common.names.shortname" $ }}
       owner: {{ .Values.global.users.pgAppUser }}
       secret:
-        name: postgresql-app-{{ .Values.cnpg.cluster.metadata.name }}
+        name: postgresql-app-{{ include "common.names.shortname" $ }}
       localeCollate: 'pl_PL.utf8'
       localeCType: 'pl_PL.utf8'
       dataChecksums: false
@@ -64,24 +45,24 @@ spec:
   externalClusters:
   - name: {{ .Values.global.recovery.serverName }}
     barmanObjectStore:
-      destinationPath: "s3://{{ .Values.global.backup.s3bucket }}/{{ .Values.cnpg.cluster.metadata.namespace }}/postgresql/"
+      destinationPath: s3://{{ .Values.global.backup.s3bucket }}/{{ include "common.names.namespace" $ }}/postgresql/
       endpointCA:
         name: "postgresql-s3-ca"
         key: "ca-bundle.crt"
       endpointURL: {{ .Values.global.backup.s3url }}
       s3Credentials:
         accessKeyId:
-          name: postgresql-s3-{{ .Values.cnpg.cluster.metadata.name }}
+          name: postgresql-s3-{{ include "common.names.shortname" $ }}
           key: AWS_ACCESS_KEY_ID
         secretAccessKey:
-          name: postgresql-s3-{{ .Values.cnpg.cluster.metadata.name }}
+          name: postgresql-s3-{{ include "common.names.shortname" $ }}
           key: AWS_SECRET_ACCESS_KEY
   bootstrap:
     recovery:
       source: {{ .Values.global.recovery.serverName }}
       owner: {{ .Values.global.users.pgAppUser }}
       secret:
-        name: postgresql-app-{{ .Values.cnpg.cluster.metadata.name }}
+        name: postgresql-app-{{ include "common.names.shortname" $ }}
     {{- if .Values.global.recovery.pitr.enabled }}
     recoveryTarget:
         targetTime: {{ .Values.global.recovery.pitr.datetime }}
@@ -97,7 +78,7 @@ spec:
       login: true
       superuser: false
       passwordSecret:
-        name: postgresql-app-{{ .Values.cnpg.cluster.metadata.name }}
+        name: postgresql-app-{{ include "common.names.shortname" $ }}
     - name: {{ .Values.global.users.pgAdmUser }}
       comment: admin
       createdb: true
@@ -106,14 +87,7 @@ spec:
       login: true
       superuser: true
       passwordSecret:
-        name: postgresql-superuser-{{ .Values.cnpg.cluster.metadata.name }}
-  storage:
-    storageClass: {{ .Values.cnpg.cluster.spec.storage.storageClass }}
-    size: {{ .Values.cnpg.cluster.spec.storage.size }}
-    resizeInUseVolumes: True
-  walStorage:
-    size: 1Gi
-    resizeInUseVolumes: True
+        name: postgresql-superuser-{{ include "common.names.shortname" $ }}
   {{- if .Values.global.backup.enabled }}
   backup:
     {{- if or .Values.global.create.enabled .Values.global.import.enabled }}
@@ -121,20 +95,20 @@ spec:
     {{- end }}
     retentionPolicy: "3d"
     barmanObjectStore:
-      destinationPath: "s3://{{ .Values.global.backup.s3bucket }}/{{ .Values.cnpg.cluster.metadata.namespace }}/postgresql/"
+      destinationPath: s3://{{ .Values.global.backup.s3bucket }}/{{ include "common.names.namespace" $ }}/postgresql/
       endpointCA:
         name: "postgresql-s3-ca"
         key: "ca-bundle.crt"
       endpointURL: {{ .Values.global.backup.s3url }}
       {{- if .Values.global.recovery.enabled }}
-      serverName: "{{ .Values.cnpg.cluster.metadata.name }}-{{ .Values.global.recovery.nameSuffix }}"
+      serverName: {{ include "common.names.shortname" $ }}-{{ .Values.global.recovery.nameSuffix }}
       {{- end }}
       s3Credentials:
         accessKeyId:
-          name: postgresql-s3-{{ .Values.cnpg.cluster.metadata.name }}
+          name: postgresql-s3-{{ include "common.names.shortname" $ }}
           key: AWS_ACCESS_KEY_ID
         secretAccessKey:
-          name: postgresql-s3-{{ .Values.cnpg.cluster.metadata.name }}
+          name: postgresql-s3-{{ include "common.names.shortname" $ }}
           key: AWS_SECRET_ACCESS_KEY
       wal:
         compression: gzip

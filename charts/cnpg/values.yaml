@@ -28,28 +28,41 @@ global:
     s3secret: ''
     s3ca: ''
 
-# # Operator
-# cloudnative-pg:
-#   monitoring:
-#     podMonitorEnabled: true
-#   containerSecurityContext:
-#     seccompProfile: {}
-#   podSecurityContext:
-#     seccompProfile: {}
+nameOverride: "postgresql-test"
+namespaceOverride: "rk-test"
 
 # Main
 cnpg:
-  cluster:
-    metadata:
-      name: postgresql-test
-      namespace: rk-test
-    spec:
-      instances: 3
-      minSyncReplicas: 1
-      maxSyncReplicas: 2
-      storage:
-        size: '2Gi'
-        storageClass: 'bs-vsphere-c1'
+  instances: 3
+  minSyncReplicas: 1
+  maxSyncReplicas: 2
+  replicationSlots:
+    highAvailability:
+      enabled: true
+  monitoring:
+    enablePodMonitor: true
+  postgresql:
+    pg_hba:
+    - host all all all password
+    parameters:
+      max_connections: "100"
+      superuser_reserved_connections: "3"
+      shared_buffers: "256MB"
+      timezone: "Europe/Warsaw"
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: 500m
+    limits:
+      memory: "512Mi"
+      cpu: 500m
+  storage:
+    storageClass: 'bs-vsphere-c1'
+    size: '2Gi'
+    resizeInUseVolumes: True
+  walStorage:
+    size: 1Gi
+    resizeInUseVolumes: True
       
   # pooler:
   #   metadata:
