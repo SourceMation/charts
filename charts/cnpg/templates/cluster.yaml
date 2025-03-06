@@ -9,7 +9,7 @@ metadata:
 spec:
   {{- toYaml . | nindent 2 }}
 {{- end }}
-  {{- if .Values.global.create.enabled }}
+  {{- if eq .Values.global.deploymentMode "create" }}
   bootstrap:
     initdb:
       database: {{ include "common.names.shortname" $ }}
@@ -20,7 +20,7 @@ spec:
       localeCType: 'pl_PL.utf8'
       dataChecksums: false
   {{- end }}
-  {{- if .Values.global.import.enabled }}
+  {{- if eq .Values.global.deploymentMode "import" }}
   externalClusters:
   - name: source-cluster
     connectionParameters:
@@ -41,7 +41,7 @@ spec:
         source:
           externalCluster: source-cluster
   {{- end }}
-  {{- if and .Values.global.recovery.enabled .Values.global.backup.enabled }}
+  {{- if and (eq .Values.global.deploymentMode "recovery") .Values.global.backup.enabled }}
   externalClusters:
   - name: {{ .Values.global.recovery.serverName }}
     barmanObjectStore:
@@ -90,7 +90,7 @@ spec:
         name: postgresql-superuser-{{ include "common.names.shortname" $ }}
   {{- if .Values.global.backup.enabled }}
   backup:
-    {{- if or .Values.global.create.enabled .Values.global.import.enabled }}
+    {{- if or (eq .Values.global.deploymentMode "create") (eq .Values.global.deploymentMode "import") }}
     target: "prefer-standby"
     {{- end }}
     retentionPolicy: "3d"
@@ -100,7 +100,7 @@ spec:
         name: "postgresql-s3-ca"
         key: "ca-bundle.crt"
       endpointURL: {{ .Values.global.backup.s3url }}
-      {{- if .Values.global.recovery.enabled }}
+      {{- if eq .Values.global.deploymentMode "recovery" }}
       serverName: {{ include "common.names.shortname" $ }}-{{ .Values.global.recovery.nameSuffix }}
       {{- end }}
       s3Credentials:

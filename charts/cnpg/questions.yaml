@@ -1,750 +1,308 @@
-categories:
-- security
-- monitoring
-namespace: example-namespace
 questions:
-
-####################
-## start example values section
-####################
-
-- variable: questionsSpec.reference.radio
-  type: radio
-  tooltip: "No help available."
-  label: label radio
-  description: 'desc radio'
-  default: "false"
-  group: "Vars Reference"
-  options:
-    custom1: Custom one
-    custom2: Custom two
-  show_if: "true&&true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.boolean
-  type: boolean
-  tooltip: "No help available."
-  label: boolean labels
-  description: 'Integrate App1 with App2'
-  default: "false"
-  group: "Vars Reference"
-  options: []
-  show_if: "true&&true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.reference.subquectionHostname.0.myHost
-    type: hostname
-    tooltip: "No help available."
-    label: label hostnameSubquestion
-    description: 'desc hostnameSubquestion'
-    min_length: 6
-    default: ""
-#    group: "Vars Reference"
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-- variable: questionsSpec.reference.string
-  type: string
-  tooltip: "No help available."
-  label: label string
-  description: 'Default username'
-  required: true
-  default: ""
-  tooltip: "No help available."
-#  valid_chars: "^[a-z]+$"
-#  invalid_chars: "[0-9]"
-  min_length: 1
-#  max_length: 9
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.password
-  type: password
-  tooltip: "No help available."
-  label: label password
-  description: 'Default password: P@ssword1'
-  default: "P@ssword1"
-  min_length: 6
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.int
-  type: int
-  tooltip: "No help available."
-  label: label int
-  description: 'desc int'
-  default: "2"
-  min: 1
-  max: 10
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.enumName
+# General
+- variable: global.deploymentMode
+  label: "PostgreSQL Deployment Mode"
+  description: "Choose the deployment mode for PostgreSQL"
   type: enum
-  tooltip: "No help available."
-  label: label enum
-  description: 'desc enum'
-  default: "ClusterIP"
-  group: "Vars Reference"
   options:
-  - "ClusterIP"
-  - "LoadBalancer"
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.enumSingle
-  type: enum
-  tooltip: "No help available."
-  label: label enum
-  description: 'desc enum'
-  default: "ClusterIP"
-  group: "Vars Reference"
-  options:
-    ClusterIP: Cluster IP
-    LoadBalancer: Load Balancer
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.enumMultiple
-  type: enum
-  tooltip: "No help available."
-  label: label enum
-  description: 'desc enum'
-  default: "ClusterIP"
-  group: "Vars Reference"
-  options:
-    ClusterIP: Cluster IP
-    LoadBalancer: Load Balancer
-  show_if: "true"
-  show_subquestions_if: "true" 
-  multiple: true
-
-- variable: questionsSpec.reference.storageclass
-  tooltip: "No help available."
-  label: label storageclass
-  description: 'Use default storageclass if empty'
-  type: storageclass
-  default: ""
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.hostname
-  type: hostname
-  tooltip: "No help available."
-  label: label hostname
-  description: 'desc hostname'
-  default: "hostnamedef"
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.cloudcredential
-  type: cloudcredential
-  tooltip: "No help available."
-  label: label cloudcredential
-  description: 'desc cloudcredential'
-  default: "cloudcredentialdef"
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.referenceServiceName
-  type: reference[service]
-  tooltip: "No help available."
-  label: label referenceservice
-  description: 'desc referenceservice'
-  default: "default-reference"
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.referenceConfigMap
-  type: reference[configmap]
-  tooltip: "No help available."
-  label: label referenceconfigmap
-  description: 'desc referenceconfigmap'
-  default: "default-reference"
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.referenceSecret
-  type: reference[secret]
-  tooltip: "No help available."
-  label: label referencesecret
-  description: 'desc referencesecret'
-  default: "default-reference"
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.secret
-  type: secret
-  tooltip: "No help available."
-  label: label secret
-  description: 'desc secret'
-  default: "secretdef"
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.referencePvc
-  type: reference[persistentvolumeclaim]
-  tooltip: "No help available."
-  label: label referencepvc
-  description: 'desc referencepvc'
-  default: "default-reference"
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.pvc
-  type: pvc
-  tooltip: "No help available."
-  label: label pvc
-  description: 'desc pvc'
-  default: "pvcdef"
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-- variable: questionsSpec.reference.mapString
-  type: map[string]
-  tooltip: "No help available."
-  label: label mapString
-  description: 'desc mapString'
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-
-- variable: questionsSpec.reference.arrayString
-  type: array[string]
-  tooltip: "No help available."
-  label: label arrayString
-  description: 'desc arrayString'
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-
-- variable: questionsSpec.reference.yaml
-  type: yaml
-  tooltip: "No help available."
-  label: label yaml
-  description: 'desc yaml'
-# default: defaultOneLine
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-
-- variable: questionsSpec.reference.multiline
-  type: multiline
-  tooltip: "No help available."
-  label: label multiline
-  description: 'desc multiline'
-  default: |
-    exampleLineOne
-    exampleLineTwo
-  group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-
-####################
-## end example values section
-####################
-
-
-
-# Components
-- variable: questionsSpec.kibanaApp.enabled
-  default: "true"
-  label: "Deploy Kibana"
-  type: boolean
-  group: "Components"
-
-
-# Integrations 
-
-
-- variable: questionsSpec.k8sPlatform
-  type: enum
-  tooltip: "No help available."
-  label: Kubernetes Platform
-  description: 'Kubernetes Platform'
-  default: "rke2"
-  group: "Integrations"
-  options:
-    rke2: RKE2
-  show_if: "true"
-  show_subquestions_if: "true" 
-
-- variable: questionsSpec.kibanaApp.integrations.otel.enabled
-  label: Integrate Kibana with OTEL
-  description: ''
-  type: boolean
-  default: "false"
-  group: "Integrations"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.kibanaApp.integrations.otel.serviceName
-    type: string
-    tooltip: "No help available."
-    label: Service Name OTEL
-    description: 'Service Name OTEL'
-    required: false
-    default: "otel.kube-system.svc:4444"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.integrations.otel.username
-    type: string
-    tooltip: "No help available."
-    label: Username OTEL
-    description: 'Username OTEL'
-    required: false
-    default: "admin"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.integrations.otel.password
-    type: password
-    tooltip: "No help available."
-    label: Password / Token OTEL
-    description: 'Default Password / Token: P@ssword1'
-    default: "P@ssword1"
-    min_length: 5
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-
-- variable: questionsSpec.kibanaApp.integrations.prometheus.enabled
-  label: Integrate Kibana with Prometheus
-  description: ''
-  type: boolean
-  default: "false"
-  group: "Integrations"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
+    create: Create New Cluster
+    import: Import Existing Cluster
+    recovery: Recover Existing Cluster
+  default: "create"
+  group: "General"
   subquestions:
 
-
-# Service Discovery
-## Service Discovery - Kibana
-
-- variable: questionsSpec.kibanaApp.ingress.enabled
-  label: Enable Ingress URL for Kibana
-  description: 'Enable Ingress URL for Kibana'
-  type: boolean
-  default: "false"
-  group: "Service Discovery"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.kibanaApp.ingress.host.0.url
-    type: hostname
-    tooltip: "No help available."
-    label: Ingress URL Kibana
-    description: 'Ingress URL Kibana'
-    min_length: 6
-    default: ""
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.ingress.ingressClass
-    type: string
-    tooltip: "No help available."
-    label: Ingress Class Kibana
-    description: 'Ingress Class Kibana'
-    required: false
-    default: ""
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.ingress.annotations
-    type: map[string]
-    tooltip: "No help available."
-    label: Ingress Annotation Kibana
-    description: 'Ingress Annotation Kibana'
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-
-
-
-- variable: questionsSpec.kibanaApp.service.enabled
-  label: Custom Service for Kibana
-  description: ''
-  type: boolean
-  default: "false"
-  group: "Service Discovery"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.kibanaApp.service.type
-    type: enum
-    tooltip: "No help available."
-    label: Service Type Kibana
-    description: 'Service Type Kibana'
-    default: "ClusterIP"
-    options:
-      ClusterIP: Cluster IP
-      LoadBalancer: Load Balancer
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.service.annotations
-    type: map[string]
-    tooltip: "No help available."
-    label: Service Annotation Kibana
-    description: 'Ingress Annotation Kibana'
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-
-
-# Storage
-
-- variable: questionsSpec.kibanaApp.storage.enabled
-  label: Custom Storage for Kibana
-  description: ''
-  type: boolean
-  default: "false"
-  group: "Storage"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.kibanaApp.storage.createMode
-    type: enum
-    tooltip: "No help available."
-    label: PVC Create Mode Kibana
-    description: 'PVC or Object Create Mode Kibana'
-    default: "create"
-    options:
-      create: Create
-      existing: Existing
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.type
-    type: enum
-    tooltip: "No help available."
-    label: Storage Type Kibana
-    description: 'Storage Type Kibana'
-    default: "pvc"
-    options:
-      pvc: PVC
-      s3: S3 Object Storage
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.size
-    type: int
-    tooltip: "No help available."
-    label: Storage Size Kibana
-    description: 'GiB'
-#    default: "2"
-#    min: 1
-#    max: 10
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=pvc"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.accessMode
-    type: enum
-    tooltip: "No help available."
-    label: PVC Access Mode Kibana
-    description: 'PVC Access Mode Kibana'
-    default: "ReadWriteOnce"
-    options:
-      ReadWriteOnce: ReadWriteOnce
-      ReadOnlyMany: ReadOnlyMany
-      ReadWriteMany: ReadWriteMany
-      ReadWriteOncePod: ReadWriteOncePod
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=pvc"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.storageClass
-    tooltip: "No help available."
-    label: PVC Storage Class Kibana
-    description: 'PVC Storage Class Kibana'
-    type: storageclass
-#    default: ""
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=pvc"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.existingPvcName
-    type: reference[persistentvolumeclaim]
-    tooltip: "No help available."
-    label: PVC Existing Name Kibana
-    description: 'PVC Existing Name Kibana'
-#    default: "default-reference"
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=existing&&questionsSpec.kibanaApp.storage.type=pvc"
-    show_subquestions_if: "true" 
-
-
-  - variable: questionsSpec.kibanaApp.storage.object.url
-    type: string
-    tooltip: "No help available."
-    label: OBJECT URL Kibana
-    description: 'OBJECT URL Kibana'
+  # Import Subquestions
+  - variable: global.import.sourceName
+    label: "Source Database Name"
+    description: "Name of the source database to import from"
+    type: "string"
     required: true
-    default: "https://s3.example.com:443"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.accessKey
-    type: string
-    tooltip: "No help available."
-    label: OBJECT Access Key Kibana
-    description: 'OBJECT Access Key Kibana / Login'
-    required: false
-    default: "minioadmin"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.secretKey
-    type: password
-    tooltip: "No help available."
-    label: OBJECT Secret Key Kibana
-    description: 'Default password: minioadmin'
-    default: "minioadmin"
-    min_length: 5
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.bucket
-    type: string
-    tooltip: "No help available."
-    label: OBJECT Bucket Kibana
-    description: 'OBJECT Bucket Kibana'
-    required: false
-#    default: ""
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.path
-    type: string
-    tooltip: "No help available."
-    label: OBJECT Path Kibana
-    description: 'OBJECT Path Kibana'
-    required: false
-    default: "/directory"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.class
-    type: string
-    tooltip: "No help available."
-    label: OBJECT Class Kibana
-    description: 'OBJECT Class Kibana'
-    required: false
-    default: "STANDARD"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.existingSecretName
-    type: reference[secret]
-    tooltip: "No help available."
-    label: PVC Existing Name Kibana
-    description: 'PVC Existing Name Kibana'
-#    default: "default-reference"
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=existing&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
+    group: "Import"
+    show_if: "global.deploymentMode=import"
+  - variable: global.import.sourceNamespace
+    label: "Source Namespace"
+    description: "Kubernetes namespace of the source database"
+    type: "string"
+    required: true
+    group: "Import"
+    show_if: "global.deploymentMode=import"
+  - variable: global.import.sourceServiceName
+    label: "Source Service Name"
+    description: "Service name of the source database"
+    type: "string"
+    required: true
+    group: "Import"
+    show_if: "global.deploymentMode=import"
+  - variable: global.import.sourcePgAppUser
+    label: "Source PostgreSQL Application Username"
+    description: "Username to connect to the source PostgreSQL database"
+    type: "string"
+    required: true
+    group: "Import"
+    show_if: "global.deploymentMode=import"
+  - variable: global.import.sourcePgAppPass
+    label: "Source PostgreSQL Application Password"
+    description: "Password to connect to the source PostgreSQL database"
+    type: "password"
+    required: true
+    group: "Import"
+    show_if: "global.deploymentMode=import"
 
+  # Recovery Subquestions
+  - variable: global.recovery.serverName
+    label: "Recovery Server Name"
+    description: "Name of the PostgreSQL server for recovery"
+    type: "string"
+    default: "postgresql-test"
+    required: true
+    group: "Recovery"
+    show_if: "global.deploymentMode=recovery"
+  - variable: global.recovery.nameSuffix
+    label: "Recovery Name Suffix"
+    description: "Suffix to append to the recovery deployment name"
+    type: "string"
+    default: "recovery"
+    required: true
+    group: "Recovery"
+    show_if: "global.deploymentMode=recovery"
+  - variable: global.recovery.pitr.enabled
+    label: "Enable Point-in-Time Recovery"
+    description: "Enable Point-in-Time Recovery functionality"
+    type: "boolean"
+    default: false
+    required: true
+    group: "Recovery"
+    show_if: "global.deploymentMode=recovery"
+  - variable: global.recovery.pitr.datetime
+    label: "Recovery Point-in-Time"
+    description: "Date and time to recover the database to (when PITR is enabled)"
+    type: "date"
+    required: false
+    show_if: "global.recovery.pitr.enabled=true && global.deploymentMode=recovery"
+    group: "Recovery"
+
+# General
+- variable: nameOverride
+  label: "Deployment Name"
+  description: "Override the name of the PostgreSQL deployment"
+  type: "string"
+  default: "postgresql-test"
+  required: true
+  group: "General"
+- variable: namespaceOverride
+  label: "Namespace"
+  description: "Override the namespace for the PostgreSQL deployment"
+  type: "string"
+  default: "rk-test"
+  required: true
+  group: "General"
+
+# Database users
+- variable: global.users.pgAppUser
+  label: "PostgreSQL Application Username"
+  description: "Username for application to connect to PostgreSQL"
+  type: "string"
+  required: true
+  group: "Users"
+- variable: global.users.pgAppPass
+  label: "PostgreSQL Application Password"
+  description: "Password for application to connect to PostgreSQL"
+  type: "password"
+  required: true
+  group: "Users"
+- variable: global.users.pgAdmUser
+  label: "PostgreSQL Admin Username"
+  description: "Admin username for PostgreSQL management"
+  type: "string"
+  required: true
+  group: "Users"
+- variable: global.users.pgAdmPass
+  label: "PostgreSQL Admin Password"
+  description: "Admin password for PostgreSQL management"
+  type: "password"
+  required: true
+  group: "Users"
+
+# Backup
+- variable: global.backup.enabled
+  label: "Enable Backup"
+  description: "Enable backup functionality for PostgreSQL"
+  type: "boolean"
+  default: false
+  required: true
+  group: "Backup"
+- variable: global.backup.s3url
+  label: "S3 URL"
+  description: "URL of the S3-compatible storage service"
+  type: "string"
+  required: false
+  show_if: "global.backup.enabled=true"
+  group: "Backup"
+- variable: global.backup.s3bucket
+  label: "S3 Bucket"
+  description: "Bucket name in the S3-compatible storage"
+  type: "string"
+  required: false
+  show_if: "global.backup.enabled=true"
+  group: "Backup"
+- variable: global.backup.s3access
+  label: "S3 Access Key"
+  description: "Access key for the S3-compatible storage"
+  type: "string"
+  required: false
+  show_if: "global.backup.enabled=true"
+  group: "Backup"
+- variable: global.backup.s3secret
+  label: "S3 Secret Key"
+  description: "Secret key for the S3-compatible storage"
+  type: "password"
+  required: false
+  show_if: "global.backup.enabled=true"
+  group: "Backup"
+- variable: global.backup.s3ca
+  label: "S3 CA Certificate"
+  description: "CA certificate for S3 connection (if needed)"
+  type: "multiline"
+  required: false
+  show_if: "global.backup.enabled=true"
+  group: "Backup"
 
 # Workloads
-
-## Custom Default Credentials for Kibana
-
-- variable: questionsSpec.kibanaApp.workloads.enabled
-  label: Custom Default Credentials for Kibana
-  description: ''
-  type: boolean
-  default: "true"
+- variable: cnpg.instances
+  label: "Number of Instances"
+  description: "Number of PostgreSQL instances in the cluster"
+  type: "int"
+  default: 3
+  min: 1
+  required: true
   group: "Workloads"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.kibanaApp.workloads.authCreateMode
-    type: enum
-    tooltip: "No help available."
-    label: Credentials Create Mode Kibana
-    description: 'Credentials Create Mode Kibana'
-    default: "create"
-    options:
-      create: Create
-      generate: Generate
-      existing: Existing
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.workloads.authUsername
-    type: string
-    tooltip: "No help available."
-    label: Username Kibana
-    description: 'Login / Username Kibana'
-    required: false
-    default: "admin"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.workloads.authCreateMode=create"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.workloads.authPassword
-    type: password
-    tooltip: "No help available."
-    label: Password Kibana
-    description: 'Default password: P@ssword1'
-    default: "P@ssword1"
-    min_length: 5
-    options: []
-    show_if: "questionsSpec.kibanaApp.workloads.authCreateMode=create"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.workloads.authExisitingSecret
-    type: reference[secret]
-    tooltip: "No help available."
-    label: Existing Secret Name Kibana
-    description: 'Existing Secret Name Kibana'
-#    default: "default-reference"
-    options: []
-    show_if: "questionsSpec.kibanaApp.workloads.authCreateMode=existing"
-    show_subquestions_if: "true" 
-
-## Custom resource consumption for Kibana
-
-- variable: questionsSpec.kibanaApp.workloads.limits.enabled
-  label: Custom resource consumption for Kibana
-  description: ''
-  type: boolean
-  default: "false"
+- variable: cnpg.minSyncReplicas
+  label: "Minimum Synchronous Replicas"
+  description: "Minimum number of synchronous replicas"
+  type: "int"
+  default: 1
+  min: 0
+  required: true
   group: "Workloads"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.kibanaApp.workloads.limits.cpu
-    type: int
-    tooltip: "No help available."
-    label: Limit Milicores Kibana (1000 = 1vCPU)
-    description: 'Limit Milicores Kibana (1000 = 1vCPU)'
-    required: false
-#    default: "500"
-    tooltip: "1000 = 1vCPU"
-    options: []
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.workloads.limits.memory
-    type: int
-    tooltip: "No help available."
-    label: Limit RAM Kibana (MiB)
-    description: 'Limit RAM Kibana (MiB)'
-    required: false
-#    default: "500"
-    tooltip: "No help available."
-    options: []
-    show_subquestions_if: "true" 
+- variable: cnpg.maxSyncReplicas
+  label: "Maximum Synchronous Replicas"
+  description: "Maximum number of synchronous replicas"
+  type: "int"
+  default: 2
+  min: 0
+  required: true
+  group: "Workloads"
+- variable: cnpg.replicationSlots.highAvailability.enabled
+  label: "Enable High Availability Replication Slots"
+  description: "Enable high availability replication slots"
+  type: "boolean"
+  default: true
+  required: true
+  group: "Workloads"
 
+# Apps
+- variable: cnpg.postgresql.parameters.max_connections
+  label: "Max Connections"
+  description: "Maximum number of database connections allowed"
+  type: "string"
+  default: "100"
+  required: true
+  group: "Apps"
+- variable: cnpg.postgresql.parameters.superuser_reserved_connections
+  label: "Superuser Reserved Connections"
+  description: "Number of connections reserved for superusers"
+  type: "string"
+  default: "3"
+  required: true
+  group: "Apps"
+- variable: cnpg.postgresql.parameters.shared_buffers
+  label: "Shared Buffers"
+  description: "Amount of memory dedicated to shared buffers"
+  type: "string"
+  default: "256MB"
+  required: true
+  group: "Apps"
+- variable: cnpg.postgresql.parameters.timezone
+  label: "Timezone"
+  description: "PostgreSQL server timezone"
+  type: "string"
+  default: "Europe/Warsaw"
+  required: true
+  group: "Apps"
 
-- variable: questionsSpec.others.overwriteNamespace.enabled
-  label: Set Custom Namespace for Application
-  description: ''
-  type: boolean
-  default: "false"
-  group: "Others"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.others.overwriteNamespace.name
-    type: string
-    tooltip: "No help available."
-    label: Overwrite Chart Namespac
-    description: 'Overwrite Chart Namespace'
-    required: false
-#    default: "admin"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
+# Resources
+- variable: cnpg.resources.requests.memory
+  label: "Memory Request"
+  description: "Memory resource request for PostgreSQL pods"
+  type: "string"
+  default: "512Mi"
+  required: true
+  group: "Resources"
+- variable: cnpg.resources.requests.cpu
+  label: "CPU Request"
+  description: "CPU resource request for PostgreSQL pods"
+  type: "string"
+  default: "500m"
+  required: true
+  group: "Resources"
+- variable: cnpg.resources.limits.memory
+  label: "Memory Limit"
+  description: "Memory resource limit for PostgreSQL pods"
+  type: "string"
+  default: "512Mi"
+  required: true
+  group: "Resources"
+- variable: cnpg.resources.limits.cpu
+  label: "CPU Limit"
+  description: "CPU resource limit for PostgreSQL pods"
+  type: "string"
+  default: "500m"
+  required: true
+  group: "Resources"
 
-- variable: questionsSpec.others.overwriteName.enabled
-  label: Set Custom Release Name for Application
-  description: ''
-  type: boolean
-  default: "false"
-  group: "Others"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.others.overwriteName.release
-    type: string
-    tooltip: "No help available."
-    label: Overwrite Chart Release Name
-    description: 'Overwrite Chart Release Name'
-    required: false
-#    default: "admin"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
+# Storage
+- variable: cnpg.storage.storageClass
+  label: "Storage Class"
+  description: "Kubernetes storage class for PostgreSQL data"
+  type: "string"
+  default: "bs-vsphere-c1"
+  required: true
+  group: "Storage"
+- variable: cnpg.storage.size
+  label: "Storage Size"
+  description: "Size of the persistent volume for PostgreSQL data"
+  type: "string"
+  default: "2Gi"
+  required: true
+  group: "Storage"
+- variable: cnpg.storage.resizeInUseVolumes
+  label: "Allow Storage Resize"
+  description: "Allow resizing of in-use persistent volumes"
+  type: "boolean"
+  default: true
+  required: true
+  group: "Storage"
+- variable: cnpg.walStorage.size
+  label: "WAL Storage Size"
+  description: "Size of the persistent volume for PostgreSQL WAL"
+  type: "string"
+  default: "1Gi"
+  required: true
+  group: "Storage"
+- variable: cnpg.walStorage.resizeInUseVolumes
+  label: "Allow WAL Storage Resize"
+  description: "Allow resizing of in-use WAL persistent volumes"
+  type: "boolean"
+  default: true
+  required: true
+  group: "Storage"
 
-
-
+# Monitoring
+- variable: cnpg.monitoring.enablePodMonitor
+  label: "Enable Pod Monitoring"
+  description: "Enable Prometheus PodMonitor for PostgreSQL pods"
+  type: "boolean"
+  default: true
+  required: true
+  group: "Monitoring"

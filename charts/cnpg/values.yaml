@@ -1,21 +1,18 @@
 global:
+  deploymentMode: 'create'
   users:
     pgAppUser: ''
     pgAppPass: ''
     pgAdmUser: ''
     pgAdmPass: ''
-  create:
-    enabled: true
   import:
-    enabled: false
     sourceName: ''
     sourceNamespace: ''
     sourceServiceName: ''
     sourcePgAppUser: ''
     sourcePgAppPass: ''
   recovery:
-    enabled: false
-    serverName: 'postgresql-test'
+    serverName: 'postgresql-production'
     nameSuffix: 'recovery'
     pitr:
       enabled: false
@@ -28,8 +25,8 @@ global:
     s3secret: ''
     s3ca: ''
 
-nameOverride: "postgresql-test"
-namespaceOverride: "rk-test"
+nameOverride: "cnpg-test"
+namespaceOverride: "my-namespace"
 
 # Main
 cnpg:
