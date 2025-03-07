@@ -61,6 +61,8 @@ cnpg:
     size: 1Gi
     resizeInUseVolumes: True
       
+customRoles:
+
   # pooler:
   #   metadata:
   #     name: pgbouncer-test

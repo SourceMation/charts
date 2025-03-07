@@ -88,6 +88,9 @@ spec:
       superuser: true
       passwordSecret:
         name: postgresql-superuser-{{ include "common.names.shortname" $ }}
+    {{- with .Values.customRoles }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
   {{- if .Values.global.backup.enabled }}
   backup:
     {{- if or (eq .Values.global.deploymentMode "create") (eq .Values.global.deploymentMode "import") }}
