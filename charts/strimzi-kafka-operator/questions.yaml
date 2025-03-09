@@ -26,5 +26,4 @@ questions:
   options:
     rke2: RKE2
   show_if: "true"
-  show_subquestions_if: "true" 
 

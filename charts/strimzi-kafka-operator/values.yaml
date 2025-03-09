@@ -95,4 +95,5 @@ strimzi-kafka-operator:
   #     name: maven-builder
   #     tag: ""
 
-questionsSpec: {}
+questionsSpec:
+  k8sPlatform: k8s
