@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: strimzi-kafka-operator
+  repository: oci://quay.io/strimzi-helm
+  version: 0.44.0
+digest: sha256:0fb7f01c7f0905532cd2076744caeceb2d93d7a77ceba32c965b991e53b7f478
+generated: "2025-03-09T18:31:15.82408854+01:00"
