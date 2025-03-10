@@ -931,4 +931,77 @@ entries:
     urls:
     - neuvector-security/neuvector-security-1.0.0.tgz
     version: 1.0.0
-generated: "2025-03-07T10:11:18.753098618+01:00"
+  strimzi-kafka-operator:
+  - annotations:
+      catalog.cattle.io/display-name: Kafka Strimzi (1/2) - Operator
+      catalog.cattle.io/namespace: lp-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: strimzi-cluster-operator
+    apiVersion: v2
+    appVersion: 0.45.0
+    created: "2025-03-09T22:58:04.576286072+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - condition: global.strimziKafkaCrd.enabled
+      name: strimzi-kafka-operator
+      repository: oci://quay.io/strimzi-helm
+      version: 0.45.0
+    description: Apache Kafka is an open-source distributed event streaming platform.
+      Install only once on kubernetes. Data Streaming.
+    digest: fa954f82459b15f25dc9fead27413f78eb949b91636fbf914540403731fb121d
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - data streaming
+    - kafka
+    - strimzi
+    maintainers:
+    - email: kamil.kwiatkowski@linuxpolska.com
+      name: Qwiatu
+    name: strimzi-kafka-operator
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - strimzi-kafka-operator/strimzi-kafka-operator-0.1.1.tgz
+    version: 0.1.1
+  - annotations:
+      catalog.cattle.io/display-name: Kafka Strimzi (1/2) - Operator
+      catalog.cattle.io/namespace: lp-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: strimzi-cluster-operator
+    apiVersion: v2
+    appVersion: 0.44.0
+    created: "2025-03-09T22:58:04.569824295+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - condition: global.strimziKafkaCrd.enabled
+      name: strimzi-kafka-operator
+      repository: oci://quay.io/strimzi-helm
+      version: 0.44.0
+    description: Apache Kafka is an open-source distributed event streaming platform.
+      Install only once on kubernetes. Data Streaming.
+    digest: 29cf018e77c54c303836c664959f62b6173e5b5d261bb4850d4f693b3152b4e9
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - data streaming
+    - kafka
+    - strimzi
+    maintainers:
+    - email: kamil.kwiatkowski@linuxpolska.com
+      name: Qwiatu
+    name: strimzi-kafka-operator
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-03-09T22:58:04.483225497+01:00"
