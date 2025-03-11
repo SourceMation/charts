@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: redis-operator
+  repository: https://ot-container-kit.github.io/helm-charts
+  version: 0.19.3
+digest: sha256:be3533c73185709e6202b65af063d0db2e9ac88b3f035a37827b77f6bf5671bb
+generated: "2025-03-11T08:14:21.117839187+01:00"
