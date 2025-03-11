@@ -48,8 +48,8 @@
 
 ```bash
 
-export CHART_NAMESPACE=lp-systems
-export CHART_VERSION=1.0.0
+export CHART_NAMESPACE=lp-system
+export CHART_VERSION=0.1.0
 
 kubectl create ns ${CHART_NAMESPACE}
 
