@@ -34,5 +34,5 @@ name: neuvector
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 1.0.0
+version: 0.1.0
 
