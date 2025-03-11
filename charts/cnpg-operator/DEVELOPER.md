@@ -4,8 +4,7 @@
  
 ```bash 
  
-export CHART_VERSION=1.0.0
-export CHART_NAMESPACE=cngp-operator
+export CHART_NAMESPACE=lp-system
  
 cd charts/charts/cnpg-operator 
 
@@ -25,5 +24,5 @@ helm uninstall -n ${CHART_NAMESPACE} cnpg-operator
 # Testing
 
 ```bash
-
+kubectl -n ${CHART_NAMESPACE} get po
 ```

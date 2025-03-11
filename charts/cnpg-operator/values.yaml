@@ -18,3 +18,4 @@ cnpg:
   podSecurityContext:
     seccompProfile: {}
 
+questionsSpec: {}
