@@ -9,7 +9,7 @@ entries:
       catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
     apiVersion: v2
     appVersion: v1.16.1
-    created: "2025-02-27T13:09:23.276488829+01:00"
+    created: "2025-03-11T09:00:58.798186378+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -42,7 +42,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-config
     apiVersion: v2
     appVersion: 1.15.1
-    created: "2025-02-27T13:09:23.276065368+01:00"
+    created: "2025-03-11T09:00:58.797352076+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -77,7 +77,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-add-ons
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2025-02-27T13:09:23.279229643+01:00"
+    created: "2025-03-11T09:00:58.803492513+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -121,7 +121,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-add-ons
     apiVersion: v2
     appVersion: 1.1.0
-    created: "2025-02-27T13:09:23.27747868+01:00"
+    created: "2025-03-11T09:00:58.80005931+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -160,7 +160,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager
     apiVersion: v2
     appVersion: v1.16.1
-    created: "2025-02-27T13:09:23.289672477+01:00"
+    created: "2025-03-11T09:00:58.822165006+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -203,7 +203,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager
     apiVersion: v2
     appVersion: 1.15.1
-    created: "2025-02-27T13:09:23.283978006+01:00"
+    created: "2025-03-11T09:00:58.811815233+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -245,7 +245,7 @@ entries:
       catalog.cattle.io/release-name: cnpg
     apiVersion: v2
     appVersion: 1.24.1
-    created: "2025-02-27T13:09:23.295512968+01:00"
+    created: "2025-03-11T09:00:58.829689184+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -284,7 +284,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2025-02-27T13:09:23.295731275+01:00"
+    created: "2025-03-11T09:00:58.83029019+01:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: 7b430316ecc0bab82476c486da0a753d678bdccc338745a5018b74584bea4deb
     home: https://linuxpolska.com
@@ -310,7 +310,7 @@ entries:
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2025-02-27T13:09:23.300761678+01:00"
+    created: "2025-03-11T09:00:58.837614004+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -350,7 +350,7 @@ entries:
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2025-02-27T13:09:23.29964221+01:00"
+    created: "2025-03-11T09:00:58.835173784+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -390,7 +390,7 @@ entries:
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2025-02-27T13:09:23.297485883+01:00"
+    created: "2025-03-11T09:00:58.832763138+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -431,7 +431,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2025-02-27T13:09:23.30181028+01:00"
+    created: "2025-03-11T09:00:58.841463578+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -472,7 +472,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2025-02-27T13:09:23.301461336+01:00"
+    created: "2025-03-11T09:00:58.839676635+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -513,7 +513,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2025-02-27T13:09:23.301119029+01:00"
+    created: "2025-03-11T09:00:58.83849861+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -556,7 +556,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.14.0
-    created: "2025-02-27T13:09:23.318137698+01:00"
+    created: "2025-03-11T09:00:58.876751627+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -606,7 +606,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.13.0
-    created: "2025-02-27T13:09:23.312859472+01:00"
+    created: "2025-03-11T09:00:58.865355534+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -656,7 +656,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.12.1
-    created: "2025-02-27T13:09:23.306819276+01:00"
+    created: "2025-03-11T09:00:58.854235592+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -705,7 +705,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.10
-    created: "2025-02-27T13:09:23.323289094+01:00"
+    created: "2025-03-11T09:00:58.889362495+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -737,7 +737,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.9
-    created: "2025-02-27T13:09:23.320687937+01:00"
+    created: "2025-03-11T09:00:58.882766061+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -770,7 +770,7 @@ entries:
       catalog.cattle.io/release-name: jenkins-by-lp
     apiVersion: v2
     appVersion: 2.462.3
-    created: "2025-02-27T13:09:23.326255756+01:00"
+    created: "2025-03-11T09:00:58.895369507+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -805,7 +805,7 @@ entries:
       catalog.cattle.io/release-name: neuvector
     apiVersion: v2
     appVersion: 5.4.2
-    created: "2025-02-27T13:09:23.327886595+01:00"
+    created: "2025-03-11T09:00:58.900313625+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -840,7 +840,7 @@ entries:
       catalog.cattle.io/release-name: neuvector-sec
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-02-27T13:09:23.328212519+01:00"
+    created: "2025-03-11T09:00:58.901219633+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -867,4 +867,41 @@ entries:
     urls:
     - neuvector-security/neuvector-security-1.0.0.tgz
     version: 1.0.0
-generated: "2025-02-27T13:09:23.275571956+01:00"
+  redis-operator:
+  - annotations:
+      catalog.cattle.io/display-name: Redis (1/2) - Operator
+      catalog.cattle.io/namespace: lp-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: redis-operator
+    apiVersion: v2
+    appVersion: 0.19.1
+    created: "2025-03-11T09:00:58.916476198+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - condition: global.redisOperatorCrd.enabled
+      name: redis-operator
+      repository: https://ot-container-kit.github.io/helm-charts
+      version: 0.19.3
+    description: Provides easy redis setup definitions for Kubernetes. Install only
+      once on kubernetes. Database in-memory
+    digest: 8e89969d034b7f12da1e2aa834bc39f9767c01ee334d8f5d0bdf3ad31c5abe4a
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - database in-memory
+    - in memory
+    - redis
+    maintainers:
+    - email: radoslaw.klewin@linuxpolska.com
+      name: rklewin
+    name: redis-operator
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - redis-operator/redis-operator-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-03-11T09:00:58.796343014+01:00"
