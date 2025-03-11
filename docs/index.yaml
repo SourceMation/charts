@@ -9,7 +9,7 @@ entries:
       catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
     apiVersion: v2
     appVersion: v1.16.1
-    created: "2025-03-11T09:00:58.798186378+01:00"
+    created: "2025-03-07T10:11:18.75514493+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -42,7 +42,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-config
     apiVersion: v2
     appVersion: 1.15.1
-    created: "2025-03-11T09:00:58.797352076+01:00"
+    created: "2025-03-07T10:11:18.754288533+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -77,7 +77,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-add-ons
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2025-03-11T09:00:58.803492513+01:00"
+    created: "2025-03-07T10:11:18.760611591+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -121,7 +121,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-add-ons
     apiVersion: v2
     appVersion: 1.1.0
-    created: "2025-03-11T09:00:58.80005931+01:00"
+    created: "2025-03-07T10:11:18.757190035+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -160,7 +160,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager
     apiVersion: v2
     appVersion: v1.16.1
-    created: "2025-03-11T09:00:58.822165006+01:00"
+    created: "2025-03-07T10:11:18.781081144+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -203,7 +203,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager
     apiVersion: v2
     appVersion: 1.15.1
-    created: "2025-03-11T09:00:58.811815233+01:00"
+    created: "2025-03-07T10:11:18.770068904+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -245,7 +245,7 @@ entries:
       catalog.cattle.io/release-name: cnpg
     apiVersion: v2
     appVersion: 1.24.1
-    created: "2025-03-11T09:00:58.829689184+01:00"
+    created: "2025-03-07T10:11:18.78892171+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -284,7 +284,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2025-03-11T09:00:58.83029019+01:00"
+    created: "2025-03-07T10:11:18.789274357+01:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: 7b430316ecc0bab82476c486da0a753d678bdccc338745a5018b74584bea4deb
     home: https://linuxpolska.com
@@ -310,7 +310,7 @@ entries:
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2025-03-11T09:00:58.837614004+01:00"
+    created: "2025-03-07T10:11:18.798433873+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -350,7 +350,7 @@ entries:
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2025-03-11T09:00:58.835173784+01:00"
+    created: "2025-03-07T10:11:18.795955105+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -390,7 +390,7 @@ entries:
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2025-03-11T09:00:58.832763138+01:00"
+    created: "2025-03-07T10:11:18.792208347+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -431,7 +431,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2025-03-11T09:00:58.841463578+01:00"
+    created: "2025-03-07T10:11:18.801081852+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -472,7 +472,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2025-03-11T09:00:58.839676635+01:00"
+    created: "2025-03-07T10:11:18.800185341+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -513,7 +513,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2025-03-11T09:00:58.83849861+01:00"
+    created: "2025-03-07T10:11:18.799324516+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -556,7 +556,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.14.0
-    created: "2025-03-11T09:00:58.876751627+01:00"
+    created: "2025-03-07T10:11:18.839156941+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -606,7 +606,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.13.0
-    created: "2025-03-11T09:00:58.865355534+01:00"
+    created: "2025-03-07T10:11:18.825551767+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -656,7 +656,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.12.1
-    created: "2025-03-11T09:00:58.854235592+01:00"
+    created: "2025-03-07T10:11:18.812455269+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -704,8 +704,72 @@ entries:
       catalog.cattle.io/permits-os: linux
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
+    appVersion: 5.7.12
+    created: "2025-03-07T10:11:18.865911736+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - name: jenkins
+      repository: https://charts.jenkins.io
+      version: 5.7.12
+    description: An automation server that enables developers to build, test, and
+      deploy. Install many times on kubernetes. CI/CD.
+    digest: 059cd48a4975c0130f7308513e688fd5ec6f280c2c15cf9027013245c91cfc60
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - cicd
+    maintainers:
+    - email: marek.janosz@linuxpolska.com
+      name: jmmaro
+    name: jenkins
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - jenkins/jenkins-0.1.3.tgz
+    version: 0.1.3
+  - annotations:
+      catalog.cattle.io/display-name: Jenkins (1/1) - App
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: jenkins
+    apiVersion: v2
+    appVersion: 5.7.11
+    created: "2025-03-07T10:11:18.859452556+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - name: jenkins
+      repository: https://charts.jenkins.io
+      version: 5.7.11
+    description: An automation server that enables developers to build, test, and
+      deploy. Install many times on kubernetes. CI/CD.
+    digest: 64170de4287aeaaf909814d3ddf41334979207e1ccd556e241f624a24d16a8dd
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - cicd
+    maintainers:
+    - email: marek.janosz@linuxpolska.com
+      name: jmmaro
+    name: jenkins
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - jenkins/jenkins-0.1.2.tgz
+    version: 0.1.2
+  - annotations:
+      catalog.cattle.io/display-name: Jenkins (1/1) - App
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: jenkins
+    apiVersion: v2
     appVersion: 5.7.10
-    created: "2025-03-11T09:00:58.889362495+01:00"
+    created: "2025-03-07T10:11:18.853009823+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -737,7 +801,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.9
-    created: "2025-03-11T09:00:58.882766061+01:00"
+    created: "2025-03-07T10:11:18.845066158+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -770,7 +834,7 @@ entries:
       catalog.cattle.io/release-name: jenkins-by-lp
     apiVersion: v2
     appVersion: 2.462.3
-    created: "2025-03-11T09:00:58.895369507+01:00"
+    created: "2025-03-07T10:11:18.872469264+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -805,7 +869,7 @@ entries:
       catalog.cattle.io/release-name: neuvector
     apiVersion: v2
     appVersion: 5.4.2
-    created: "2025-03-11T09:00:58.900313625+01:00"
+    created: "2025-03-07T10:11:18.87646588+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -840,7 +904,7 @@ entries:
       catalog.cattle.io/release-name: neuvector-sec
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-03-11T09:00:58.901219633+01:00"
+    created: "2025-03-07T10:11:18.877343345+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -867,41 +931,77 @@ entries:
     urls:
     - neuvector-security/neuvector-security-1.0.0.tgz
     version: 1.0.0
-  redis-operator:
+  strimzi-kafka-operator:
   - annotations:
-      catalog.cattle.io/display-name: Redis (1/2) - Operator
+      catalog.cattle.io/display-name: Kafka Strimzi (1/2) - Operator
       catalog.cattle.io/namespace: lp-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/release-name: redis-operator
+      catalog.cattle.io/release-name: strimzi-cluster-operator
     apiVersion: v2
-    appVersion: 0.19.1
-    created: "2025-03-11T09:00:58.916476198+01:00"
+    appVersion: 0.45.0
+    created: "2025-03-09T22:58:04.576286072+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
-    - condition: global.redisOperatorCrd.enabled
-      name: redis-operator
-      repository: https://ot-container-kit.github.io/helm-charts
-      version: 0.19.3
-    description: Provides easy redis setup definitions for Kubernetes. Install only
-      once on kubernetes. Database in-memory
-    digest: 8e89969d034b7f12da1e2aa834bc39f9767c01ee334d8f5d0bdf3ad31c5abe4a
+    - condition: global.strimziKafkaCrd.enabled
+      name: strimzi-kafka-operator
+      repository: oci://quay.io/strimzi-helm
+      version: 0.45.0
+    description: Apache Kafka is an open-source distributed event streaming platform.
+      Install only once on kubernetes. Data Streaming.
+    digest: fa954f82459b15f25dc9fead27413f78eb949b91636fbf914540403731fb121d
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
-    - database in-memory
-    - in memory
-    - redis
+    - data streaming
+    - kafka
+    - strimzi
     maintainers:
-    - email: radoslaw.klewin@linuxpolska.com
-      name: rklewin
-    name: redis-operator
+    - email: kamil.kwiatkowski@linuxpolska.com
+      name: Qwiatu
+    name: strimzi-kafka-operator
     sources:
     - https://github.com/SourceMation/charts.git
     type: application
     urls:
-    - redis-operator/redis-operator-0.1.0.tgz
+    - strimzi-kafka-operator/strimzi-kafka-operator-0.1.1.tgz
+    version: 0.1.1
+  - annotations:
+      catalog.cattle.io/display-name: Kafka Strimzi (1/2) - Operator
+      catalog.cattle.io/namespace: lp-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: strimzi-cluster-operator
+    apiVersion: v2
+    appVersion: 0.44.0
+    created: "2025-03-09T22:58:04.569824295+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - condition: global.strimziKafkaCrd.enabled
+      name: strimzi-kafka-operator
+      repository: oci://quay.io/strimzi-helm
+      version: 0.44.0
+    description: Apache Kafka is an open-source distributed event streaming platform.
+      Install only once on kubernetes. Data Streaming.
+    digest: 29cf018e77c54c303836c664959f62b6173e5b5d261bb4850d4f693b3152b4e9
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - data streaming
+    - kafka
+    - strimzi
+    maintainers:
+    - email: kamil.kwiatkowski@linuxpolska.com
+      name: Qwiatu
+    name: strimzi-kafka-operator
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-11T09:00:58.796343014+01:00"
+generated: "2025-03-09T22:58:04.483225497+01:00"
