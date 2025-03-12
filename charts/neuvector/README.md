@@ -78,6 +78,7 @@ neuvector \
 ```bash
 
 kubectl -n ${CHART_NAMESPACE} get po
+helm -n ${CHART_NAMESPACE} test neuvector
 
 ```
 
