@@ -879,7 +879,7 @@ entries:
       version: 2.8.4
     description: NeuVector provides a powerful end-to-end container security platform.
       Install only once on kubernetes. Security.
-    digest: 782ea1fa44364e3d10407e97e508636a68c0a3f17ec9787f331d1b782b42acfc
+    digest: 6d36d0ce82430391f5172fad9413519d3d24cb032fff3c691b43d36ff76a389b
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -893,8 +893,8 @@ entries:
     - https://github.com/SourceMation/charts.git
     type: application
     urls:
-    - neuvector/neuvector-1.0.0.tgz
-    version: 1.0.0
+    - neuvector/neuvector-0.1.0.tgz
+    version: 0.1.0
   neuvector-security:
   - annotations:
       catalog.cattle.io/display-name: NeuVector Security Rules
