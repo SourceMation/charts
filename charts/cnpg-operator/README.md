@@ -79,6 +79,7 @@ cnpg \
 ```bash
 
 kubectl -n ${CHART_NAMESPACE} get po
+helm -n ${CHART_NAMESPACE} test cnpg-operator
 
 ```
 
