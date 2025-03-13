@@ -68,7 +68,7 @@ EOF
 
 helm -n ${CHART_NAMESPACE} upgrade --install cnpg-operator \
 --repo https://sourcemation.github.io/charts/ \
-cnpg \
+cnpg-operator \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
 
