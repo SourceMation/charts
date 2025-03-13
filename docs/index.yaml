@@ -940,7 +940,43 @@ entries:
       catalog.cattle.io/release-name: redis-operator
     apiVersion: v2
     appVersion: 0.19.1
-    created: "2025-03-12T08:19:09.582565286+01:00"
+    created: "2025-03-13T10:11:56.289790423+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - condition: global.redisOperatorCrd.enabled
+      name: redis-operator
+      repository: https://ot-container-kit.github.io/helm-charts
+      version: 0.19.3
+    description: Provides easy redis setup definitions for Kubernetes. Install only
+      once on kubernetes. Database in-memory
+    digest: 9bf7c000e251b11e138bfb5521c37e753cdca1c50c92ee29b512c94c1840bc04
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - database in-memory
+    - in memory
+    - redis
+    maintainers:
+    - email: radoslaw.klewin@linuxpolska.com
+      name: rklewin
+    name: redis-operator
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - redis-operator/redis-operator-0.1.1.tgz
+    version: 0.1.1
+  - annotations:
+      catalog.cattle.io/display-name: Redis (1/2) - Operator
+      catalog.cattle.io/namespace: lp-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: redis-operator
+    apiVersion: v2
+    appVersion: 0.19.1
+    created: "2025-03-13T10:11:56.280835241+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1041,4 +1077,4 @@ entries:
     urls:
     - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-12T08:19:09.399063344+01:00"
+generated: "2025-03-13T10:11:56.185663601+01:00"
