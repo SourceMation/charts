@@ -1,6 +1,0 @@
-apiVersion: v2
-name: redis
-description: A Helm chart for Redis on EuroLinux 9
-type: application
-version: 6.2.7
-appVersion: "6.2.7" 

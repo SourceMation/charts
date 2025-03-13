@@ -931,6 +931,43 @@ entries:
     urls:
     - neuvector-security/neuvector-security-1.0.0.tgz
     version: 1.0.0
+  redis:
+  - annotations:
+      catalog.cattle.io/display-name: Redis (2/2) - App
+      catalog.cattle.io/namespace: redis
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: redis
+    apiVersion: v2
+    appVersion: 0.16.5
+    created: "2025-03-13T10:00:25.709443914+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - condition: global.redisOperatorCrd.enabled
+      name: redis
+      repository: https://ot-container-kit.github.io/helm-charts
+      version: 0.16.5
+    description: Provides easy redis setup definitions for Kubernetes. Install many
+      times on kubernetes. Database in-memory
+    digest: 65c39e5a592cd6565218f54af14d7672839daf748d72b8d0d5537ba8ea2a82f8
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - database in-memory
+    - in memory
+    - redis
+    maintainers:
+    - email: radoslaw.kolba@linuxpolska.com
+      name: radkolba
+    name: redis
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - redis/redis-0.1.0.tgz
+    version: 0.1.0
   redis-operator:
   - annotations:
       catalog.cattle.io/display-name: Redis (1/2) - Operator
@@ -1041,4 +1078,4 @@ entries:
     urls:
     - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-12T08:19:09.399063344+01:00"
+generated: "2025-03-13T10:00:25.633052457+01:00"
