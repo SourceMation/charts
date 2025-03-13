@@ -75,3 +75,4 @@ kubectl get mutatingwebhookconfiguration -o name | grep -i open | xargs kubectl 
 #kubectl get mutatingwebhookconfiguration -o name | grep -i istio | xargs kubectl delete
 
 ```
+
