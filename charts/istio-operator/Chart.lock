@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: base
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.24.3
+digest: sha256:7a6f2460b1b5411bc5e28acfddd5241bcef7381f0996c637ef147dc64dd2e41c
+generated: "2025-03-13T11:25:26.861650091+01:00"
