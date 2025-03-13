@@ -12,5 +12,5 @@ spec:
       command: ["/bin/sh", "-c"]
       args:
         - |
-          kubectl get pods -n testing | grep -E 'controller|enforcer|manager' | grep -v 'Running' && exit 1 || exit 0
+          kubectl get pods | grep -E 'controller|enforcer|manager' | grep -v 'Running' && exit 1 || exit 0
   restartPolicy: Never
