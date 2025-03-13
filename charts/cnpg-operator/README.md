@@ -87,7 +87,7 @@ helm -n ${CHART_NAMESPACE} test cnpg-operator
 
 ```bash
 
-helm -n ${CHART_NAMESPACE} uninstall cnpg
+helm -n ${CHART_NAMESPACE} uninstall cnpg-operator
 
 
 ```
