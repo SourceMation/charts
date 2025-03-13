@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: redis
+  repository: https://ot-container-kit.github.io/helm-charts
+  version: 0.16.5
+digest: sha256:f661efdeba8b8ac4a7828f9870967e5b89ddb4b7e4ce1cf1df3847d25e0cd792
+generated: "2025-03-12T14:47:20.002094332+01:00"
