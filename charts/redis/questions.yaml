@@ -2,7 +2,6 @@ categories:
 - database
 - in-memory
 - in memory
-namespace: lp-system
 questions:
 
 # Integrations 

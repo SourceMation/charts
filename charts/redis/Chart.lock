@@ -4,6 +4,15 @@ dependencies:
   version: 0.1.1
 - name: redis
   repository: https://ot-container-kit.github.io/helm-charts
-  version: 0.16.5
-digest: sha256:f661efdeba8b8ac4a7828f9870967e5b89ddb4b7e4ce1cf1df3847d25e0cd792
-generated: "2025-03-12T14:47:20.002094332+01:00"
+  version: 0.16.4
+- name: redis-cluster
+  repository: https://ot-container-kit.github.io/helm-charts
+  version: 0.16.4
+- name: redis-replication
+  repository: https://ot-container-kit.github.io/helm-charts
+  version: 0.16.6
+- name: redis-sentinel
+  repository: https://ot-container-kit.github.io/helm-charts
+  version: 0.16.8
+digest: sha256:2c7e40b7a9779c427df60bf508aa9817df8008191d4e72841106f2b3b5698709
+generated: "2025-03-13T16:01:57.108706204+01:00"
