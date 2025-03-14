@@ -4,19 +4,19 @@
  
 ```bash 
  
-export CHART_NAMESPACE=lp-system
+export CHART_NAMESPACE=neuvector
  
-cd charts/charts/cnpg-operator 
+cd charts/charts/neuvector 
 
  
 helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \ 
-cnpg-operator .  
+neuvector .  
  
 ``` 
 # Cleaning
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} cnpg-operator
+helm uninstall -n ${CHART_NAMESPACE} neuvector
 
 ```
 

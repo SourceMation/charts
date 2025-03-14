@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-svc-crd-webhook"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+spec:
+  containers:
+    - name: test-controller
+      image: busybox
+      command: ['sh', '-c', 'nc -zv {{ .Release.Name }}-svc-crd-webhook 443']
+  restartPolicy: Never

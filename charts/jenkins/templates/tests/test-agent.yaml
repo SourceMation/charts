@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-agent"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      command: ["curl", "-k", "-f", "{{ .Release.Name }}-agent:50000"]
+  restartPolicy: Never

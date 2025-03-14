@@ -6,17 +6,17 @@
  
 export CHART_NAMESPACE=lp-system
  
-cd charts/charts/cnpg-operator 
+cd charts/charts/redis-operator
 
  
-helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \ 
-cnpg-operator .  
+helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
+redis-operator .  
  
 ``` 
 # Cleaning
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} cnpg-operator
+helm uninstall -n ${CHART_NAMESPACE} redis-operator
 
 ```
 

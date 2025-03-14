@@ -49,7 +49,7 @@
 ```bash
 
 export CHART_NAMESPACE=neuvector
-export CHART_VERSION=1.0.0
+export CHART_VERSION=0.1.0
 
 kubectl create ns ${CHART_NAMESPACE}
 
@@ -78,6 +78,7 @@ neuvector \
 ```bash
 
 kubectl -n ${CHART_NAMESPACE} get po
+helm -n ${CHART_NAMESPACE} test neuvector
 
 ```
 

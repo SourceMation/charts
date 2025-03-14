@@ -2,9 +2,9 @@
 
 ### Are you looking for more information?
 
-1. Based on: https://github.com/cloudnative-pg/cloudnative-pg.git
-2. Documentation: https://cloudnative-pg.io/docs/
-3. Chart Source: https://github.com/cloudnative-pg/charts.git
+1. Based on: https://github.com/OT-CONTAINER-KIT/redis-operator.git
+2. Documentation: https://ot-redis-operator.netlify.app/docs/
+3. Chart Source: https://github.com/OT-CONTAINER-KIT/redis-operator/tree/master/charts/redis-operator
 
 
 ## Before Installation
@@ -42,7 +42,6 @@
 > Notify us: https://github.com/SourceMation/charts/issues
 
 
-
 ## CLI installation
 
 ### Preparation
@@ -66,9 +65,9 @@ cat << EOF > /tmp/values.yaml
 EOF 
 
 
-helm -n ${CHART_NAMESPACE} upgrade --install cnpg-operator \
+helm -n ${CHART_NAMESPACE} upgrade --install redis-operator \
 --repo https://sourcemation.github.io/charts/ \
-cnpg-operator \
+redis-operator \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
 
@@ -79,7 +78,6 @@ cnpg-operator \
 ```bash
 
 kubectl -n ${CHART_NAMESPACE} get po
-helm -n ${CHART_NAMESPACE} test cnpg-operator
 
 ```
 
@@ -87,8 +85,7 @@ helm -n ${CHART_NAMESPACE} test cnpg-operator
 
 ```bash
 
-helm -n ${CHART_NAMESPACE} uninstall cnpg-operator
-
+helm -n ${CHART_NAMESPACE} uninstall redis-operator
 
 ```
 
