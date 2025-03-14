@@ -939,7 +939,7 @@ entries:
       catalog.cattle.io/release-name: redis
     apiVersion: v2
     appVersion: 0.16.4
-    created: "2025-03-14T08:43:41.314045841+01:00"
+    created: "2025-03-14T10:44:21.987653062+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -958,7 +958,7 @@ entries:
       version: 0.16.8
     description: Provides easy redis setup definitions for Kubernetes. Install many
       times on kubernetes. Database in-memory
-    digest: 66608f5836f2c54eacf20d06eb35f53b045a342484fde9d6c9a23c2cbe153694
+    digest: e069b7ac150e205bd05a4b08abb2b51aeb130129469b8d09b7e9b2999a056253
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -1085,4 +1085,4 @@ entries:
     urls:
     - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-14T08:43:41.232396132+01:00"
+generated: "2025-03-14T10:44:21.910621394+01:00"

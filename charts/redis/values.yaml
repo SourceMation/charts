@@ -1,6 +1,5 @@
 ############ redisStandalone ############
 # redisStandalone:
-#   name: ""
 #   image: quay.io/opstree/redis
 #   tag: v7.0.15
 #   imagePullPolicy: IfNotPresent
@@ -22,7 +21,6 @@
 
 ############ redisCluster ############
 # redisCluster:
-#   name: ""
 #   clusterSize: 3
 #   clusterVersion: v7
 #   persistenceEnabled: true
@@ -62,7 +60,6 @@
 
 ############ redisReplication ############
 # redisReplication:
-#   name: ""
 #   clusterSize: 3
 #   image: quay.io/opstree/redis
 #   tag: v7.0.15
@@ -79,7 +76,6 @@
 
 ############ redisSentinel ############
 # redisSentinel:
-#   name: ""
 #   clusterSize: 3
 #   image: quay.io/opstree/redis-sentinel
 #   tag: v7.0.15
