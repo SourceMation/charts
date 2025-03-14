@@ -704,6 +704,38 @@ entries:
       catalog.cattle.io/permits-os: linux
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
+    appVersion: 5.7.13
+    created: "2025-03-10T10:04:22.186213625+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - name: jenkins
+      repository: https://charts.jenkins.io
+      version: 5.7.13
+    description: An automation server that enables developers to build, test, and
+      deploy. Install many times on kubernetes. CI/CD.
+    digest: e537a3ba6770df1744b71e795ff853841d3a48951aad85583135ab239a8da668
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - cicd
+    maintainers:
+    - email: marek.janosz@linuxpolska.com
+      name: jmmaro
+    name: jenkins
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - jenkins/jenkins-0.1.4.tgz
+    version: 0.1.4
+  - annotations:
+      catalog.cattle.io/display-name: Jenkins (1/1) - App
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: jenkins
+    apiVersion: v2
     appVersion: 5.7.12
     created: "2025-03-12T08:19:09.547357484+01:00"
     dependencies:
