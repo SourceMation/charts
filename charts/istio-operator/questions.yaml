@@ -1,6 +1,6 @@
 categories:
 - security
-namespace: lp-system
+namespace: istio-system
 questions:
 
 

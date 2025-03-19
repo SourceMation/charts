@@ -4,14 +4,24 @@ global:
   istioOperatorCrd:
     enabled: true
 
-# base:
-#   excludedCRDs: []
-#   enableCRDTemplates: true
-#   validationURL: ""
-#   validationCABundle: ""
-#   enableIstioConfigCRDs: true
-# defaultRevision: "default"
-# experimental:
-#   stableValidationPolicy: false
+istiod:
+  profile: ambient
+  global:
+    logAsJson: true
+  meshConfig:
+    enableTracing: true
+    defaultConfig:
+      tracing: {} # disable legacy MeshConfig tracing options
+    extensionProviders:
+    - name: jaeger
+      opentelemetry:
+        port: 4318
+        service: jaeger-collector.default.svc.cluster.local
+        http:
+          path: "/v1/traces"
+          timeout: 10s
+
+cni:
+  profile: ambient
 
 questionsSpec: {}
