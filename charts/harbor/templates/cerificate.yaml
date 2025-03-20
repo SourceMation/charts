@@ -1,0 +1,26 @@
+{{ if and (.Values.certManager.ingress.enabled) (eq .Values.harbor.expose.type "ingress") }}
+{{ if or (eq .Values.harbor.expose.tls.certSource "auto") (eq .Values.harbor.expose.tls.certSource "secret") }}
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ template "harbor.ingress" . }}
+spec:
+  {{- if eq .Values.harbor.expose.tls.certSource "secret" }}
+  secretName: {{ .Values.harbor.expose.tls.secret.secretName }}
+  {{- else }}
+  secretName: {{ template "harbor.ingress" . }}
+  {{- end }}
+  duration: {{ .Values.certManager.ingress.duration }}
+  renewBefore: {{ .Values.certManager.ingress.renewBefore }}
+  dnsNames:
+    - {{ .Values.harbor.expose.ingress.hosts.core }}
+    - www.{{- .Values.harbor.expose.ingress.hosts.core }}
+  issuerRef:
+    name: {{ .Values.certManager.ingress.issuerName }}
+    kind: {{ .Values.certManager.ingress.issuerKind }}
+
+{{ else }}
+  {{ fail ".Values.harbor.expose.tls.certSource is neither `auto` nor `secret`" }}
+{{ end }}
+{{ end }}
