@@ -704,8 +704,40 @@ entries:
       catalog.cattle.io/permits-os: linux
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
+    appVersion: 5.7.16
+    created: "2025-03-20T20:26:17.890978357+01:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - name: jenkins
+      repository: https://charts.jenkins.io
+      version: 5.7.16
+    description: An automation server that enables developers to build, test, and
+      deploy. Install many times on kubernetes. CI/CD.
+    digest: 2611aedf3963581e4b120accb97d6f231b1bd20129e4cf76df53cbd4e6fb93cc
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - cicd
+    maintainers:
+    - email: marek.janosz@linuxpolska.com
+      name: jmmaro
+    name: jenkins
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - jenkins/jenkins-0.1.7.tgz
+    version: 0.1.7
+  - annotations:
+      catalog.cattle.io/display-name: Jenkins (1/1) - App
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: jenkins
+    apiVersion: v2
     appVersion: 5.7.15
-    created: "2025-03-20T01:59:20.227527848+01:00"
+    created: "2025-03-20T20:26:17.883133699+01:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1207,4 +1239,4 @@ entries:
     urls:
     - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-20T01:59:24.452175644+01:00"
+generated: "2025-03-20T20:26:17.735641182+01:00"
