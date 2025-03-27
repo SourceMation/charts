@@ -4,6 +4,6 @@ dependencies:
   version: 0.1.1
 - name: jenkins
   repository: https://charts.jenkins.io
-  version: 5.8.19
-digest: sha256:5c501dad7f46471cd8d064738155f9fd0ef57c894b503021c47513ca913d21cb
-generated: "2025-03-27T01:59:16.070547075+01:00"
+  version: 5.8.20
+digest: sha256:f365f9f9def9a8c521d04f27f3be82f8cc5c9c60b1a0950e8b8ea800ffb0e134
+generated: "2025-03-27T17:50:11.855859509+01:00"
