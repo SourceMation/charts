@@ -13,13 +13,16 @@ istiod:
     defaultConfig:
       tracing: {} # disable legacy MeshConfig tracing options
     extensionProviders:
-    - name: jaeger
+    - name: elastic
       opentelemetry:
-        port: 4318
-        service: jaeger-collector.default.svc.cluster.local
+        port: 8200
+        service: elk-service-agent.default.svc.cluster.local
         http:
           path: "/v1/traces"
           timeout: 10s
+          headers:
+          - name: "authorization"
+            value: "Bearer E2D3ytLiaI236F62x2n6Rvt4"
 
 cni:
   profile: ambient

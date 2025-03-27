@@ -9,4 +9,4 @@ metadata:
 spec:
   tracing:
   - providers:
-    - name: jaeger
+    - name: elastic
