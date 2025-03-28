@@ -25,7 +25,7 @@ kubectl -n kube-system create secret generic elastic-agent-ca \
 
 ```bash
 
-export ELASTIC_VER=1.2.1
+export ELASTIC_VER=1.3.0
 export CLUSTER_NAME=elk
 export K8S_NAMESPACE=elastic-tst
 export AGENT_FLEET_URL=https://fleet-tst.apps.example.com:443
