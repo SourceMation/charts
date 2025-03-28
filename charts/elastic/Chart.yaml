@@ -4,7 +4,7 @@ annotations:
   catalog.cattle.io/display-name: Elastic - Apps (2/3)
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
-  catalog.cattle.io/kube-version: '>=1.25.0-0 < 1.30.0-0'
+  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
   catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: elk
 #  catalog.cattle.io/auto-install: monitoring-stack-crd=match
@@ -28,7 +28,7 @@ keywords:
 - enterprise search
 - fleet
 - opentelemetry
-kubeVersion: '>=1.25.0-0 <1.30.0-0'
+kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
 - email: biuro@linuxpolska.com
   name: Linux Polska
@@ -36,4 +36,4 @@ name: elastic
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 1.3.0
+version: 0.1.0
