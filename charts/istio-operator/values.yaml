@@ -16,7 +16,7 @@ istiod:
     - name: elastic
       opentelemetry:
         port: 8200
-        service: elk-service-agent.default.svc.cluster.local
+        service: ""
         http:
           path: "/v1/traces"
           timeout: 10s
