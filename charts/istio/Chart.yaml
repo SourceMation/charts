@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: istio (1/2) - Operator
+  catalog.cattle.io/display-name: Istio (1/1)
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
 #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
@@ -40,7 +40,7 @@ maintainers:
 # podaj swoje dane
 - email: radoslaw.kolba@linuxpolska.com
   name: radkolba
-name: istio-operator
+name: istio
 sources:
 - https://github.com/SourceMation/charts.git
 type: application

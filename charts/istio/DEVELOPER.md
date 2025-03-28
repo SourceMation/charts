@@ -7,17 +7,17 @@
 export CHART_VERSION=0.1.0
 export CHART_NAMESPACE=lp-system
  
-cd charts/charts/istio-operator 
+cd charts/charts/istio
 
 helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
-istio-operator .
+istio .
 
 ``` 
 # Cleaning
 
 ```bash
 
-helm uninstall -n ${CHART_NAMESPACE} istio-operator
+helm uninstall -n ${CHART_NAMESPACE} istio
 kubectl get crd -o name | grep -i istio | xargs kubectl delete
 
 ```

@@ -2,26 +2,19 @@ categories:
 - security
 namespace: istio-system
 questions:
-
-
-
 # Components
 - variable: global.istioOperatorCrd.enabled
   default: "true"
   label: "Deploy Istio Operator"
   type: boolean
   group: "Components"
-
-
 # Integrations 
-
 - variable: istiod.meshConfig.extensionProviders.0.opentelemetry.service
   label: Elastic service agent dns
   tooltip: "Example: elk-service-agent.default.svc.cluster.local"
   type: string
   default: ""
   group: "Integrations"
-
 - variable: questionsSpec.k8sPlatform
   type: enum
   tooltip: "No help available."
