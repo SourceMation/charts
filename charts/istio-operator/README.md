@@ -74,9 +74,9 @@ cat << EOF > /tmp/values.yaml
 EOF 
 
 
-helm -n ${CHART_NAMESPACE} upgrade --install istio \
+helm -n ${CHART_NAMESPACE} upgrade --install istio-operator \
 --repo https://sourcemation.github.io/charts/ \
-istio \
+istio-operator \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
 
@@ -94,7 +94,7 @@ kubectl -n ${CHART_NAMESPACE} get po
 
 ```bash
 
-helm -n ${CHART_NAMESPACE} uninstall istio
+helm -n ${CHART_NAMESPACE} uninstall istio-operator
 
 kubectl get crd -o name | grep -i istio | xargs kubectl delete
 
