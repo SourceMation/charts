@@ -939,26 +939,30 @@ entries:
       catalog.cattle.io/release-name: redis
     apiVersion: v2
     appVersion: 0.16.4
-    created: "2025-03-14T10:44:21.987653062+01:00"
+    created: "2025-03-31T15:49:17.905146492+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
-    - name: redis
+    - condition: global.redisClassic.enabled
+      name: redis
       repository: https://ot-container-kit.github.io/helm-charts
       version: 0.16.4
-    - name: redis-cluster
+    - condition: global.redisCluster.enabled
+      name: redis-cluster
       repository: https://ot-container-kit.github.io/helm-charts
       version: 0.16.4
-    - name: redis-replication
+    - condition: global.redisSentinel.enabled
+      name: redis-replication
       repository: https://ot-container-kit.github.io/helm-charts
       version: 0.16.6
-    - name: redis-sentinel
+    - condition: global.redisSentinel.enabled
+      name: redis-sentinel
       repository: https://ot-container-kit.github.io/helm-charts
       version: 0.16.8
     description: Provides easy redis setup definitions for Kubernetes. Install many
       times on kubernetes. Database in-memory
-    digest: e069b7ac150e205bd05a4b08abb2b51aeb130129469b8d09b7e9b2999a056253
+    digest: 496c1e7c1e9321ddf88197cbb467e4cb470da0d41ea89b3b2180943ebc17a695
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -1085,4 +1089,4 @@ entries:
     urls:
     - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-14T10:44:21.910621394+01:00"
+generated: "2025-03-31T15:49:17.830093603+02:00"
