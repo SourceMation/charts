@@ -3,6 +3,22 @@ categories:
 - in-memory
 - in memory
 questions:
+# Components
+- variable: global.redisClassic.enabled
+  default: "true"
+  label: "Deploy Redis Classic - Basic Version"
+  type: boolean
+  group: "Components"
+- variable: global.redisCluster.enabled
+  default: "false"
+  label: "Deploy Redis Cluster - Horizontal Scaling (Clustered Mode)"
+  type: boolean
+  group: "Components"
+- variable: global.redisSentinel.enabled
+  default: "false"
+  label: "Deploy Redis Sentinel - High Availability & Replication"
+  type: boolean
+  group: "Components"
 
 # Integrations 
 - variable: questionsSpec.k8sPlatform

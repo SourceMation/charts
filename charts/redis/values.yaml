@@ -1,3 +1,11 @@
+global:
+  redisClassic:
+    enabled: true
+  redisCluster:
+    enabled: false
+  redisSentinel:
+    enabled: false
+
 ############ redisStandalone ############
 # redisStandalone:
 #   image: quay.io/opstree/redis

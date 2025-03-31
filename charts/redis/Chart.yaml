@@ -12,16 +12,20 @@ dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/
   version: 0.1.x
-- name: redis
+- condition: global.redisClassic.enabled
+  name: redis
   version: 0.16.4
   repository: https://ot-container-kit.github.io/helm-charts
-- name: redis-cluster
+- condition: global.redisCluster.enabled
+  name: redis-cluster
   version: 0.16.4
   repository: https://ot-container-kit.github.io/helm-charts
-- name: redis-replication
+- condition: global.redisSentinel.enabled
+  name: redis-replication
   version: 0.16.6
   repository: https://ot-container-kit.github.io/helm-charts
-- name: redis-sentinel
+- condition: global.redisSentinel.enabled
+  name: redis-sentinel
   version: 0.16.8
   repository: https://ot-container-kit.github.io/helm-charts
 
