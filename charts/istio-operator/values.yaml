@@ -22,7 +22,7 @@ istiod:
           timeout: 10s
           headers:
           - name: "authorization"
-            value: "Bearer E2D3ytLiaI236F62x2n6Rvt4"
+            value: "Bearer PATE-TOKEN"
 
 cni:
   profile: ambient
