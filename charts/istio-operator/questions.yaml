@@ -15,6 +15,12 @@ questions:
   type: string
   default: ""
   group: "Integrations"
+- variable: istiod.meshConfig.extensionProviders.0.opentelemetry.http.headers.0.value
+  label: Elastic authorization token
+  tooltip: "Example: Bearer E2D3ytLiaI236F62x2n6Rvt4"
+  type: string
+  default: "Bearer PATE-TOKEN"
+  group: "Integrations"
 - variable: questionsSpec.k8sPlatform
   type: enum
   tooltip: "No help available."
