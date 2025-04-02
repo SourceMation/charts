@@ -699,14 +699,14 @@ entries:
     version: 1.3.0
   istio-operator:
   - annotations:
-      catalog.cattle.io/display-name: Istio-operator (1/1)
+      catalog.cattle.io/display-name: Istio (1/1) - Operator
       catalog.cattle.io/namespace: istio-system
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
       catalog.cattle.io/release-name: istio-operator
     apiVersion: v2
     appVersion: 1.24.3
-    created: "2025-04-01T09:51:14.422723858+02:00"
+    created: "2025-04-02T14:12:08.516675562+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -727,7 +727,7 @@ entries:
     description: Istio is an open source service mesh that layers transparently onto
       existing distributed applications. Install only once on kubernetes. Security
       & Monitoring.
-    digest: c7ba32c982fc1874bcaed2e29049e18400dcbf8f4a72b08975d059dd41466d6a
+    digest: c533bbcbe690c7843b3cfbed68aea84c14a77159d1f0562743e99b75d4f98dd5
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -1089,4 +1089,4 @@ entries:
     urls:
     - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-01T09:51:14.366313034+02:00"
+generated: "2025-04-02T14:12:08.45683271+02:00"
