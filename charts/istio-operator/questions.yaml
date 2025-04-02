@@ -19,7 +19,7 @@ questions:
   label: Elastic authorization token
   tooltip: "Example: Bearer E2D3ytLiaI236F62x2n6Rvt4"
   type: string
-  default: "Bearer PATE-TOKEN"
+  default: "Bearer PASTE-TOKEN"
   group: "Integrations"
 - variable: questionsSpec.k8sPlatform
   type: enum

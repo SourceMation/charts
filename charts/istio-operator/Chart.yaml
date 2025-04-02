@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: Istio-operator (1/1)
+  catalog.cattle.io/display-name: Istio (1/1) - Operator
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
 #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'

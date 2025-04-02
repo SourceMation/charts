@@ -9,9 +9,6 @@ istiod:
   global:
     logAsJson: true
   meshConfig:
-    enableTracing: true
-    defaultConfig:
-      tracing: {} # disable legacy MeshConfig tracing options
     extensionProviders:
     - name: elastic
       opentelemetry:
@@ -22,7 +19,7 @@ istiod:
           timeout: 10s
           headers:
           - name: "authorization"
-            value: "Bearer PATE-TOKEN"
+            value: "Bearer PASTE-TOKEN"
 
 cni:
   profile: ambient
