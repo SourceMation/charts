@@ -8,6 +8,7 @@
 ## Table of content
 - [hashocorp_vault_ent](https://github.com/sourcemation/charts/tree/main/charts/hashocorp_vault_ent/current/README.md)
 - [hashocorp_vault_ent](https://github.com/sourcemation/charts/tree/main/charts/hashocorp_vault/current/README.md)
+- [agro-cd](https://github.com/sourcemation/charts/tree/main/charts/argo-cd/README.md)
 - [gitea](https://github.com/sourcemation/charts/tree/main/charts/gitea/current/README.md)
 - [istio](https://github.com/sourcemation/charts/tree/main/charts/istio/current/README.md)
 - [jaeger](https://github.com/sourcemation/charts/tree/main/charts/jaeger/current/README.md)
@@ -22,7 +23,6 @@
 - [rancher-monitoring](https://github.com/sourcemation/charts/tree/main/charts/rancher-monitoring/current/README.md)
 - [jenkins](https://github.com/sourcemation/charts/tree/main/charts/jenkins/README.md)
 - [sonarqube](https://github.com/sourcemation/charts/tree/main/charts/sonarqube/current/README.md)
-- [agrocd](https://github.com/sourcemation/charts/tree/main/charts/argocd/current/README.md)
 - [shipwright-cli](https://github.com/sourcemation/charts/tree/main/charts/shipwright-cli/current/README.md)
 - [shipwright-oprator](https://github.com/sourcemation/charts/tree/main/charts/shipwright-operator/current/README.md)
 - [tekton-operator](https://github.com/sourcemation/charts/tree/main/charts/tekton-operator/current/README.md)
