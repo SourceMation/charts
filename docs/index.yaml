@@ -939,7 +939,7 @@ entries:
       catalog.cattle.io/release-name: redis-cluster
     apiVersion: v2
     appVersion: 0.16.4
-    created: "2025-04-03T11:53:52.049845248+02:00"
+    created: "2025-04-03T12:00:24.172588818+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -949,7 +949,7 @@ entries:
       version: 0.16.4
     description: Provides easy redis-cluster setup definitions for Kubernetes. Install
       many times on kubernetes. Database in-memory
-    digest: db0ec2ccb37a488e0e8357ccd022dcc8b11e650d3339632036d9c444fe0378c7
+    digest: ac4717e090d50d82c89266ce310acee84fc24a113117c9d3981bca6d65de8791
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -1011,7 +1011,7 @@ entries:
       catalog.cattle.io/release-name: redis-sentinel
     apiVersion: v2
     appVersion: 0.16.4
-    created: "2025-04-03T11:53:52.06113529+02:00"
+    created: "2025-04-03T12:00:24.181959088+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1021,7 +1021,7 @@ entries:
       version: 0.16.8
     description: Provides easy redis-sentinel setup definitions for Kubernetes. Install
       many times on kubernetes. Database in-memory
-    digest: 7ebed3f7db0626c2813bfc463eb4237ecbbfc68f5c20f0904cf827c31bf204dd
+    digest: 801388a86b6987371c3975d9449c48412e50fbe2691d447a3a94311668378f3d
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -1111,4 +1111,4 @@ entries:
     urls:
     - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-03T11:53:51.974868493+02:00"
+generated: "2025-04-03T12:00:24.096917433+02:00"
