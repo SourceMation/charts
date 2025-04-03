@@ -6,17 +6,17 @@
  
 export CHART_NAMESPACE=redis
  
-cd charts/charts/redis
+cd charts/charts/redis-sentinel
 
  
 helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
-redis .  
+redis-sentinel .  
  
 ``` 
 # Cleaning
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} redis
+helm uninstall -n ${CHART_NAMESPACE} redis-sentinel
 
 ```
 

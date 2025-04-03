@@ -4,7 +4,7 @@
 
 1. Based on: https://github.com/OT-CONTAINER-KIT/redis-operator.git
 2. Documentation: https://ot-redis-operator.netlify.app/docs/
-3. Chart Source: https://github.com/OT-CONTAINER-KIT/redis-operator/tree/master/charts/redis
+3. Chart Source: https://github.com/OT-CONTAINER-KIT/redis-operator/tree/main/charts/redis-cluster
 
 
 ## Before Installation
@@ -64,9 +64,9 @@ cat << EOF > /tmp/values.yaml
 EOF 
 
 
-helm -n ${CHART_NAMESPACE} upgrade --install redis \
+helm -n ${CHART_NAMESPACE} upgrade --install redis-cluster \
 --repo https://sourcemation.github.io/charts/ \
-redis \
+redis-cluster \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
 
@@ -84,7 +84,7 @@ kubectl -n ${CHART_NAMESPACE} get po
 
 ```bash
 
-helm -n ${CHART_NAMESPACE} uninstall redis
+helm -n ${CHART_NAMESPACE} uninstall redis-cluster
 
 ```
 

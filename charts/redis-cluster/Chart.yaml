@@ -1,10 +1,10 @@
 annotations:
-  catalog.cattle.io/display-name: Redis (2/2) - App
+  catalog.cattle.io/display-name: Redis Cluster (2/2) - App
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
 #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
 #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
-  catalog.cattle.io/release-name: redis
+  catalog.cattle.io/release-name: redis-cluster
 #  catalog.cattle.io/namespace: redis
 apiVersion: v2
 appVersion: 0.16.4
@@ -12,38 +12,23 @@ dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/
   version: 0.1.x
-- condition: global.redisClassic.enabled
-  name: redis
+- name: redis-cluster
   version: 0.16.4
-  repository: https://ot-container-kit.github.io/helm-charts
-- condition: global.redisCluster.enabled
-  name: redis-cluster
-  version: 0.16.4
-  repository: https://ot-container-kit.github.io/helm-charts
-- condition: global.redisSentinel.enabled
-  name: redis-replication
-  version: 0.16.6
-  repository: https://ot-container-kit.github.io/helm-charts
-- condition: global.redisSentinel.enabled
-  name: redis-sentinel
-  version: 0.16.8
   repository: https://ot-container-kit.github.io/helm-charts
 
-description: Provides easy redis setup definitions for Kubernetes. Install many times on kubernetes. Database in-memory
+description: Provides easy redis-cluster setup definitions for Kubernetes. Install many times on kubernetes. Database in-memory
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
-# dodać nazwy komponentów oraz nazwę kategorii
 - database in-memory
 - in memory
 - redis
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
-# podaj swoje dane
 - email: radoslaw.kolba@linuxpolska.com
   name: radkolba
-name: redis
+name: redis-cluster
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
