@@ -16,13 +16,16 @@ dependencies:
   name: base
   version: 1.24.3
   repository: https://istio-release.storage.googleapis.com/charts
-- name: istiod
+- condition: global.istioOperatorCrd.enabled
+  name: istiod
   version: 1.24.3
   repository: https://istio-release.storage.googleapis.com/charts
-- name: cni
+- condition: global.istioOperatorCrd.enabled
+  name: cni
   version: 1.24.3
   repository: https://istio-release.storage.googleapis.com/charts
-- name: ztunnel
+- condition: global.istioOperatorCrd.enabled
+  name: ztunnel
   version: 1.24.3
   repository: https://istio-release.storage.googleapis.com/charts
 
