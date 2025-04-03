@@ -2,37 +2,35 @@ annotations:
   catalog.cattle.io/display-name: NeuVector (1/1) - App
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
-#  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
-#  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+  #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+  #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: neuvector
   catalog.cattle.io/namespace: neuvector
 apiVersion: v2
-appVersion: 5.4.2
+appVersion: 2.8.5
 dependencies:
-- name: common
-  repository: https://sourcemation.github.io/charts/
-  version: 0.1.x
-#- condition: global.appCrd.enabled
-- name: core
-  version: 2.8.4
-  repository: https://neuvector.github.io/neuvector-helm/
-
+  - name: common
+    repository: https://sourcemation.github.io/charts/
+    version: 0.1.x
+  #- condition: global.appCrd.enabled
+  - name: core
+    version: 2.8.5
+    repository: https://neuvector.github.io/neuvector-helm/
 description: NeuVector provides a powerful end-to-end container security platform. Install only once on kubernetes. Security.
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
-# dodać nazwy komponentów oraz nazwę kategorii
-- security
-- neuvector
+  # dodać nazwy komponentów oraz nazwę kategorii
+  - security
+  - neuvector
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
-# podaj swoje dane
-- email: radoslaw.klewin@linuxpolska.com
-  name: rklewin
+  # podaj swoje dane
+  - email: radoslaw.klewin@linuxpolska.com
+    name: rklewin
 name: neuvector
 sources:
-- https://github.com/SourceMation/charts.git
+  - https://github.com/SourceMation/charts.git
 type: application
-version: 0.1.0
-
+version: 0.1.1

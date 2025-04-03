@@ -87,18 +87,18 @@ jenkins:
         - secretName: "jenkins-tls-cert"
           hosts:
             - "{{ .Values.controller.ingress.hostName }}"
-    installPlugins:
-      - kubernetes:4313.va_9b_4fe2a_0e34
-      - workflow-aggregator:600.vb_57cdd26fdd7
-      - git:5.7.0
-      - git-client:6.1.2
-      - configuration-as-code:1932.v75cb_b_f1b_698d
-      - cloudbees-disk-usage-simple:232.v713eeed2e1f4
-      - prometheus:819.v50953a_c560dd
+    #installPlugins:
+    #  - kubernetes:4313.va_9b_4fe2a_0e34
+    #  - workflow-aggregator:600.vb_57cdd26fdd7
+    #  - git:5.7.0
+    #  - configuration-as-code:1932.v75cb_b_f1b_698d
     additionalPlugins:
-      - pipeline-stage-view:2.37
-      - pipeline-utility-steps:2.18.0
+      - cloudbees-disk-usage-simple:239.v6a_f1a_c1c8046
       - generic-webhook-trigger:2.3.1
+      - git-client:6.1.2
+      - pipeline-stage-view:2.37
+      - pipeline-utility-steps:2.19.0
+      - prometheus:819.v50953a_c560dd
       - rebuild:338.va_0a_b_50e29397
     #  - ssh-slaves:3.1031.v72c6b_883b_869
     #  - swarm:3.49
