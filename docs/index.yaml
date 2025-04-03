@@ -931,38 +931,25 @@ entries:
     urls:
     - neuvector-security/neuvector-security-1.0.0.tgz
     version: 1.0.0
-  redis:
+  redis-cluster:
   - annotations:
-      catalog.cattle.io/display-name: Redis (2/2) - App
+      catalog.cattle.io/display-name: Redis Cluster (2/2) - App
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/release-name: redis
+      catalog.cattle.io/release-name: redis-cluster
     apiVersion: v2
     appVersion: 0.16.4
-    created: "2025-03-31T15:49:17.905146492+02:00"
+    created: "2025-04-03T11:53:52.049845248+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
       version: 0.1.x
-    - condition: global.redisClassic.enabled
-      name: redis
+    - name: redis-cluster
       repository: https://ot-container-kit.github.io/helm-charts
       version: 0.16.4
-    - condition: global.redisCluster.enabled
-      name: redis-cluster
-      repository: https://ot-container-kit.github.io/helm-charts
-      version: 0.16.4
-    - condition: global.redisSentinel.enabled
-      name: redis-replication
-      repository: https://ot-container-kit.github.io/helm-charts
-      version: 0.16.6
-    - condition: global.redisSentinel.enabled
-      name: redis-sentinel
-      repository: https://ot-container-kit.github.io/helm-charts
-      version: 0.16.8
-    description: Provides easy redis setup definitions for Kubernetes. Install many
-      times on kubernetes. Database in-memory
-    digest: 496c1e7c1e9321ddf88197cbb467e4cb470da0d41ea89b3b2180943ebc17a695
+    description: Provides easy redis-cluster setup definitions for Kubernetes. Install
+      many times on kubernetes. Database in-memory
+    digest: db0ec2ccb37a488e0e8357ccd022dcc8b11e650d3339632036d9c444fe0378c7
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -972,12 +959,12 @@ entries:
     maintainers:
     - email: radoslaw.kolba@linuxpolska.com
       name: radkolba
-    name: redis
+    name: redis-cluster
     sources:
     - https://github.com/SourceMation/charts.git
     type: application
     urls:
-    - redis/redis-0.1.0.tgz
+    - redis-cluster/redis-cluster-0.1.0.tgz
     version: 0.1.0
   redis-operator:
   - annotations:
@@ -1015,6 +1002,41 @@ entries:
     type: application
     urls:
     - redis-operator/redis-operator-0.1.0.tgz
+    version: 0.1.0
+  redis-sentinel:
+  - annotations:
+      catalog.cattle.io/display-name: Redis Sentinel (2/2) - App
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: redis-sentinel
+    apiVersion: v2
+    appVersion: 0.16.4
+    created: "2025-04-03T11:53:52.06113529+02:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - name: redis-sentinel
+      repository: https://ot-container-kit.github.io/helm-charts
+      version: 0.16.8
+    description: Provides easy redis-sentinel setup definitions for Kubernetes. Install
+      many times on kubernetes. Database in-memory
+    digest: 7ebed3f7db0626c2813bfc463eb4237ecbbfc68f5c20f0904cf827c31bf204dd
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - database in-memory
+    - in memory
+    - redis
+    maintainers:
+    - email: radoslaw.kolba@linuxpolska.com
+      name: radkolba
+    name: redis-sentinel
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - redis-sentinel/redis-sentinel-0.1.0.tgz
     version: 0.1.0
   strimzi-kafka-operator:
   - annotations:
@@ -1089,4 +1111,4 @@ entries:
     urls:
     - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-03-31T15:49:17.830093603+02:00"
+generated: "2025-04-03T11:53:51.974868493+02:00"
