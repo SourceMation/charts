@@ -1,0 +1,157 @@
+forgejo:
+  affinity: {}
+  nodeSelector: {}
+  securityContext: {}
+  image:
+    registry: "code.forgejo.org"
+    repository: "forgejo/forgejo"
+    #tag: ''
+    pullPolicy: "IfNotPresent"
+  imagePullSecrets: []
+  gitea:
+    admin:
+      username: "gitea_admin"
+      password: "P@ssword1"
+      email: "gitea_admin@example.com"
+    config:
+      RUN_MODE: "prod"
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  ingress:
+    enabled: true
+    ingressClassName: "nginx"
+    annotations:
+      cert-manager.io/cluster-issuer: "default-selfsigned-ca"
+    hosts:
+      - host: "forgejo.apps.example.com"
+        paths:
+          - path: "/"
+            pathType: "Prefix"
+    tls:
+      - hosts:
+          - "forgejo.apps.example.com"
+        secretName: "forgejo-tls"
+  # default persistence
+  persistence:
+    enabled: true
+    create: false
+    mount: true
+    claimName: "forgejo-data"
+    size: 10Gi
+    storageClass: ""
+    accessModes:
+      - "ReadWriteOnce"
+  resources: {}
+  service:
+    http:
+      type: "ClusterIP"
+      port: 3000
+    ssh:
+      type: "ClusterIP"
+      port: 22
+  strategy:
+    type: "Recreate"
+    rollingUpdate: {}
+  postgresql:
+    enabled: false
+  postgresql-ha:
+    enabled: true
+    global:
+      postgresql:
+        password: "P@ssword1"
+        database: "gitea"
+        username: "gitea"
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    namespaceOverride: ""
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: "Retain"
+      whenDeleted: "Delete"
+    postgresql:
+      affinity: {}
+      nodeSelector: {}
+      image:
+        registry: "docker.io"
+        repository: "bitnami/postgresql-repmgr"
+        #tag: 16.3.0-debian-12-r18
+        pullPolicy: "IfNotPresent"
+        pullSecrets: []
+      networkPolicy:
+        enabled: true
+        allowExternal: true
+        allowExternalEgress: true
+      repmgrPassword: "P@ssword1"
+      postgresPassword: "P@ssword1"
+      updateStrategy:
+        type: "RollingUpdate"
+    pgpool:
+      adminPassword: "P@ssword1"
+    resources:
+      requests:
+        cpu: "250m"
+        memory: "256Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+    service:
+      type: "ClusterIP"
+      ports:
+        postgresql: 5432
+    persistence:
+      enabled: true
+      size: "8Gi"
+      storageClass: ""
+      accessModes:
+        - "ReadWriteOnce"
+  redis-cluster:
+    enabled: true
+    usePassword: false
+    cluster:
+      nodes: 3
+      replicas: 0
+    image:
+      registry: "docker.io"
+      repository: "bitnami/redis-cluster"
+      pullPolicy: "IfNotPresent"
+      pullSecrets: []
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    networkPolicy:
+      enabled: true
+      allowExternal: true
+      allowExternalEgress: true
+    persistence:
+      enabled: true
+      size: "8Gi"
+      storageClass: ""
+      accessModes:
+        - "ReadWriteOnce"
+    persistentVolumeClaimRetentionPolicy:
+      enabled: true
+      whenScaled: "Retain"
+      whenDeleted: "Delete"
+    redis:
+      affinity: {}
+      nodeSelector: {}
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+        limits:
+          cpu: "200m"
+          memory: "256Mi"
+      updateStrategy:
+        type: "RollingUpdate"
+        rollingUpdate:
+          partition: 0
+    service:
+      type: "ClusterIP"
+      ports:
+        redis: 6379
