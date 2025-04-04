@@ -2064,6 +2064,42 @@ entries:
       catalog.cattle.io/permits-os: linux
       catalog.cattle.io/release-name: redis-operator
     apiVersion: v2
+    appVersion: 0.20.0
+    created: "2025-04-01T09:42:39.63376133+02:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - condition: global.redisOperatorCrd.enabled
+      name: redis-operator
+      repository: https://ot-container-kit.github.io/helm-charts
+      version: 0.20.0
+    description: Provides easy redis setup definitions for Kubernetes. Install only
+      once on kubernetes. Database in-memory
+    digest: 8f09915434ff940f1c396573e19b4699932b61b8254a6ddff423933626deb685
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - database in-memory
+    - in memory
+    - redis
+    maintainers:
+    - email: radoslaw.klewin@linuxpolska.com
+      name: rklewin
+    name: redis-operator
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - redis-operator/redis-operator-0.2.0.tgz
+    version: 0.2.0
+  - annotations:
+      catalog.cattle.io/display-name: Redis (1/2) - Operator
+      catalog.cattle.io/namespace: lp-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: redis-operator
+    apiVersion: v2
     appVersion: 0.19.1
     created: "2025-04-04T01:59:31.672607557+02:00"
     dependencies:
