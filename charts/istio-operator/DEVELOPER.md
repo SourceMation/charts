@@ -7,6 +7,11 @@
 export CHART_VERSION=0.1.0
 export CHART_NAMESPACE=istio-system
  
+cat << EOF > /tmp/values.yaml
+global:
+    istioNamespace: $CHART_NAMESPACE
+EOF
+
 cd charts/charts/istio-operator
 
 helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
