@@ -9,7 +9,7 @@ entries:
       catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
     apiVersion: v2
     appVersion: v1.16.1
-    created: "2025-04-08T15:07:10.300879253+02:00"
+    created: "2025-04-09T01:59:23.518304337+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -42,7 +42,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-config
     apiVersion: v2
     appVersion: 1.15.1
-    created: "2025-04-08T15:07:10.300365456+02:00"
+    created: "2025-04-09T01:59:23.51732833+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -77,7 +77,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-add-ons
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2025-04-08T15:07:10.304212211+02:00"
+    created: "2025-04-09T01:59:23.525752786+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -121,7 +121,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager-add-ons
     apiVersion: v2
     appVersion: 1.1.0
-    created: "2025-04-08T15:07:10.302078653+02:00"
+    created: "2025-04-09T01:59:23.520355106+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -160,7 +160,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager
     apiVersion: v2
     appVersion: v1.16.1
-    created: "2025-04-08T15:07:10.316210756+02:00"
+    created: "2025-04-09T01:59:23.544285981+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -203,7 +203,7 @@ entries:
       catalog.cattle.io/release-name: cert-manager
     apiVersion: v2
     appVersion: 1.15.1
-    created: "2025-04-08T15:07:10.309831437+02:00"
+    created: "2025-04-09T01:59:23.534693605+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -245,7 +245,7 @@ entries:
       catalog.cattle.io/release-name: cnpg
     apiVersion: v2
     appVersion: 1.24.1
-    created: "2025-04-08T15:07:10.321618593+02:00"
+    created: "2025-04-09T01:59:23.553151507+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -284,7 +284,7 @@ entries:
       catalog.cattle.io/release-name: commons
     apiVersion: v2
     appVersion: 0.1.1
-    created: "2025-04-08T15:07:10.321835277+02:00"
+    created: "2025-04-09T01:59:23.553499177+02:00"
     description: A Library Helm Chart for grouping common logic between charts.
     digest: 7b430316ecc0bab82476c486da0a753d678bdccc338745a5018b74584bea4deb
     home: https://linuxpolska.com
@@ -310,7 +310,7 @@ entries:
       catalog.cattle.io/release-name: elk
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2025-04-08T15:07:10.323508475+02:00"
+    created: "2025-04-09T01:59:23.557409473+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -351,7 +351,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.15.0
-    created: "2025-04-08T15:07:10.325222755+02:00"
+    created: "2025-04-09T01:59:23.561075631+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -392,7 +392,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2025-04-08T15:07:10.324666326+02:00"
+    created: "2025-04-09T01:59:23.560070734+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -433,7 +433,7 @@ entries:
       catalog.cattle.io/release-name: elk-agent
     apiVersion: v2
     appVersion: 8.13.4
-    created: "2025-04-08T15:07:10.324078103+02:00"
+    created: "2025-04-09T01:59:23.559104215+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -476,7 +476,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.14.0
-    created: "2025-04-08T15:07:10.347359517+02:00"
+    created: "2025-04-09T01:59:23.596925129+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -526,7 +526,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.13.0
-    created: "2025-04-08T15:07:10.340739922+02:00"
+    created: "2025-04-09T01:59:23.585188645+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -576,7 +576,7 @@ entries:
       catalog.cattle.io/release-name: elastic-operator
     apiVersion: v2
     appVersion: 2.12.1
-    created: "2025-04-08T15:07:10.333758646+02:00"
+    created: "2025-04-09T01:59:23.573868037+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -625,8 +625,58 @@ entries:
       catalog.cattle.io/permits-os: linux
       catalog.cattle.io/release-name: istio-operator
     apiVersion: v2
+    appVersion: 1.24.4
+    created: "2025-04-09T01:59:23.613719719+02:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - condition: global.istioOperatorCrd.enabled
+      name: base
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.24.4
+    - condition: global.istioOperatorCrd.enabled
+      name: istiod
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.24.4
+    - condition: global.istioOperatorCrd.enabled
+      name: cni
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.24.4
+    - condition: global.istioOperatorCrd.enabled
+      name: ztunnel
+      repository: https://istio-release.storage.googleapis.com/charts
+      version: 1.24.4
+    description: Istio is an open source service mesh that layers transparently onto
+      existing distributed applications. Install only once on kubernetes. Security
+      & Monitoring.
+    digest: 6835df3e82cabfb896864ae79347f7bbdcc7afd42ee60ebe058f14fbb3506398
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - security
+    - monitoring
+    - istio
+    kubeVersion: '>=1.26.0-0 <1.31.0-0'
+    maintainers:
+    - email: radoslaw.kolba@linuxpolska.com
+      name: radkolba
+    name: istio-operator
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - istio-operator/istio-operator-0.1.1.tgz
+    version: 0.1.1
+  - annotations:
+      catalog.cattle.io/display-name: Istio (1/1) - Operator
+      catalog.cattle.io/namespace: istio-system
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: istio-operator
+    apiVersion: v2
     appVersion: 1.24.3
-    created: "2025-04-08T15:07:10.352371544+02:00"
+    created: "2025-04-09T01:59:23.604332555+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -676,7 +726,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.32
-    created: "2025-04-08T15:07:10.482607622+02:00"
+    created: "2025-04-09T01:59:23.828743653+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -708,7 +758,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.31
-    created: "2025-04-08T15:07:10.472921462+02:00"
+    created: "2025-04-09T01:59:23.821322572+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -740,7 +790,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.30
-    created: "2025-04-08T15:07:10.46795217+02:00"
+    created: "2025-04-09T01:59:23.815553537+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -772,7 +822,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.29
-    created: "2025-04-08T15:07:10.464369763+02:00"
+    created: "2025-04-09T01:59:23.80889732+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -804,7 +854,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.28
-    created: "2025-04-08T15:07:10.460254447+02:00"
+    created: "2025-04-09T01:59:23.803320007+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -836,7 +886,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.27
-    created: "2025-04-08T15:07:10.456784792+02:00"
+    created: "2025-04-09T01:59:23.796968096+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -868,7 +918,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.26
-    created: "2025-04-08T15:07:10.45242527+02:00"
+    created: "2025-04-09T01:59:23.79130297+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -900,7 +950,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.25
-    created: "2025-04-08T15:07:10.444858095+02:00"
+    created: "2025-04-09T01:59:23.778699408+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -932,7 +982,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.24
-    created: "2025-04-08T15:07:10.441278968+02:00"
+    created: "2025-04-09T01:59:23.773053543+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -964,7 +1014,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.23
-    created: "2025-04-08T15:07:10.436910867+02:00"
+    created: "2025-04-09T01:59:23.764726417+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -996,7 +1046,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.22
-    created: "2025-04-08T15:07:10.433496445+02:00"
+    created: "2025-04-09T01:59:23.758671569+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1028,7 +1078,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.21
-    created: "2025-04-08T15:07:10.429982489+02:00"
+    created: "2025-04-09T01:59:23.751782856+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1060,7 +1110,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.20
-    created: "2025-04-08T15:07:10.425438679+02:00"
+    created: "2025-04-09T01:59:23.745977307+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1092,7 +1142,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.19
-    created: "2025-04-08T15:07:10.421726072+02:00"
+    created: "2025-04-09T01:59:23.739244129+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1124,7 +1174,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.18
-    created: "2025-04-08T15:07:10.417062905+02:00"
+    created: "2025-04-09T01:59:23.732593286+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1156,7 +1206,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.17
-    created: "2025-04-08T15:07:10.413599094+02:00"
+    created: "2025-04-09T01:59:23.726251721+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1188,7 +1238,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.16
-    created: "2025-04-08T15:07:10.409961127+02:00"
+    created: "2025-04-09T01:59:23.7179649+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1220,7 +1270,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.14
-    created: "2025-04-08T15:07:10.535885767+02:00"
+    created: "2025-04-09T01:59:23.877207677+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1252,7 +1302,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.11
-    created: "2025-04-08T15:07:10.528575618+02:00"
+    created: "2025-04-09T01:59:23.869793177+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1284,7 +1334,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.10
-    created: "2025-04-08T15:07:10.521040224+02:00"
+    created: "2025-04-09T01:59:23.863529217+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1316,7 +1366,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.8
-    created: "2025-04-08T15:07:10.513108874+02:00"
+    created: "2025-04-09T01:59:23.855446977+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1348,7 +1398,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.6
-    created: "2025-04-08T15:07:10.506239852+02:00"
+    created: "2025-04-09T01:59:23.849562976+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1380,7 +1430,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.5
-    created: "2025-04-08T15:07:10.498569419+02:00"
+    created: "2025-04-09T01:59:23.841197183+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1412,7 +1462,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.4
-    created: "2025-04-08T15:07:10.489483892+02:00"
+    created: "2025-04-09T01:59:23.834879773+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1444,7 +1494,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.3
-    created: "2025-04-08T15:07:10.449010576+02:00"
+    created: "2025-04-09T01:59:23.785593605+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1476,7 +1526,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.2
-    created: "2025-04-08T15:07:10.405731529+02:00"
+    created: "2025-04-09T01:59:23.711951527+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1508,7 +1558,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.8.0
-    created: "2025-04-08T15:07:10.402169491+02:00"
+    created: "2025-04-09T01:59:23.703749383+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1540,7 +1590,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.23
-    created: "2025-04-08T15:07:10.36773134+02:00"
+    created: "2025-04-09T01:59:23.641113844+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1572,7 +1622,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.22
-    created: "2025-04-08T15:07:10.364215596+02:00"
+    created: "2025-04-09T01:59:23.634937498+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1604,7 +1654,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.21
-    created: "2025-04-08T15:07:10.397910051+02:00"
+    created: "2025-04-09T01:59:23.697199819+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1636,7 +1686,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.17
-    created: "2025-04-08T15:07:10.394277453+02:00"
+    created: "2025-04-09T01:59:23.689902768+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1668,7 +1718,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.16
-    created: "2025-04-08T15:07:10.390207882+02:00"
+    created: "2025-04-09T01:59:23.682932126+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1700,7 +1750,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.15
-    created: "2025-04-08T15:07:10.386754846+02:00"
+    created: "2025-04-09T01:59:23.676007709+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1732,7 +1782,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.14
-    created: "2025-04-08T15:07:10.383320898+02:00"
+    created: "2025-04-09T01:59:23.669919222+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1764,7 +1814,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.13
-    created: "2025-04-08T15:07:10.379199527+02:00"
+    created: "2025-04-09T01:59:23.66344886+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1796,7 +1846,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.12
-    created: "2025-04-08T15:07:10.375816127+02:00"
+    created: "2025-04-09T01:59:23.654511104+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1828,7 +1878,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.11
-    created: "2025-04-08T15:07:10.371536208+02:00"
+    created: "2025-04-09T01:59:23.648504085+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1860,7 +1910,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.10
-    created: "2025-04-08T15:07:10.360191248+02:00"
+    created: "2025-04-09T01:59:23.627183544+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1892,7 +1942,7 @@ entries:
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
     appVersion: 5.7.9
-    created: "2025-04-08T15:07:10.35674476+02:00"
+    created: "2025-04-09T01:59:23.620247796+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1925,7 +1975,7 @@ entries:
       catalog.cattle.io/release-name: jenkins-by-lp
     apiVersion: v2
     appVersion: 2.462.3
-    created: "2025-04-08T15:07:10.541230166+02:00"
+    created: "2025-04-09T01:59:23.882790272+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1960,7 +2010,7 @@ entries:
       catalog.cattle.io/release-name: neuvector
     apiVersion: v2
     appVersion: 2.8.5
-    created: "2025-04-08T15:07:10.548477189+02:00"
+    created: "2025-04-09T01:59:23.897811899+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -1994,7 +2044,7 @@ entries:
       catalog.cattle.io/release-name: neuvector
     apiVersion: v2
     appVersion: 5.4.2
-    created: "2025-04-08T15:07:10.54427913+02:00"
+    created: "2025-04-09T01:59:23.886588108+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -2029,7 +2079,7 @@ entries:
       catalog.cattle.io/release-name: neuvector-sec
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2025-04-08T15:07:10.549170535+02:00"
+    created: "2025-04-09T01:59:23.899012355+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -2065,7 +2115,7 @@ entries:
       catalog.cattle.io/release-name: redis-operator
     apiVersion: v2
     appVersion: 0.20.0
-    created: "2025-04-08T15:07:10.579270105+02:00"
+    created: "2025-04-09T01:59:23.94525054+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -2101,7 +2151,7 @@ entries:
       catalog.cattle.io/release-name: redis-operator
     apiVersion: v2
     appVersion: 0.19.1
-    created: "2025-04-08T15:07:10.570008806+02:00"
+    created: "2025-04-09T01:59:23.929797892+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -2137,7 +2187,7 @@ entries:
       catalog.cattle.io/release-name: redis-operator
     apiVersion: v2
     appVersion: 0.19.1
-    created: "2025-04-08T15:07:10.559923991+02:00"
+    created: "2025-04-09T01:59:23.916784597+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -2174,7 +2224,7 @@ entries:
       catalog.cattle.io/release-name: strimzi-cluster-operator
     apiVersion: v2
     appVersion: 0.45.0
-    created: "2025-04-08T15:07:10.598050105+02:00"
+    created: "2025-04-09T01:59:23.968778327+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -2210,7 +2260,7 @@ entries:
       catalog.cattle.io/release-name: strimzi-cluster-operator
     apiVersion: v2
     appVersion: 0.44.0
-    created: "2025-04-08T15:07:10.588460056+02:00"
+    created: "2025-04-09T01:59:23.959963664+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -2238,4 +2288,4 @@ entries:
     urls:
     - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-08T15:07:10.299808932+02:00"
+generated: "2025-04-09T01:59:23.516326009+02:00"

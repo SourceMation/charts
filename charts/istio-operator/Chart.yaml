@@ -2,49 +2,48 @@ annotations:
   catalog.cattle.io/display-name: Istio (1/1) - Operator
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
-#  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
-#  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+  #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+  #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: istio-operator
   catalog.cattle.io/namespace: istio-system
 apiVersion: v2
-appVersion: 1.24.3
+appVersion: 1.24.4
 dependencies:
-- name: common
-  repository: https://sourcemation.github.io/charts/
-  version: 0.1.x
-- condition: global.istioOperatorCrd.enabled
-  name: base
-  version: 1.24.3
-  repository: https://istio-release.storage.googleapis.com/charts
-- condition: global.istioOperatorCrd.enabled
-  name: istiod
-  version: 1.24.3
-  repository: https://istio-release.storage.googleapis.com/charts
-- condition: global.istioOperatorCrd.enabled
-  name: cni
-  version: 1.24.3
-  repository: https://istio-release.storage.googleapis.com/charts
-- condition: global.istioOperatorCrd.enabled
-  name: ztunnel
-  version: 1.24.3
-  repository: https://istio-release.storage.googleapis.com/charts
-
+  - name: common
+    repository: https://sourcemation.github.io/charts/
+    version: 0.1.x
+  - condition: global.istioOperatorCrd.enabled
+    name: base
+    version: 1.24.4
+    repository: https://istio-release.storage.googleapis.com/charts
+  - condition: global.istioOperatorCrd.enabled
+    name: istiod
+    version: 1.24.4
+    repository: https://istio-release.storage.googleapis.com/charts
+  - condition: global.istioOperatorCrd.enabled
+    name: cni
+    version: 1.24.4
+    repository: https://istio-release.storage.googleapis.com/charts
+  - condition: global.istioOperatorCrd.enabled
+    name: ztunnel
+    version: 1.24.4
+    repository: https://istio-release.storage.googleapis.com/charts
 description: Istio is an open source service mesh that layers transparently onto existing distributed applications. Install only once on kubernetes. Security & Monitoring.
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
-# dodać nazwy komponentów oraz nazwę kategorii
-- security
-- monitoring
-- istio
+  # dodać nazwy komponentów oraz nazwę kategorii
+  - security
+  - monitoring
+  - istio
 kubeVersion: '>=1.26.0-0 <1.31.0-0'
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
-# podaj swoje dane
-- email: radoslaw.kolba@linuxpolska.com
-  name: radkolba
+  # podaj swoje dane
+  - email: radoslaw.kolba@linuxpolska.com
+    name: radkolba
 name: istio-operator
 sources:
-- https://github.com/SourceMation/charts.git
+  - https://github.com/SourceMation/charts.git
 type: application
-version: 0.1.0
+version: 0.1.1
