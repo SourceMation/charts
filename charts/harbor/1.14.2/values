@@ -1,8 +1,0 @@
-expose:
-  type: ingress
-  tls:
-    enabled: true
-    certSource: secret
-    secret:
-      secretName: "harbor-cert"
-      notarySecretName: "harbor-cert"

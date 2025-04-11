@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: harbor
+  repository: https://helm.goharbor.io
+  version: 1.15.1
+digest: sha256:1299151ab494f172bab08a90b4fb559c57be077432c8e7f03e4e266e77ff7524
+generated: "2024-10-14T16:23:53.11469368+02:00"
