@@ -3,7 +3,7 @@
 ### Are you looking for more information?
 
 1. Based on: https://github.com/OT-CONTAINER-KIT/redis-operator.git
-2. Documentation: https://ot-redis-operator.netlify.app/docs/getting-started/
+2. Documentation: https://ot-redis-operator.netlify.app/docs/getting-started/sentinel/
 3. Chart Source: https://github.com/OT-CONTAINER-KIT/redis-operator/tree/main/charts/redis-sentinel
 
 

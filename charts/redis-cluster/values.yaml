@@ -1,4 +1,13 @@
-# redisCluster:
+global:
+  username: "admin"
+  password: "P@ssword1"
+
+redis-cluster:
+  redisCluster:
+    redisSecret:
+      secretName: "redis-auth-secret"
+      secretKey: "password"
+
 #   clusterSize: 3
 #   clusterVersion: v7
 #   persistenceEnabled: true

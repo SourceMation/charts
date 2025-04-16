@@ -1,4 +1,13 @@
-# redisSentinel:
+global:
+  username: "admin"
+  password: "P@ssword1"
+  
+redis-sentinel:
+  redisSentinel:
+    redisSecret:
+      secretName: "redis-auth-secret"
+      secretKey: "password"
+
 #   clusterSize: 3
 #   image: quay.io/opstree/redis-sentinel
 #   tag: v7.0.15
