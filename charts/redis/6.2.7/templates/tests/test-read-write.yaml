@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-read-write"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+spec:
+  containers:
+    - name: redis-cli
+      image: redis:latest
+      command:
+        - sh
+        - "-c"
+        - |
+          redis-cli -h redis-redis -a P@ssword1 SET test-key "test-value" &&
+          redis-cli -h redis-redis -a P@ssword1 GET test-key | grep "test-value" || exit 1
+  restartPolicy: Never
