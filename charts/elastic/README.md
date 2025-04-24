@@ -96,7 +96,6 @@ helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace \
 --set "kibana.params.ingress.hostname=${KB_URL}" \
 --set "agentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
 --set "agentFleet.params.ingress.hostname=${FLEET_URL}" \
---set "enterpriseSearch.params.ingress.hostname=${ENT_URL}" \
 --repo https://sourcemation.github.io/charts/ \
 --version ${CHART_VER} \
 ${CHART_RELEASE_NAME} elastic
