@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-postgresql-connection"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+spec:
+  containers:
+    - name: postgresql-client
+      image: bitnami/postgresql:latest
+      env:
+        - name: PGPASSWORD
+          value: "{{ .Values.postgresql.postgresPassword }}"
+        - name: PGUSER
+          value: "{{ .Values.postgresql.postgresUser }}"
+        - name: PGDATABASE
+          value: "{{ .Values.postgresql.postgresDB }}"
+      command:
+        - sh
+        - "-c"
+        - |
+          psql -h {{ .Release.Name }}-postgres -U $PGUSER -d $PGDATABASE -c "SELECT 1" &&
+          echo "PostgreSQL connection test passed"
+  restartPolicy: Never
