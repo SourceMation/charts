@@ -1,0 +1,14 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: {{ include "common.names.shortname" $ }}-default
+  namespace: {{ include "common.names.namespace" $ }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+spec:
+  tracing:
+  - providers:
+    - name: elastic
