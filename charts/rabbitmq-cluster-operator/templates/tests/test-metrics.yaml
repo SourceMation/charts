@@ -1,0 +1,15 @@
+{{- if .Values.rmqclusterope.clusterOperator.metrics.service.enabled }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-metrics"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      command: ["curl", "-k", "-f", "{{ .Release.Name }}-{{ (index .Chart.Dependencies 1).Alias }}-metrics:80/metrics"]
+  restartPolicy: Never
+{{- end }}
