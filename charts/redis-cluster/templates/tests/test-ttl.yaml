@@ -13,10 +13,10 @@ spec:
         - sh
         - "-c"
         - |
-          redis-cli -h redis-redis -a P@ssword1 SET tempkey tempvalue EX 5 &&
+          redis-cli -c -h redis-cluster-leader -a P@ssword1 SET tempkey tempvalue EX 5 &&
           echo "Temporary key set: tempkey=tempvalue with TTL 5 seconds"
 
-          VALUE=$(redis-cli -h redis-redis -a P@ssword1 GET tempkey) &&
+          VALUE=$(redis-cli -c -h redis-cluster-leader -a P@ssword1 GET tempkey) &&
           if [ "$VALUE" = "tempvalue" ]; then
             echo "Key exists: $VALUE"
           else
@@ -25,7 +25,7 @@ spec:
 
           sleep 6
 
-          VALUE=$(redis-cli -h redis-redis -a P@ssword1 GET tempkey) &&
+          VALUE=$(redis-cli -c -h redis-cluster-leader -a P@ssword1 GET tempkey) &&
           if [ -z "$VALUE" ]; then
             echo "Key successfully expired after TTL"
           else

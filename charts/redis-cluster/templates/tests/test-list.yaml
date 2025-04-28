@@ -13,16 +13,16 @@ spec:
         - sh
         - "-c"
         - |
-          redis-cli -h redis-redis -a P@ssword1 DEL mylist &&
+          redis-cli -c -h redis-cluster-leader -a P@ssword1 DEL mylist &&
           echo "List cleared"
 
-          redis-cli -h redis-redis -a P@ssword1 LPUSH mylist "value1" "value2" "value3" &&
+          redis-cli -c -h redis-cluster-leader -a P@ssword1 LPUSH mylist "value1" "value2" "value3" &&
           echo "List created with values: value3, value2, value1"
 
-          LIST=$(redis-cli -h redis-redis -a P@ssword1 LRANGE mylist 0 -1 | tr -d '\n') &&
+          LIST=$(redis-cli -c -h redis-cluster-leader -a P@ssword1 LRANGE mylist 0 -1 | tr -d '\n') &&
           echo "Current list values: $LIST"
 
-          redis-cli -h redis-redis -a P@ssword1 DEL mylist &&
+          redis-cli -c -h redis-cluster-leader -a P@ssword1 DEL mylist &&
           echo "List cleared"
 
           if [ "$LIST" = "value3value2value1" ]; then

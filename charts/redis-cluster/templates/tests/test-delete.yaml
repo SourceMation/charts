@@ -13,20 +13,20 @@ spec:
         - sh
         - "-c"
         - |
-          redis-cli -h redis-redis -a P@ssword1 SET testkey testvalue &&
+          redis-cli -c -h redis-cluster-leader -a P@ssword1 SET testkey testvalue &&
           echo "Key added: testkey=testvalue"
 
-          VALUE=$(redis-cli -h redis-redis -a P@ssword1 GET testkey) &&
+          VALUE=$(redis-cli -c -h redis-cluster-leader -a P@ssword1 GET testkey) &&
           if [ "$VALUE" = "testvalue" ]; then
             echo "Value retrieved successfully: $VALUE"
           else
             echo "Failed to retrieve value: $VALUE" && exit 1
           fi
 
-          redis-cli -h redis-redis -a P@ssword1 DEL testkey &&
+          redis-cli -c -h redis-cluster-leader -a P@ssword1 DEL testkey &&
           echo "Key deleted: testkey"
 
-          VALUE=$(redis-cli -h redis-redis -a P@ssword1 GET testkey) &&
+          VALUE=$(redis-cli -c -h redis-cluster-leader -a P@ssword1 GET testkey) &&
           if [ -z "$VALUE" ]; then
             echo "Key successfully deleted: testkey"
           else
