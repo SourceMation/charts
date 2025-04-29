@@ -6,7 +6,7 @@ annotations:
 #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: kyverno
 apiVersion: v2
-appVersion: 1.0.0
+appVersion: 0.1.0
 dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/
@@ -30,4 +30,4 @@ name: kyverno
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 1.0.0
+version: 0.1.0

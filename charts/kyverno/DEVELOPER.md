@@ -4,7 +4,7 @@
  
 ```bash 
 
-export CHART_VERSION=1.0.0
+export CHART_VERSION=0.1.0
 export CHART_NAMESPACE=kyverno
  
 cd charts/charts/kyverno/${CHART_VERSION} 

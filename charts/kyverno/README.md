@@ -46,7 +46,7 @@
 ```bash
 
 export CHART_NAMESPACE=kyverno
-export CHART_VERSION=3.0.7
+export CHART_VERSION=0.1.0
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 
