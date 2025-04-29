@@ -1,0 +1,132 @@
+global:
+  username: "admin"
+  password: "P@ssword1"
+  
+redis-sentinel:
+  redisSentinel:
+    redisSecret:
+      secretName: "redis-auth-secret"
+      secretKey: "password"
+
+#   clusterSize: 3
+#   image: quay.io/opstree/redis-sentinel
+#   tag: v7.0.15
+#   imagePullPolicy: IfNotPresent
+#   imagePullSecrets: []
+#   redisSecret:
+#     secretName: ""
+#     secretKey: ""
+#   serviceType: ClusterIP
+#   resources: {}
+#   ignoreAnnotations: []
+#   minReadySeconds: 0
+#   recreateStatefulSetOnUpdateInvalid: false
+
+# redisSentinelConfig:
+#   redisReplicationName: "redis-replication"
+#   redisReplicationPassword:
+#     secretName: ""
+#     secretKey: ""
+#   masterGroupName: ""
+#   resolveHostnames: ""
+#   announceHostnames: ""
+#   redisPort: ""
+#   quorum: ""
+#   parallelSyncs: ""
+#   failoverTimeout: ""
+#   downAfterMilliseconds: ""
+
+# pdb:
+#   enabled: false
+#   minAvailable: 1
+#   maxUnavailable: null
+
+# livenessProbe:
+#   failureThreshold: 3
+#   initialDelaySeconds: 1
+#   periodSeconds: 10
+#   successThreshold: 1
+#   timeoutSeconds: 1
+
+# readinessProbe:
+#   failureThreshold: 3
+#   initialDelaySeconds: 1
+#   periodSeconds: 10
+#   successThreshold: 1
+#   timeoutSeconds: 1
+
+# externalConfig:
+#   enabled: false
+#   data: |
+#     tcp-keepalive 400
+#     slowlog-max-len 158
+#     stream-node-max-bytes 2048
+
+# externalService:
+#   enabled: false
+#   serviceType: NodePort
+#   port: 26379
+
+# serviceMonitor:
+#   enabled: false
+#   interval: 30s
+#   scrapeTimeout: 10s
+#   namespace: monitoring
+#   extraLabels: {}
+
+# redisExporter:
+#   enabled: false
+#   image: quay.io/opstree/redis-exporter
+#   tag: "v1.44.0"
+#   imagePullPolicy: IfNotPresent
+#   resources: {}
+#   env: []
+#   securityContext: {}
+
+# sidecars:
+#   name: ""
+#   image: ""
+#   imagePullPolicy: "IfNotPresent"
+#   resources:
+#     limits:
+#       cpu: "100m"
+#       memory: "128Mi"
+#     requests:
+#       cpu: "50m"
+#       memory: "64Mi"
+#   env: {}
+
+# initContainer:
+#   enabled: false
+#   image: ""
+#   imagePullPolicy: "IfNotPresent"
+#   resources: {}
+#   env: []
+#   command: []
+#   args: []
+
+# priorityClassName: ""
+
+# nodeSelector: {}
+
+# podSecurityContext:
+#   runAsUser: 1000
+#   fsGroup: 1000
+
+# TLS:
+#   ca: ca.key
+#   cert: tls.crt
+#   key: tls.key
+#   secret:
+#     secretName: ""
+
+# acl:
+#   secret:
+#     secretName: ""
+
+# env: []
+# securityContext: {}
+# affinity: {}
+# tolerations: []
+# serviceAccountName: ""
+# labels: {}

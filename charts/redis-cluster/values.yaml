@@ -1,0 +1,137 @@
+global:
+  username: "admin"
+  password: "P@ssword1"
+
+redis-cluster:
+  redisCluster:
+    redisSecret:
+      secretName: "redis-auth-secret"
+      secretKey: "password"
+
+#   clusterSize: 3
+#   clusterVersion: v7
+#   persistenceEnabled: true
+#   image: quay.io/opstree/redis
+#   tag: v7.0.15
+#   imagePullPolicy: IfNotPresent
+#   imagePullSecrets: {}
+#   redisSecret:
+#     secretName: ""
+#     secretKey: ""
+#   resources: {}
+#   minReadySeconds: 0
+#   recreateStatefulSetOnUpdateInvalid: false
+#   leader:
+#     replicas: 3
+#     serviceType: ClusterIP
+#     affinity: {}
+#     tolerations: []
+#     nodeSelector: null
+#     securityContext: {}
+#     pdb:
+#       enabled: false
+#       maxUnavailable: 1
+#       minAvailable: 1
+    
+#   follower:
+#     replicas: 3
+#     serviceType: ClusterIP
+#     affinity: null
+#     tolerations: []
+#     nodeSelector: null
+#     securityContext: {}
+#     pdb:
+#       enabled: false
+#       maxUnavailable: 1
+#       minAvailable: 1
+
+# externalConfig:
+#   enabled: false
+#   data: |
+#     tcp-keepalive 400
+#     slowlog-max-len 158
+#     stream-node-max-bytes 2048
+
+# externalService:
+#   enabled: false
+#   serviceType: LoadBalancer
+#   port: 6379
+
+# serviceMonitor:
+#   enabled: false
+#   interval: 30s
+#   scrapeTimeout: 10s
+#   namespace: monitoring
+#   extraLabels: {}
+
+# redisExporter:
+#   enabled: false
+#   image: quay.io/opstree/redis-exporter
+#   tag: "v1.44.0"
+#   imagePullPolicy: IfNotPresent
+#   resources: {}
+#   env: []
+#   securityContext: {}
+
+# sidecars:
+#   name: ""
+#   image: ""
+#   imagePullPolicy: "IfNotPresent"
+#   resources:
+#     limits:
+#       cpu: "100m"
+#       memory: "128Mi"
+#     requests:
+#       cpu: "50m"
+#       memory: "64Mi"
+#   env: {}
+
+# initContainer:
+#   enabled: false
+#   image: ""
+#   imagePullPolicy: "IfNotPresent"
+#   resources: {}
+#   env: []
+#   command: []
+#   args: []
+
+# priorityClassName: ""
+
+# nodeSelector: {}
+
+# storageSpec:
+#   volumeClaimTemplate:
+#     spec:
+#       accessModes: ["ReadWriteOnce"]
+#       resources:
+#         requests:
+#           storage: 1Gi
+#   nodeConfVolume: true
+#   nodeConfVolumeClaimTemplate:
+#     spec:
+#       accessModes: ["ReadWriteOnce"]
+#       resources:
+#         requests:
+#           storage: 1Gi
+
+# podSecurityContext:
+#   runAsUser: 1000
+#   fsGroup: 1000
+
+# TLS:
+#   ca: ca.key
+#   cert: tls.crt
+#   key: tls.key
+#   secret:
+#     secretName: ""
+
+# acl:
+#   secret:
+#     secretName: ""
+
+# env: []
+# securityContext: {}
+# affinity: {}
+# tolerations: []
+# serviceAccountName: ""
+# labels: {}
