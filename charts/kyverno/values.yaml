@@ -1,23 +1,22 @@
-kyverno:
-  test:
-    securityContext: []
-  webhooksCleanup:
-    securityContext: []
-  policyReportsCleanup:
-    securityContext: []
-  cleanupJobs:
-    admissionReports:
-      securityContext: []
-    clusterAdmissionReports:
-      securityContext: []
-  admissionController:	
-    initContainer:
-      securityContext: []
-    container:
-      securityContext: []
-  backgroundController:
-    securityContext: []
-  cleanupController:
-    securityContext: []
-  reportsController:
-    securityContext: []
+# kyverno:
+  # test:
+  # webhooksCleanup:
+  #   securityContext: []
+  # policyReportsCleanup:
+  #   securityContext: []
+  # cleanupJobs:
+  #   admissionReports:
+  #     securityContext: []
+  #   clusterAdmissionReports:
+  #     securityContext: []
+  # admissionController:	
+  #   initContainer:
+  #     securityContext: []
+  #   container:
+  #     securityContext: []
+  # backgroundController:
+  #   securityContext: []
+  # cleanupController:
+  #   securityContext: []
+  # reportsController:
+  #   securityContext: []
