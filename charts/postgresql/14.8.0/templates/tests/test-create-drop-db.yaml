@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-create-drop-db"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+spec:
+  containers:
+    - name: postgresql-client
+      image: bitnami/postgresql:latest
+      env:
+        - name: PGPASSWORD
+          value: "{{ .Values.postgresql.postgresPassword }}"
+        - name: PGUSER
+          value: "{{ .Values.postgresql.postgresUser }}"
+        - name: PGDATABASE
+          value: "{{ .Values.postgresql.postgresDB }}"
+      command:
+        - sh
+        - "-c"
+        - |
+          psql -h {{ .Release.Name }}-postgres -U $PGUSER -c "CREATE DATABASE testdb;" &&
+          echo "Database testdb created successfully" &&
+          psql -h {{ .Release.Name }}-postgres -U $PGUSER -c "\l" &&
+          psql -h {{ .Release.Name }}-postgres -U $PGUSER -c "DROP DATABASE testdb;" &&
+          echo "Database testdb dropped successfully"
+  restartPolicy: Never

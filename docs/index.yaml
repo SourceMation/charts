@@ -675,6 +675,38 @@ entries:
       catalog.cattle.io/permits-os: linux
       catalog.cattle.io/release-name: jenkins
     apiVersion: v2
+    appVersion: 5.8.37
+    created: "2025-04-25T01:59:31.031611915+02:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - name: jenkins
+      repository: https://charts.jenkins.io
+      version: 5.8.37
+    description: An automation server that enables developers to build, test, and
+      deploy. Install many times on kubernetes. CI/CD.
+    digest: ac687ccbf82e4ac05480640484e8e3491b57768f46b700dbc1aa43ec65a0f007
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - cicd
+    maintainers:
+    - email: marek.janosz@linuxpolska.com
+      name: jmmaro
+    name: jenkins
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - jenkins/jenkins-0.2.31.tgz
+    version: 0.2.31
+  - annotations:
+      catalog.cattle.io/display-name: Jenkins (1/1) - App
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: jenkins
+    apiVersion: v2
     appVersion: 5.8.36
     created: "2025-04-29T16:01:00.730372263+02:00"
     dependencies:
@@ -2219,6 +2251,41 @@ entries:
     urls:
     - neuvector-security/neuvector-security-1.0.0.tgz
     version: 1.0.0
+  redis-cluster:
+  - annotations:
+      catalog.cattle.io/display-name: Redis Cluster (2/2) - App
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: redis-cluster
+    apiVersion: v2
+    appVersion: 0.16.4
+    created: "2025-04-03T12:00:24.172588818+02:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - name: redis-cluster
+      repository: https://ot-container-kit.github.io/helm-charts
+      version: 0.16.4
+    description: Provides easy redis-cluster setup definitions for Kubernetes. Install
+      many times on kubernetes. Database in-memory
+    digest: ac4717e090d50d82c89266ce310acee84fc24a113117c9d3981bca6d65de8791
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - database in-memory
+    - in memory
+    - redis
+    maintainers:
+    - email: radoslaw.kolba@linuxpolska.com
+      name: radkolba-lp
+    name: redis-cluster
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - redis-cluster/redis-cluster-0.1.0.tgz
+    version: 0.1.0
   redis-operator:
   - annotations:
       catalog.cattle.io/display-name: Redis (1/2) - Operator
@@ -2327,6 +2394,41 @@ entries:
     type: application
     urls:
     - redis-operator/redis-operator-0.1.0.tgz
+    version: 0.1.0
+  redis-sentinel:
+  - annotations:
+      catalog.cattle.io/display-name: Redis Sentinel (2/2) - App
+      catalog.cattle.io/os: linux
+      catalog.cattle.io/permits-os: linux
+      catalog.cattle.io/release-name: redis-sentinel
+    apiVersion: v2
+    appVersion: 0.16.4
+    created: "2025-04-03T12:00:24.181959088+02:00"
+    dependencies:
+    - name: common
+      repository: https://sourcemation.github.io/charts/
+      version: 0.1.x
+    - name: redis-sentinel
+      repository: https://ot-container-kit.github.io/helm-charts
+      version: 0.16.8
+    description: Provides easy redis-sentinel setup definitions for Kubernetes. Install
+      many times on kubernetes. Database in-memory
+    digest: 801388a86b6987371c3975d9449c48412e50fbe2691d447a3a94311668378f3d
+    home: https://linuxpolska.com
+    icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
+    keywords:
+    - database in-memory
+    - in memory
+    - redis
+    maintainers:
+    - email: radoslaw.kolba@linuxpolska.com
+      name: radkolba-lp
+    name: redis-sentinel
+    sources:
+    - https://github.com/SourceMation/charts.git
+    type: application
+    urls:
+    - redis-sentinel/redis-sentinel-0.1.0.tgz
     version: 0.1.0
   strimzi-kafka-operator:
   - annotations:
