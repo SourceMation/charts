@@ -4,10 +4,9 @@
  
 ```bash 
 
-export CHART_VERSION=0.1.0
 export CHART_NAMESPACE=kyverno
  
-cd charts/charts/kyverno/${CHART_VERSION} 
+cd charts/charts/kyverno/
 
 helm  upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
 kyverno .

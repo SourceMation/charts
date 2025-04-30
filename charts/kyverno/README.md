@@ -44,43 +44,29 @@
 ### Preparation
 
 ```bash
-
 export CHART_NAMESPACE=kyverno
 export CHART_VERSION=0.1.0
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace=${CHART_NAMESPACE}
-
 ```
 
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
 helm -n ${CHART_NAMESPACE} upgrade --install kyverno \
---repo https://sourcemation.github.io/charts/ \
-kyverno \
--f /tmp/values.yaml \
+--repo https://sourcemation.github.io/charts/ kyverno \
 --version ${CHART_VERSION}
-
 ```
 
 ### Validation and Testing
 
 ```bash
-
 kubectl -n ${CHART_NAMESPACE} get po
-
 ```
 
 ## CLI removing
 
 ```bash
-
 helm -n ${CHART_NAMESPACE} uninstall kyverno
-
 ```
 
