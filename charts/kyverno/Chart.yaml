@@ -2,32 +2,31 @@ annotations:
   catalog.cattle.io/display-name: Kyverno (1/1) - App
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
-#  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
-#  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+  #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+  #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: kyverno
 apiVersion: v2
-appVersion: 3.4.0
+appVersion: 3.4.1
 dependencies:
-- name: common
-  repository: https://sourcemation.github.io/charts/
-  version: 0.1.x
-- name: kyverno
-  version: 3.4.0
-  repository: https://kyverno.github.io/kyverno/
-
+  - name: common
+    repository: https://sourcemation.github.io/charts/
+    version: 0.1.x
+  - name: kyverno
+    version: 3.4.1
+    repository: https://kyverno.github.io/kyverno/
 description: Kyverno is a policy management solution for Kubernetes and other cloud native environments. Install many times on kubernetes. Security.
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
-- security
-- kyverno
+  - security
+  - kyverno
 kubeVersion: '>=1.26.0-0 <1.31.0-0'
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
-- email: radoslaw.kolba@linuxpolska.com
-  name: radkolba-lp
+  - email: radoslaw.kolba@linuxpolska.com
+    name: radkolba-lp
 name: kyverno
 sources:
-- https://github.com/SourceMation/charts.git
+  - https://github.com/SourceMation/charts.git
 type: application
-version: 0.1.0
+version: 0.1.1
