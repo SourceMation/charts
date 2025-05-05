@@ -44,7 +44,7 @@
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=kyverno
+export CHART_NAMESPACE=kyverno-operator
 export CHART_VERSION=0.1.0
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace=${CHART_NAMESPACE}
@@ -53,8 +53,8 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 ### Go go helm
 
 ``` bash
-helm -n ${CHART_NAMESPACE} upgrade --install kyverno \
---repo https://sourcemation.github.io/charts/ kyverno \
+helm -n ${CHART_NAMESPACE} upgrade --install kyverno-operator \
+--repo https://sourcemation.github.io/charts/ kyverno-operator \
 --version ${CHART_VERSION}
 ```
 
@@ -68,6 +68,6 @@ helm -n ${CHART_NAMESPACE} test ${CHART_NAME}
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall kyverno
+helm -n ${CHART_NAMESPACE} uninstall kyverno-operator
 ```
 
