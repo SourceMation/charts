@@ -62,6 +62,7 @@ helm -n ${CHART_NAMESPACE} upgrade --install kyverno \
 
 ```bash
 kubectl -n ${CHART_NAMESPACE} get po
+helm -n ${CHART_NAMESPACE} test ${CHART_NAME}
 ```
 
 ## CLI removing
