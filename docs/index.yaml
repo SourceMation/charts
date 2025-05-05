@@ -2175,15 +2175,15 @@ entries:
     urls:
     - jenkins/jenkins-by-lp-1.0.1.tgz
     version: 1.0.1
-  kyverno:
+  kyverno-operator:
   - annotations:
-      catalog.cattle.io/display-name: Kyverno (1/1) - App
+      catalog.cattle.io/display-name: Kyverno (1/1) - Operator
       catalog.cattle.io/os: linux
       catalog.cattle.io/permits-os: linux
-      catalog.cattle.io/release-name: kyverno
+      catalog.cattle.io/release-name: kyverno-operator
     apiVersion: v2
-    appVersion: 0.1.0
-    created: "2025-05-03T01:59:28.803809983+02:00"
+    appVersion: 3.4.0
+    created: "2025-05-05T14:29:34.046675697+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -2192,8 +2192,8 @@ entries:
       repository: https://kyverno.github.io/kyverno/
       version: 3.4.0
     description: Kyverno is a policy management solution for Kubernetes and other
-      cloud native environments. Install many times on kubernetes. Security.
-    digest: dcd9b06dcd660312ae65d32d7e6ad288251904754be06f2b8505e6655f7f6eb3
+      cloud native environments. Install only once on kubernetes. Security.
+    digest: 0ae6621dad310051e7e15b297600e06096ce538e627eea187780d2bf4e13a1d7
     home: https://linuxpolska.com
     icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
     keywords:
@@ -2203,12 +2203,12 @@ entries:
     maintainers:
     - email: radoslaw.kolba@linuxpolska.com
       name: radkolba-lp
-    name: kyverno
+    name: kyverno-operator
     sources:
     - https://github.com/SourceMation/charts.git
     type: application
     urls:
-    - kyverno/kyverno-0.1.0.tgz
+    - kyverno-operator/kyverno-operator-0.1.0.tgz
     version: 0.1.0
   neuvector:
   - annotations:
@@ -2219,7 +2219,7 @@ entries:
       catalog.cattle.io/release-name: neuvector
     apiVersion: v2
     appVersion: 2.8.5
-    created: "2025-05-03T01:59:28.81217847+02:00"
+    created: "2025-05-05T14:29:34.055623193+02:00"
     dependencies:
     - name: common
       repository: https://sourcemation.github.io/charts/
@@ -2567,4 +2567,4 @@ entries:
     urls:
     - strimzi-kafka-operator/strimzi-kafka-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2025-05-03T01:59:28.372870736+02:00"
+generated: "2025-05-05T14:29:33.627840555+02:00"
