@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-validate-policy"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+spec:
+  containers:
+    - name: kubectl
+      image: bitnami/kubectl:latest
+      command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Creating deny-latest policy..." &&
+          cat <<EOF | kubectl apply -f -
+          apiVersion: kyverno.io/v1
+          kind: ClusterPolicy
+          metadata:
+            name: deny-latest
+          spec:
+            validationFailureAction: Enforce
+            rules:
+              - name: validate-image-tag
+                match:
+                  resources:
+                    kinds:
+                      - Pod
+                validate:
+                  message: "Using 'latest' tag is not allowed."
+                  pattern:
+                    spec:
+                      containers:
+                        - image: "!*:latest"
+          EOF
+          echo "Creating namespace kyverno-test..."
+          kubectl create ns kyverno-test || true
+          echo "Testing deny-latest policy..." &&
+          (kubectl run denytest -n kyverno-test --image=nginx:latest && exit 1 || echo "Correctly blocked pod with latest tag.") &&
+          echo "Cleaning up..." &&
+          kubectl delete clusterpolicy deny-latest &&
+          kubectl delete pod denytest --ignore-not-found=true
+          kubectl delete ns kyverno-test --ignore-not-found=true
+  restartPolicy: Never
