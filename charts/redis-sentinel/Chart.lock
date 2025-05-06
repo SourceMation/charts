@@ -1,9 +1,0 @@
-dependencies:
-- name: common
-  repository: https://sourcemation.github.io/charts/
-  version: 0.1.1
-- name: redis-sentinel
-  repository: https://ot-container-kit.github.io/helm-charts
-  version: 0.16.8
-digest: sha256:7ec6056cb3f5fc0d3ce43b50b5ead2e22f4246ed979b0db12201d894850d5ff8
-generated: "2025-04-03T11:45:39.384109082+02:00"
