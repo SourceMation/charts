@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://sourcemation.github.io/charts/
+  version: 0.1.1
+- name: rabbitmq-cluster-operator
+  repository: https://charts.bitnami.com/bitnami
+  version: 4.4.6
+digest: sha256:f9233bccbf5375f7292a1414968d7fdabe74837444550bf0fe40097ee167f0bb
+generated: "2025-04-24T10:42:05.849808951+02:00"

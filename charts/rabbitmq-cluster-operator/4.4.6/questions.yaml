@@ -1,0 +1,132 @@
+categories:
+- amqp
+namespace: lp-system
+questions:
+
+# Components
+- variable: rmqclusterope.customOperatorImage
+  default: false
+  label: Change RabbitMQ Cluster Operator image
+  group: "Components"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: rmqclusterope.clusterOperator.image.registry
+    label: RabbitMQ Cluster Operator image registry
+    description: "RabbitMQ Cluster Operator image registry"
+    group: "Components"
+    type: string
+  - variable: rmqclusterope.clusterOperator.image.repository
+    label: RabbitMQ Cluster Operator image repository
+    description: "RabbitMQ Cluster Operator image repository"
+    group: "Components"
+    type: string
+  - variable: rmqclusterope.clusterOperator.image.tag
+    label: RabbitMQ Cluster Operator image tag
+    description: "RabbitMQ Cluster Operator image tag"
+    group: "Components"
+    type: string
+  - variable: rmqclusterope.clusterOperator.image.pullSecrets
+    label: RabbitMQ Cluster Operator image PullSecrets
+    description: "RabbitMQ Cluster Operator image PullSecrets"
+    group: "Components"
+    type: secret
+  - variable: rmqclusterope.clusterOperator.image.pullPolicy
+    default: "IfNotPresent"
+    label: RabbitMQ Cluster Operator image pullPolicy
+    description: "RabbitMQ Cluster Operator image pullPolicy"
+    group: "Components"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+- variable: rmqclusterope.customImage
+  default: false
+  label: Change RabbitMQ image
+  group: "Components"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: rmqclusterope.rabbitmqImage.registry
+    label: RabbitMQ image registry
+    description: "RabbitMQ image registry"
+    group: "Components"
+    type: string
+  - variable: rmqclusterope.rabbitmqImage.repository
+    label: RabbitMQ image repository
+    description: "RabbitMQ image repository"
+    group: "Components"
+    type: string
+  - variable: rmqclusterope.rabbitmqImage.tag
+    label: RabbitMQ image tag
+    description: "RabbitMQ image tag"
+    group: "Components"
+    type: string
+  - variable: rmqclusterope.rabbitmqImage.pullSecrets
+    label: RabbitMQ image PullSecrets
+    description: "RabbitMQ image PullSecrets"
+    group: "Components"
+    type: secret
+# Integrations
+- variable: rmqclusterope.global.compatibility.openshift.adaptSecurityContext
+  default: auto
+  label: Adapt security context of the deployment for OpenShift
+  description: "Adapt security context of the deployment for OpenShift"
+  group: "Integrations"
+  type: enum
+  options:
+  - "auto"
+  - "disabled"
+  - "force"
+- variable: rmqclusterope.clusterOperator.metrics.service.enabled
+  default: false
+  label: RabbitMQ Cluster Operator metrics
+  description: "RabbitMQ Cluster Operator metrics"
+  group: "Integrations"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: rmqclusterope.clusterOperator.metrics.podMonitor.enabled
+    default: false
+    label: Enable pod monitor for RabbitMQ Cluster Operator
+    description: "Enable pod monitor for RabbitMQ Cluster Operator"
+    group: "Integrations"
+    type: boolean
+# Workloads
+- variable: rmqclusterope.clusterOperator.customResources
+  default: false
+  label: Modify RabbitMQ Cluster Operator resource consumption
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: rmqclusterope.clusterOperator.resources.limits.cpu
+    label: "Milicore limit for a RabbitMQ Cluster Operator instance"
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+  - variable: rmqclusterope.clusterOperator.resources.requests.cpu
+    label: "Milicore request for a RabbitMQ Cluster Operator instance"
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+  - variable: rmqclusterope.clusterOperator.resources.limits.memory
+    label: "Memory limit for a RabbitMQ Cluster Operator instance"
+    description: "Memory limit for a Jenkins instance"
+    group: "Workloads"
+    type: string
+  - variable: rmqclusterope.clusterOperator.resources.requests.memory
+    label: "Memory request for a RabbitMQ Cluster Operator instance"
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+- variable: rmqclusterope.clusterOperator.updateStrategy.type
+  default: "RollingUpdate"
+  label: RabbitMQ Cluster Operator update strategy
+  description: "RabbitMQ Cluster Operator update strategy"
+  group: "Workloads"
+  type: enum
+  options:
+  - "RollingUpdate"
+  - "OnDelete"
