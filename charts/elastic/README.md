@@ -77,7 +77,6 @@ export REPO_URL=repo-tst.apps.example.com
 export KB_URL=kibana-tst.apps.example.com
 export APM_URL=apm-tst.apps.example.com
 export FLEET_URL=fleet-tst.apps.example.com
-export ENT_URL=esearch-tst.apps.example.com
 
 
 kubectl create ns ${CHART_NAMESPACE}

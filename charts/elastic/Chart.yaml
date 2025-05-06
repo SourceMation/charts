@@ -14,9 +14,6 @@ dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/
   version: 0.1.x
-- name: opentelemetry-kube-stack
-  version: "0.94.0" 
-  repository: "https://open-telemetry.github.io/opentelemetry-helm-charts"
 description: Set of elastic, opentelemetry apps
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
@@ -38,4 +35,4 @@ name: elastic
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 0.1.0
+version: 0.2.0

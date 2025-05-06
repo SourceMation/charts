@@ -24,7 +24,7 @@ agentFleet:
         nginx.ingress.kubernetes.io/ssl-passthrough: "true"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
       enabled: true
-      hostname: fleet-dev.apps.dev0.lab.linuxpolska.pl
+      hostname: fleet-tst.apps.test0.lab.linuxpolska.pl
       ingressClassName: ""
     service:
       annotations: {}
@@ -60,7 +60,7 @@ agentServices:
             nginx.ingress.kubernetes.io/ssl-passthrough: "true"
             nginx.ingress.kubernetes.io/ssl-redirect: "true"
           enabled: true
-          hostname: apm-http-dev.apps.dev0.lab.linuxpolska.pl
+          hostname: apm-http-tst.apps.test0.lab.linuxpolska.pl
           ingressClassName: ""
         token: E2D3ytLiaI236F62x2n6Rvt4
     service:
@@ -86,7 +86,7 @@ elasticsearch:
         nginx.ingress.kubernetes.io/ssl-passthrough: "true"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
       enabled: true
-      hostname: es-dev.apps.dev0.lab.linuxpolska.pl
+      hostname: es-tst.apps.test0.lab.linuxpolska.pl
       ingressClassName: ""
     pdb: 2
     roles:
@@ -211,8 +211,9 @@ elasticsearch:
           size: 10Gi
           storageClass: ""
         tolerations: []
+    # for GCP S3 snapshot storage
     # secureSettings:
-    # - secretName: gcp-s3-secret
+    #   - secretName: gcp-s3-secret
     service:
       annotations: {}
 kibana:
@@ -251,7 +252,7 @@ kibana:
         nginx.ingress.kubernetes.io/ssl-passthrough: "true"
         nginx.ingress.kubernetes.io/ssl-redirect: "true"
       enabled: true
-      hostname: kb-dev.apps.dev0.lab.linuxpolska.pl
+      hostname: kb-tst.apps.test0.lab.linuxpolska.pl
       ingressClassName: ""
     service:
       annotations: {}
@@ -303,7 +304,7 @@ packageRegistry:
         nginx.ingress.kubernetes.io/ssl-passthrough: "false"
         nginx.ingress.kubernetes.io/ssl-redirect: "false"
       enabled: true
-      hostname: repo-dev.apps.dev0.lab.linuxpolska.pl
+      hostname: repo-tst.apps.test0.lab.linuxpolska.pl
       ingressClassName: ""
     service:
       annotations: {}
