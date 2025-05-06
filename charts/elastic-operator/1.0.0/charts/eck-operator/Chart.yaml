@@ -14,7 +14,6 @@ keywords:
 - Kibana
 - APM Server
 - Beats
-- Enterprise Search
 - Elastic Stack
 - Operator
 kubeVersion: '>=1.21.0-0'

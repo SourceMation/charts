@@ -58,9 +58,9 @@ spec:
           periodSeconds: 5
         resources: 
           requests:
-            memory: 1Gi
+            memory: 2Gi
           limits:
-            memory: 1500Mi
+            memory: 4Gi
 #        volumeMounts:
 #        - mountPath: /mnt/elastic-internal/http-certs
 #          name: elastic-internal-http-certificates
