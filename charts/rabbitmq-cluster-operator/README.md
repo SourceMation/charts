@@ -67,19 +67,5 @@ helm -n ${CHART_NAMESPACE} test ${CHART_NAME}
 
 ```bash
 helm -n ${CHART_NAMESPACE} uninstall ${CHART_NAME}
-kubectl delete \
-  crd/bindings.rabbitmq.com \
-  crd/exchanges.rabbitmq.com \
-  crd/federations.rabbitmq.com \
-  crd/operatorpolicies.rabbitmq.com \
-  crd/permissions.rabbitmq.com \
-  crd/policies.rabbitmq.com \
-  crd/queues.rabbitmq.com \
-  crd/rabbitmqclusters.rabbitmq.com \
-  crd/schemareplications.rabbitmq.com \
-  crd/shovels.rabbitmq.com \
-  crd/superstreams.rabbitmq.com \
-  crd/topicpermissions.rabbitmq.com \
-  crd/users.rabbitmq.com \
-  crd/vhosts.rabbitmq.com
+kubectl get crd -o name | grep 'rabbitmq.com' | xargs kubectl delete
 ```

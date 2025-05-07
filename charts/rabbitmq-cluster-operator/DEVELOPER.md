@@ -6,7 +6,7 @@
 git clone git@github.com:SourceMation/charts.git
 cd charts/charts/rabbitmq-cluster-operator
 
-export CHART_NAME=rabbitmq-cluster-operator
+export CHART_NAME=rabbitmq-operator
 export CHART_NAMESPACE=lp-system
 
 helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \ 
@@ -16,21 +16,7 @@ ${CHART_NAME} .
 
 ```bash
 helm uninstall -n ${CHART_NAMESPACE} ${CHART_NAME}
-kubectl delete \
-  crd/bindings.rabbitmq.com \
-  crd/exchanges.rabbitmq.com \
-  crd/federations.rabbitmq.com \
-  crd/operatorpolicies.rabbitmq.com \
-  crd/permissions.rabbitmq.com \
-  crd/policies.rabbitmq.com \
-  crd/queues.rabbitmq.com \
-  crd/rabbitmqclusters.rabbitmq.com \
-  crd/schemareplications.rabbitmq.com \
-  crd/shovels.rabbitmq.com \
-  crd/superstreams.rabbitmq.com \
-  crd/topicpermissions.rabbitmq.com \
-  crd/users.rabbitmq.com \
-  crd/vhosts.rabbitmq.com
+kubectl get crd -o name | grep 'rabbitmq.com' | xargs kubectl delete
 ```
 
 
