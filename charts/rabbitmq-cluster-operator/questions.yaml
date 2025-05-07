@@ -10,38 +10,47 @@ questions:
   type: boolean
   group: "Components"
 
+# Integrations
+- variable: rke2rabbitmqope.clusterOperator.metrics.service.enabled
+  default: false
+  label: Integrate RabbtiMQ Operator with Promehteus
+  description: "Integrate RabbtiMQ Operator with Promehteus"
+  group: "Integrations"
+  type: boolean
+
+# Workloads
 - variable: rke2rabbitmqope.customOperatorImage
   default: false
   label: Change RabbitMQ Cluster Operator image
-  group: "Components"
+  group: "Workloads"
   type: boolean
   show_subquestion_if: true
   subquestions:
   - variable: rke2rabbitmqope.clusterOperator.image.registry
     label: RabbitMQ Cluster Operator image registry
     description: "RabbitMQ Cluster Operator image registry"
-    group: "Components"
+    group: "Workloads"
     type: string
   - variable: rke2rabbitmqope.clusterOperator.image.repository
     label: RabbitMQ Cluster Operator image repository
     description: "RabbitMQ Cluster Operator image repository"
-    group: "Components"
+    group: "Workloads"
     type: string
   - variable: rke2rabbitmqope.clusterOperator.image.tag
     label: RabbitMQ Cluster Operator image tag
     description: "RabbitMQ Cluster Operator image tag"
-    group: "Components"
+    group: "Workloads"
     type: string
   - variable: rke2rabbitmqope.clusterOperator.image.pullSecrets
     label: RabbitMQ Cluster Operator image PullSecrets
     description: "RabbitMQ Cluster Operator image PullSecrets"
-    group: "Components"
+    group: "Workloads"
     type: secret
   - variable: rke2rabbitmqope.clusterOperator.image.pullPolicy
     default: "IfNotPresent"
     label: RabbitMQ Cluster Operator image pullPolicy
     description: "RabbitMQ Cluster Operator image pullPolicy"
-    group: "Components"
+    group: "Workloads"
     type: enum
     options:
     - "Always"
@@ -50,59 +59,34 @@ questions:
 - variable: rke2rabbitmqope.customImage
   default: false
   label: Change RabbitMQ image
-  group: "Components"
+  group: "Workloads"
   type: boolean
   show_subquestion_if: true
   subquestions:
   - variable: rke2rabbitmqope.rabbitmqImage.registry
     label: RabbitMQ image registry
     description: "RabbitMQ image registry"
-    group: "Components"
+    group: "Workloads"
     type: string
   - variable: rke2rabbitmqope.rabbitmqImage.repository
     label: RabbitMQ image repository
     description: "RabbitMQ image repository"
-    group: "Components"
+    group: "Workloads"
     type: string
   - variable: rke2rabbitmqope.rabbitmqImage.tag
     label: RabbitMQ image tag
     description: "RabbitMQ image tag"
-    group: "Components"
+    group: "Workloads"
     type: string
   - variable: rke2rabbitmqope.rabbitmqImage.pullSecrets
     label: RabbitMQ image PullSecrets
     description: "RabbitMQ image PullSecrets"
-    group: "Components"
+    group: "Workloads"
     type: secret
-# Integrations
-- variable: rke2rabbitmqope.global.compatibility.openshift.adaptSecurityContext
-  default: auto
-  label: Adapt security context of the deployment for OpenShift
-  description: "Adapt security context of the deployment for OpenShift"
-  group: "Integrations"
-  type: enum
-  options:
-  - "auto"
-  - "disabled"
-  - "force"
-- variable: rke2rabbitmqope.clusterOperator.metrics.service.enabled
-  default: false
-  label: RabbitMQ Cluster Operator metrics
-  description: "RabbitMQ Cluster Operator metrics"
-  group: "Integrations"
-  type: boolean
-  show_subquestion_if: true
-  subquestions:
-  - variable: rke2rabbitmqope.clusterOperator.metrics.podMonitor.enabled
-    default: false
-    label: Enable pod monitor for RabbitMQ Cluster Operator
-    description: "Enable pod monitor for RabbitMQ Cluster Operator"
-    group: "Integrations"
-    type: boolean
-# Workloads
+
 - variable: rke2rabbitmqope.clusterOperator.customResources
   default: false
-  label: Modify RabbitMQ Cluster Operator resource consumption
+  label: Custom resource consumption for RabbitMQ Operator
   group: "Workloads"
   type: boolean
   show_subquestion_if: true
