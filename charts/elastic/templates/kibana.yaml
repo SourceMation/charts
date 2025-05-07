@@ -43,15 +43,7 @@ spec:
         - >
           set -x;
           until curl -f -k -L http://{{ include "common.names.shortname" $ -}}-repo-http:8080; do sleep 2; done
-#      initContainers:
-#      - name: wait-for
-#        image: busybox:latest
-#        command: 
-#        - /bin/sh
-#        - -c
-#        - >
-#          set -x;
-#          until wget -q --spider --no-check-certificate http://{{ include "common.names.shortname" $ -}}-repo-http:8080; do sleep 2; done
+      {{- end }}
       containers:
       - name: kibana
         resources:
@@ -72,7 +64,7 @@ spec:
           requests:
             cpu: 100m
             memory: 200Mi
-      {{- end }}
+
   monitoring:
     metrics:
       elasticsearchRefs:
@@ -105,12 +97,7 @@ spec:
       {{- end }}
   elasticsearchRef:
     name: {{ include "common.names.shortname" $ }}
-  {{- if $.Values.enterpriseSearch.enabled }}
-  enterpriseSearchRef:
-    name: {{ include "common.names.shortname" $ }}-entsearch
-  {{- end }}
   config:
-    enterpriseSearch.ssl.verificationMode: none
     monitoring.kibana.collection.enabled: 'true'
     monitoring.ui.ccs.enabled: 'false'
     monitoring.ui.container.elasticsearch.enabled: 'true'
@@ -126,7 +113,7 @@ spec:
     server.publicBaseUrl: "https://{{- .ingress.hostname -}}:443"
     xpack.fleet.agents.fleet_server.hosts:
     - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:443"
-    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:8220"
+    # - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:8220"
     - "https://{{- include "common.names.shortname" $ -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
     xpack.fleet.outputs:
     - id: elastic
@@ -136,7 +123,7 @@ spec:
       type: elasticsearch
       hosts:
       - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
-      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
+      # - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
       - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
       ssl:
         certificate_authorities: 
@@ -153,7 +140,7 @@ spec:
     {{- else if ($.Values.kibana.params.service.annotations) }}  
     server.publicBaseUrl: "https://{{- .ingress.hostname -}}:5601"
     xpack.fleet.agents.fleet_server.hosts:
-    - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:8220"
+    # - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:8220"
     - "https://{{- $.Values.agentFleet.params.ingress.hostname -}}:443"
     - "https://{{- include "common.names.shortname" $ -}}-fleet-agent-http.{{- include "common.names.namespace" $ -}}.svc:8220"
     xpack.fleet.outputs:
@@ -163,7 +150,7 @@ spec:
       name: elastic
       type: elasticsearch
       hosts:
-      - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
+      # - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:9200"
       - "https://{{ $.Values.elasticsearch.params.ingress.hostname -}}:443"
       - "https://{{ include "common.names.shortname" $ -}}-es-http.{{ include "common.names.namespace" $ -}}.svc:9200"
       ssl:
@@ -256,7 +243,7 @@ spec:
             */}}
             {{- if and ( $.Values.kibana.params.ingress.enabled ) ( not $.Values.kibana.params.service.annotations ) }}  
             - name: url
-              value: "https://{{ $.Values.agentServices.params.roles.apm.ingress.hostname -}}:443"
+              value: "https://{{ $.Values.agentServices.params.roles.apm.ingress.hostname -}}"
             {{- /*
             # If loadbalancers ip is set in annotation directive
             */}}
@@ -275,7 +262,7 @@ spec:
             - name: secret_token
               value: {{ $.Values.agentServices.params.roles.apm.token | quote }}
             - name: tls_enabled
-              value: 'false'
+              value: 'true'
             - name: tls_certificate
               value: "/mnt/elastic-internal/http-certs/tls.crt"
             - name: tls_key

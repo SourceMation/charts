@@ -1,320 +1,289 @@
-# Default values for elastic.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-
+agentFleet:
+  enabled: true
+  params:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/os
+              operator: In
+              values:
+              - linux
+    image:
+      registry: docker.elastic.co
+      repository: elastic-agent/elastic-agent
+      tag: ""
+    ingress:
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-body-size: "0"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      enabled: true
+      hostname: fleet-tst.apps.test0.lab.linuxpolska.pl
+      ingressClassName: ""
+    service:
+      annotations: {}
+    tolerations: []
+agentServices:
+  enabled: true
+  params:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/os
+              operator: In
+              values:
+              - linux
+    count: 3
+    cpu: 1500m
+    image:
+      registry: docker.elastic.co
+      repository: elastic-agent/elastic-agent
+      tag: ""
+    memory: 800Mi
+    roles:
+      apm:
+        ingress:
+          annotations:
+            nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+            nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+            nginx.ingress.kubernetes.io/proxy-body-size: "0"
+            nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+            nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+            nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+            nginx.ingress.kubernetes.io/ssl-redirect: "true"
+          enabled: true
+          hostname: apm-http-tst.apps.test0.lab.linuxpolska.pl
+          ingressClassName: ""
+        token: E2D3ytLiaI236F62x2n6Rvt4
+    service:
+      annotations: {}
+    tolerations: []
 elasticsearch:
   enabled: true
   params:
     auth:
-      username: ""
-      password: ""
-    pdb: 2
-#    secureSettings:
-#      - secretName: s3-secret
-    roles:
-      master:
-        autoscaling:
-          enabled: false
-        count: 3
-        cpu: 2000m
-        memory: 4Gi
-        storage:
-          size: 2Gi
-          storageClass: ""
-        config:
-          node:
-            roles: ["master"]
-          xpack:
-            security:
-              audit:
-                enabled: false
-        labels:
-          elasticsearch.type: master
-        affinity:
-          podAntiAffinity:
-            preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    elasticsearch.type: master
-                topologyKey: kubernetes.io/hostname
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/os
-                  operator: In
-                  values:
-                  - linux
-        tolerations: []
-      data:
-        autoscaling:
-          enabled: false
-          maxNodes: 4
-          maxCpu: 4000m
-          maxMemory: 8Gi
-          maxStorage: 250Gi
-        count: 3
-        cpu: 4000m
-        memory: 8Gi
-        storage:
-          size: 80Gi
-          storageClass: ""
-        config:
-          node:
-            roles: [ "data", "ingest", "transform", "remote_cluster_client" ]
-          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
-          xpack:
-            security:
-              audit:
-                enabled: false
-        labels:
-          elasticsearch.type: data
-        affinity:
-          podAntiAffinity:
-            preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    elasticsearch.type: data
-                topologyKey: kubernetes.io/hostname
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/os
-                  operator: In
-                  values:
-                  - linux
-        tolerations: []
-      ml:
-        autoscaling:
-          enabled: false
-          maxNodes: 2
-          maxCpu: 2000m
-          maxMemory: 4Gi
-          maxStorage: 10Gi
-        count: 1
-        cpu: 2000m
-        memory: 4Gi
-        storage:
-          size: 2Gi
-          storageClass: ""
-        config:
-          node:
-            roles: [ "ml", "remote_cluster_client" ]
-          # https://www.elastic.co/guide/en/elasticsearch/reference/current/enable-audit-logging.html
-          xpack:
-            security:
-              audit:
-                enabled: false
-        labels:
-          elasticsearch.type: ml
-        affinity:
-          podAntiAffinity:
-            preferredDuringSchedulingIgnoredDuringExecution:
-            - weight: 100
-              podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    elasticsearch.type: ml
-                topologyKey: kubernetes.io/hostname
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-              - matchExpressions:
-                - key: kubernetes.io/os
-                  operator: In
-                  values:
-                  - linux
-        tolerations: []
+      password: qaz123456
+      username: elastic-eck
     image:
       registry: docker.elastic.co
       repository: elasticsearch/elasticsearch
       tag: ""
     ingress:
-      enabled: true
-      ingressClassName: ""
-      hostname: es-tst.apps.example.com
       annotations:
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/proxy-body-size: "0"
         nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-    service:
-      annotations: {}
-
-
-packageRegistry:
-  enabled: true
-  params:
-    image:
-      registry: docker.elastic.co
-      repository: package-registry/distribution
-      tag: ""
-    ingress:
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
       enabled: true
+      hostname: es-tst.apps.test0.lab.linuxpolska.pl
       ingressClassName: ""
-      hostname: repo-tst.apps.example.com
-      annotations:
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTP" 
-        nginx.ingress.kubernetes.io/ssl-passthrough: "false" 
-        nginx.ingress.kubernetes.io/ssl-redirect: "false" 
-        nginx.ingress.kubernetes.io/force-ssl-redirect: "false" 
+    pdb: 2
+    roles:
+      data:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    elasticsearch.type: data
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        autoscaling:
+          enabled: false
+          maxCpu: 4000m
+          maxMemory: 8Gi
+          maxNodes: 4
+          maxStorage: 250Gi
+        config:
+          node:
+            roles:
+            - data
+            - ingest
+            - transform
+            - remote_cluster_client
+          xpack:
+            security:
+              audit:
+                enabled: false
+        count: 3
+        cpu: 4000m
+        labels:
+          elasticsearch.type: data
+        memory: 8Gi
+        storage:
+          size: 250Gi
+        tolerations: []
+      master:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    elasticsearch.type: master
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        autoscaling:
+          enabled: false
+        config:
+          node:
+            roles:
+            - master
+          xpack:
+            security:
+              audit:
+                enabled: false
+        count: 3
+        cpu: 2000m
+        labels:
+          elasticsearch.type: master
+        memory: 4Gi
+        storage:
+          size: 2Gi
+        tolerations: []
+      ml:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+              - matchExpressions:
+                - key: kubernetes.io/os
+                  operator: In
+                  values:
+                  - linux
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    elasticsearch.type: ml
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        autoscaling:
+          enabled: false
+          maxCpu: 2000m
+          maxMemory: 12Gi
+          maxNodes: 3
+          maxStorage: 10Gi
+        config:
+          node:
+            roles:
+            - ml
+            - remote_cluster_client
+          xpack:
+            security:
+              audit:
+                enabled: false
+        count: 2
+        cpu: 2000m
+        labels:
+          elasticsearch.type: ml
+        memory: 8Gi
+        storage:
+          size: 10Gi
+          storageClass: ""
+        tolerations: []
+    # for GCP S3 snapshot storage
+    # secureSettings:
+    #   - secretName: gcp-s3-secret
     service:
       annotations: {}
-    affinity:
-      nodeAffinity: 
-        requiredDuringSchedulingIgnoredDuringExecution: 
-          nodeSelectorTerms: 
-          - matchExpressions: 
-            - key: kubernetes.io/os 
-              operator: In 
-              values:  
-              - linux 
-    tolerations: []
-
-
 kibana:
   enabled: true
   params:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/os
+              operator: In
+              values:
+              - linux
     autoscaling:
-      enabled: false
-      maxNodes: 2
       averageCpuUtilization: 50
-    image:
-      registry: docker.elastic.co
-      repository: package-registry/distribution
-      tag: ""
-    ingress:
       enabled: true
-      ingressClassName: ""
-      hostname: kb-tst.apps.example.com
-      annotations:
-#        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-#        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
-#        nginx.ingress.kubernetes.io/ssl-redirect: "false"
-#        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-        nginx.ingress.kubernetes.io/ssl-redirect: "true"
-        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-        nginx.ingress.kubernetes.io/proxy-body-size: "0"
-        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-    service:
-      annotations: {}
+      maxNodes: 2
     config:
       xpack:
+        encryptedSavedObjects:
+          encryptionKey: d41d8cd98f00b204e9800998ecf8427e
         reporting:
-          encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
+          encryptionKey: d41d8cd98f00b204e9800998ecf8427e
         security:
           audit:
             enabled: false
-          encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
-        encryptedSavedObjects:
-          encryptionKey: "d41d8cd98f00b204e9800998ecf8427e"
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/os
-              operator: In
-              values:
-              - linux
-    tolerations: []
-
-
-agentFleet:
-  enabled: true
-  params:
-    image:
-      registry: docker.elastic.co
-      repository: beats/elastic-agent
-      tag: ""
+          encryptionKey: d41d8cd98f00b204e9800998ecf8427e
     ingress:
-      enabled: true
-      ingressClassName: ""
-      hostname: fleet-tst.apps.example.com
       annotations:
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
         nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/proxy-body-size: "0"
         nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
         nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      enabled: true
+      hostname: kb-tst.apps.test0.lab.linuxpolska.pl
+      ingressClassName: ""
     service:
       annotations: {}
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/os
-              operator: In
-              values:
-              - linux
     tolerations: []
-
-agentServices:
-  enabled: true
-  params:
-    image:
-      registry: docker.elastic.co
-      repository: beats/elastic-agent
-      tag: ""
-    count: 3
-    cpu: "1500m"
-    memory: "800Mi"
-    service:
-      annotations: {}
-    roles:
-      apm:
-        token: "E2D3ytLiaI236F62x2n6Rvt4"
-        ingress:
-          enabled: true
-          ingressClassName: ""
-          hostname: apm-http-tst.apps.example.com
-          annotations:
-            nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-            nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-            nginx.ingress.kubernetes.io/ssl-redirect: "true"
-            nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-            nginx.ingress.kubernetes.io/proxy-body-size: "0"
-            nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-            nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-          - matchExpressions:
-            - key: kubernetes.io/os
-              operator: In
-              values:
-              - linux
-    tolerations: []
-
-
 logstash:
-  enabled: true
+  enabled: false
   params:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/os
+              operator: In
+              values:
+              - linux
     image:
       registry: docker.elastic.co
       repository: logstash/logstash
       tag: ""
+    pipelines: []
     service:
       annotations: {}
     storage:
       size: 2Gi
-      storageClass: ""
+    tolerations: []
+nameOverride: ""
+namespaceOverride: ""
+packageRegistry:
+  enabled: false
+  params:
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -324,48 +293,20 @@ logstash:
               operator: In
               values:
               - linux
-#            - key: elastic
-#              operator: In
-#              values:
-#              - all
-    tolerations: []
-    pipelines: []
-
-enterpriseSearch:
-  enabled: false
-  params:
-    count: 1
     image:
       registry: docker.elastic.co
       repository: package-registry/distribution
       tag: ""
-    cpu: "2000m"
-    memory: "8Gi"
     ingress:
-      enabled: true
-      ingressClassName: ""
-      hostname: entsearch-tst.apps.example.com
       annotations:
-#        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-#        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
-#        nginx.ingress.kubernetes.io/ssl-redirect: "false"
-#        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-        nginx.ingress.kubernetes.io/ssl-redirect: "true"
-        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-        nginx.ingress.kubernetes.io/proxy-body-size: "0"
-        nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-        nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+        nginx.ingress.kubernetes.io/backend-protocol: HTTP
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      enabled: true
+      hostname: repo-tst.apps.test0.lab.linuxpolska.pl
+      ingressClassName: ""
     service:
       annotations: {}
-
-imagePullSecrets: []
-#- name: repo-auth
-
+    tolerations: []
 tlsSecretName: ""
-
-
-nameOverride: ""
-namespaceOverride: ""
-fullnameOverride: ""

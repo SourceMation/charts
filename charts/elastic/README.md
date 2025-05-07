@@ -77,7 +77,6 @@ export REPO_URL=repo-tst.apps.example.com
 export KB_URL=kibana-tst.apps.example.com
 export APM_URL=apm-tst.apps.example.com
 export FLEET_URL=fleet-tst.apps.example.com
-export ENT_URL=esearch-tst.apps.example.com
 
 
 kubectl create ns ${CHART_NAMESPACE}
@@ -96,7 +95,6 @@ helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace \
 --set "kibana.params.ingress.hostname=${KB_URL}" \
 --set "agentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
 --set "agentFleet.params.ingress.hostname=${FLEET_URL}" \
---set "enterpriseSearch.params.ingress.hostname=${ENT_URL}" \
 --repo https://sourcemation.github.io/charts/ \
 --version ${CHART_VER} \
 ${CHART_RELEASE_NAME} elastic
