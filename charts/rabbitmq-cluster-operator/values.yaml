@@ -59,16 +59,16 @@ rke2rabbitmqope:
       digest: ""
       pullPolicy: IfNotPresent
       pullSecrets: []
-    metrics:
-      service:
+  #  metrics:
+  #    service:
   #      enabled: false
   #      type: ClusterIP
   #      ports:
   #        http: 80
   #    serviceMonitor:
   #      enabled: false
-      podMonitor:
-        enabled: true
+  #    podMonitor:
+  #      enabled: false
     networkPolicy:
       enabled: true
   #    kubeAPIServerPorts: [443, 6443, 8443]

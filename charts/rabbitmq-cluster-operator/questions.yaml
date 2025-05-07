@@ -11,7 +11,7 @@ questions:
   group: "Components"
 
 # Integrations
-- variable: rke2rabbitmqope.clusterOperator.metrics.service.enabled
+- variable: rke2rabbitmqope.clusterOperator.metrics.podMonitor.enabled
   default: false
   label: Integrate RabbtiMQ Operator with Promehteus
   description: "Integrate RabbtiMQ Operator with Promehteus"
