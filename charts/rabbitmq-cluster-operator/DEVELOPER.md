@@ -7,7 +7,6 @@ git clone git@github.com:SourceMation/charts.git
 cd charts/charts/rabbitmq-cluster-operator
 
 export CHART_NAME=rabbitmq-cluster-operator
-export CHART_VERSION=0.1.0
 export CHART_NAMESPACE=lp-system
 
 helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \ 

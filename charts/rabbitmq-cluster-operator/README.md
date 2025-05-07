@@ -2,8 +2,8 @@
 
 ### Are you looking for more information?
 
-1. Documentation: https://charts.bitnami.com/bitnami
-2. Chart Source: https://github.com/SourceMation/charts.git
+1. Documentation: https://www.rabbitmq.com/kubernetes/operator/install-operator
+2. Chart Source: https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq-cluster-operator
 
 ## Before Installation
 
@@ -40,7 +40,7 @@
 ### Preparation
 
 ```bash
-export CHART_NAME=rabbitmq-cluster-operator
+export CHART_NAME=rabbitmq-operator
 export CHART_VERSION=0.1.0
 export CHART_NAMESPACE=lp-system
 

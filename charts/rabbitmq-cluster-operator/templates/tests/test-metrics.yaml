@@ -1,4 +1,4 @@
-{{- if .Values.rmqclusterope.clusterOperator.metrics.service.enabled }}
+{{- if .Values.rke2rabbitmqope.clusterOperator.metrics.service.enabled }}
 apiVersion: v1
 kind: Pod
 metadata:
