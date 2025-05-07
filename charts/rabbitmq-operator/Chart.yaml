@@ -29,7 +29,7 @@ keywords:
 maintainers:
 - email: marek.janosz@linuxpolska.com
   name: jmmaro
-name: rabbitmq-cluster-operator
+name: rabbitmq-operator
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
