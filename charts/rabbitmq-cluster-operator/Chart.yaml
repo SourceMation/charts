@@ -12,7 +12,8 @@ dependencies:
 - name: common
   repository: https://sourcemation.github.io/charts/
   version: 0.1.x
-- name: rabbitmq-cluster-operator
+- condition: global.rabbitmqOperator.enabled
+  name: rabbitmq-cluster-operator
   repository: https://charts.bitnami.com/bitnami
   version: 4.4.6
   alias: rke2rabbitmqope

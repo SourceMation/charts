@@ -4,6 +4,12 @@ namespace: lp-system
 questions:
 
 # Components
+- variable: global.rabbitmqOperator.enabled
+  default: "true"
+  label: "Deploy RabbitMQ Operator"
+  type: boolean
+  group: "Components"
+
 - variable: rke2rabbitmqope.customOperatorImage
   default: false
   label: Change RabbitMQ Cluster Operator image
