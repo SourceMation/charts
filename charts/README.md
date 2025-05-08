@@ -33,6 +33,7 @@
 - [forgejo](https://github.com/sourcemation/charts/tree/main/charts/forgejo/current/README.md)
 - [coder](https://github.com/sourcemation/charts/tree/main/charts/coder/current/README.md)
 - [rabbitmq](https://github.com/sourcemation/charts/tree/main/charts/rabbitmq/current/README.md)
+- [rabbitmq-operator](https://github.com/sourcemation/charts/tree/main/charts/rabbitmq-operator/README.md)
 - [redis](https://github.com/sourcemation/charts/tree/main/charts/redis/current/README.md)
 - [mongodb](https://github.com/sourcemation/charts/tree/main/charts/mongodb/current/README.md)
 - [postgresql](https://github.com/sourcemation/charts/tree/main/charts/postgresql/current/README.md)
