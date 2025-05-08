@@ -27,7 +27,6 @@ helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace ${CHART_RELEASE_
 --set "packageRegistry.params.ingress.hostname=${REPO_URL}" \
 --set "kibana.params.ingress.hostname=${KB_URL}" \
 --set "agentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
---set "enterpriseSearch.params.ingress.hostname=${ENT_URL}" \
 --set "agentFleet.params.ingress.hostname=${FLEET_URL}"
 
 ```

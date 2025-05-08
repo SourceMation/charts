@@ -4,18 +4,18 @@
  
 ```bash 
 
-export CHART_NAMESPACE=kyverno
+export CHART_NAMESPACE=kyverno-operator
  
-cd charts/charts/kyverno/
+cd charts/charts/kyverno-operator/
 
 helm  upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
-kyverno .
+kyverno-operator .
  
 ``` 
 # Cleaning
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} kyverno
+helm uninstall -n ${CHART_NAMESPACE} kyverno-operator
 
 ```
 

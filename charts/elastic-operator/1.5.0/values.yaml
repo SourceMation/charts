@@ -1,0 +1,81 @@
+global:
+  elasticCrd:
+    enabled: true
+#  istioCrd:
+#    enabled: true
+#  certManagerCrd:
+#    enabled: false
+#  openTelemetryCrd:
+#    enabled: false
+
+
+
+
+eck-operator:
+  installCRDs: false
+  createClusterScopedResources: true
+  webhook:
+    enabled: false
+  config:
+    validateStorageClass: false
+
+#base:
+#  defaults:
+#    global:
+#      istioNamespace: lp-system
+#    defaultRevision: default
+#
+#istiod:
+#  defaults:
+#    global:
+#      istioNamespace: lp-system
+#      logAsJson: true
+#    meshConfig:
+#      enableTracing: true
+##      defaultConfig:
+##        tracing:
+##          sampling: 99
+##          zipkin:
+##            address: istiod-jaeger-collector.lp-system.svc:9411
+#      extensionProviders:
+#      - name: zipkin-tracing
+#        zipkin:
+#          service: "istiod-zipkin.lp-system.svc"
+#          port: 9411
+#          
+##      - name: otel-tracing
+##        opentelemetry:
+##          port: 4317
+##          service: elastic-operatorntelemetry-collector.elastic-eck.svc.cluster.local
+##          resource_detectors:
+##            environment: {}
+#
+#jaeger:
+#  fullnameOverride: istiod
+#  query:
+#    basePath: /jaeger
+#    service:
+#      port: 16686
+#    ingress:
+#      enabled: true
+#      host: jeager.apps.dev0.lab.linuxpolska.pl
+#
+#cert-manager:
+#  namespace: lp-system
+#  crds:
+#    enabled: true
+#  prometheus:
+#    enabled: false
+#  webhook:
+#    timeoutSeconds: 4
+#
+#opentelemetry-operator:
+#  manager:
+#    collectorImage:
+#      repository: otel/opentelemetry-collector-k8s
+#  admissionWebhooks:
+#    certManager:
+#      enabled: false
+#    autoGenerateCert:
+#      enabled: true
+#
