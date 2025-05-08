@@ -13,7 +13,7 @@ helm show values oci://quay.io/strimzi-helm/strimzi-kafka-operator --version 0.4
  
 ```bash 
  
-export CHART_VERSION=0.1.1
+export CHART_VERSION=0.1.2
 export CHART_NAMESPACE=lp-system
  
 cd charts/charts/strimzi-kafka-operator/
