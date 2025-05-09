@@ -1,0 +1,118 @@
+name: 'Create helm package and update helm repo index'
+on:
+  push:
+    tags:
+      - '*/*'
+
+jobs:
+  update-index:
+    name: Update SourceMation Repo
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+    
+    steps:
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'latest'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract chart name and version from tag
+        id: extract-info
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          CHART_NAME=${TAG_NAME%%/*}
+          CHART_VERSION=${TAG_NAME#*/}
+          echo "chart_name=$CHART_NAME" >> $GITHUB_OUTPUT
+          echo "chart_version=$CHART_VERSION" >> $GITHUB_OUTPUT
+          echo "Processing chart: $CHART_NAME, version: $CHART_VERSION"
+      
+      - name: Checkout main branch for the chart source
+        uses: actions/checkout@v3
+        with:
+          ref: main
+          path: chart-source
+      
+      - name: Check if chart directory exists
+        id: check-dir
+        run: |
+          if [ -d "chart-source/charts/${{ steps.extract-info.outputs.chart_name }}" ]; then
+            echo "chart_dir_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Chart directory chart-source/charts/${{ steps.extract-info.outputs.chart_name }} does not exist"
+            echo "chart_dir_exists=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Check if chart version matches the tag
+        if: steps.check-dir.outputs.chart_dir_exists == 'true'
+        id: check-version
+        run: |
+          if [ "$(yq .version chart-source/charts/${{ steps.extract-info.outputs.chart_name }}/Chart.yaml)" == "${{ steps.extract-info.outputs.chart_version }}" ]; then
+            echo "chart_version_matches=true" >> $GITHUB_OUTPUT
+          else
+            echo "Chart ${{ steps.extract-info.outputs.chart_name }} version ${{ steps.extract-info.outputs.chart_version }} does not exist on the main branch."
+            echo "chart_version_matches=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Package Helm chart
+        if: steps.check-version.outputs.chart_version_matches == 'true'
+        run: |
+          mkdir -p charts/${{ steps.extract-info.outputs.chart_name }}
+          helm package chart-source/charts/${{ steps.extract-info.outputs.chart_name }} -d charts/${{ steps.extract-info.outputs.chart_name }}
+      
+      - name: Checkout index branch for index.yaml
+        if: steps.check-version.outputs.chart_version_matches == 'true'
+        uses: actions/checkout@v3
+        with:
+          ref: index
+          path: index-branch
+      
+      - name: Merge existing charts and update index
+        if: steps.check-version.outputs.chart_version_matches == 'true'
+        run: |
+          if [ "$(ls -A charts/*/*.tgz 2>/dev/null)" ]; then
+            cp -rf charts/* index-branch/
+          fi
+          helm repo index index-branch
+     
+      - name: Configure git
+        if: steps.check-version.outputs.chart_version_matches == 'true'
+        run: |
+          cd index-branch
+          git config user.name "bot-lp"
+          git config user.email "bot@linuxpolska.pl"
+      
+      - name: Commit and push changes
+        if: steps.check-version.outputs.chart_version_matches == 'true'
+        id: git-push
+        run: |
+          cd index-branch
+          git add .
+          
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            echo "commit_pushed=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "Update Helm chart index for ${{ steps.extract-info.outputs.chart_name }} version ${{ steps.extract-info.outputs.chart_version }}"
+            git push origin index
+            echo "commit_pushed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Trigger GitHub Pages rebuild
+        if: steps.git-push.outputs.commit_pushed == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            try {
+              await github.rest.repos.requestPagesBuild({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+              console.log('Successfully requested a GitHub Pages build');
+            } catch (error) {
+              console.error('Error requesting Pages build:', error);
+              core.setFailed('Failed to trigger GitHub Pages rebuild');
+            }
