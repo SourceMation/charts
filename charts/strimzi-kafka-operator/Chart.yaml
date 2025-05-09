@@ -10,7 +10,7 @@ apiVersion: v2
 appVersion: 0.45.0
 dependencies:
 - name: common
-  repository: https://sourcemation.github.io/charts/
+  repository: https://charts.sourcemation.com/
   version: 0.1.x
 - condition: global.strimziKafkaCrd.enabled
   name: strimzi-kafka-operator

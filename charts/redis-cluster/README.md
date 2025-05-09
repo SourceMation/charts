@@ -65,7 +65,7 @@ EOF
 
 
 helm -n ${CHART_NAMESPACE} upgrade --install redis-cluster \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 redis-cluster \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}

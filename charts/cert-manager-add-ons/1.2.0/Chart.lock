@@ -1,6 +1,6 @@
 dependencies:
 - name: common
-  repository: https://sourcemation.github.io/charts/
+  repository: https://charts.sourcemation.com/
   version: 0.1.1
 - name: adcs-issuer
   repository: https://djkormo.github.io/adcs-issuer

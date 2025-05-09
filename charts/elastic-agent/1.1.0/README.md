@@ -31,7 +31,7 @@ helm -n ${K8S_NAMESPACE} upgrade --install --create-namespace \
 --set "elasticAgent.params.fleetEnrollmentToken=${FLEET_ENROLLMENT_TOKEN}" \
 --set "elasticAgent.params.fleetUrl=${FLEET_URL}" \
 --set "additionalTrustedCASecret=elastic-agent-ca" \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 --version ${ELASTIC_VER} \
 elka-agent elastic-agent
 

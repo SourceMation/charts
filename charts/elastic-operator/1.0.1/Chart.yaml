@@ -9,7 +9,7 @@ appVersion: 1.0.1
 # https://github.com/helm/helm/blob/main/pkg/releaseutil/kind_sorter.go
 dependencies:
 - name: common
-  repository: https://sourcemation.github.io/charts/
+  repository: https://charts.sourcemation.com/
   version: 0.1.x
 - condition: global.elasticCrd.enabled
   name: eck-operator-crds
@@ -59,6 +59,6 @@ maintainers:
   name: Linux Polska
 name: obs-stack-v1-crd
 sources:
--  https://sourcemation.github.io/charts/
+-  https://charts.sourcemation.com/
 type: application
 version: 1.0.1

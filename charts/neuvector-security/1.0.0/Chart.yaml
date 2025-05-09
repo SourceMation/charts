@@ -10,7 +10,7 @@ apiVersion: v2
 appVersion: 1.0.0
 dependencies:
 - name: common
-  repository: https://sourcemation.github.io/charts/
+  repository: https://charts.sourcemation.com/
   version: 0.1.x
 
 description: Predefined security rules for NeuVector. Security, Default policies.

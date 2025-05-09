@@ -70,7 +70,7 @@ EOF
 
 ```bash
 helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
---repo https://sourcemation.github.io/charts/  ${CHART_NAME} \
+--repo https://charts.sourcemation.com/  ${CHART_NAME} \
 --values /tmp/values.yaml  \
 --version ${CHART_VERSION}
 ```

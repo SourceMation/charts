@@ -10,7 +10,7 @@ apiVersion: v2
 appVersion: 5.8.40
 dependencies:
   - name: common
-    repository: https://sourcemation.github.io/charts/
+    repository: https://charts.sourcemation.com/
     version: 0.1.x
   - name: jenkins
     repository: https://charts.jenkins.io
