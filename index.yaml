@@ -12,7 +12,7 @@ entries:
     created: "2025-05-07T19:44:47.398815685+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     description: Cert-manager configuration. Install many times per k8s. Security.
     digest: 7b0915db1c58358cb100d08011cf9274a65ab8410342606bcb2954acf08538c0
@@ -45,7 +45,7 @@ entries:
     created: "2025-05-07T19:44:47.398198753+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     description: Cert-manager configuration. Install once per k8s. Security.
     digest: 333cf1f26af6cd477b57370720f3804dee41d757c4c5fb7e3b9dc74e576ff282
@@ -80,7 +80,7 @@ entries:
     created: "2025-05-07T19:44:47.402338703+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.adcsIssuerCrd.enabled
       name: adcs-issuer
@@ -124,7 +124,7 @@ entries:
     created: "2025-05-07T19:44:47.399807913+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.adcsIssuer.enabled
       name: adcs-issuer
@@ -163,7 +163,7 @@ entries:
     created: "2025-05-07T19:44:47.413240763+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.certManagerCrd.enabled
       name: cert-manager
@@ -206,7 +206,7 @@ entries:
     created: "2025-05-07T19:44:47.407485112+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.certManagerCrd.enabled
       name: cert-manager
@@ -248,7 +248,7 @@ entries:
     created: "2025-05-07T19:44:47.417105233+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.cnpgOperatorCrd.enabled
       name: cloudnative-pg
@@ -313,7 +313,7 @@ entries:
     created: "2025-05-07T19:44:47.420062313+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     description: Set of elastic, opentelemetry apps
     digest: c3530b51de409cab85b31eeb2c0792fab284a202883e9f3d851084373f681735
@@ -354,7 +354,7 @@ entries:
     created: "2025-05-07T19:44:47.423200734+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.x.x
     description: Install once per k8s. Elastic agent for kubernetes which colecting
       logs, metrics, traces.
@@ -395,7 +395,7 @@ entries:
     created: "2025-05-07T19:44:47.422315443+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.x.x
     description: Install once per k8s. Elastic agent for kubernetes which colecting
       logs, metrics, traces.
@@ -436,7 +436,7 @@ entries:
     created: "2025-05-07T19:44:47.421206979+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.x.x
     description: Install once per k8s. Elastic agent for kubernetes which colecting
       logs, metrics, traces.
@@ -479,7 +479,7 @@ entries:
     created: "2025-05-07T19:44:47.448003218+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.elasticCrd.enabled
       name: eck-operator-crds
@@ -529,7 +529,7 @@ entries:
     created: "2025-05-07T19:44:47.441922527+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.elasticCrd.enabled
       name: eck-operator-crds
@@ -579,7 +579,7 @@ entries:
     created: "2025-05-07T19:44:47.434413357+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.elasticCrd.enabled
       name: eck-operator-crds
@@ -629,7 +629,7 @@ entries:
     created: "2025-05-07T19:44:47.452320738+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.istioOperatorCrd.enabled
       name: base
@@ -679,7 +679,7 @@ entries:
     created: "2025-05-07T01:59:32.497396148+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -711,7 +711,7 @@ entries:
     created: "2025-05-07T01:59:32.488731688+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -743,7 +743,7 @@ entries:
     created: "2025-05-07T01:59:32.482453718+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -775,7 +775,7 @@ entries:
     created: "2025-05-07T19:44:47.59268472+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -807,7 +807,7 @@ entries:
     created: "2025-05-07T19:44:47.589499685+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -839,7 +839,7 @@ entries:
     created: "2025-05-07T19:44:47.58328178+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -871,7 +871,7 @@ entries:
     created: "2025-05-07T19:44:47.580393802+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -903,7 +903,7 @@ entries:
     created: "2025-05-07T19:44:47.577626084+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -935,7 +935,7 @@ entries:
     created: "2025-05-07T19:44:47.573729761+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -967,7 +967,7 @@ entries:
     created: "2025-05-07T19:44:47.570618572+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -999,7 +999,7 @@ entries:
     created: "2025-05-07T19:44:47.567323293+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1031,7 +1031,7 @@ entries:
     created: "2025-05-07T19:44:47.564405619+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1063,7 +1063,7 @@ entries:
     created: "2025-05-07T19:44:47.561556767+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1095,7 +1095,7 @@ entries:
     created: "2025-05-07T19:44:47.557568294+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1127,7 +1127,7 @@ entries:
     created: "2025-05-07T19:44:47.553688666+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1159,7 +1159,7 @@ entries:
     created: "2025-05-07T19:44:47.545991271+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1191,7 +1191,7 @@ entries:
     created: "2025-05-07T19:44:47.543106968+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1223,7 +1223,7 @@ entries:
     created: "2025-05-07T19:44:47.539432144+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1255,7 +1255,7 @@ entries:
     created: "2025-05-07T19:44:47.536202131+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1287,7 +1287,7 @@ entries:
     created: "2025-05-07T19:44:47.532723479+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1319,7 +1319,7 @@ entries:
     created: "2025-05-07T19:44:47.528066559+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1351,7 +1351,7 @@ entries:
     created: "2025-05-07T19:44:47.523997043+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1383,7 +1383,7 @@ entries:
     created: "2025-05-07T19:44:47.519679389+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1415,7 +1415,7 @@ entries:
     created: "2025-05-07T19:44:47.516518565+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1447,7 +1447,7 @@ entries:
     created: "2025-05-07T19:44:47.512672967+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1479,7 +1479,7 @@ entries:
     created: "2025-05-07T19:44:47.610636282+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1511,7 +1511,7 @@ entries:
     created: "2025-05-07T19:44:47.607756412+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1543,7 +1543,7 @@ entries:
     created: "2025-05-07T19:44:47.604313775+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1575,7 +1575,7 @@ entries:
     created: "2025-05-07T19:44:47.601738524+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1607,7 +1607,7 @@ entries:
     created: "2025-05-07T19:44:47.598076508+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1639,7 +1639,7 @@ entries:
     created: "2025-05-07T19:44:47.595400971+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1671,7 +1671,7 @@ entries:
     created: "2025-05-07T19:44:47.586578616+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1703,7 +1703,7 @@ entries:
     created: "2025-05-07T19:44:47.548939183+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1735,7 +1735,7 @@ entries:
     created: "2025-05-07T19:44:47.508084326+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1767,7 +1767,7 @@ entries:
     created: "2025-05-07T19:44:47.503250434+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1799,7 +1799,7 @@ entries:
     created: "2025-05-07T19:44:47.470022187+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1831,7 +1831,7 @@ entries:
     created: "2025-05-07T19:44:47.465560391+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1863,7 +1863,7 @@ entries:
     created: "2025-05-07T19:44:47.499151823+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1895,7 +1895,7 @@ entries:
     created: "2025-05-07T19:44:47.494178837+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1927,7 +1927,7 @@ entries:
     created: "2025-05-07T19:44:47.489479237+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1959,7 +1959,7 @@ entries:
     created: "2025-05-07T19:44:47.486643211+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -1991,7 +1991,7 @@ entries:
     created: "2025-05-07T19:44:47.48316322+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -2023,7 +2023,7 @@ entries:
     created: "2025-05-07T19:44:47.480233992+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -2055,7 +2055,7 @@ entries:
     created: "2025-05-07T19:44:47.477416717+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -2087,7 +2087,7 @@ entries:
     created: "2025-05-07T19:44:47.473909938+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -2119,7 +2119,7 @@ entries:
     created: "2025-05-07T19:44:47.460923901+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -2151,7 +2151,7 @@ entries:
     created: "2025-05-07T19:44:47.456659586+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -2184,7 +2184,7 @@ entries:
     created: "2025-05-07T19:44:47.613622273+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: jenkins
       repository: https://charts.jenkins.io
@@ -2218,7 +2218,7 @@ entries:
     created: "2025-05-07T01:59:32.578228354+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: kyverno
       repository: https://kyverno.github.io/kyverno/
@@ -2254,7 +2254,7 @@ entries:
     created: "2025-05-07T19:44:47.618650348+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: core
       repository: https://neuvector.github.io/neuvector-helm/
@@ -2288,7 +2288,7 @@ entries:
     created: "2025-05-07T19:44:47.616413877+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: core
       repository: https://neuvector.github.io/neuvector-helm/
@@ -2323,7 +2323,7 @@ entries:
     created: "2025-05-07T19:44:47.619530813+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     description: Predefined security rules for NeuVector. Security, Default policies.
     digest: b913ca0f35686ee66f0d1276d4a98a0470efe4b7ca3957ca3946afe0d173513b
@@ -2359,7 +2359,7 @@ entries:
     created: "2025-05-07T19:44:47.623603856+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - alias: rke2rabbitmqope
       condition: global.rabbitmqOperator.enabled
@@ -2397,7 +2397,7 @@ entries:
     created: "2025-05-07T19:44:47.62418319+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: redis-cluster
       repository: https://ot-container-kit.github.io/helm-charts
@@ -2433,7 +2433,7 @@ entries:
     created: "2025-05-07T19:44:47.648013658+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.redisOperatorCrd.enabled
       name: redis-operator
@@ -2469,7 +2469,7 @@ entries:
     created: "2025-05-07T19:44:47.640452583+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.redisOperatorCrd.enabled
       name: redis-operator
@@ -2505,7 +2505,7 @@ entries:
     created: "2025-05-07T19:44:47.632443767+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.redisOperatorCrd.enabled
       name: redis-operator
@@ -2541,7 +2541,7 @@ entries:
     created: "2025-05-07T19:44:47.648937139+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - name: redis-sentinel
       repository: https://ot-container-kit.github.io/helm-charts
@@ -2577,7 +2577,7 @@ entries:
     created: "2025-05-08T14:08:22.612387021+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.strimziKafkaCrd.enabled
       name: strimzi-kafka-operator
@@ -2613,7 +2613,7 @@ entries:
     created: "2025-05-08T14:08:22.607395314+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.strimziKafkaCrd.enabled
       name: strimzi-kafka-operator
@@ -2649,7 +2649,7 @@ entries:
     created: "2025-05-07T19:44:47.654337614+02:00"
     dependencies:
     - name: common
-      repository: https://sourcemation.github.io/charts/
+      repository: https://charts.sourcemation.com/
       version: 0.1.x
     - condition: global.strimziKafkaCrd.enabled
       name: strimzi-kafka-operator
