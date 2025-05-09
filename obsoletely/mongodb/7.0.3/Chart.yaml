@@ -1,6 +1,0 @@
-apiVersion: v2
-name: mongodb
-description: A Helm chart for MongoDB on EuroLinux 9
-type: application
-version: 7.0.3
-appVersion: "7.0.3" 

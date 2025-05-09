@@ -1,6 +1,0 @@
-apiVersion: v2
-name: rabbitmq
-description: A Helm chart for RabbitMQ on EuroLinux 9
-type: application
-version: 3.11.10
-appVersion: "3.11.10" 

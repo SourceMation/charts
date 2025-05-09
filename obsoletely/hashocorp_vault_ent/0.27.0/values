@@ -1,8 +1,0 @@
-ui:
-  enabled: true
-server:
-  image:
-    repository: hashicorp/vault-enterprise
-    tag: 1.15.2-ent
-  enterpriseLicense:
-    secretName: vault-ent-license
