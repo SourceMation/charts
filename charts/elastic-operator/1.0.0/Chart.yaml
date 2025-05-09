@@ -36,6 +36,6 @@ maintainers:
   name: Linux Polska
 name: obs-stack-v1-crd
 sources:
--  https://sourcemation.github.io/charts/
+-  https://charts.sourcemation.com/
 type: application
 version: 1.0.0

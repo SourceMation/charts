@@ -72,7 +72,7 @@ EOF
 
 
 helm -n ${CHART_NAMESPACE} upgrade --install neuvector-sec \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 neuvector-security \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}

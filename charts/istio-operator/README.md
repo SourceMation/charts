@@ -75,7 +75,7 @@ EOF
 
 
 helm -n ${CHART_NAMESPACE} upgrade --install istio-operator \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 istio-operator \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}

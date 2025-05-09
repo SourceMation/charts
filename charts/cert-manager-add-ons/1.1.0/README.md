@@ -84,7 +84,7 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 ``` bash
 
 helm -n ${CHART_NAMESPACE} upgrade --install cert-manager-add-ons \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 cert-manager-add-ons /
 --version ${CHART_VERSION}
 

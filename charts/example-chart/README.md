@@ -89,7 +89,7 @@ EOF
 
 
 helm -n ${CHART_NAMESPACE} upgrade --install example-chart \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 example-chart \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}

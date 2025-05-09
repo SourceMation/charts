@@ -66,7 +66,7 @@ EOF
 
 
 helm -n ${CHART_NAMESPACE} upgrade --install redis-operator \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 redis-operator \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}

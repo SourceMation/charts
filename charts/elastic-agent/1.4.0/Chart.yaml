@@ -13,7 +13,7 @@ apiVersion: v2
 appVersion: 8.15.0
 dependencies:
 - name: common
-  repository: https://sourcemation.github.io/charts/
+  repository: https://charts.sourcemation.com/
   version: 0.x.x
 description: Install once per k8s. Elastic agent for kubernetes which colecting logs, metrics, traces.
 home: https://linuxpolska.com

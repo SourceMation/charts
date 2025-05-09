@@ -84,7 +84,7 @@ helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace \
 --set "elasticAgent.params.fleetUrl=${AGENT_FLEET_URL}" \
 --set "additionalTrustedCASecret=elastic-agent-ca" \
 --set "nameOverride=${CHART_RELEASE_NAME}" \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 --version ${CHART_VER} \
 ${CHART_RELEASE_NAME}-agent elastic-agent
 

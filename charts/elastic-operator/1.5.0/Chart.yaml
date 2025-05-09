@@ -10,7 +10,7 @@ apiVersion: v2
 appVersion: 3.0.0
 dependencies:
 - name: common
-  repository: https://sourcemation.github.io/charts/
+  repository: https://charts.sourcemation.com/
   version: 0.1.x
 - condition: global.elasticCrd.enabled
   name: eck-operator-crds

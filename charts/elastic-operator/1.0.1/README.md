@@ -21,7 +21,7 @@ kubectl create ns ${CHART_NAMESPACE}
 ``` bash
 
 helm -n ${CHART_NAMESPACE} upgrade --install obs-stack-v1-crd \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 --version ${CHART_VERSION}
 
 ```

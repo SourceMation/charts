@@ -20,5 +20,5 @@ helm -n ${CHART_NAMESPACE} upgrade --install obs-stack-v1-crd \
 --set "eck-operator.createClusterScopedResources=true" \
 --set "eck-operator.webhook.enabled=false" \
 --set "eck-operator.config.validateStorageClass=false" \
---repo https://sourcemation.github.io/charts/ obs-stack-v1-crd
+--repo https://charts.sourcemation.com/ obs-stack-v1-crd
 ```
