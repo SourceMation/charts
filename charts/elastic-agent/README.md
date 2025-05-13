@@ -54,14 +54,11 @@ no action required
 lack of known issues
 
 
-
-
 ## CLI installation
 
 ### Preparation
 
 ```bash
-
 export CHART_VER=1.4.0
 export CHART_RELEASE_NAME=elk
 export CHART_NAMESPACE=kube-system
@@ -70,39 +67,35 @@ export AGENT_FLEET_URL=https://fleet-tst.apps.example.com:443
 export AGENT_FLEET_ENROLLMENT_TOKEN=''
 
 kubectl create ns ${CHART_NAMESPACE}
-
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
 ```
 
 ### Go go helm
 
-``` bash
-
-helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace \
+```bash
+helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_RELEASE_NAME}-agent \
+--create-namespace \
 --set "elasticAgent.params.fleetEnrollmentToken=${AGENT_FLEET_ENROLLMENT_TOKEN}" \
 --set "elasticAgent.params.fleetUrl=${AGENT_FLEET_URL}" \
 --set "additionalTrustedCASecret=elastic-agent-ca" \
 --set "nameOverride=${CHART_RELEASE_NAME}" \
 --repo https://charts.sourcemation.com/ \
---version ${CHART_VER} \
-${CHART_RELEASE_NAME}-agent elastic-agent
+elastic-agent \
+--version ${CHART_VER}
+```
 
+### Validation and Testing
 
+```bash
 kubectl -n kube-system get po -o wide -l app=elastic-agent
 kubectl -n kube-system get po -o wide -l app.kubernetes.io/name=kube-state-metrics
 
 kubectl -n kube-system logs deploy/kube-state-metrics
 kubectl -n kube-system logs ds/elastic-agent
-
 ```
 
 ## CLI removing
 
 ```bash
-
 helm -n ${CHART_NAMESPACE} uninstall ${CHART_RELEASE_NAME}-agent
-
-kubectl -n ${CHART_NAMESPACE} get po 
-
 ```
