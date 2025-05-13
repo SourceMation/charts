@@ -3,16 +3,14 @@
 ## Installing from repo / Instalacja z repo 
  
 ```bash 
- 
-export CHART_VERSION=1.3.0 
+git clone git@github.com:SourceMation/charts.git
+cd charts/elastic-operator/
+
 export CHART_NAMESPACE=lp-system 
  
-cd charts/elastic-operator/${CHART_VERSION} 
- 
- 
-helm -n ${CHART_NAMESPACE} upgrade --install -n ${CHART_NAMESPACE} --create-namespace \ 
+helm -n ${CHART_NAMESPACE} upgrade --install \
+--create-namespace \ 
 elastic-operator .  
- 
 ``` 
 
 #kubectl get crd -o name | grep -i istio | xargs kubectl delete
@@ -20,4 +18,3 @@ elastic-operator .
 #kubectl get crd -o name | grep -i opentelemetry | xargs kubectl delete
 #kubectl get validatingwebhookconfiguration -o name | grep -i istio | xargs kubectl delete
 #kubectl get mutatingwebhookconfiguration -o name | grep -i istio | xargs kubectl delete
-

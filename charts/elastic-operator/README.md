@@ -1,8 +1,8 @@
 ## Generic
 
-Based on: https://github.com/elastic/cloud-on-k8s.git
-Doc: https://www.elastic.co/guide/en/cloud-on-k8s/current/index.html
-Source: https://github.com/SourceMation/charts.git
+Based on: https://github.com/elastic/cloud-on-k8s.git  
+Doc: https://www.elastic.co/guide/en/cloud-on-k8s/current/index.html  
+Source: https://github.com/SourceMation/charts.git  
 
 ## Requirements
 
@@ -30,40 +30,31 @@ no action required
 lack of known issues
 
 
-
-
 ## CLI installation
 
 ### Preparation
 
 ```bash
-
 export CHART_NAMESPACE=lp-system
-export CHART_VERSION=1.3.0
+export CHART_VERSION=1.5.0
 
 kubectl create ns ${CHART_NAMESPACE}
-
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
 ```
 
 ### Go go helm
 
 ``` bash
-
 helm -n ${CHART_NAMESPACE} upgrade --install elastic-operator \
 --repo https://charts.sourcemation.com/ \
+elastic-operator \
 --version ${CHART_VERSION}
-
 ```
-
 
 ## CLI removing
 
 ```bash
-
 helm -n ${CHART_NAMESPACE} uninstall elastic-operator
-
 kubectl get validatingwebhookconfiguration -o name | grep -i open | xargs kubectl delete
 kubectl get mutatingwebhookconfiguration -o name | grep -i open | xargs kubectl delete
 
@@ -73,6 +64,4 @@ kubectl get mutatingwebhookconfiguration -o name | grep -i open | xargs kubectl 
 #kubectl get crd -o name | grep -i opentelemetry | xargs kubectl delete 
 #kubectl get validatingwebhookconfiguration -o name | grep -i istio | xargs kubectl delete 
 #kubectl get mutatingwebhookconfiguration -o name | grep -i istio | xargs kubectl delete
-
 ```
-
