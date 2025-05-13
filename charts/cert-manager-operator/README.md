@@ -50,7 +50,6 @@ Soloution:
 
 ```bash 
 kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
-
 ```
 
 #### Internal error occurred: failed calling webhook "webhook.cert-manager.io": failed to call webhook: Post "": no endpoints available for service "cert-manager-webhook"
@@ -71,49 +70,33 @@ Solution:
 ```bash
 
 export CHART_NAMESPACE=cert-manager
-export CHART_VERSION=1.0.0
+export CHART_VERSION=1.1.0
 
 kubectl create ns ${CHART_NAMESPACE}
-
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
 ```
 
 ### Go go helm
 
 ``` bash
-
 helm -n ${CHART_NAMESPACE} upgrade --install cert-manager \
 --repo https://charts.sourcemation.com/ \
-cert-manager-operator /
+cert-manager-operator \
 --version ${CHART_VERSION}
-
-
-kubectl -n ${CHART_NAMESPACE} get po
-
-kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,challenges -A
-
 ```
 
 ### Validation and Testing
 
 ```bash
-
 kubectl -n ${CHART_NAMESPACE} get po
-
+kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,challenges -A
 ```
 
 ## CLI removing
 
 ```bash
-
-
 helm -n ${CHART_NAMESPACE} uninstall cert-manager-operator
-
 kubectl delete apiservice v1beta1.webhook.cert-manager.io
-
 kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
-
 kubectl -n ${CHART_NAMESPACE} delete secret/trust-manager-tls
-
 ```
