@@ -53,11 +53,8 @@ Soloution:
 2. If do not have Active Directory Certificate Services, just clean resources
 
 ```bash
-
 helm -n adcs-issuer uninstall adcs-issuer
-
 kubectl get crd -o name | grep -i adcs | xargs kubectl delete
-
 ```
 
 > **Note:**
@@ -69,44 +66,32 @@ kubectl get crd -o name | grep -i adcs | xargs kubectl delete
 ### Preparation
 
 ```bash
-
 export CHART_NAMESPACE=cert-manager
 export CHART_VERSION=1.2.0
 
 kubectl create ns ${CHART_NAMESPACE}
-
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
 ```
 
 ### Go go helm
 
 ``` bash
-
 helm -n ${CHART_NAMESPACE} upgrade --install cert-manager-add-ons \
 --repo https://charts.sourcemation.com/ \
 cert-manager-add-ons /
 --version ${CHART_VERSION}
-
 ```
 
 ### Validation and Testing
 
 ```bash
-
 kubectl -n ${CHART_NAMESPACE} get po
 kubectl get ClusterAdcsIssuer,AdcsIssuer -A
-
 ```
 
 ## CLI removing
 
 ```bash
-
-
 helm -n ${CHART_NAMESPACE} uninstall cert-manager-add-ons
-
 kubectl get crd -o name | grep -i adcs | xargs kubectl delete
-
-
 ```
