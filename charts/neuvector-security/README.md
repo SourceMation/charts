@@ -53,14 +53,11 @@
 ### Preparation
 
 ```bash
-
 export CHART_NAMESPACE=lp-system
 export CHART_VERSION=1.0.0
 
 kubectl create ns ${CHART_NAMESPACE}
-
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
 ```
 
 ### Go go helm
@@ -76,22 +73,16 @@ helm -n ${CHART_NAMESPACE} upgrade --install neuvector-sec \
 neuvector-security \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
-
 ```
 
 ### Validation and Testing
 
 ```bash
-
 kubectl get nvadmissioncontrolsecurityrules.neuvector.com,nvclustersecurityrules.neuvector.com,nvcomplianceprofiles.neuvector.com,nvdlpsecurityrules.neuvector.com,nvsecurityrules.neuvector.com,nvvulnerabilityprofiles.neuvector.com,nvwafsecurityrules.neuvector.com -A
-
 ```
 
 ## CLI removing
 
 ```bash
-
 helm -n ${CHART_NAMESPACE} uninstall neuvector-security
-
 ```
-
