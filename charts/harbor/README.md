@@ -19,17 +19,16 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 
 ```bash
 # create tls certificate and create secret named harbor-cert / stwórz certyfikat tls  i stwórz secret o nazwie harbor-cert
-kubectl -n ${K8S_NAMESPACE} create secret tls harbor-cert --cert=tls.crt --key=tls.key
+kubectl -n ${CHART_NAMESPACE} create secret tls harbor-cert --cert=tls.crt --key=tls.key
 ```
 
 
 ## Installation via helm / Instalacja przy użyciu helm
 
 ```bash
-
-helm upgrade --install harbor \
- -n ${CHART_NAMESPACE}  \
- -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/harbor/${CHART_VERSION}/values \
- --set "expose.ingress.hosts.core=${CORE_INGRESS_ADDRESS}" \
- --repo https://helm.goharbor.io --version ${CHART_VERSION}
-- 
+helm -n ${CHART_NAMESPACE} upgrade --install harbor \
+-f https://raw.githubusercontent.com/sourcemation/charts/main/charts/harbor/values \
+--set "expose.ingress.hosts.core=${CORE_INGRESS_ADDRESS}" \
+--repo https://helm.goharbor.io \
+harbor \
+--version ${CHART_VERSION}
