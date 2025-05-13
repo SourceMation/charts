@@ -16,8 +16,10 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 ```
 
 ## Installation via helm / Instalacja przy użyciu helm
+
 ```bash
-helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace pgadmin charts/pgadmin/1.0.0/ \
+helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace \
+pgadmin charts/pgadmin/ \
 --set env.PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL} \
 --set env.PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD} \
 --set env.PGADMIN_HOST_URL=${PGADMIN_HOST_URL}
