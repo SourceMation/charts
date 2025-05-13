@@ -1,42 +1,34 @@
 # For developers
 
-
 ##
 
 ```bash
-
 helm show values oci://quay.io/strimzi-helm/strimzi-kafka-operator --version 0.45.0
-
 ```
  
 ## Installing from repo
  
 ```bash 
- 
+git clone git@github.com:SourceMation/charts.git
+cd charts/charts/strimzi-kafka-operator/
+
 export CHART_VERSION=0.1.2
 export CHART_NAMESPACE=lp-system
- 
-cd charts/charts/strimzi-kafka-operator/
 
  
 helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
 strimzi-cluster-operator .
- 
 ``` 
+
 # Cleaning
 
 ```bash
-
 helm uninstall -n ${CHART_NAMESPACE} strimzi-cluster-operator
-
 ```
-
 
 # Testing
 
 ```bash
-
-
 kubectl apply -f - <<EOF
 ---
 apiVersion: kafka.strimzi.io/v1beta2
@@ -121,6 +113,4 @@ spec:
     status.storage.replication.factor: -1
 
 EOF
-
-
 ```
