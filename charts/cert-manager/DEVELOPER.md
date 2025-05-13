@@ -5,7 +5,6 @@
 
 
 ```bash
-
 kubectl create -f - <<EOF
 ---
 apiVersion: cert-manager.io/v1
@@ -70,14 +69,12 @@ openssl s_client \
 rm -rf test.txt
 
 kubectl delete certificate test-server
-
 ```
 
 
 ## Installing from repo / Instalacja z repo 
  
 ```bash 
- 
 export CHART_VERSION=1.1.0
 export CHART_NAMESPACE=cert-manager
  
@@ -87,14 +84,11 @@ helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
 cert-manager-config .  
 
 kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,challenges -A
-
 ``` 
 
 
 ## Removing
 
 ```bash
-
 helm -n ${CHART_NAMESPACE} uninstall cert-manager-config
-
 ```
