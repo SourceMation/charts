@@ -1,8 +1,8 @@
 ## Generic
 
-Based on: https://github.com/elastic/cloud-on-k8s.git
-Doc: https://www.elastic.co/guide/en/cloud-on-k8s/current/index.html
-Source: https://github.com/SourceMation/charts.git
+Based on: https://github.com/elastic/cloud-on-k8s.git  
+Doc: https://www.elastic.co/guide/en/cloud-on-k8s/current/index.html  
+Source: https://github.com/SourceMation/charts.git  
 
 ## Requirements
 
