@@ -7,20 +7,19 @@ annotations:
   catalog.cattle.io/release-name: cert-manager
   catalog.cattle.io/namespace: cert-manager
 apiVersion: v2
-appVersion: v1.16.1
+appVersion: ""
 dependencies:
-- name: common
-  repository: https://charts.sourcemation.com/
-  version: 0.1.x
-- condition: global.certManagerCrd.enabled
-  name: cert-manager
-  version: v1.16.1
-  repository: https://charts.jetstack.io
-- condition: global.certManagerApproverPolicyCrd.enabled
-  name: cert-manager-approver-policy
-  version: v0.16.0
-  repository: https://charts.jetstack.io
-
+  - name: common
+    repository: https://charts.sourcemation.com/
+    version: 0.1.x
+  - condition: global.certManagerCrd.enabled
+    name: cert-manager
+    version: v1.16.2
+    repository: https://charts.jetstack.io
+  - condition: global.certManagerApproverPolicyCrd.enabled
+    name: cert-manager-approver-policy
+    version: v0.17.0
+    repository: https://charts.jetstack.io
 #- condition: global.adcsIssuer.enabled
 #  name: adcs-issuer
 #  version: 2.1.1
@@ -30,21 +29,19 @@ dependencies:
 #  name: trust-manager
 #  version: v0.12.0
 #  repository: https://charts.jetstack.io
-
-
-description: Manage TLS certificates via cert-manager operator. Install once per k8s. Security. 
+description: Manage TLS certificates via cert-manager operator. Install once per k8s. Security.
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
-- security
-- cert manager
-- cert-manager
+  - security
+  - cert manager
+  - cert-manager
 kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
-- email: biuro@linuxpolska.com
-  name: Linux Polska
+  - email: biuro@linuxpolska.com
+    name: Linux Polska
 name: cert-manager-operator
 sources:
-- https://github.com/SourceMation/charts.git
+  - https://github.com/SourceMation/charts.git
 type: application
-version: 1.1.0
+version: 1.2.0
