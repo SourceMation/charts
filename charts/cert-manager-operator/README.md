@@ -13,14 +13,6 @@
 > **Note:**
 > no action required
 
-OR
-1. Install following charts
-
-```bash 
-
-helm upgrade install ...
-
-```
 
 ## After Installation
 
@@ -46,22 +38,29 @@ helm upgrade install ...
 
 ## Known Issues
 
-> **Note:**
-> Notify us: https://github.com/SourceMation/charts/issues
-
-  OR
-
 #### Error: Unable to continue with install: CustomResourceDefinition "*.cert-manager.io" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "": current value is ""
 
 Reason: cert-manager is installed in another namespace
 
 Soloution:
 
-1. Skip the operator's depthyment or if do not have cert-manager installed, just clean resources
+1. Do not deploy this operator
+
+2. If do not have cert-manager, just clean resources
 
 ```bash 
 kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
 ```
+
+#### Internal error occurred: failed calling webhook "webhook.cert-manager.io": failed to call webhook: Post "": no endpoints available for service "cert-manager-webhook"
+
+Reason:
+
+1. cert-manager do not start on time
+
+Solution:
+
+1. Re-deploy installation 
 
 
 ## CLI installation
@@ -71,25 +70,18 @@ kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
 ```bash
 
 export CHART_NAMESPACE=cert-manager
-export CHART_VERSION=1.0.0
+export CHART_VERSION=1.1.0
 
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
 ```
 
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
-helm -n ${CHART_NAMESPACE} upgrade --install example-chart \
+helm -n ${CHART_NAMESPACE} upgrade --install cert-manager \
 --repo https://charts.sourcemation.com/ \
-example-chart \
--f /tmp/values.yaml \
+cert-manager-operator \
 --version ${CHART_VERSION}
 ```
 
@@ -97,6 +89,7 @@ example-chart \
 
 ```bash
 kubectl -n ${CHART_NAMESPACE} get po
+kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,challenges -A
 ```
 
 ## CLI removing
@@ -105,4 +98,5 @@ kubectl -n ${CHART_NAMESPACE} get po
 helm -n ${CHART_NAMESPACE} uninstall cert-manager-operator
 kubectl delete apiservice v1beta1.webhook.cert-manager.io
 kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
+kubectl -n ${CHART_NAMESPACE} delete secret/trust-manager-tls
 ```

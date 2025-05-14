@@ -47,14 +47,11 @@
 ### Preparation
 
 ```bash
-
 export CHART_NAMESPACE=neuvector
 export CHART_VERSION=0.1.0
 
 kubectl create ns ${CHART_NAMESPACE}
-
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
 ```
 
 ### Go go helm
@@ -70,24 +67,17 @@ helm -n ${CHART_NAMESPACE} upgrade --install neuvector \
 neuvector \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
-
 ```
 
 ### Validation and Testing
 
 ```bash
-
 kubectl -n ${CHART_NAMESPACE} get po
 helm -n ${CHART_NAMESPACE} test neuvector
-
 ```
 
 ## CLI removing
 
 ```bash
-
 helm -n ${CHART_NAMESPACE} uninstall neuvector
-
 ```
-
-

@@ -3,35 +3,31 @@
 ## Installing from repo
  
 ```bash 
- 
-export CHART_VERSION=0.1.0
 export CHART_NAMESPACE=istio-system
- 
+
 cat << EOF > /tmp/values.yaml
 global:
     istioNamespace: $CHART_NAMESPACE
 EOF
 
+git clone git@github.com:SourceMation/charts.git
 cd charts/charts/istio-operator
 
-helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
+helm -n ${CHART_NAMESPACE} upgrade --install \
+--create-namespace \
 istio-operator .
-
 ``` 
 # Cleaning
 
 ```bash
-
 helm uninstall -n ${CHART_NAMESPACE} istio-operator
 kubectl get crd -o name | grep -i istio-operator | xargs kubectl delete
-
 ```
 
 
 # Testing
 
 ```bash
-
 kubectl -n ${CHART_NAMESPACE} get po
 
 # CREATING ISTIO EXAMPLE APP

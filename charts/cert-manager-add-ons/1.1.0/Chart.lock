@@ -1,9 +1,0 @@
-dependencies:
-- name: common
-  repository: https://charts.sourcemation.com/
-  version: 0.1.1
-- name: adcs-issuer
-  repository: https://djkormo.github.io/adcs-issuer
-  version: 3.0.0
-digest: sha256:8ed0302415ca5d431bab5b21c7f9849c3b1b7ede5808c0a6b949339e72bc9b7e
-generated: "2024-11-04T05:41:29.772499573+01:00"

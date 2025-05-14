@@ -47,14 +47,11 @@
 ### Preparation
 
 ```bash
-
 export CHART_NAMESPACE=lp-system
 export CHART_VERSION=0.1.0
 
 kubectl create ns ${CHART_NAMESPACE}
-
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
 ```
 
 ### Go go helm
@@ -70,22 +67,16 @@ helm -n ${CHART_NAMESPACE} upgrade --install redis-operator \
 redis-operator \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
-
 ```
 
 ### Validation and Testing
 
 ```bash
-
 kubectl -n ${CHART_NAMESPACE} get po
-
 ```
 
 ## CLI removing
 
 ```bash
-
 helm -n ${CHART_NAMESPACE} uninstall redis-operator
-
 ```
-

@@ -2,15 +2,20 @@
 
 ### Are you looking for more information?
 
-1. Based on: https://github.com/OT-CONTAINER-KIT/redis-operator.git
-2. Documentation: https://ot-redis-operator.netlify.app/docs/getting-started/sentinel/
-3. Chart Source: https://github.com/OT-CONTAINER-KIT/redis-operator/tree/main/charts/redis-sentinel
+1. Based on: https://github.com/cert-manager/cert-manager.git
+
+2. Documentation: 
+* https://cert-manager.io/docs/
+* https://github.com/nokia/adcs-issuer
+
+3. Chart Source:
+* https://github.com/nokia/adcs-issuer 
 
 
 ## Before Installation
 
-> **Note:**
-> This chart requires redis-operator to be installed on current Kubernetes cluster
+1. Install chart via Apps: Cert-manager (1/3) - Operator
+2. Install chart via Apps: Cert-manager (2/3) - Add-ons
 
 
 ## After Installation
@@ -46,8 +51,8 @@
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=redis
-export CHART_VERSION=0.1.0
+export CHART_NAMESPACE=cert-manager
+export CHART_VERSION=1.1.0
 
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
@@ -56,26 +61,20 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
-helm -n ${CHART_NAMESPACE} upgrade --install redis-sentinel \
+helm -n ${CHART_NAMESPACE} upgrade --install default-issuer \ 
 --repo https://charts.sourcemation.com/ \
-redis-sentinel \
--f /tmp/values.yaml \
+cert-manager \
 --version ${CHART_VERSION}
 ```
 
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
+kubectl get clusterissuer,issuer,clusteradcsissuer,adcsissuer,cert,crp -A
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall redis-sentinel
+helm -n ${CHART_NAMESPACE} uninstall default-issuer
 ```
