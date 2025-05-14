@@ -4,9 +4,9 @@ dependencies:
   version: 0.1.1
 - name: adcs-issuer
   repository: https://djkormo.github.io/adcs-issuer
-  version: 3.0.0
+  version: 3.0.1
 - name: trust-manager
   repository: https://charts.jetstack.io
-  version: v0.13.0
-digest: sha256:d6262ec906d693ded6cf33883ae4e7b06a1e4df09c3ff78d1ea6dac8b8960f00
-generated: "2024-11-12T17:45:30.610494022+01:00"
+  version: v0.14.0
+digest: sha256:8aa3eb1c904db77d45befc85677f887fb0da0f63a035857e3539ce7562881123
+generated: "2025-05-15T01:59:13.211388606+02:00"
