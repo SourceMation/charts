@@ -7,14 +7,14 @@ annotations:
   catalog.cattle.io/release-name: neuvector
   catalog.cattle.io/namespace: neuvector
 apiVersion: v2
-appVersion: 2.8.5
+appVersion: 2.8.6
 dependencies:
   - name: common
     repository: https://charts.sourcemation.com/
     version: 0.1.x
   #- condition: global.appCrd.enabled
   - name: core
-    version: 2.8.5
+    version: 2.8.6
     repository: https://neuvector.github.io/neuvector-helm/
 description: NeuVector provides a powerful end-to-end container security platform. Install only once on kubernetes. Security.
 home: https://linuxpolska.com
@@ -33,4 +33,4 @@ name: neuvector
 sources:
   - https://github.com/SourceMation/charts.git
 type: application
-version: 0.1.1
+version: 0.1.2
