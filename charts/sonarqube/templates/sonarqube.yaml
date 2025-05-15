@@ -1,0 +1,33 @@
+{{- if .Values.sonarqube.ingress.enabled }}
+{{- $tls := first .Values.sonarqube.ingress.tls }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "common.names.shortname" $ }}-tls-cert
+  namespace: {{ include "common.names.namespace" $ }}
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook-weight": "1"
+spec:
+  secretName: {{ $tls.secretName }}
+  isCA: false
+  usages:
+    - server auth
+    - client auth
+    - key encipherment
+    - digital signature
+  {{- range .Values.sonarqube.ingress.hosts }}
+  commonName: {{ printf "%s" .name }}
+  {{- end }}
+  {{- with $tls.hosts }}
+  dnsNames: {{- toYaml . | nindent 4 }}
+  {{- end }}
+  issuerRef:
+    group: cert-manager.io
+    {{- with .Values.sonarqube.ingress.cert }}
+    name: {{ .issuerName }}
+    kind: {{ .issuerKind }}
+    {{- end }}
+{{- end }}

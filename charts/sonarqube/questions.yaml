@@ -1,0 +1,332 @@
+categories:
+- static-analysis
+questions:
+
+# Components
+- variable: global.sonarqube.enabled
+  default: "true"
+  label: "Deploy SonarQube"
+  type: boolean
+  group: "Components"
+- variable: sonarqube.postgresql.enabled
+  default: "true"
+  label: "Deploy PostgreSQL"
+  type: boolean
+  group: "Components"
+
+# Integrations
+- variable: sonarqube.prometheusMonitoring.podMonitor.enabled
+  default: true
+  label: Integrate SonarQube with Promehteus
+  description: "Integrate SonarQube with Promehteus"
+  group: "Integrations"
+  type: boolean
+  show_if: "global.sonarqube.enabled=true"
+- variable: sonarqube.postgresql.metrics.enabled
+  default: true
+  label: Integrate Postgresql with Promehteus
+  description: "Integrate Postgresql with Promehteus"
+  group: "Integrations"
+  type: boolean
+  show_if: "sonarqube.postgresql.enabled=true"
+
+# Service Discovery
+- variable: sonarqube.ingress.enabled
+  label: Enable SonarQube Ingress
+  group: "Service Discovery"
+  type: boolean
+  show_if: "global.sonarqube.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.ingress.hosts.0.name
+    default: "sonarqube.apps.example.com"
+    label: URL
+    description: "Configure SonarQube Ingress URL"
+    group: "Service Discovery"
+    type: hostname
+    required: true
+  - variable: sonarqube.ingress.tls.0.hosts.0
+    default: "sonarqube.apps.example.com"
+    label: URL
+    description: "Configure SonarQube TLS URL"
+    group: "Service Discovery"
+    type: hostname
+    required: true
+  - variable: "sonarqube.ingress.cert.issuerName"
+    default: "default-selfsigned-ca"
+    label: Certificate issuer name
+    tooltip: "Use 'kubectl get Issuer,clusterIssuer' to get the list of issuers."
+    group: "Service Discovery"
+    type: string
+    required: true
+  - variable: "sonarqube.ingress.cert.issuerKind"
+    default: "ClusterIssuer"
+    label: Certificate issuer kind
+    group: "Service Discovery"
+    type: enum
+    options:
+    - "ClusterIssuer"
+    - "Issuer"
+    required: true
+  - variable: sonarqube.ingress.tls.0.secretName
+    default: "sonarqube-tls-cert"
+    label: Secret Name
+    description: "Configure secret name for SonarQube"
+    group: "Service Discovery"
+    type: string
+    required: true
+
+# Storage
+- variable: sonarqube.persistence.enabled
+  default: true
+  label: Enable SonarQube persistent storage
+  group: "Storage"
+  type: boolean
+  show_if: "global.sonarqube.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.persistence.size
+    default: "10Gi"
+    label: SonarQube persistent volume size
+    group: "Storage"
+    type: string
+    required: true
+  - variable: sonarqube.persistence.storageClass
+    label: SonarQube persistent volume Storage Class
+    group: "Storage"
+    type: storageclass
+
+- variable: sonarqube.postgresql.persistence.enabled
+  default: true
+  label: Enable PostgreSQL persistent storage
+  group: "Storage"
+  type: boolean
+  show_if: "sonarqube.postgresql.enabled=true"
+  show_subquestion_if: true 
+  subquestions:
+  - variable: sonarqube.postgresql.persistence.size
+    default: "10Gi"
+    label: Postgresql persistent volume size
+    description: "Postgresql persistent volume size"
+    group: "Storage"
+    type: string
+  - variable: sonarqube.postgresql.persistence.storageClass
+    label: Postgresql persistent Storage Class
+    description: "Postgresql persistent Storage Class"
+    group: "Storage"
+    type: storageclass
+
+# Workloads
+- variable: global.sonarqube.customImage
+  default: false
+  label: Change SonarQube image
+  group: "Workloads"
+  type: boolean
+  show_if: "global.sonarqube.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.image.registry
+    default: "docker.io"
+    label: SonarQube image registry
+    description: "SonarQube image registry"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.image.repository
+    default: "sonarqube"
+    label: SonarQube image repository
+    description: "SonarQube image repository"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.image.tag
+    label: SonarQube image tag
+    description: "SonarQube image tag"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: sonarqube.image.pullPolicy
+    default: "IfNotPresent"
+    label: SonarQube image pullPolicy
+    description: "SonarQube image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "If NotPresent"
+    - "Never"
+  #- variable: sonarqube.image.pullSecret
+  #  label: SonarQube image pullSecret
+  #  description: "SonarQube image pullSecret"
+  #  group: "Workloads"
+  #  type: secret
+  #  required: false
+- variable: global.postgresql.customImage
+  default: false
+  label: Change Postgresql image
+  description: "Change Postgresql image"
+  group: "Workloads"
+  type: boolean
+  show_if: "sonarqube.postgresql.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.postgresql.image.registry
+    default: "docker.io"
+    label: Postgresql image registry
+    description: "Postgresql image registry"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.postgresql.image.repository
+    default: "bitnami/postgresql"
+    label: Postgresql image repository
+    description: "Postgresql image repository"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.postgresql.image.tag
+    label: Postgresql image tag
+    description: "Postgresql image tag"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: sonarqube.postgresql.image.pullPolicy
+    default: "IfNotPresent"
+    label: Postgresql image pullPolicy
+    description: "Postgresql image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "If NotPresent"
+    - "Never"
+  #- variable: sonarqube.postgresql.image.pullSecrets
+  #  label: Postgresql image PullSecrets
+  #  description: "Postgresql image PullSecrets"
+  #  group: "Workloads"
+  #  type: secret
+  #  required: false
+
+- variable: sonarqube.params.customResources.sonarqube
+  default: false
+  label: Modify SonarQube resource consumption
+  group: "Workloads"
+  type: boolean
+  show_if: "global.sonarqube.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.resources.limits.cpu
+    label: Milicore limit for a SonarQube instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: sonarqube.resources.requests.cpu
+    label: Milicore requests for a SonarQube instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: sonarqube.resources.limits.memory
+    label: Memory limit for a SonarQube instance
+    description: "Memory limit for a SonarQube instance"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: sonarqube.resources.requests.memory
+    label: Memory requests for a SonarQube instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+    required: false
+
+- variable: sonarqube.params.customResources.postgresql
+  default: false
+  label: Modify Postgresql resource consumption
+  group: "Workloads"
+  type: boolean
+  show_if: "sonarqube.postgresql.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.postgresql.resources.limits.cpu
+    default: "2000m"
+    label: Milicore limit for a Postgresql instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.postgresql.resources.requests.cpu
+    default: "100m"
+    label: Milicore requests for a Postgresql instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.postgresql.resources.limits.memory
+    default: "2Gi"
+    label: Memory limit for a Postgresql instance
+    description: "Memory limit for a Postgresql instance"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.postgresql.resources.requests.memory
+    default: "200Mi"
+    label: Memory requests for a Postgresql instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+
+- variable: sonarqube.customPassword
+  default: false
+  label: Change SonarQube admin password
+  description: "Change SonarQube admin password"
+  group: "Workloads"
+  type: boolean
+  show_if: "global.sonarqube.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  #- variable: sonarqube.setAdminPassword.currentPassword
+  #  default: "admin"
+  #  label: SonarQube current admin password
+  #  group: "Workloads"
+  #  type: password
+  #  min_length: 5
+  - variable: sonarqube.setAdminPassword.newPassword
+    default: "P@ssword1234"
+    label: SonarQube admin password
+    description: "Default password is 'P@ssword1234'. Change it!"
+    group: "Workloads"
+    type: password
+    min_length: 12
+
+- variable: sonarqube.postgresql.customPassword
+  default: false
+  label: Change Postgresql DB configuration
+  description: "Change Postgresql DB configuration"
+  group: "Workloads"
+  type: boolean
+  show_if: "sonarqube.postgresql.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.postgresql.postgresqlDatabase
+    default: "sonar"
+    label: SonarQube DB name
+    description: "SonarQube DB name"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.postgresql.postgresqlUsername
+    default: "sonar"
+    label: SonarQube DB username
+    description: "SonarQube DB username"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.postgresql.postgresqlPassword
+    default: "P@ssword1"
+    label: SonarQube DB password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
+    type: password
+
+- variable: sonarqube.postgresql.updateStrategy.type
+  default: "RollingUpdate"
+  label: PostgreSQL update strategy
+  description: "PostgreSQL update strategy"
+  group: "Workloads"
+  type: enum
+  options:
+  - "RollingUpdate"
+  - "Recreate"
+  show_if: "sonarqube.postgresql.enabled=true"
