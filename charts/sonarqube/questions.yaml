@@ -21,7 +21,7 @@ questions:
   description: "Integrate SonarQube with Promehteus"
   group: "Integrations"
   type: boolean
-  show_if: "global.sonarqube.enabled=true"
+  show_if: "global.sonarqubeApp.enabled=true"
 - variable: sonarqube.postgresql.metrics.enabled
   default: true
   label: Integrate Postgresql with Promehteus
@@ -35,7 +35,7 @@ questions:
   label: Enable SonarQube Ingress
   group: "Service Discovery"
   type: boolean
-  show_if: "global.sonarqube.enabled=true"
+  show_if: "global.sonarqubeApp.enabled=true"
   show_subquestion_if: true
   subquestions:
   - variable: sonarqube.ingress.hosts.0.name
@@ -82,7 +82,7 @@ questions:
   label: Enable SonarQube persistent storage
   group: "Storage"
   type: boolean
-  show_if: "global.sonarqube.enabled=true"
+  show_if: "global.sonarqubeApp.enabled=true"
   show_subquestion_if: true
   subquestions:
   - variable: sonarqube.persistence.size
@@ -122,7 +122,7 @@ questions:
   label: Change SonarQube image
   group: "Workloads"
   type: boolean
-  show_if: "global.sonarqube.enabled=true"
+  show_if: "global.sonarqubeApp.enabled=true"
   show_subquestion_if: true
   subquestions:
   - variable: sonarqube.image.registry
@@ -208,7 +208,7 @@ questions:
   label: Modify SonarQube resource consumption
   group: "Workloads"
   type: boolean
-  show_if: "global.sonarqube.enabled=true"
+  show_if: "global.sonarqubeApp.enabled=true"
   show_subquestion_if: true
   subquestions:
   - variable: sonarqube.resources.limits.cpu
@@ -275,7 +275,7 @@ questions:
   description: "Change SonarQube admin password"
   group: "Workloads"
   type: boolean
-  show_if: "global.sonarqube.enabled=true"
+  show_if: "global.sonarqubeApp.enabled=true"
   show_subquestion_if: true
   subquestions:
   #- variable: sonarqube.setAdminPassword.currentPassword
