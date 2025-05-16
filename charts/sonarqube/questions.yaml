@@ -1,9 +1,9 @@
 categories:
-- static-analysis
+- code analysis
 questions:
 
 # Components
-- variable: global.sonarqube.enabled
+- variable: global.sonarqubeApp.enabled
   default: "true"
   label: "Deploy SonarQube"
   type: boolean

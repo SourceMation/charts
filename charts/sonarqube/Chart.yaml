@@ -11,7 +11,7 @@ dependencies:
 - name: common
   repository: https://charts.sourcemation.com/
   version: 0.1.x
-- condition: global.sonarqube.enabled
+- condition: global.sonarqubeApp.enabled
   name: sonarqube
   repository: https://SonarSource.github.io/helm-chart-sonarqube/
   version: 2025.1.1
