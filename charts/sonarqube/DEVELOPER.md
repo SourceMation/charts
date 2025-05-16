@@ -3,16 +3,15 @@
 ## Installing from repo
 
 ```bash
-git clone git@github.com:SourceMation/charts.git
-cd charts/charts/sonarqube/
-
-
 export CHART_NAME=sonarqube
 export CHART_NAMESPACE=sonarqube
 export CHART_URL=sonarqube.apps.example.com
 export CERT_SECRET_NAME=sonarqube-tls-cert
 export CERT_ISSUER_NAME=default-selfsigned-ca
 export CERT_ISSUER_KIND=ClusterIssuer
+
+git clone git@github.com:SourceMation/charts.git
+cd charts/charts/${CHART_NAME}/
 
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
