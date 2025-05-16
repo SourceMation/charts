@@ -9,7 +9,9 @@
 
 ## Before Installation
 
-The installation of cert-manager is required according to the instructions provided in the README file of the latest version: https://github.com/SourceMation/charts/tree/main/charts/cert-manager
+* The installation of cert-manager is required according to the instructions provided in the README file of the latest version: https://github.com/SourceMation/charts/tree/main/charts/cert-manager
+
+* An ingress controller must be installed within the cluster.
 
 ## After Installation
 

@@ -16,14 +16,14 @@ questions:
 
 # Integrations
 - variable: sonarqube.prometheusMonitoring.podMonitor.enabled
-  default: true
+  default: false
   label: Integrate SonarQube with Promehteus
   description: "Integrate SonarQube with Promehteus"
   group: "Integrations"
   type: boolean
   show_if: "global.sonarqubeApp.enabled=true"
 - variable: sonarqube.postgresql.metrics.enabled
-  default: true
+  default: false
   label: Integrate Postgresql with Promehteus
   description: "Integrate Postgresql with Promehteus"
   group: "Integrations"
@@ -270,7 +270,7 @@ questions:
     type: string
 
 - variable: sonarqube.customPassword
-  default: false
+  default: true
   label: Change SonarQube admin password
   description: "Change SonarQube admin password"
   group: "Workloads"
@@ -293,7 +293,7 @@ questions:
     min_length: 12
 
 - variable: sonarqube.postgresql.customPassword
-  default: false
+  default: true
   label: Change Postgresql DB configuration
   description: "Change Postgresql DB configuration"
   group: "Workloads"
@@ -314,9 +314,9 @@ questions:
     group: "Workloads"
     type: string
   - variable: sonarqube.postgresql.postgresqlPassword
-    default: "P@ssword1"
+    default: "P@ssword1234"
     label: SonarQube DB password
-    description: "Default password is 'P@ssword1'. Change it!"
+    description: "Default password is 'P@ssword1234'. Change it!"
     group: "Workloads"
     type: password
 

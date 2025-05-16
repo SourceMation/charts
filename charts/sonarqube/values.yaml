@@ -3,9 +3,9 @@ global:
     enabled: true
 
 sonarqube:
-  affinity: {}
-  nodeSelector: {}
-  seccompProfile: {}
+  #affinity: {}
+  #nodeSelector: {}
+  #seccompProfile: {}
   #securityContext:
   #  fsGroup: 0
   #account:
@@ -23,6 +23,10 @@ sonarqube:
   #  tag: ""
   #  pullPolicy: "IfNotPresent"
   #  pullSecrets: []
+  initSysctl:
+    enabled: false
+  initFs:
+    enabled: false
   httproute:
     enabled: false
   ingress-nginx:
@@ -52,8 +56,8 @@ sonarqube:
   #  install: []
   prometheusMonitoring:
     podMonitor:
-      enabled: true
-  monitoringPasscode: "P@ssword1"
+      enabled: false
+  monitoringPasscode: "P@ssword1234"
   resources:
     limits:
       cpu: "1000m"
@@ -84,7 +88,7 @@ sonarqube:
     #  pullPolicy: "IfNotPresent"
     #  pullSecrets: 
     metrics:
-      enabled: true
+      enabled: false
       serviceMonitor:
         enabled: true
     #nameOverride: ""
