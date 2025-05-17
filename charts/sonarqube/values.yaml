@@ -1,6 +1,8 @@
 global:
   sonarqubeApp:
     enabled: true
+    cert-manager:
+      enabled: true
 
 sonarqube:
   #affinity: {}
@@ -41,7 +43,7 @@ sonarqube:
         - "sonarqube.apps.example.com"
     cert:
       issuerKind: "ClusterIssuer"
-      issuerName: "default-selfsigned-ca"  
+      issuerName: "default-selfsigned-ca"
   #networkPolicy:
   #  enabled: false
   persistence:

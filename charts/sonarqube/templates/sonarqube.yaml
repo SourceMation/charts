@@ -1,4 +1,4 @@
-{{- if .Values.sonarqube.ingress.enabled }}
+{{- if and .Values.sonarqube.ingress.enabled (index .Values.global.sonarqubeApp "cert-manager" "enabled" ) }}
 {{- $tls := first .Values.sonarqube.ingress.tls }}
 apiVersion: cert-manager.io/v1
 kind: Certificate

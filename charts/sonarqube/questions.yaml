@@ -29,6 +29,13 @@ questions:
   group: "Integrations"
   type: boolean
   show_if: "sonarqube.postgresql.enabled=true"
+- variable: global.sonarqubeApp.cert-manager.enabled
+  default: true
+  label: Integrate SonarQube with Cert-Manager
+  description: "Integrate SonarQube with Cert-Manager"
+  group: "Integrations"
+  type: boolean
+  show_if: "global.sonarqubeApp.enabled=true"
 
 # Service Discovery
 - variable: sonarqube.ingress.enabled
@@ -46,7 +53,7 @@ questions:
     type: hostname
     required: true
   - variable: sonarqube.ingress.tls.0.hosts.0
-    default: "sonarqube.apps.example.com"
+    #default: "sonarqube.apps.example.com"
     label: URL
     description: "Configure SonarQube TLS URL"
     group: "Service Discovery"
@@ -59,6 +66,7 @@ questions:
     group: "Service Discovery"
     type: string
     required: true
+    show_if: "global.sonarqubeApp.cert-manager.enabled=true"
   - variable: "sonarqube.ingress.cert.issuerKind"
     default: "ClusterIssuer"
     label: Certificate issuer kind
@@ -68,10 +76,11 @@ questions:
     - "ClusterIssuer"
     - "Issuer"
     required: true
+    show_if: "global.sonarqubeApp.cert-manager.enabled=true"
   - variable: sonarqube.ingress.tls.0.secretName
-    default: "sonarqube-tls-cert"
+    #default: "sonarqube-tls-cert"
     label: Secret Name
-    description: "Configure secret name for SonarQube"
+    description: "Configure secret name for SonarQube TLS"
     group: "Service Discovery"
     type: string
     required: true
@@ -203,7 +212,7 @@ questions:
   #  type: secret
   #  required: false
 
-- variable: sonarqube.params.customResources.sonarqube
+- variable: sonarqube.customResources
   default: false
   label: Modify SonarQube resource consumption
   group: "Workloads"
@@ -236,7 +245,7 @@ questions:
     type: string
     required: false
 
-- variable: sonarqube.params.customResources.postgresql
+- variable: postgresql.customResources
   default: false
   label: Modify Postgresql resource consumption
   group: "Workloads"
