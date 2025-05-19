@@ -61,7 +61,6 @@ Soloution:
 
 ```bash 
 kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
-
 ```
 
 
@@ -75,7 +74,6 @@ export CHART_NAMESPACE=cert-manager
 export CHART_VERSION=1.0.0
 
 kubectl create ns ${CHART_NAMESPACE}
-
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 
 ```
@@ -89,31 +87,22 @@ EOF
 
 
 helm -n ${CHART_NAMESPACE} upgrade --install example-chart \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 example-chart \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
-
 ```
 
 ### Validation and Testing
 
 ```bash
-
 kubectl -n ${CHART_NAMESPACE} get po
-
 ```
 
 ## CLI removing
 
 ```bash
-
 helm -n ${CHART_NAMESPACE} uninstall cert-manager-operator
-
 kubectl delete apiservice v1beta1.webhook.cert-manager.io
-
 kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
-
-
 ```
-

@@ -1,8 +1,8 @@
 ## Generic
 
-Based on: https://github.com/elastic/cloud-on-k8s.git
-Doc: https://www.elastic.co/guide/en/cloud-on-k8s/current/index.html
-Source: https://github.com/SourceMation/charts.git
+Based on: https://github.com/elastic/cloud-on-k8s.git  
+Doc: https://www.elastic.co/guide/en/cloud-on-k8s/current/index.html  
+Source: https://github.com/SourceMation/charts.git  
 
 ## Requirements
 
@@ -95,7 +95,7 @@ helm -n ${CHART_NAMESPACE} upgrade --install --create-namespace \
 --set "kibana.params.ingress.hostname=${KB_URL}" \
 --set "agentServices.params.roles.apm.ingress.hostname=${APM_URL}" \
 --set "agentFleet.params.ingress.hostname=${FLEET_URL}" \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 --version ${CHART_VER} \
 ${CHART_RELEASE_NAME} elastic
 

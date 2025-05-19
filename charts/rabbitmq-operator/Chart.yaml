@@ -9,14 +9,14 @@ annotations:
 apiVersion: v2
 appVersion: 4.4.7
 dependencies:
-  - name: common
-    repository: https://sourcemation.github.io/charts/
-    version: 0.1.x
-  - condition: global.rabbitmqOperator.enabled
-    name: rabbitmq-cluster-operator
-    repository: https://charts.bitnami.com/bitnami
-    version: 4.4.7
-    alias: rke2rabbitmqope
+- name: common
+  repository: https://charts.sourcemation.com/
+  version: 0.1.x
+- condition: global.rabbitmqOperator.enabled
+  name: rabbitmq-cluster-operator
+  repository: https://charts.bitnami.com/bitnami
+  version: 4.4.7
+  alias: rke2rabbitmqope
 description: RabbitMQ Cluster Operator automates RabbitMQ clusters running on Kubernetes. Install only once on kubernetes.
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png

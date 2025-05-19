@@ -3,23 +3,21 @@
 ## Installing from repo
  
 ```bash 
- 
+git clone git@github.com:SourceMation/charts.git
+cd charts/charts/neuvector
+
 export CHART_NAMESPACE=neuvector
- 
-cd charts/charts/neuvector 
 
  
 helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \ 
 neuvector .  
- 
 ``` 
+
 # Cleaning
 
 ```bash
 helm uninstall -n ${CHART_NAMESPACE} neuvector
-
 ```
-
 
 # Testing
 

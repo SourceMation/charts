@@ -54,7 +54,7 @@ kubectl config set-context --current --namespace=${CHART_NAMESPACE}
 
 ``` bash
 helm -n ${CHART_NAMESPACE} upgrade --install kyverno-operator \
---repo https://sourcemation.github.io/charts/ kyverno-operator \
+--repo https://charts.sourcemation.com/ kyverno-operator \
 --version ${CHART_VERSION}
 ```
 

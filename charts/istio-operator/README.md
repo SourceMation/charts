@@ -46,9 +46,7 @@ Soloution:
 1. Skip the operator's deployment or if do not have istio installed, just clean resources
 
 ```bash
-
 kubectl get crd -o name | grep -i istio | xargs kubectl delete
-
 ```
 
 ## CLI installation
@@ -56,14 +54,11 @@ kubectl get crd -o name | grep -i istio | xargs kubectl delete
 ### Preparation
 
 ```bash
-
 export CHART_NAMESPACE=istio-system
 export CHART_VERSION=0.1.0
 
 kubectl create ns ${CHART_NAMESPACE}
-
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
 ```
 
 ### Go go helm
@@ -75,29 +70,21 @@ EOF
 
 
 helm -n ${CHART_NAMESPACE} upgrade --install istio-operator \
---repo https://sourcemation.github.io/charts/ \
+--repo https://charts.sourcemation.com/ \
 istio-operator \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
-
 ```
 
 ### Validation and Testing
 
 ```bash
-
 kubectl -n ${CHART_NAMESPACE} get po
-
 ```
 
 ## CLI removing
 
 ```bash
-
 helm -n ${CHART_NAMESPACE} uninstall istio-operator
-
 kubectl get crd -o name | grep -i istio | xargs kubectl delete
-
-
 ```
-
