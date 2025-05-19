@@ -11,6 +11,8 @@
 
 * The installation of cert-manager is required according to the instructions provided in the README file of the latest version: https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 
+* The installation of cloudnative-pg operator is required according to the instructions provided in the README file of the latest version: https://github.com/SourceMation/charts/tree/main/charts/cnpg-operator
+
 * An ingress controller must be installed within the cluster.
 
 ## After Installation
