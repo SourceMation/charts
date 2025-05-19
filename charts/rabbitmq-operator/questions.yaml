@@ -119,4 +119,4 @@ questions:
   type: enum
   options:
   - "RollingUpdate"
-  - "OnDelete"
+  - "Recreate"
