@@ -3,6 +3,8 @@ global:
     enabled: true
     cert-manager:
       enabled: true
+  cnpg:
+    enabled: true
 
 sonarqube:
   #affinity: {}
@@ -78,50 +80,16 @@ sonarqube:
   #deploymentStrategy:
   #  type: Recreate
 
-  postgresql:
+  jdbcOverwrite:
     enabled: true
-    primary:
-      affinity: {}
-      nodeSelector: {}
-    #image:
-    #  registry: "docker.io"
-    #  repository: "bitnami/postgresql"
-    #  #tag: 11.14.0-debian-10-r22
-    #  pullPolicy: "IfNotPresent"
-    #  pullSecrets: 
-    metrics:
-      enabled: false
-      serviceMonitor:
-        enabled: true
-    #nameOverride: ""
-    #networkPolicy:
-    #  enabled: false
-    postgresqlUsername: "sonar"
-    postgresqlPassword: "P@ssword1"
-    postgresqlDatabase: "sonar"
-    persistence:
-      enabled: true
-      size: "10Gi"
-      storageClass: ""
-      accessMode: ReadWriteOnce
-    resources:
-      limits:
-        cpu: "2000m"
-        memory: "2Gi"
-      requests:
-        cpu: "100m"
-        memory: "200Mi"
-    #securityContext:
-    #  enabled: true
-    #  fsGroup: 1001
-    #service:
-    #  port: 5432
-    #  type: "ClusterIP"
-    #serviceAccount:
-    #  enabled: false
-    #updateStrategy:
-    #  type: "RollingUpdate"
+    jdbcUrl: "jdbc:postgresql://sonarqube-cnpg-cluster-rw/sonar"
+    jdbcUsername: "sonar"
+    jdbcSecretName: sonarqube-cnpg-cluster-user
+    jdbcSecretPasswordKey: password
 
+  postgresql:
+    enabled: false
+    
   #tests:
   #  image: ""
   #  enabled: true
@@ -134,3 +102,31 @@ sonarqube:
   #      cpu: 500m
   #      memory: 200M
   #      ephemeral-storage: 1000M
+
+
+cnpg:
+  cluster:
+    metadata:
+      name: "cnpg-cluster"
+    auth:
+      #username: "sonar"
+      password: "P@ssword1234"
+      database: "sonar"
+      suUsername: "postgres"
+      suPassword: "P@ssword1234"
+    metrics:
+      enablePodMonitor: false
+    spec:
+      instances: 2
+      resources:
+        requests:
+          memory: "200Mi"
+          cpu: "100m"
+        limits:
+          memory: "2Gi"
+          cpu: "2000m"
+      storage:
+        accessModes:
+          - "ReadWriteOnce"
+        size: "10Gi"
+        storageClass: ""

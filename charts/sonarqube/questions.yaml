@@ -8,9 +8,9 @@ questions:
   label: "Deploy SonarQube"
   type: boolean
   group: "Components"
-- variable: sonarqube.postgresql.enabled
+- variable: global.cnpg.enabled
   default: "true"
-  label: "Deploy PostgreSQL"
+  label: "Deploy CloudNativePG-Cluster"
   type: boolean
   group: "Components"
 
@@ -22,13 +22,13 @@ questions:
   group: "Integrations"
   type: boolean
   show_if: "global.sonarqubeApp.enabled=true"
-- variable: sonarqube.postgresql.metrics.enabled
+- variable: cnpg.cluster.metrics.enablePodMonitor
   default: false
-  label: Integrate Postgresql with Promehteus
-  description: "Integrate Postgresql with Promehteus"
+  label: Integrate CloudNativePG with Promehteus
+  description: "Integrate CloudNativePG with Promehteus"
   group: "Integrations"
   type: boolean
-  show_if: "sonarqube.postgresql.enabled=true"
+  show_if: "global.cnpg.enabled=true"
 - variable: global.sonarqubeApp.cert-manager.enabled
   default: true
   label: Integrate SonarQube with Cert-Manager
@@ -105,23 +105,24 @@ questions:
     group: "Storage"
     type: storageclass
 
-- variable: sonarqube.postgresql.persistence.enabled
+- variable: cnpg.clusters.spec.storage.enabled
   default: true
-  label: Enable PostgreSQL persistent storage
+  label: Enable CloudNativePG persistent storage
   group: "Storage"
   type: boolean
-  show_if: "sonarqube.postgresql.enabled=true"
+  required: true
+  show_if: "global.cnpg.enabled=true"
   show_subquestion_if: true 
   subquestions:
-  - variable: sonarqube.postgresql.persistence.size
+  - variable: cnpg.clusters.spec.storage.size
     default: "10Gi"
-    label: Postgresql persistent volume size
-    description: "Postgresql persistent volume size"
+    label: CloudNativePG persistent volume size
+    description: "CloudNativePG persistent volume size"
     group: "Storage"
     type: string
-  - variable: sonarqube.postgresql.persistence.storageClass
-    label: Postgresql persistent Storage Class
-    description: "Postgresql persistent Storage Class"
+  - variable: cnpg.clusters.spec.storage.storageClass
+    label: CloudNativePG persistent Storage Class
+    description: "CloudNativePG persistent Storage Class"
     group: "Storage"
     type: storageclass
 
@@ -168,51 +169,8 @@ questions:
   #  group: "Workloads"
   #  type: secret
   #  required: false
-- variable: global.postgresql.customImage
-  default: false
-  label: Change Postgresql image
-  description: "Change Postgresql image"
-  group: "Workloads"
-  type: boolean
-  show_if: "sonarqube.postgresql.enabled=true"
-  show_subquestion_if: true
-  subquestions:
-  - variable: sonarqube.postgresql.image.registry
-    default: "docker.io"
-    label: Postgresql image registry
-    description: "Postgresql image registry"
-    group: "Workloads"
-    type: string
-  - variable: sonarqube.postgresql.image.repository
-    default: "bitnami/postgresql"
-    label: Postgresql image repository
-    description: "Postgresql image repository"
-    group: "Workloads"
-    type: string
-  - variable: sonarqube.postgresql.image.tag
-    label: Postgresql image tag
-    description: "Postgresql image tag"
-    group: "Workloads"
-    type: string
-    required: false
-  - variable: sonarqube.postgresql.image.pullPolicy
-    default: "IfNotPresent"
-    label: Postgresql image pullPolicy
-    description: "Postgresql image pullPolicy"
-    group: "Workloads"
-    type: enum
-    options:
-    - "Always"
-    - "If NotPresent"
-    - "Never"
-  #- variable: sonarqube.postgresql.image.pullSecrets
-  #  label: Postgresql image PullSecrets
-  #  description: "Postgresql image PullSecrets"
-  #  group: "Workloads"
-  #  type: secret
-  #  required: false
 
-- variable: sonarqube.customResources
+- variable: global.sonarqubeApp.customResources
   default: false
   label: Modify SonarQube resource consumption
   group: "Workloads"
@@ -245,40 +203,40 @@ questions:
     type: string
     required: false
 
-- variable: postgresql.customResources
+- variable: global.cnpg.customResources
   default: false
-  label: Modify Postgresql resource consumption
+  label: Modify CloudNativePG resource consumption
   group: "Workloads"
   type: boolean
-  show_if: "sonarqube.postgresql.enabled=true"
+  show_if: "global.cnpg.enabled=true"
   show_subquestion_if: true
   subquestions:
-  - variable: sonarqube.postgresql.resources.limits.cpu
+  - variable: cnpg.cluster.spec.resources.limits.cpu
     default: "2000m"
-    label: Milicore limit for a Postgresql instance
+    label: Milicore limit for a CloudNativePG instance
     description: "1000m(milicores) = 1vCPU"
     group: "Workloads"
     type: string
-  - variable: sonarqube.postgresql.resources.requests.cpu
+  - variable: cnpg.cluster.spec.resources.requests.cpu
     default: "100m"
-    label: Milicore requests for a Postgresql instance
+    label: Milicore requests for a CloudNativePG instance
     description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
     group: "Workloads"
     type: string
-  - variable: sonarqube.postgresql.resources.limits.memory
+  - variable: cnpg.cluster.spec.resources.limits.memory
     default: "2Gi"
-    label: Memory limit for a Postgresql instance
-    description: "Memory limit for a Postgresql instance"
+    label: Memory limit for a CloudNativePG instance
+    description: "Memory limit for a CloudNativePG instance"
     group: "Workloads"
     type: string
-  - variable: sonarqube.postgresql.resources.requests.memory
+  - variable: cnpg.cluster.spec.resources.requests.memory
     default: "200Mi"
-    label: Memory requests for a Postgresql instance
+    label: Memory requests for a CloudNativePG instance
     description: "Memory request, value must be <= memory limit"
     group: "Workloads"
     type: string
 
-- variable: sonarqube.customPassword
+- variable: global.sonarqube.customPassword
   default: true
   label: Change SonarQube admin password
   description: "Change SonarQube admin password"
@@ -301,41 +259,30 @@ questions:
     type: password
     min_length: 12
 
-- variable: sonarqube.postgresql.customPassword
+- variable: gloabl.cnpg.customPassword
   default: true
-  label: Change Postgresql DB configuration
-  description: "Change Postgresql DB configuration"
+  label: Change CloudNativePG DB configuration
+  description: "Change CloudNativePG DB configuration"
   group: "Workloads"
   type: boolean
-  show_if: "sonarqube.postgresql.enabled=true"
+  show_if: "global.cnpg.enabled=true"
   show_subquestion_if: true
   subquestions:
-  - variable: sonarqube.postgresql.postgresqlDatabase
+  - variable: cnpg.cluste.auth.database
     default: "sonar"
     label: SonarQube DB name
     description: "SonarQube DB name"
     group: "Workloads"
     type: string
-  - variable: sonarqube.postgresql.postgresqlUsername
+  - variable: sonarqube.jdbcOverwrite.jdbcUsername
     default: "sonar"
     label: SonarQube DB username
     description: "SonarQube DB username"
     group: "Workloads"
     type: string
-  - variable: sonarqube.postgresql.postgresqlPassword
+  - variable: cnpg.cluster.auth.password
     default: "P@ssword1234"
     label: SonarQube DB password
     description: "Default password is 'P@ssword1234'. Change it!"
     group: "Workloads"
     type: password
-
-- variable: sonarqube.postgresql.updateStrategy.type
-  default: "RollingUpdate"
-  label: PostgreSQL update strategy
-  description: "PostgreSQL update strategy"
-  group: "Workloads"
-  type: enum
-  options:
-  - "RollingUpdate"
-  - "Recreate"
-  show_if: "sonarqube.postgresql.enabled=true"
