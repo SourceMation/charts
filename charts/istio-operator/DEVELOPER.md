@@ -21,7 +21,7 @@ istio-operator .
 
 ```bash
 helm uninstall -n ${CHART_NAMESPACE} istio-operator
-kubectl get crd -o name | grep -i istio-operator | xargs kubectl delete
+kubectl get crd -o name | grep -i istio | xargs kubectl delete
 ```
 
 
