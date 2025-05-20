@@ -55,7 +55,7 @@ kubectl get crd -o name | grep -i istio | xargs kubectl delete
 
 ```bash
 export CHART_NAMESPACE=istio-system
-export CHART_VERSION=0.3.0
+export CHART_VERSION=0.2.0
 
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}

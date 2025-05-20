@@ -47,4 +47,4 @@ name: istio-operator
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 0.3.0
+version: 0.2.0
