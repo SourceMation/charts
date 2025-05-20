@@ -3,10 +3,14 @@ global:
     enabled: true
 
 cnpg:
+  crds:
+    create: true
+  
   image:
 #    repository: ghcr.io/cloudnative-pg/cloudnative-pg
     pullPolicy: IfNotPresent
-   
+#  imagePullSecrets: [] 
+
 #  monitoring:
 #    podMonitorEnabled: true
 #  imagePullSecrets:
@@ -18,4 +22,5 @@ cnpg:
   podSecurityContext:
     seccompProfile: {}
 
+#  updateStrategy: {}
 questionsSpec: {}
