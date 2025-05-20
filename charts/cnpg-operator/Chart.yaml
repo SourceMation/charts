@@ -7,14 +7,14 @@ annotations:
   catalog.cattle.io/release-name: cnpg
   catalog.cattle.io/namespace: lp-system
 apiVersion: v2
-appVersion: 0.23.1
+appVersion: 0.23.2
 dependencies:
   - name: common
     repository: https://charts.sourcemation.com/
     version: 0.1.x
   - condition: global.cnpgOperatorCrd.enabled
     name: cloudnative-pg
-    version: 0.23.1
+    version: 0.23.2
     repository: https://cloudnative-pg.github.io/charts
 description: CloudNativePG is operator designed to manage PostgreSQL workloads. Install only once on kubernetes. Databases.
 home: https://linuxpolska.com
@@ -34,4 +34,4 @@ name: cnpg-operator
 sources:
   - https://github.com/SourceMation/charts.git
 type: application
-version: 0.2.1
+version: 0.2.2
