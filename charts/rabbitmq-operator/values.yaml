@@ -19,7 +19,7 @@ rke2rabbitmqope:
   rabbitmqImage:
     registry: docker.io
     repository: sourcemation/rabbitmq-4
-    tag: "4.1.0-20250505-amd64"
+    tag: "4.1.0-20250520"
     digest: ""
     pullSecrets: []
   #credentialUpdaterImage:
