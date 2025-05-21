@@ -66,32 +66,33 @@ kubectl get crd -o name | grep -i adcs | xargs kubectl delete
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=cert-manager
+export RELEASE_NAME=cert-manager-add-ons
+export CHART_NAME=cert-manager-add-ons
+export RELEASE_NAMESPACE=cert-manager
 export CHART_VERSION=1.2.0
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-helm -n ${CHART_NAMESPACE} upgrade --install cert-manager-add-ons \
---repo https://charts.sourcemation.com/ \
-cert-manager-add-ons /
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 --version ${CHART_VERSION}
 ```
 
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
+kubectl -n ${RELEASE_NAMESPACE} get po
 kubectl get ClusterAdcsIssuer,AdcsIssuer -A
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall cert-manager-add-ons
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 kubectl get crd -o name | grep -i adcs | xargs kubectl delete
 ```

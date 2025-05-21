@@ -9,10 +9,8 @@
 
 ## Before Installation
 
-
 > **Note:**
 > no action required
-
 
 ## After Installation
 
@@ -29,12 +27,10 @@
 > **Note:**
 > no action required
 
-
 ## Tips and Tricks
 
 > **Note:**
 > no tips and tricks
-
 
 ## Known Issues
 
@@ -42,53 +38,38 @@
 > Notify us: https://github.com/SourceMation/charts/issues
 
 
-
 ## CLI installation
 
 ### Preparation
 
 ```bash
-
-export CHART_NAMESPACE=lp-system
+export RELEASE_NAME=cnpg-operator
+export CHART_NAME=cnpg-operator
+export RELEASE_NAMESPACE=lp-system
 export CHART_VERSION=0.1.0
 
-kubectl create ns ${CHART_NAMESPACE}
-
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
-helm -n ${CHART_NAMESPACE} upgrade --install cnpg-operator \
---repo https://charts.sourcemation.com/ \
-cnpg-operator \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
-
 ```
 
 ### Validation and Testing
 
 ```bash
-
-kubectl -n ${CHART_NAMESPACE} get po
-helm -n ${CHART_NAMESPACE} test cnpg-operator
-
+kubectl -n ${RELEASE_NAMESPACE} get po
+helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```
 
 ## CLI removing
 
 ```bash
-
-helm -n ${CHART_NAMESPACE} uninstall cnpg-operator
-
-
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 ```
-

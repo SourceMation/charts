@@ -3,8 +3,9 @@
 ## Installing from repo
 
 ```bash
+export RELEASE_NAME=jenkins
 export CHART_NAME=jenkins
-export CHART_NAMESPACE=jenkins
+export RELEASE_NAMESPACE=jenkins
 export CHART_URL=jenkins.apps.example.com
 export CERT_ISSUER_NAME=default-selfsigned-ca
 export CERT_ISSUER_KIND=ClusterIssuer
@@ -13,8 +14,8 @@ export CERT_SECRET_NAME=jenkins-tls-cert
 git clone git@github.com:SourceMation/charts.git
 cd charts/charts/${CHART_NAME}/
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 
 cat << EOF > /tmp/values.yaml
 jenkins:
@@ -29,21 +30,21 @@ jenkins:
 EOF
 
 
-helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} . \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} . \
 -f /tmp/values.yaml
 ```
 
 # Cleaning
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} ${CHART_NAME}
-kubectl delete certificate "${CHART_NAME}-tls-cert"
+helm uninstall -n ${RELEASE_NAMESPACE} ${RELEASE_NAME}
+kubectl delete certificate "${RELEASE_NAME}-tls-cert"
 ```
 
 
 # Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po,svc,sts,secret,cm,pvc,ingress,cert
-helm -n ${CHART_NAMESPACE} test ${CHART_NAME}
+kubectl -n ${RELEASE_NAMESPACE} get po,svc,sts,secret,cm,pvc,ingress,cert
+helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```

@@ -47,24 +47,20 @@
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=lp-system
+export RELEASE_NAME=redis-ope
+export CHART_NAME=redis-operator
+export RELEASE_NAMESPACE=lp-system
 export CHART_VERSION=0.1.0
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
-helm -n ${CHART_NAMESPACE} upgrade --install redis-operator \
---repo https://charts.sourcemation.com/ \
-redis-operator \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
 ```
@@ -72,11 +68,11 @@ redis-operator \
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
+kubectl -n ${RELEASE_NAMESPACE} get po
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall redis-operator
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 ```

@@ -1,16 +1,27 @@
 ## For developers
 
+## Installing from repo
 
 ```bash
-git clone git@github.com:SourceMation/charts.git
-cd charts/charts/elastic-agent/${CHART_VER}
+export RELEASE_NAME=elk-agent
+export CHART_NAME=elastic-agent
+export RELEASE_NAMESPACE=kube-system
 
-kubectl create ns ${CHART_NAMESPACE} 
+git clone git@github.com:SourceMation/charts.git
+cd charts/charts/${CHART_NAME}
+
+kubectl create ns ${RELEASE_NAMESPACE} 
 kubectl config set-context --current --namespace kube-system
 
-helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_RELEASE_NAME}-agent \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} . \
 --set "elasticAgent.params.fleetEnrollmentToken=${AGENT_FLEET_ENROLLMENT_TOKEN}" \
 --set "elasticAgent.params.fleetUrl=${AGENT_FLEET_URL}" \
 --set "additionalTrustedCASecret=elastic-agent-ca" \
---set "nameOverride=${CHART_RELEASE_NAME}" .
+--set "nameOverride=${RELEASE_NAME}"
+```
+
+## Cleaning
+
+```bash
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 ```

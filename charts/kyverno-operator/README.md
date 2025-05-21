@@ -44,30 +44,32 @@
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=kyverno-operator
+export RELEASE_NAME=kyverno
+export CHART_NAME=kyverno-operator
+export RELEASE_NAMESPACE=kyverno-operator
 export CHART_VERSION=0.1.0
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace=${CHART_NAMESPACE}
+
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace=${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-helm -n ${CHART_NAMESPACE} upgrade --install kyverno-operator \
---repo https://charts.sourcemation.com/ kyverno-operator \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 --version ${CHART_VERSION}
 ```
 
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
-helm -n ${CHART_NAMESPACE} test ${CHART_NAME}
+kubectl -n ${RELEASE_NAMESPACE} get po
+helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall kyverno-operator
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 ```
-

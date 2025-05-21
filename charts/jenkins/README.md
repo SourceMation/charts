@@ -41,17 +41,18 @@ https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 ### Preparation
 
 ```bash
+export RELEASE_NAME=jenkins
 export CHART_NAME=jenkins
 export CHART_VERSION=0.1.0
-export CHART_NAMESPACE=jenkins
+export RELEASE_NAMESPACE=jenkins
 
 export CHART_URL=jenkins.apps.example.com
 export CERT_ISSUER_NAME=default-selfsigned-ca
 export CERT_ISSUER_KIND=ClusterIssuer
 export CERT_SECRET_NAME=jenkins-tls-cert
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 
 cat << EOF > /tmp/values.yaml
 jenkins:
@@ -69,22 +70,22 @@ EOF
 ### Go go helm
 
 ```bash
-helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
---repo https://charts.sourcemation.com/ ${CHART_NAME} \
---values /tmp/values.yaml  \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
+--values /tmp/values.yaml \
 --version ${CHART_VERSION}
 ```
 
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
-helm -n ${CHART_NAMESPACE} test ${CHART_NAME}
+kubectl -n ${RELEASE_NAMESPACE} get po
+helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall jenkins
-kubectl delete certificate "${CHART_NAME}-tls-cert"
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
+kubectl delete certificate "${RELEASE_NAME}-tls-cert"
 ```
