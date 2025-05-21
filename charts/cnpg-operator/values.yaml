@@ -3,8 +3,8 @@ global:
     enabled: true
 
 clusterImageCatalog:
-  name: "sourcemation"
-  images:
+  - name: "postgresql"
+    images:
     - image: quay.io/sourcemation/cnpg-17:latest
       major: 17
     - image: quay.io/sourcemation/cnpg-16:latest
