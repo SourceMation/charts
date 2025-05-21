@@ -52,7 +52,7 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 
 ```bash
 helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
---repo https://charts.sourcemation.com/  ${CHART_NAME} \
+--repo https://charts.sourcemation.com/ ${CHART_NAME} \
 --version ${CHART_VERSION}
 ```
 
