@@ -11,7 +11,12 @@ questions:
   type: boolean
   group: "Components"
 
-# Integrations 
+# Integrations
+- variable: clusterImageCatalog.name
+  label: Cluster Image Catalog name
+  type: string
+  group: "Integrations"
+  required: true
 - variable: questionsSpec.k8sPlatform
   type: enum
   label: Kubernetes Platform
