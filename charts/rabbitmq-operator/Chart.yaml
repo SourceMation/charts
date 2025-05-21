@@ -7,7 +7,7 @@ annotations:
   catalog.cattle.io/release-name: rabbitmq-operator
   catalog.cattle.io/namespace: lp-system
 apiVersion: v2
-appVersion: 4.4.8
+appVersion: 4.4.9
 dependencies:
   - name: common
     repository: https://charts.sourcemation.com/
@@ -15,7 +15,7 @@ dependencies:
   - condition: global.rabbitmqOperator.enabled
     name: rabbitmq-cluster-operator
     repository: https://charts.bitnami.com/bitnami
-    version: 4.4.8
+    version: 4.4.9
     alias: rke2rabbitmqope
 description: RabbitMQ Cluster Operator automates RabbitMQ clusters running on Kubernetes. Install only once on kubernetes.
 home: https://linuxpolska.com
@@ -33,4 +33,4 @@ name: rabbitmq-operator
 sources:
   - https://github.com/SourceMation/charts.git
 type: application
-version: 0.1.2
+version: 0.1.3
