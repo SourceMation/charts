@@ -37,10 +37,23 @@
 
 
 ## Known Issues
+#### Error: Unable to continue with install: ConfigMap "cnpg-controller-manager-config" in namespace "lp-system" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "aaaa": current value is "bbbb"
 
-> **Note:**
-> Notify us: https://github.com/SourceMation/charts/issues
+Reason: Helm is trying to install a release named 'aaaa', but there’s already a resource (ConfigMap cnpg-controller-manager-config) in the lp-system namespace that belongs to another Helm release called 'bbbb'.
 
+Soloution:
+
+1. Use the same release name as before (bbbb)
+
+```bash
+helm upgrade --install bbbb -n lp-system ...
+```
+
+2. Delete the old Helm release (if you don’t need it)
+
+```bash
+helm uninstall bbbb -n lp-system
+```
 
 
 ## CLI installation
@@ -63,7 +76,7 @@ kubectl config set-context --current --namespace ${CHART_NAMESPACE}
 ``` bash
 cat << EOF > /tmp/values.yaml
 
-EOF 
+EOF
 
 
 helm -n ${CHART_NAMESPACE} upgrade --install cnpg-operator \
