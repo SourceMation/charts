@@ -36,16 +36,17 @@ https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 ### Preparation
 
 ```bash
+export RELEASE_NAME=argo
 export CHART_NAME=argo-cd
 export CHART_VERSION=0.1.0
-export CHART_NAMESPACE=lp-system
+export RELEASE_NAMESPACE=lp-system
 
 export CHART_URL=argo-cd.apps.example.com
 export CERT_ISSUER_NAME=default-selfsigned-ca
 export CERT_ISSUER_KIND=ClusterIssuer
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 
 cat << EOF > /tmp/values.yaml
 argocd:
@@ -67,22 +68,23 @@ EOF
 ### Go go helm
 
 ``` bash
-helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
---repo https://sourcemation.github.io/charts/ ${CHART_NAME} \
---values /tmp/values.yaml  \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
+-f /tmp/values.yaml  \
 --version ${CHART_VERSION}
 ```
 
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
+kubectl -n ${RELEASE_NAMESPACE} get po
 kubectl get crd | grep argoproj
 ```
 
 ## CLI removing
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} ${CHART_NAME}
-kubectl delete -n ${CHART_NAMESPACE} secret/argocd-redis
+helm uninstall -n ${RELEASE_NAMESPACE} ${RELEASE_NAME}
+kubectl delete -n ${RELEASE_NAMESPACE} secret/argocd-redis
+kubectl get crd -o name | grep -i argoproj | xargs kubectl delete
 ```

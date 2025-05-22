@@ -3,19 +3,19 @@
 ## Installing from repo
 
 ```bash
-git clone git@github.com:SourceMation/charts.git
-cd charts/charts/argo-cd/
-
-
+export RELEASE_NAME=argo
 export CHART_NAME=argo-cd
-export CHART_NAMESPACE=lp-system
+export RELEASE_NAMESPACE=lp-system
+
 export CHART_URL=argo-cd.apps.example.com
 export CERT_ISSUER_NAME=default-selfsigned-ca
 export CERT_ISSUER_KIND=ClusterIssuer
 
+git clone git@github.com:SourceMation/charts.git
+cd charts/charts/${CHART_NAME}
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 
 cat << EOF > /tmp/values.yaml
 argocd:
@@ -34,21 +34,22 @@ argocd:
 EOF
 
 
-helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} . \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} . \
 -f /tmp/values.yaml
 ```
 
 # Cleaning
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} ${CHART_NAME}
-kubectl delete -n ${CHART_NAMESPACE} secret/argocd-redis
+helm uninstall -n ${RELEASE_NAMESPACE} ${RELEASE_NAME}
+kubectl delete -n ${RELEASE_NAMESPACE} secret/argocd-redis
+kubectl get crd -o name | grep -i argoproj | xargs kubectl delete
 ```
 
 
 # Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po,svc,sts,secret,cm,pvc,ingress,cert
+kubectl -n ${RELEASE_NAMESPACE} get po,svc,sts,secret,cm,pvc,ingress,cert
 kubectl get crd | grep argoproj
 ```
