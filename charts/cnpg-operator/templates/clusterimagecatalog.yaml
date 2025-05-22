@@ -5,6 +5,9 @@ kind: ClusterImageCatalog
 metadata:
   name: {{ $v.name }}
   namespace: {{ include "common.names.namespace" $ }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
   labels:
     {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
