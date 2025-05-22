@@ -1,11 +1,11 @@
 annotations:
-  catalog.cattle.io/display-name: Argo CD (1/1) - CRD/OPERATOR/APP
+  catalog.cattle.io/display-name: Argo CD (1/1) - OPERATOR/APP
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
   catalog.cattle.io/release-name: argo-cd
   catalog.cattle.io/namespace: lp-system
-  #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
-  #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+#  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+#  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
 apiVersion: v2
 appVersion: 7.8.20
 dependencies:
@@ -16,7 +16,7 @@ dependencies:
     repository: https://argoproj.github.io/argo-helm
     version: 7.8.20
     alias: argocd
-description: "Argo CD is a declarative, GitOps-based continuous delivery tool for Kubernetes, allowing users to manage application deployments."
+description: "A declarative, GitOps-based continuous delivery tool for Kubernetes. Install once per k8s. CI/CD."
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
