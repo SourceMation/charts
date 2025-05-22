@@ -75,13 +75,14 @@ kubectl delete certificate test-server
 ## Installing from repo / Instalacja z repo 
  
 ```bash 
-export CHART_VERSION=1.1.0
-export CHART_NAMESPACE=cert-manager
+export RELEASE_NAME=default-issuer
+export CHART_NAME=cert-manager
+export RELEASE_NAMESPACE=cert-manager
  
-cd charts/charts/cert-manager-config/${CHART_VERSION} 
+cd charts/charts/${CHART_NAME}
  
-helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
-cert-manager-config .  
+helm upgrade --install -n ${RELEASE_NAMESPACE} --create-namespace \
+${RELEASE_NAME} .
 
 kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,challenges -A
 ``` 
@@ -90,5 +91,5 @@ kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,chall
 ## Removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall cert-manager-config
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 ```

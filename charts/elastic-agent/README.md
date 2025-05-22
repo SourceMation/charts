@@ -16,10 +16,8 @@ no action required
 4. Create secret in kube-system namespace 
 
 ```bash
-
 kubectl -n kube-system create secret generic elastic-agent-ca \
 --from-file=ca.crt=/tmp/remote.ca.crt -o yaml --dry-run=client | kubectl apply -f -
-
 ```
 
 5. Prepare Fleet Agent URL
@@ -59,28 +57,27 @@ lack of known issues
 ### Preparation
 
 ```bash
+export RELEASE_NAME=elk-agent
+export CHART_NAME=elastic-agent
+export RELEASE_NAMESPACE=kube-system
 export CHART_VER=1.4.0
-export CHART_RELEASE_NAME=elk
-export CHART_NAMESPACE=kube-system
 
 export AGENT_FLEET_URL=https://fleet-tst.apps.example.com:443
 export AGENT_FLEET_ENROLLMENT_TOKEN=''
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ```bash
-helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_RELEASE_NAME}-agent \
---create-namespace \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
 --set "elasticAgent.params.fleetEnrollmentToken=${AGENT_FLEET_ENROLLMENT_TOKEN}" \
 --set "elasticAgent.params.fleetUrl=${AGENT_FLEET_URL}" \
 --set "additionalTrustedCASecret=elastic-agent-ca" \
---set "nameOverride=${CHART_RELEASE_NAME}" \
---repo https://charts.sourcemation.com/ \
-elastic-agent \
+--set "nameOverride=${RELEASE_NAME}" \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 --version ${CHART_VER}
 ```
 
@@ -97,5 +94,5 @@ kubectl -n kube-system logs ds/elastic-agent
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall ${CHART_RELEASE_NAME}-agent
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 ```
