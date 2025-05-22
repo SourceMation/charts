@@ -40,16 +40,17 @@
 ### Preparation
 
 ```bash
+export RELEASE_NAME=sonarqube
 export CHART_NAME=sonarqube
 export CHART_VERSION=0.1.0
-export CHART_NAMESPACE=sonarqube
+export RELEASE_NAMESPACE=sonarqube
 export CHART_URL=sonarqube.apps.example.com
 export CERT_SECRET_NAME=sonarqube-tls-cert
 export CERT_ISSUER_NAME=default-selfsigned-ca
 export CERT_ISSUER_KIND=ClusterIssuer
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 
 cat << EOF > /tmp/values.yaml
 sonarqube:
@@ -69,21 +70,21 @@ EOF
 ### Go go helm
 
 ``` bash
-helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
 -f /tmp/values.yaml \
---repo https://sourcemation.github.io/charts/ ${CHART_NAME} \
+${CHART_NAME} --repo https://sourcemation.github.io/charts/ \
 --version ${CHART_VERSION}
 ```
 
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
+kubectl -n ${RELEASE_NAMESPACE} get po
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall ${CHART_NAME}
-kubectl -n ${CHART_NAMESPACE} delete cert/${CHART_NAME}-tls-cert
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
+kubectl -n ${RELEASE_NAMESPACE} delete cert/${RELEASE_NAME}-tls-cert
 ```
