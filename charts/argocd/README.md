@@ -21,5 +21,6 @@ helm upgrade --install argocd \
  -n ${ARGOCD_NAMESPACE} \
  -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/argocd/${CHART_VERSION}/values \
  --set "global.domain=${DOMAIN_ADDRESS}" \
- --repo https://argoproj.github.io/argo-helm argo-cd --version ${CHART_VERSION} 
+ argo-cd --repo https://argoproj.github.io/argo-helm \
+ --version ${CHART_VERSION} 
 ```

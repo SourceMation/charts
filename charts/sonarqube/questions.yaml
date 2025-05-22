@@ -1,0 +1,288 @@
+categories:
+- code analysis
+questions:
+
+# Components
+- variable: global.sonarqubeApp.enabled
+  default: "true"
+  label: "Deploy SonarQube"
+  type: boolean
+  group: "Components"
+- variable: global.cnpg.enabled
+  default: "true"
+  label: "Deploy CloudNativePG-Cluster"
+  type: boolean
+  group: "Components"
+
+# Integrations
+- variable: sonarqube.prometheusMonitoring.podMonitor.enabled
+  default: false
+  label: Integrate SonarQube with Promehteus
+  description: "Integrate SonarQube with Promehteus"
+  group: "Integrations"
+  type: boolean
+  show_if: "global.sonarqubeApp.enabled=true"
+- variable: cnpg.cluster.metrics.enablePodMonitor
+  default: false
+  label: Integrate CloudNativePG with Promehteus
+  description: "Integrate CloudNativePG with Promehteus"
+  group: "Integrations"
+  type: boolean
+  show_if: "global.cnpg.enabled=true"
+- variable: global.sonarqubeApp.cert-manager.enabled
+  default: true
+  label: Integrate SonarQube with Cert-Manager
+  description: "Integrate SonarQube with Cert-Manager"
+  group: "Integrations"
+  type: boolean
+  show_if: "global.sonarqubeApp.enabled=true"
+
+# Service Discovery
+- variable: sonarqube.ingress.enabled
+  label: Enable SonarQube Ingress
+  group: "Service Discovery"
+  type: boolean
+  show_if: "global.sonarqubeApp.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.ingress.hosts.0.name
+    default: "sonarqube.apps.example.com"
+    label: URL
+    description: "Configure SonarQube Ingress URL"
+    group: "Service Discovery"
+    type: hostname
+    required: true
+  - variable: sonarqube.ingress.tls.0.hosts.0
+    #default: "sonarqube.apps.example.com"
+    label: URL
+    description: "Configure SonarQube TLS URL"
+    group: "Service Discovery"
+    type: hostname
+    required: true
+  - variable: "sonarqube.ingress.cert.issuerName"
+    default: "default-selfsigned-ca"
+    label: Certificate issuer name
+    tooltip: "Use 'kubectl get Issuer,clusterIssuer' to get the list of issuers."
+    group: "Service Discovery"
+    type: string
+    required: true
+    show_if: "global.sonarqubeApp.cert-manager.enabled=true"
+  - variable: "sonarqube.ingress.cert.issuerKind"
+    default: "ClusterIssuer"
+    label: Certificate issuer kind
+    group: "Service Discovery"
+    type: enum
+    options:
+    - "ClusterIssuer"
+    - "Issuer"
+    required: true
+    show_if: "global.sonarqubeApp.cert-manager.enabled=true"
+  - variable: sonarqube.ingress.tls.0.secretName
+    #default: "sonarqube-tls-cert"
+    label: Secret Name
+    description: "Configure secret name for SonarQube TLS"
+    group: "Service Discovery"
+    type: string
+    required: true
+
+# Storage
+- variable: sonarqube.persistence.enabled
+  default: true
+  label: Enable SonarQube persistent storage
+  group: "Storage"
+  type: boolean
+  show_if: "global.sonarqubeApp.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.persistence.size
+    default: "10Gi"
+    label: SonarQube persistent volume size
+    group: "Storage"
+    type: string
+    required: true
+  - variable: sonarqube.persistence.storageClass
+    label: SonarQube persistent volume Storage Class
+    group: "Storage"
+    type: storageclass
+
+- variable: cnpg.clusters.spec.storage.enabled
+  default: true
+  label: Enable CloudNativePG persistent storage
+  group: "Storage"
+  type: boolean
+  required: true
+  show_if: "global.cnpg.enabled=true"
+  show_subquestion_if: true 
+  subquestions:
+  - variable: cnpg.clusters.spec.storage.size
+    default: "10Gi"
+    label: CloudNativePG persistent volume size
+    description: "CloudNativePG persistent volume size"
+    group: "Storage"
+    type: string
+  - variable: cnpg.clusters.spec.storage.storageClass
+    label: CloudNativePG persistent Storage Class
+    description: "CloudNativePG persistent Storage Class"
+    group: "Storage"
+    type: storageclass
+
+# Workloads
+- variable: global.sonarqube.customImage
+  default: false
+  label: Change SonarQube image
+  group: "Workloads"
+  type: boolean
+  show_if: "global.sonarqubeApp.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.image.registry
+    default: "docker.io"
+    label: SonarQube image registry
+    description: "SonarQube image registry"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.image.repository
+    default: "sonarqube"
+    label: SonarQube image repository
+    description: "SonarQube image repository"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.image.tag
+    label: SonarQube image tag
+    description: "SonarQube image tag"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: sonarqube.image.pullPolicy
+    default: "IfNotPresent"
+    label: SonarQube image pullPolicy
+    description: "SonarQube image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "If NotPresent"
+    - "Never"
+  #- variable: sonarqube.image.pullSecret
+  #  label: SonarQube image pullSecret
+  #  description: "SonarQube image pullSecret"
+  #  group: "Workloads"
+  #  type: secret
+  #  required: false
+
+- variable: global.sonarqubeApp.customResources
+  default: false
+  label: Modify SonarQube resource consumption
+  group: "Workloads"
+  type: boolean
+  show_if: "global.sonarqubeApp.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: sonarqube.resources.limits.cpu
+    label: Milicore limit for a SonarQube instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: sonarqube.resources.requests.cpu
+    label: Milicore requests for a SonarQube instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: sonarqube.resources.limits.memory
+    label: Memory limit for a SonarQube instance
+    description: "Memory limit for a SonarQube instance"
+    group: "Workloads"
+    type: string
+    required: false
+  - variable: sonarqube.resources.requests.memory
+    label: Memory requests for a SonarQube instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+    required: false
+
+- variable: global.cnpg.customResources
+  default: false
+  label: Modify CloudNativePG resource consumption
+  group: "Workloads"
+  type: boolean
+  show_if: "global.cnpg.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: cnpg.cluster.spec.resources.limits.cpu
+    default: "2000m"
+    label: Milicore limit for a CloudNativePG instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+  - variable: cnpg.cluster.spec.resources.requests.cpu
+    default: "100m"
+    label: Milicore requests for a CloudNativePG instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+  - variable: cnpg.cluster.spec.resources.limits.memory
+    default: "2Gi"
+    label: Memory limit for a CloudNativePG instance
+    description: "Memory limit for a CloudNativePG instance"
+    group: "Workloads"
+    type: string
+  - variable: cnpg.cluster.spec.resources.requests.memory
+    default: "200Mi"
+    label: Memory requests for a CloudNativePG instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+
+- variable: global.sonarqube.customPassword
+  default: true
+  label: Change SonarQube admin password
+  description: "Change SonarQube admin password"
+  group: "Workloads"
+  type: boolean
+  show_if: "global.sonarqubeApp.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  #- variable: sonarqube.setAdminPassword.currentPassword
+  #  default: "admin"
+  #  label: SonarQube current admin password
+  #  group: "Workloads"
+  #  type: password
+  #  min_length: 5
+  - variable: sonarqube.setAdminPassword.newPassword
+    default: "P@ssword1234"
+    label: SonarQube admin password
+    description: "Default password is 'P@ssword1234'. Change it!"
+    group: "Workloads"
+    type: password
+    min_length: 12
+
+- variable: gloabl.cnpg.customPassword
+  default: true
+  label: Change CloudNativePG DB configuration
+  description: "Change CloudNativePG DB configuration"
+  group: "Workloads"
+  type: boolean
+  show_if: "global.cnpg.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: cnpg.cluste.auth.database
+    default: "sonar"
+    label: SonarQube DB name
+    description: "SonarQube DB name"
+    group: "Workloads"
+    type: string
+  - variable: sonarqube.jdbcOverwrite.jdbcUsername
+    default: "sonar"
+    label: SonarQube DB username
+    description: "SonarQube DB username"
+    group: "Workloads"
+    type: string
+  - variable: cnpg.cluster.auth.password
+    default: "P@ssword1234"
+    label: SonarQube DB password
+    description: "Default password is 'P@ssword1234'. Change it!"
+    group: "Workloads"
+    type: password

@@ -12,7 +12,8 @@ cd charts/charts/${CHART_NAME}
 
 helm -n ${RELEASE_NAMESPACE} upgrade --install --create-namespace \ 
 ${RELEASE_NAME} .
-``` 
+```
+
 # Cleaning
 
 ```bash

@@ -46,24 +46,20 @@
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=redis
+export RELEASE_NAME=redis-cluster
+export CHART_NAME=redis-cluster
+export RELEASE_NAMESPACE=redis
 export CHART_VERSION=0.1.0
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
-helm -n ${CHART_NAMESPACE} upgrade --install redis-cluster \
---repo https://charts.sourcemation.com/ \
-redis-cluster \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
 ```
@@ -71,11 +67,11 @@ redis-cluster \
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
+kubectl -n ${RELEASE_NAMESPACE} get po
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall redis-cluster
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 ```

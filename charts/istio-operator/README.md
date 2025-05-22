@@ -54,24 +54,25 @@ kubectl get crd -o name | grep -i istio | xargs kubectl delete
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=istio-system
-export CHART_VERSION=0.1.0
+export RELEASE_NAME=istio
+export CHART_NAME=istio-operator
+export RELEASE_NAMESPACE=istio-system
+export CHART_VERSION=0.2.0
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
+
+cat << EOF > /tmp/values.yaml
+global:
+    istioNamespace: $RELEASE_NAMESPACE
+EOF
 ```
 
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
-helm -n ${CHART_NAMESPACE} upgrade --install istio-operator \
---repo https://charts.sourcemation.com/ \
-istio-operator \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
 ```
@@ -79,12 +80,12 @@ istio-operator \
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
+kubectl -n ${RELEASE_NAMESPACE} get po
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall istio-operator
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 kubectl get crd -o name | grep -i istio | xargs kubectl delete
 ```

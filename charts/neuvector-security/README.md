@@ -53,24 +53,20 @@
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=lp-system
+export RELEASE_NAME=neuvector-sec
+export CHART_NAME=neuvector-security
+export RELEASE_NAMESPACE=lp-system
 export CHART_VERSION=1.0.0
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
-helm -n ${CHART_NAMESPACE} upgrade --install neuvector-sec \
---repo https://charts.sourcemation.com/ \
-neuvector-security \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
 ```
@@ -84,5 +80,5 @@ kubectl get nvadmissioncontrolsecurityrules.neuvector.com,nvclustersecurityrules
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall neuvector-security
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 ```

@@ -7,19 +7,21 @@
 ## Preparation /Przygotowanie
 
 ```bash
-export CHART_NAMESPACE=sealed-secrets
+export RELEASE_NAME=sealed-secrets
+export CHART_NAME=sealed-secrets
+export RELEASE_NAMESPACE=sealed-secrets
 export CHART_VERSION=2.15.2
 export INGRESS_HOST=sealed-secrets.example.com
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace=${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace=${RELEASE_NAMESPACE}
 ```
 
 ## Installation via helm / Instalacja przy użyciu helm
 
 ```bash
-helm -n ${CHART_NAMESPACE} upgrade --install sealed-secrets \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
 -f https://raw.githubusercontent.com/sourcemation/charts/main/charts/sealed-secrets/values \
 --set server.ingress.hosts[0].host=${INGRESS_HOST} \
---repo https://bitnami-labs.github.io/sealed-secrets sealed-secrets --version ${CHART_VERSION}
+${CHART_NAME} --repo https://bitnami-labs.github.io/sealed-secrets \ --version ${CHART_VERSION}
 ```
