@@ -63,13 +63,13 @@ sonarqube:
       - "${CHART_URL}"
     cert:
       issuerKind: "${CERT_ISSUER_KIND}"
-      issuerName: "${CERT_ISSUER_NAME}"  
+      issuerName: "${CERT_ISSUER_NAME}"
 EOF
 ```
 
 ### Go go helm
 
-``` bash
+```bash
 helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
 -f /tmp/values.yaml \
 ${CHART_NAME} --repo https://sourcemation.github.io/charts/ \

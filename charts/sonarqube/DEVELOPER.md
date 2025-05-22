@@ -29,7 +29,7 @@ sonarqube:
       - "${CHART_URL}"
     cert:
       issuerKind: "${CERT_ISSUER_KIND}"
-      issuerName: "${CERT_ISSUER_NAME}"  
+      issuerName: "${CERT_ISSUER_NAME}"
 EOF
 
 
@@ -43,7 +43,6 @@ helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} . \
 helm uninstall -n ${RELEASE_NAMESPACE} ${RELEASE_NAME}
 kubectl delete certificate "${RELEASE_NAME}-tls-cert"
 ```
-
 
 # Testing
 
