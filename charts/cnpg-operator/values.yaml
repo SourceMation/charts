@@ -2,6 +2,14 @@ global:
   cnpgOperatorCrd:
     enabled: true
 
+clusterImageCatalog:
+  - name: "postgresql"
+    images:
+    - image: quay.io/sourcemation/cnpg-17:latest
+      major: 17
+    - image: quay.io/sourcemation/cnpg-16:latest
+      major: 16
+
 cnpg:
   crds:
     create: true

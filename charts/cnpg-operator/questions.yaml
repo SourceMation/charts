@@ -11,7 +11,7 @@ questions:
   type: boolean
   group: "Components"
 
-# Integrations 
+# Integrations
 - variable: questionsSpec.k8sPlatform
   type: enum
   label: Kubernetes Platform
