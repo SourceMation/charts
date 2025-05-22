@@ -1,0 +1,49 @@
+categories:
+- security
+namespace: istio-system
+questions:
+# Components
+- variable: global.istioOperatorCrd.enabled
+  default: "true"
+  label: "Deploy Istio Operator"
+  type: boolean
+  group: "Components"
+# Integrations 
+- variable: global.elasticApmIntegration.enabled
+  label: Integrate with Elasticsearch's APM
+  type: boolean
+  default: "false"
+  group: "Integrations"
+  show_subquestions_if: "true"
+  subquestions:
+  - variable: istiod.meshConfig.extensionProviders.0.opentelemetry.service
+    label: Elastic APM hostname or IP
+    tooltip: "Example: elk-service-agent.default.svc.cluster.local"
+    type: string
+    default: "elk-service-agent.lp-system.svc.cluster.local"
+    group: "Integrations"
+  - variable: istiod.meshConfig.extensionProviders.0.opentelemetry.port
+    label: Elastic APM port
+    tooltip: "Example: Bearer E2D3ytLiaI236F62x2n6Rvt4"
+    type: int
+    default: "8200"
+    group: "Integrations"      
+  - variable: istiod.meshConfig.extensionProviders.0.opentelemetry.http.headers.0.value
+    label: Elastic authorization token
+    tooltip: "Example: Bearer E2D3ytLiaI236F62x2n6Rvt4"
+    type: string
+    default: "Bearer PASTE-TOKEN"
+    group: "Integrations"
+- variable: questionsSpec.k8sPlatform
+  type: enum
+  tooltip: "No help available."
+  label: Kubernetes Platform
+  description: 'Kubernetes Platform'
+  default: "rke2"
+  group: "Integrations"
+  options:
+    rke2: RKE2
+  show_if: "true"
+  show_subquestions_if: "true" 
+
+

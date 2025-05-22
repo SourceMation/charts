@@ -1,0 +1,18 @@
+dependencies:
+- name: common
+  repository: https://charts.sourcemation.com/
+  version: 0.1.1
+- name: base
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.26.0
+- name: istiod
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.26.0
+- name: cni
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.26.0
+- name: ztunnel
+  repository: https://istio-release.storage.googleapis.com/charts
+  version: 1.26.0
+digest: sha256:3ed0ebbbf8a05bf5e9068cd8a578a2e9dac5451dde7e7172bc4be2e4e6f890ec
+generated: "2025-05-19T13:55:13.277436421+02:00"

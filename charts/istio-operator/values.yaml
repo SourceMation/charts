@@ -1,0 +1,29 @@
+global:
+#  imagePullSecrets: []
+#  istioNamespace: istio-system
+  istioOperatorCrd:
+    enabled: true
+  elasticApmIntegration:
+    enabled: false
+
+istiod:
+  profile: ambient
+  global:
+    logAsJson: true
+  meshConfig:
+    extensionProviders:
+    - name: elastic
+      opentelemetry:
+        port: 8200
+        service: ""
+        http:
+          path: "/v1/traces"
+          timeout: 10s
+          headers:
+          - name: "authorization"
+            value: "Bearer PASTE-TOKEN"
+
+cni:
+  profile: ambient
+
+questionsSpec: {}

@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-mutate-policy"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+spec:
+  containers:
+    - name: kubectl
+      image: bitnami/kubectl:latest
+      command:
+        - /bin/sh
+        - -c
+        - |
+          echo "Creating mutate-label policy..." &&
+          cat <<EOF | kubectl apply -f -
+          apiVersion: kyverno.io/v1
+          kind: ClusterPolicy
+          metadata:
+            name: add-label-env
+          spec:
+            rules:
+              - name: add-env-label
+                match:
+                  resources:
+                    kinds:
+                      - Pod
+                mutate:
+                  patchStrategicMerge:
+                    metadata:
+                      labels:
+                        env: test
+          EOF
+          echo "Creating namespace kyverno-test..."
+          kubectl create ns kyverno-test || true
+          echo "Deploying test pod..." &&
+          kubectl run mutatepod -n kyverno-test --image=nginx &&
+          sleep 5 &&
+          echo "Checking if label 'env=test' was added..." &&
+          kubectl get pod mutatepod -n kyverno-test -o jsonpath='{.metadata.labels.env}' | grep test &&
+          echo "Cleaning up..." &&
+          kubectl delete clusterpolicy add-label-env &&
+          kubectl delete pod mutatepod --ignore-not-found=true &&
+          kubectl delete ns kyverno-test --ignore-not-found=true
+  restartPolicy: Never

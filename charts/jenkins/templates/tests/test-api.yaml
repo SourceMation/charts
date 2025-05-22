@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-api"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+spec:
+  containers:
+    - name: curl
+      image: curlimages/curl
+      command: ["curl", "-k", "-f", "-u", "{{ .Values.jenkins.controller.admin.username }}:{{ .Values.jenkins.controller.admin.password }}", "https://{{ .Values.jenkins.controller.ingress.hostName }}/api/json"]
+  restartPolicy: Never

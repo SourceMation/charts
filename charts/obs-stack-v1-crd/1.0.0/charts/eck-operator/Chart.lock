@@ -1,6 +1,0 @@
-dependencies:
-- name: eck-operator-crds
-  repository: ""
-  version: 2.12.1
-digest: sha256:569d88b871f097692262d1199d03aac3fbd3c22b53cd0d3584ff4984d820f1eb
-generated: "2024-03-27T16:18:11.565851658Z"

@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://charts.sourcemation.com/
+  version: 0.1.1
+- name: kyverno
+  repository: https://kyverno.github.io/kyverno/
+  version: 3.4.1
+digest: sha256:4caafdfe1260cc09eab3125374bccc756f82cebfacf775f9ed862d45d6f448df
+generated: "2025-05-15T01:59:47.412909966+02:00"

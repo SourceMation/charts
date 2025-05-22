@@ -2,28 +2,27 @@
  
 ## Installing from repo
  
-```bash 
+```bash
+export RELEASE_NAME=cnpg-operator
+export CHART_NAME=cnpg-operator
+export CHART_NAME=cnpg-operator
+export RELEASE_NAMESPACE=lp-system
  
-export CHART_VERSION=1.0.0
-export CHART_NAMESPACE=cngp-operator
- 
-cd charts/charts/cnpg-operator 
+cd charts/charts/${CHART_NAME}
 
  
-helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \ 
-cnpg-operator .  
- 
+helm upgrade --install -n ${RELEASE_NAMESPACE} --create-namespace \ 
+${RELEASE_NAME} .  
 ``` 
+
 # Cleaning
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} cnpg-operator
-
+helm uninstall -n ${RELEASE_NAMESPACE} ${RELEASE_NAME}
 ```
-
 
 # Testing
 
 ```bash
-
+kubectl -n ${RELEASE_NAMESPACE} get po
 ```

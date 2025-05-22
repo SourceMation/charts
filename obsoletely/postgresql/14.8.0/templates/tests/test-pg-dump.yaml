@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-test-pg-dump"
+  annotations:
+    "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+spec:
+  containers:
+    - name: postgresql-client
+      image: bitnami/postgresql:latest
+      env:
+        - name: PGPASSWORD
+          value: "{{ .Values.postgresql.postgresPassword }}"
+        - name: PGUSER
+          value: "{{ .Values.postgresql.postgresUser }}"
+        - name: PGDATABASE
+          value: "{{ .Values.postgresql.postgresDB }}"
+      command:
+        - sh
+        - "-c"
+        - |
+          echo "Creating dumpdb database..." &&
+          psql -h {{ .Release.Name }}-postgres -U $PGUSER -c "CREATE DATABASE dumpdb;" &&
+          echo "Populating dumpdb with test data..." &&
+          psql -h {{ .Release.Name }}-postgres -U $PGUSER -d dumpdb -c "CREATE TABLE test_table (id SERIAL PRIMARY KEY, name TEXT);" &&
+          psql -h {{ .Release.Name }}-postgres -U $PGUSER -d dumpdb -c "INSERT INTO test_table (name) VALUES ('value1'), ('value2');" &&
+          echo "Dumping dumpdb to /tmp/backup.sql..." &&
+          pg_dump -h {{ .Release.Name }}-postgres -U $PGUSER -d dumpdb > /tmp/backup.sql &&
+          echo "Dump completed. Verifying dump file..." &&
+          grep "value1" /tmp/backup.sql &&
+          grep "value2" /tmp/backup.sql &&
+          echo "Dump verified successfully. Cleaning up database dumpdb..." &&
+          psql -h {{ .Release.Name }}-postgres -U $PGUSER -c "DROP DATABASE dumpdb;" &&
+          echo "Test passed: Database dumpdb was successfully dumped and removed."
+  restartPolicy: Never
