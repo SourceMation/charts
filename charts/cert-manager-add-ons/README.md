@@ -57,6 +57,31 @@ helm -n adcs-issuer uninstall adcs-issuer
 kubectl get crd -o name | grep -i adcs | xargs kubectl delete
 ```
 
+#### Error: UPGRADE FAILED: Unable to continue with update: ServiceAccount "trust-manager" in namespace "cert-manager" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "cert-manager-add-ons": current value is "cert-manager-addons"
+
+Reason: cert-manager-add-ons is installed in the same namespace under different release name
+
+Soloution:
+
+1. Check the installed apps in your cluster
+
+```bash
+# cert-manager namespace
+helm list -n cert-manager
+
+# all namespaces
+helm list -A
+```
+
+2. Remove the duplicated helm deployment, as the chart can only be installed in the cluster once!
+
+```bash
+helm uninstall -n cert-manager cert-manager-addons # duplicated release name
+```
+
+3. Upgrade cert-manager-add-ons again
+
+
 > **Note:**
 > Notify us: https://github.com/SourceMation/charts/issues
 
