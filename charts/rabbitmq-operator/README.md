@@ -41,7 +41,7 @@
 
 ```bash
 export CHART_NAME=rabbitmq-operator
-export CHART_VERSION=0.1.0
+export CHART_VERSION=0.1.4
 export CHART_NAMESPACE=lp-system
 
 kubectl create ns ${CHART_NAMESPACE}
