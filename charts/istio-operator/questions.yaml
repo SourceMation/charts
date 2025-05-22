@@ -20,7 +20,7 @@ questions:
     label: Elastic APM hostname or IP
     tooltip: "Example: elk-service-agent.default.svc.cluster.local"
     type: string
-    default: ""
+    default: "elk-service-agent.lp-system.svc.cluster.local"
     group: "Integrations"
   - variable: istiod.meshConfig.extensionProviders.0.opentelemetry.port
     label: Elastic APM port
