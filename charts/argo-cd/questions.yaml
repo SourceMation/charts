@@ -1,0 +1,397 @@
+categories:
+- cicd
+- gitops
+
+questions:
+- variable: argocd.dex.enabled
+  label: Enable Dex server
+  group: "Components"
+  type: boolean
+- variable: argocd.redis.enabled
+  label: Enable Redis server
+  group: "Components"
+  type: boolean
+
+
+- variable: argocd.applicationSet.metrics.enabled
+  label: "Argo CD ApplicationSet metrics"
+  description: "Argo CD ApplicationSet metrics"
+  group: "Integrations"
+  type: boolean
+- variable: argocd.controller.metrics.enabled
+  label: "Argo CD Controller metrics"
+  description: "Argo CD Controller metrics"
+  group: "Integrations"
+  type: boolean
+- variable: argocd.notifications.metrics.enabled
+  label: "Argo CD Notifications metrics"
+  description: "Argo CD Notifications metrics"
+  group: "Integrations"
+  type: boolean
+- variable: argocd.repoServer.metrics.enabled
+  label: "Argo CD Repo Server metrics"
+  description: "Argo CD Repo Server metrics"
+  group: "Integrations"
+  type: boolean
+- variable: argocd.server.metrics.enabled
+  label: "Argo CD Server metrics"
+  description: "Argo CD Server metrics"
+  group: "Integrations"
+  type: boolean
+- variable: argocd.dex.metrics.enabled
+  label: "Dex metrics"
+  description: "Dex metrics"
+  group: "Integrations"
+  type: boolean
+  show_if: "argocd.dex.enabled=true"
+- variable: argocd.redis.metrics.enabled
+  label: "Redis metrics"
+  description: "Redis metrics"
+  group: "Integrations"
+  type: boolean
+  show_if: "argocd.redis.enabled=true"
+
+
+- variable: argocd.server.ingress.enabled
+  label: Enable Argo CD ingress
+  group: "Service Discovery"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: argocd.global.domain
+    default: "argo.apps.example.com"
+    label: URL
+    description: "Argo CD Ingress URL"
+    group: "Service Discovery"
+    type: hostname
+  - variable: argocd.server.certificate.enabled
+    default: false
+    label: Generate a certificate with Cert-Manager
+    group: "Service Discovery"
+    type: boolean
+  - variable: argocd.server.certificate.issuer.name
+    default: "default-selfsigned-ca"
+    label: Certificate issuer name
+    tooltip: "Use 'kubectl get Issuer,clusterIssuer' to get the list of issuers."
+    group: "Service Discovery"
+    type: string
+    required: true
+    show_if: "argocd.server.certificate.enabled=true"
+  - variable: "argocd.server.certificate.issuer.kind"
+    default: "ClusterIssuer"
+    label: Certificate issuer kind
+    group: "Service Discovery"
+    type: enum
+    options:
+    - "ClusterIssuer"
+    - "Issuer"
+    required: true
+    show_if: "argocd.server.certificate.enabled=true"
+#- variable: argocd.server.ingressGrpc.enabled
+#  default: false
+#  label: Enable Argo CD GRPC ingress
+#  group: "Service Discovery"
+#  type: boolean
+#  show_subquestion_if: true
+#  subquestions:
+#  - variable: argocd.server.ingressGrpc.hostname
+#    label: "URL. Default: grpc.<Argo CD Ingress URL>" 
+#    description: "Argo CD GRPC Ingress URL"
+#    group: "Service Discovery"
+#    type: hostname
+  
+
+- variable: argocd.server.customService
+  default: false
+  type: boolean
+  label: Custom Service for Argo CD
+  description: "Custom Service for Argo CD"
+  group: "Service Discovery"
+  show_subquestion_if: true
+  subquestions:
+  - variable: argocd.server.service.type
+    default: "ClusterIP"
+    type: enum
+    label: Service type
+    description: "Service type"
+    group: "Service Discovery"
+    options:
+      - "ClusterIP"
+      - "LoadBalancer"
+      - "NodePort"
+  - variable: argocd.server.service.servicePortHttp
+    type: int
+    label: http port
+    description: "Server service http port"
+    group: "Service Discovery"
+    show_if: "argocd.server.service.type=ClusterIP"
+  - variable: argocd.server.service.servicePortHttpName
+    type: string
+    label: http port name
+    description: "Server service http port name"
+    group: "Service Discovery"
+    show_if: "argocd.server.service.type=ClusterIP"
+  - variable: argocd.server.service.servicePortHttps
+    type: int
+    label: https port
+    description: "Server service https port"
+    group: "Service Discovery"
+    show_if: "argocd.server.service.type=ClusterIP"
+  - variable: argocd.server.service.servicePortHttpsName
+    type: string
+    label: https port name
+    description: "Server service https port name"
+    group: "Service Discovery"
+    show_if: "argocd.server.service.type=ClusterIP"
+  - variable: argocd.server.service.nodePortHttp
+    type: int
+    label: http port for NodePort
+    description: "Server service http port for NodePort"
+    group: "Service Discovery"
+    min_length: 2
+    max_length: 5
+    show_if: "argocd.server.service.type=NodePort"
+  - variable: argocd.server.service.nodePortHttps
+    type: int
+    label: https port for NodePort
+    description: "Server service https port for NodePort"
+    group: "Service Discovery"
+    min_length: 2
+    max_length: 5
+    show_if: "argocd.server.service.type=NodePort"
+  - variable: argocd.server.service.loadBalancerClass
+    type: string
+    label: Load Balancer class
+    description: "Load Balancer class"
+    group: "Service Discovery"
+    show_if: "argocd.server.service.type=LoadBalancer"
+  - variable: argocd.server.service.loadBalancerIP
+    type: string
+    valid_chars: "[0-9].+"
+    label: Load Balancer IP
+    description: "Load Balancer IP"
+    group: "Service Discovery"
+    show_if: "argocd.server.service.type=LoadBalancer"
+  - variable: argocd.server.service.loadBalancerSourceRanges
+    type: multiline
+    label: Load Balancer source ranges
+    description: "Load Balancer source ranges"
+    group: "Service Discovery"
+    show_if: "argocd.server.service.type=LoadBalancer"
+  - variable: argocd.server.service.externalIPs
+    type: multiline
+    label: Server service external IPs
+    description: "Server service external IPs"
+    group: "Service Discovery"
+  - variable: argocd.server.service.externalTrafficPolicy
+    default: "Cluster"
+    type: enum
+    label: policy
+    description: "External traffic policy for NodePort"
+    group: "Service Discovery"
+    options:
+      - "Cluster"
+      - "Local"
+    show_if: "argocd.server.service.type=NodePort||argocd.server.service.type=LoadBalancer"
+  - variable: argocd.server.service.annotations
+    type: multiline
+    label: Service annotations for Argo CD server
+    description: "Ingress annotations for Argo CD server"
+    group: "Service Discovery"
+
+
+- variable: argocd.configs.secret.argocdServerAdminPassword
+  label: Argo CD admin (bcrypt) password - check ./scripts dir
+  description: "Default password is 'P@ssword1'. Change it!"
+  group: "Workloads"
+  type: password
+  required: true
+- variable: argocd.global.deploymentStrategy.type
+  default: "RollingUpdate"
+  label: Argo CD deployment strategy
+  description: "Argo CD deployment strategy"
+  group: "Workloads"
+  type: enum
+  options:
+  - "RollingUpdate"
+  - "Recreate"
+- variable: argocd.global.customImage
+  default: false
+  label: Change Argo CD image
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: argocd.global.image.repository
+    default: "quay.io/argoproj/argocd"
+    label: Argo CD image repository
+    group: "Workloads"
+    type: string
+  - variable: argocd.global.image.tag
+    default: ""
+    label: Argo CD image tag
+    group: "Workloads"
+    type: string
+  - variable: argocd.global.image.imagePullPolicy
+    default: "IfNotPresent"
+    label: Argo CD image pullPolicy
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+- variable: argocd.controller.customResources
+  default: false
+  label: Modify Argo CD Controller resource consumption
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: argocd.controller.resources.limits.cpu
+    label: Milicore limit for an Argo CD instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+  - variable: argocd.controller.resources.requests.cpu
+    label: Milicore requests for an Argo CD instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+  - variable: argocd.controller.resources.limits.memory
+    label: Memory limit for an Argo CD instance
+    group: "Workloads"
+    type: string
+  - variable: argocd.controller.resources.requests.memory
+    label: Memory requests for an Argo CD instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+- variable: argocd.server.customResources
+  default: false
+  label: Modify Argo CD Server resource consumption
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: argocd.server.resources.limits.cpu
+    label: Milicore limit for an Argo CD instance
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+  - variable: argocd.server.resources.requests.cpu
+    label: Milicore requests for an Argo CD instance
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+  - variable: argocd.server.resources.limits.memory
+    label: Memory limit for an Argo CD instance
+    group: "Workloads"
+    type: string
+  - variable: argocd.server.resources.requests.memory
+    label: Memory requests for an Argo CD instance
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+
+
+- variable: argocd.dex.customImage
+  default: false
+  label: Change Dex image
+  group: "Workloads"
+  type: boolean
+  show_if: "argocd.dex.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: argocd.dex.image.repository
+    default: "ghcr.io/dexidp/dex"
+    label: Dex image repository
+    description: "Dex image repository"
+    group: "Workloads"
+    type: string
+  - variable: argocd.dex.image.tag
+    default: ""
+    label: Dex image tag
+    description: "Dex image tag"
+    group: "Workloads"
+    type: string
+  - variable: argocd.dex.image.imagePullPolicy
+    default: "IfNotPresent"
+    label: Dex image pullPolicy
+    description: "Dex image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
+- variable: argocd.configs.customConfigMap
+  default: false
+  label: Edit Dex config
+  group: "Workloads"
+  type: boolean
+  show_if: "argocd.dex.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: argocd.configs.cm."dex.config"
+    label: Specify Dex connectors
+    group: "Workloads"
+    type: multiline
+
+- variable: argocd.configs.customRbac
+  default: false
+  label: Edit RBAC config
+  group: "Workloads"
+  type: boolean
+  show_if: "argocd.dex.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: argocd.configs.rbac."policy.default"
+    label: policy.default
+    group: "Workloads"
+    type: multiline
+  - variable: argocd.configs.rbac."policy.csv"
+    label: policy.csv
+    group: "Workloads"
+    type: multiline
+  - variable: argocd.configs.rbac."policy.matchMode"
+    label: policy.matchMode
+    description: "glob or regex"
+    group: "Workloads"
+    type: multiline
+  - variable: argocd.configs.rbac.scopes
+    default: "[groups]"
+    label: scopes
+    group: "Workloads"
+    type: string
+
+
+- variable: argocd.redis.customImage
+  default: false
+  label: Change Redis image
+  group: "Workloads"
+  type: boolean
+  show_if: "argocd.redis.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: argocd.redis.image.repository
+    label: Redis image repository
+    description: "Redis image repository"
+    group: "Workloads"
+    type: string
+  - variable: argocd.redis.image.tag
+    default: ""
+    label: Redis image tag
+    description: "Redis image tag"
+    group: "Workloads"
+    type: string
+  - variable: argocd.redis.image.imagePullPolicy
+    default: "IfNotPresent"
+    label: Redis image pullPolicy
+    description: "Redis image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
