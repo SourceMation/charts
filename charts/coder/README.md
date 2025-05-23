@@ -9,9 +9,11 @@
 
 ## Before Installation
 
-Installation of [**cert-manager**](https://github.com/SourceMation/charts/tree/main/charts/cert-manager) and [**cnpg-operator**](https://github.com/SourceMation/charts/tree/main/charts/cnpg-operator) is required.  
-Follow the instructions in the README file of the latest versions.
+* The installation of cert-manager is required according to the instructions provided in the README file of the latest version: https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 
+* The installation of cloudnative-pg operator is required according to the instructions provided in the README file of the latest version: https://github.com/SourceMation/charts/tree/main/charts/cnpg-operator
+
+* An ingress controller must be installed within the cluster.
 
 ## After Installation
 
@@ -43,16 +45,17 @@ Follow the instructions in the README file of the latest versions.
 ### Preparation
 
 ```bash
+export RELEASE_NAME=coder
 export CHART_NAME=coder
-export CHART_VERSION=1.0.0
-export CHART_NAMESPACE=coder-namespace
+export CHART_VERSION=0.1.0
+export RELEASE_NAMESPACE=coder-namespace
 export CHART_URL=coder.apps.example.com
 export CERT_ISSUER_NAME=default-selfsigned-ca
 export CERT_ISSUER_KIND=ClusterIssuer
 export CERT_SECRET_NAME=coder-tls-cert
 
 
-cat <<EOF> /tmp/coder-values.yaml
+cat <<EOF> /tmp/values.yaml
 coder:
   coder:
     ingress:
@@ -65,28 +68,28 @@ EOF
 ```
 
 ```bash
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
---values /tmp/coder-values.yaml \
---repo https://sourcemation.github.io/charts/ ${CHART_NAME} \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+-f /tmp/values.yaml \
+${CHART_NAME} --repo https://sourcemation.github.io/charts/ \
 --version ${CHART_VERSION}
 ```
 
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
+kubectl -n ${RELEASE_NAMESPACE} get po
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall ${CHART_NAME}
-kubectl -n ${CHART_NAMESPACE} delete cert ${CERT_SECRET_NAME}
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
+kubectl -n ${RELEASE_NAMESPACE} delete cert ${CERT_SECRET_NAME}
 ```
