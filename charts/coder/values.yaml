@@ -1,7 +1,16 @@
+global:
+  coderApp:
+    enabled: true
+    cert-manager:
+      enabled: true
+  cnpg:
+    enabled: true
+
+
 coder:
   coder:
-    annotations: {}
-    nodeSelector: {}
+#    annotations: {}
+#    nodeSelector: {}
     env:
       - name: "CODER_PG_CONNECTION_URL"
         valueFrom:
@@ -9,12 +18,12 @@ coder:
             name: coder-db-url
             key: url
       - name: "CODER_PROMETHEUS_ENABLE"
-        value: "true"
+        value: "false"
     image:
-      repo: "ghcr.io/coder/coder"
-      #tag: ""
+#      repo: "ghcr.io/coder/coder"
+#      tag: ""
       pullPolicy: "IfNotPresent"
-      pullSecrets: []
+#      pullSecrets: []
     ingress:
       enable: true
       host: "coder.apps.example.com"
@@ -24,29 +33,36 @@ coder:
         issuerName: "default-selfsigned-ca"
         issuerKind: "ClusterIssuer"
         secretName: "coder-tls-cert"
-    resources: {}
-    service:
-      enable: true
-      type: "LoadBalancer"
-      externalTrafficPolicy: "Cluster"
-      # if service.type LoadBalancer
-      loadBalancerIP: ""
-    serviceAccount:
-      name: "coder"
-    volumes: []
-    replicaCount: 1
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: "app.kubernetes.io/instance"
-                    operator: "In"
-                    values:
-                      - "coder"
-              topologyKey: "kubernetes.io/hostname"
-            weight: 1
+#    replicaCount: 1
+#    resources:
+#      limits:
+#        cpu: 2000m
+#        memory: 4096Mi
+#      requests:
+#        cpu: 2000m
+#        memory: 4096Mi
+#    service:
+#      enable: true
+#      type: "LoadBalancer"
+#      externalTrafficPolicy: "Cluster"
+#      loadBalancerIP: ""
+#      loadBalancerClass: ""
+#    serviceAccount:
+#      name: "coder"
+#      disableCreate: false
+#    volumes: []
+#    affinity:
+#      podAntiAffinity:
+#        preferredDuringSchedulingIgnoredDuringExecution:
+#          - podAffinityTerm:
+#              labelSelector:
+#                matchExpressions:
+#                  - key: "app.kubernetes.io/instance"
+#                    operator: "In"
+#                    values:
+#                      - "coder"
+#              topologyKey: "kubernetes.io/hostname"
+#            weight: 1
 
 cnpg:
   cluster:
@@ -59,9 +75,9 @@ cnpg:
       suUsername: "postgres"
       suPassword: "P@ssword1"
     metrics:
-      enablePodMonitor: true
+      enablePodMonitor: false
     spec:
-      instances: 1
+      instances: 2
       resources:
         requests:
           memory: ""

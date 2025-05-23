@@ -3,11 +3,112 @@ categories:
 questions:
 
 # Components
+- variable: global.coderApp.enabled
+  default: "true"
+  label: "Deploy Coder"
+  type: boolean
+  group: "Components"
+- variable: global.cnpg.enabled
+  default: "true"
+  label: "Deploy CloudNativePG-Cluster"
+  type: boolean
+  group: "Components"
+
+# Integrations
+- variable: coder.coder.env.1.value
+  default: "false"
+  label: Integrate Coder with Promehteus
+  description: "Integrate Coder with Promehteus"
+  group: "Integrations"
+  type: enum
+  options:
+  - "true"
+  - "false"
+  show_if: "global.coderApp.enabled=true"
+- variable: cnpg.cluster.metrics.enablePodMonitor
+  default: false
+  label: Integrate CloudNativePG with Promehteus
+  description: "Integrate CloudNativePG with Promehteus"
+  group: "Integrations"
+  type: boolean
+  show_if: "global.cnpg.enabled=true"
+- variable: global.coderApp.cert-manager.enabled
+  default: true
+  label: Integrate Coder with Cert-Manager
+  description: "Integrate Coder with Cert-Manager"
+  group: "Integrations"
+  type: boolean
+  show_if: "global.coderApp.enabled=true"
+
+# Service Discovery
+- variable: coder.coder.ingress.enable
+  label: Enable Coder Ingress
+  group: "Service Discovery"
+  default: "true"
+  type: boolean
+  show_if: "global.coderApp.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: coder.coder.ingress.host
+    default: "coder.apps.example.com"
+    label: URL
+    description: "Configure url for coder web-ui"
+    group: "Service Discovery"
+    type: hostname
+    min: 6
+  - variable: coder.coder.ingress.tls.enable
+    label: Enable TLS for Coder ingress
+    description: "Enable TLS for Coder ingress"
+    group: "Service Discovery"
+    type: boolean
+  - variable: "coder.coder.ingress.tls.issuerName"
+    default: "default-selfsigned-ca"
+    label: Certificate issuer name
+    tooltip: "Use 'kubectl get Issuer,clusterIssuer' to get the list of issuers."
+    group: "Service Discovery"
+    type: string
+    required: true
+    show_if: "coder.coder.ingress.tls.enable=true && global.coderApp['cert-manager'].enabled=true"
+  - variable: "coder.coder.ingress.tls.issuerKind"
+    default: "ClusterIssuer"
+    label: Certificate issuer kind
+    group: "Service Discovery"
+    type: enum
+    options:
+    - "ClusterIssuer"
+    - "Issuer"
+    required: true
+    show_if: "coder.coder.ingress.tls.enable=true && global.coderApp['cert-manager'].enabled=true"
+  - variable: coder.coder.ingress.tls.secretName
+    label: Secret Name
+    description: "Configure secret name for coder"
+    group: "Service Discovery"
+    type: string
+    default: "coder-tls-cert"
+    show_if: "coder.coder.ingress.tls.enable=true"
+
+# Storage
+- variable: cnpg.cluster.spec.storage.size
+  default: "10Gi"
+  label: PostgreSQL persistent volume size
+  description: "PostgreSQL persistent volume size"
+  group: "Storage"
+  type: string
+  show_if: "global.cnpg.enabled=true"
+- variable: cnpg.cluster.spec.storage.storageClass
+  label: PostgreSQL persistent Storage Class
+  description: "PostgreSQL persistent Storage Class"
+  group: "Storage"
+  type: storageclass
+  show_if: "global.cnpg.enabled=true"
+
+# Workloads
 - variable: coder.customImage
   default: false
   label: Change Coder image
-  group: "Components"
+  group: "Workloads"
   type: boolean
+  show_if: "global.coderApp.enabled=true"
   show_subquestion_if: true
   subquestions:
   - variable: coder.coder.image.repo
@@ -18,138 +119,31 @@ questions:
     default: ""
     label: Coder image tag
     description: "Coder image tag"
-    group: "Components"
+    group: "Workloads"
     type: string
   #- variable: coder.coder.image.PullSecrets
   #  label: Coder image PullSecrets
   #  description: "Coder image PullSecrets"
-  #  group: "Components"
+  #  group: "Workloads"
   #  type: string
   #  required: false
   - variable: coder.coder.image.pullPolicy
     default: "IfNotPresent"
     label: Coder image pullPolicy
     description: "Coder image pullPolicy"
-    group: "Components"
+    group: "Workloads"
     type: enum
     options:
     - "Always"
     - "IfNotPresent"
     - "Never"
 
-# Integrations
-- variable: coder.coder.env[1].value
-  default: "true"
-  label: Coder metrics
-  description: "Coder metrics"
-  group: "Integrations"
-  type: boolean
-- variable: cnpg.cluster.metrics.enablePodMonitor
-  default: "true"
-  label: PostgreSQL cluster metrics
-  description: "PostgreSQL cluster metrics"
-  group: "Integrations"
-  type: boolean
-
-# Service Discovery
-- variable: coder.coder.ingress.enable
-  label: Enable Coder Ingress
-  group: "Service Discovery"
-  default: "true"
-  type: boolean
-  show_subquestion_if: true
-  subquestions:
-  - variable: coder.coder.ingress.host
-    label: URL
-    description: "Configure url for coder web-ui"
-    group: "Service Discovery"
-    type: hostname
-    default: "coder.apps.example.com"
-    min: 6
-  - variable: "coder.coder.ingress.tls.issuerName"
-    default: "default-selfsigned-ca"
-    label: Certificate issuer name
-    tooltip: "Use 'kubectl get Issuer,clusterIssuer' to get the list of issuers."
-    group: "Service Discovery"
-    type: string
-    required: true
-  - variable: "coder.coder.ingress.tls.issuerKind"
-    default: "ClusterIssuer"
-    label: Certificate issuer kind
-    group: "Service Discovery"
-    type: enum
-    options:
-    - "ClusterIssuer"
-    - "Issuer"
-    required: true
-  - variable: coder.coder.ingress.tls.secretName
-    label: Secret Name
-    description: "Configure secret name for coder"
-    group: "Service Discovery"
-    type: string
-    default: "coder-tls-cert"
-
-# Storage
-- variable: cnpg.cluster.spec.storage.size
-  default: "10Gi"
-  label: PostgreSQL persistent volume size
-  description: "PostgreSQL persistent volume size"
-  group: "Storage"
-  type: string
-- variable: cnpg.cluster.spec.storage.storageClass
-  label: PostgreSQL persistent Storage Class
-  description: "PostgreSQL persistent Storage Class"
-  group: "Storage"
-  type: storageclass
-
-# Workloads
-- variable: cnpg.cluster.auth.database
-  label: Coder DB name
-  description: "Coder database name"
-  group: "Workloads"
-  type: string
-  default: "coder"
-  required: true
-- variable: cnpg.cluster.auth.username
-  label: Coder username
-  description: "Coder DB username"
-  group: "Workloads"
-  type: string
-  default: "coder"
-  required: true
-- variable: cnpg.cluster.auth.password
-  default: "P@ssword1"
-  label: Coder password
-  description: "Default password is 'P@ssword1'. Change it!"
-  group: "Workloads"
-  type: password
-  min: 8
-  required: true
-- variable: cnpg.cluster.customPasswords
-  default: false
-  label: Change PostgreSQL DB configuration
-  description: "Change PostgreSQL DB configuration"
-  group: "Workloads"
-  type: boolean
-  show_subquestion_if: true
-  subquestions:
-  - variable: cnpg.cluster.auth.suUsername
-    default: "postgres"
-    label: PostgreSQL admin user
-    description: "PostgreSQL admin user"
-    group: "Workloads"
-    type: string
-  - variable: cnpg.cluster.auth.suPassword
-    default: "P@ssword1"
-    label: PostgreSQL admin password
-    description: "Default password is 'P@ssword1'. Change it!"
-    group: "Workloads"
-    type: password
 - variable: coder.customResources
   default: false
   label: Modify Coder resource consumption
   group: "Workloads"
   type: boolean
+  show_if: "global.coderApp.enabled=true"
   show_subquestion_if: true
   subquestions:
   - variable: coder.coder.resources.limits.cpu
@@ -172,11 +166,61 @@ questions:
     description: "Memory request, value must be <= memory limit"
     group: "Workloads"
     type: string
+
+- variable: cnpg.cluster.auth.database
+  label: Coder DB name
+  description: "Coder database name"
+  group: "Workloads"
+  type: string
+  default: "coder"
+  required: true
+  show_if: "global.cnpg.enabled=true"
+- variable: cnpg.cluster.auth.username
+  label: Coder username
+  description: "Coder DB username"
+  group: "Workloads"
+  type: string
+  default: "coder"
+  required: true
+  show_if: "global.cnpg.enabled=true"
+- variable: cnpg.cluster.auth.password
+  default: "P@ssword1"
+  label: Coder password
+  description: "Default password is 'P@ssword1'. Change it!"
+  group: "Workloads"
+  type: password
+  min: 8
+  required: true
+  show_if: "global.cnpg.enabled=true"
+
+- variable: cnpg.cluster.customPasswords
+  default: false
+  label: Change PostgreSQL DB configuration
+  description: "Change PostgreSQL DB configuration"
+  group: "Workloads"
+  type: boolean
+  show_if: "global.cnpg.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: cnpg.cluster.auth.suUsername
+    default: "postgres"
+    label: PostgreSQL admin user
+    description: "PostgreSQL admin user"
+    group: "Workloads"
+    type: string
+  - variable: cnpg.cluster.auth.suPassword
+    default: "P@ssword1"
+    label: PostgreSQL admin password
+    description: "Default password is 'P@ssword1'. Change it!"
+    group: "Workloads"
+    type: password
+
 - variable: cnpg.cluster.customResources
   default: false
   label: Modify PostgreSQL resource consumption
   group: "Workloads"
   type: boolean
+  show_if: "global.cnpg.enabled=true"
   show_subquestion_if: true
   subquestions:
   - variable: cnpg.cluster.spec.resources.limits.cpu
@@ -207,3 +251,4 @@ questions:
   description: "PostgreSQL cluster name"
   group: "Others"
   type: hostname
+  show_if: "global.cnpg.enabled=true"
