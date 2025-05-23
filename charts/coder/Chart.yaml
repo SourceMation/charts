@@ -1,5 +1,5 @@
 annotations:
-  catalog.cattle.io/display-name: "Coder (1/1) - App"
+  catalog.cattle.io/display-name: Coder (1/1) - App
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
 #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
@@ -9,13 +9,12 @@ apiVersion: v2
 appVersion: 2.18.5
 dependencies:
 - name: common
-  repository: https://sourcemation.github.io/charts/
+  repository: https://charts.sourcemation.com/
   version: 0.1.x
 - name: coder
   repository: https://helm.coder.com/v2
   version: 2.18.5
-
-description: Self-serve portal for remote development in Kubernetes.
+description: Self-serve portal for remote development in Kubernetes. Install many times on kubernetes. Development.
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
@@ -30,4 +29,4 @@ name: coder
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 1.0.0
+version: 0.1.0
