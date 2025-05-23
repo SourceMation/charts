@@ -1,9 +1,9 @@
 dependencies:
 - name: common
-  repository: https://sourcemation.github.io/charts/
+  repository: https://charts.sourcemation.com/
   version: 0.1.1
 - name: coder
   repository: https://helm.coder.com/v2
-  version: 2.18.5
-digest: sha256:2c68d5a1702ac784dbcc0d10919cc0e731668ab8786bd24b37285e255bbd6c59
-generated: "2025-02-14T15:42:57.504426166+01:00"
+  version: 2.22.0
+digest: sha256:de0ce08063107ee3bbe97789f7543bf5381d447113bfd3be1f4cb6a063ef20eb
+generated: "2025-05-23T15:23:07.299417938+02:00"
