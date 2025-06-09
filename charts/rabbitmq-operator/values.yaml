@@ -55,7 +55,7 @@ rke2rabbitmqope:
     image:
       registry: docker.io
       repository: sourcemation/rabbitmq-cluster-operator
-      tag: "2.13.0-20250522"
+      tag: "2.14.0-20250608"
       digest: ""
       pullPolicy: IfNotPresent
       pullSecrets: []
