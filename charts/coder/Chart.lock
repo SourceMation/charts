@@ -1,0 +1,9 @@
+dependencies:
+- name: common
+  repository: https://charts.sourcemation.com/
+  version: 0.1.1
+- name: coder
+  repository: https://helm.coder.com/v2
+  version: 2.22.0
+digest: sha256:de0ce08063107ee3bbe97789f7543bf5381d447113bfd3be1f4cb6a063ef20eb
+generated: "2025-05-23T15:23:07.299417938+02:00"
