@@ -26,7 +26,7 @@ keywords:
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
   - email: radoslaw.kolba@linuxpolska.com
-    name: radkolba
+    name: radkolba-lp
 name: redis-sentinel
 sources:
   - https://github.com/SourceMation/charts.git
