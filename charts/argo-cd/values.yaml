@@ -1,0 +1,392 @@
+argocd:
+  nameOverride: "argocd"
+  fullnameOverride: ""
+
+
+  crds:
+    install: true
+    keep: false
+    annotations: {}
+  
+
+  global:
+    domain: "argocd.apps.example.com"
+    #image:
+    #  repository: quay.io/argoproj/argocd
+    #  tag: ""
+    #  imagePullPolicy: IfNotPresent
+    imagePullSecrets: []
+    logging:
+      format: json
+      level: info
+    #nodeSelector:
+    #  kubernetes.io/os: linux
+    affinity:
+      podAntiAffinity: soft
+      nodeAffinity:
+        type: hard
+        matchExpressions: []
+    deploymentStrategy: {}
+
+
+  configs:
+    secret:
+      createSecret: true
+      # password bcrypt examples in the ./scripts directory
+      argocdServerAdminPassword: "$2a$10$IyeNFvUrdgcFnDPzwbcD3.K3Czed2qJvS37kGz09hKPV082NzyE0y"
+      argocdServerAdminPasswordMtime: ""
+    cm:
+      create: true
+      accounts.admin: apiKey
+      admin.enabled: true
+      annotations: {}
+      application.instanceLabelKey: argocd.argoproj.io/instance
+      application.sync.impersonation.enabled: false
+      server.rbac.log.enforce.enable: false
+      exec.enabled: false
+      timeout.reconciliation: 180s
+      timeout.hard.reconciliation: 0s
+      statusbadge.enabled: false
+      dex.config: ''
+      #  connectors:
+      #  - type: ldap
+      #    id: ldap
+      #    name: LDAP
+      #    config:
+      #      host: ldap.example.com:636
+      #      #insecureNoSSL: true
+      #      insecureSkipVerify: true
+      #      #startTLS: true
+      #      #rootCA: /etc/dex/ldap.ca
+      #      bindDN: uid=serviceaccount,cn=users,dc=example,dc=com
+      #      bindPW: password
+      #      usernamePrompt: SSO Username
+      #      userSearch:
+      #        baseDN: cn=users,dc=example,dc=com
+      #        # optional
+      #        #filter: "(objectClass=person)"
+      #        username: uid
+      #        idAttr: uid
+      #        emailAttr: mail
+      #        nameAttr: name
+      #        preferredUsernameAttr: uid
+      #      groupSearch:
+      #        baseDN: cn=groups,dc=freeipa,dc=example,dc=com
+      #        # optional
+      #        #filter: "(objectClass=group)"
+      #        userMatchers:
+      #        - userAttr: uid
+      #          groupAttr: member
+      #        nameAttr: name
+    params:
+      create: true
+      otlp.address: ''
+      controller.status.processors: 20
+      controller.operation.processors: 10
+      controller.self.heal.timeout.seconds: 5
+      controller.repo.server.timeout.seconds: 60
+      controller.sync.timeout.seconds: 0
+      applicationsetcontroller.policy: sync
+      applicationsetcontroller.enable.progressive.syncs: false
+    rbac:
+      create: true
+      policy.default: 
+        p, role:admin, capabilities, [apiKey]
+        role:readonly
+      policy.csv: ''
+      policy.matchMode: "glob"
+      scopes: "[groups]"
+    cmp:
+      create: false
+    ssh:
+      create: true
+    tls:
+      create: true
+
+
+  controller:
+    replicas: 1
+    containerSecurityContext:
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    resources: 
+    #  limits:
+    #    cpu: 500m
+    #    memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    serviceAccount:
+      create: true
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+
+
+  commitServer:
+    enabled: false
+    containerSecurityContext:
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      seccompProfile:
+        type: RuntimeDefault
+    #image:
+    #  repository: ""
+    #  tag: ""
+    #  imagePullPolicy: ""
+    metrics:
+      enabled: false
+    resources: {}
+    #  limits:
+    #    cpu: 100m
+    #    memory: 128Mi
+    #  requests:
+    #    cpu: 100m
+    #    memory: 128Mi
+
+
+  dex:
+    enabled: false
+    containerSecurityContext:
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    #image:
+    #  repository: ghcr.io/dexidp/dex
+    #  tag: v2.38.0
+    #  imagePullPolicy: ""
+    imagePullSecrets: []
+    resources: {}
+    #  limits:
+    #    cpu: 50m
+    #    memory: 64Mi
+    #  requests:
+    #    cpu: 10m
+    #    memory: 32Mi
+    serviceAccount:
+      create: true
+
+
+  redis:
+    enabled: true
+    #image:
+    #  repository: public.ecr.aws/docker/library/redis
+    #  tag: 7.2.4-alpine
+    #  imagePullPolicy: ""
+    resources: 
+      limits:
+        cpu: 200m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 64Mi
+    containerSecurityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+
+
+  redis-ha:
+    enabled: false
+
+
+  server:
+    replicas: 1
+    resources: {}
+    #  limits:
+    #    cpu: 100m
+    #    memory: 128Mi
+    #  requests:
+    #    cpu: 50m
+    #    memory: 64Mi
+    containerSecurityContext:
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    certificate:
+      enabled: false
+      duration: ""
+      renewBefore: ""
+      issuer:
+        group: "cert-manager.io"
+        kind: ""
+        name: ""
+      privateKey:
+        rotationPolicy: Never
+        encoding: PKCS1
+        algorithm: RSA
+        size: 2048
+      additionalHosts: []
+      usages:
+        - server auth
+        - client auth
+        - key encipherment
+        - digital signature
+    service:
+      type: ClusterIP
+      servicePortHttp: 80
+      servicePortHttpName: http
+      servicePortHttps: 443
+      servicePortHttpsName: https
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        namespace: ""
+    serviceAccount:
+      create: true
+    ingress:
+      enabled: true
+      controller: "generic"
+      ingressClassName: "nginx"
+      hostname: ""
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      tls: true
+    ingressGrpc:
+      enabled: false
+      ingressClassName: "nginx"
+      hostname: ""
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+      tls: true
+    route:
+      enabled: false
+      termination_type: passthrough
+      termination_policy: None
+
+
+  repoServer:
+    replicas: 1
+    resources: {}
+    #  limits:
+    #    cpu: 50m
+    #    memory: 128Mi
+    #  requests:
+    #    cpu: 10m
+    #    memory: 64Mi
+    containerSecurityContext:
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    serviceAccount:
+      create: true
+
+
+  applicationSet:
+    replicas: 1
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    service:
+      type: ClusterIP
+      port: 7000
+      portName: http-webhook
+    serviceAccount:
+      create: true
+    resources: {}
+    #  limits:
+    #    cpu: 100m
+    #    memory: 128Mi
+    #  requests:
+    #    cpu: 100m
+    #    memory: 128Mi
+    containerSecurityContext:
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    certificate:
+      enabled: false
+      domain: ""
+      renewBefore: ""
+      issuer:
+        group: "cert-manager.io"
+        kind: ""
+        name: ""
+      privateKey:
+        rotationPolicy: Never
+        encoding: PKCS1
+        algorithm: RSA
+        size: 2048
+    ingress:
+      enabled: false
+      ingressClassName: ""
+      tls: false
+
+
+  notifications:
+    enabled: true
+    secret:
+      create: true
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    resources: {}
+    #  limits:
+    #    cpu: 100m
+    #    memory: 128Mi
+    #  requests:
+    #    cpu: 100m
+    #    memory: 128Mi
+    containerSecurityContext:
+      runAsNonRoot: true
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      seccompProfile:
+        type: RuntimeDefault
+      capabilities:
+        drop:
+        - ALL
+    serviceAccount:
+      create: true
+    cm:
+      create: true
+    deploymentStrategy:
+      type: Recreate
