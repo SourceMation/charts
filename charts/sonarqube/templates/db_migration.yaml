@@ -1,0 +1,46 @@
+{{- if and .Values.global.sonarqubeApp.enabled .Values.sonarqube.setAdminPassword.newPassword .Values.sonarqube.setAdminPassword.currentPassword }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include  "common.names.shortname" . }}-migrate-db
+  labels: {{- include "common.labels.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install, post-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-weight": "-1"
+spec:
+  template:
+    metadata:
+      name:  {{ include  "common.names.shortname" . }}-migrate-db
+      labels: {{- include "common.labels.labels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: {{ include  "common.names.shortname" . }}-migrate-db
+        image: sourcemation/rocky-9-minimal
+        command: ["/bin/bash", "-c"]
+        args:
+        - |
+          while ! timeout 3 curl -s sonarqube-sonarqube:9000/api; do
+            echo "Waiting for sonarqube api endpoint..."
+            sleep 5
+          done
+
+          STATUS=$(curl -s sonarqube-sonarqube:9000/api/system/status|grep -Eo '"status":".*"'|awk -F ':' '{print $2}'|sed -e 's/"//g')
+          if [ "$STATUS" = "DB_MIGRATION_NEEDED" ]; then
+            echo "Database migration needed, triggering migration..."
+            curl -u admin:${ADMIN_PASSWORD} -X POST {{ include  "common.names.shortname" . }}-sonarqube:9000/api/system/migrate_db
+
+            while [ "$STATUS" != "UP" ]; do
+                sleep 5
+                STATUS=$(curl -s sonarqube-sonarqube:9000/api/system/status|grep -Eo '"status":".*"'|awk -F ':' '{print $2}'|sed -e 's/"//g')
+                echo "Current status: $STATUS"
+            done
+          fi
+        env:
+        - name: ADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include  "common.names.shortname" . }}-sonarqube-admin-password
+              key: password
+{{- end }}
