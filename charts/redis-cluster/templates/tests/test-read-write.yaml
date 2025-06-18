@@ -1,10 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ .Release.Name }}-test-read-write"
+  name: "{{ include "common.names.shortname" $ }}-test-read-write"
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   containers:
     - name: redis-cli
@@ -13,6 +15,6 @@ spec:
         - sh
         - "-c"
         - |
-          redis-cli -c -h redis-cluster-leader -a P@ssword1 SET test-key "test-value" &&
-          redis-cli -c -h redis-cluster-leader -a P@ssword1 GET test-key | grep "test-value" || exit 1
+          redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} SET test-key "test-value" &&
+          redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} GET test-key | grep "test-value" || exit 1
   restartPolicy: Never

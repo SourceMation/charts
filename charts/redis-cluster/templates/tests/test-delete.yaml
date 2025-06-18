@@ -1,10 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ .Release.Name }}-test-delete"
+  name: "{{ include "common.names.shortname" $ }}-test-delete"
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   containers:
     - name: redis-cli
@@ -13,20 +15,20 @@ spec:
         - sh
         - "-c"
         - |
-          redis-cli -c -h redis-cluster-leader -a P@ssword1 SET testkey testvalue &&
+          redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} SET testkey testvalue &&
           echo "Key added: testkey=testvalue"
 
-          VALUE=$(redis-cli -c -h redis-cluster-leader -a P@ssword1 GET testkey) &&
+          VALUE=$(redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} GET testkey) &&
           if [ "$VALUE" = "testvalue" ]; then
             echo "Value retrieved successfully: $VALUE"
           else
             echo "Failed to retrieve value: $VALUE" && exit 1
           fi
 
-          redis-cli -c -h redis-cluster-leader -a P@ssword1 DEL testkey &&
+          redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} DEL testkey &&
           echo "Key deleted: testkey"
 
-          VALUE=$(redis-cli -c -h redis-cluster-leader -a P@ssword1 GET testkey) &&
+          VALUE=$(redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} GET testkey) &&
           if [ -z "$VALUE" ]; then
             echo "Key successfully deleted: testkey"
           else
