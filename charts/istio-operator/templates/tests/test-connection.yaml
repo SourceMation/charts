@@ -1,10 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ .Release.Name }}-test-status"
+  name: {{ include "common.names.shortname" $ }}-operator-test-status
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   containers:
     - name: kubectl
@@ -13,5 +15,5 @@ spec:
         - sh
         - -c
         - |
-          kubectl get pods | grep -E 'istio' | grep -v 'Running' && exit 1 || exit 0
+          kubectl get pods | grep -E 'istio-cni' | grep -v 'Running' && exit 1 || exit 0
   restartPolicy: Never
