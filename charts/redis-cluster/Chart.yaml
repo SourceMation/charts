@@ -5,7 +5,6 @@ annotations:
   #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
   #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: redis-cluster
-#  catalog.cattle.io/namespace: redis
 apiVersion: v2
 appVersion: 0.16.5
 dependencies:
@@ -23,10 +22,9 @@ keywords:
   - in memory
   - redis
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
-#kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
   - email: radoslaw.kolba@linuxpolska.com
-    name: radkolba
+    name: radkolba-lp
 name: redis-cluster
 sources:
   - https://github.com/SourceMation/charts.git
