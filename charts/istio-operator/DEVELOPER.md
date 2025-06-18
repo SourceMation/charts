@@ -25,7 +25,7 @@ ${RELEASE_NAME} .
 
 ```bash
 helm uninstall -n ${RELEASE_NAMESPACE} ${RELEASE_NAME}
-kubectl get crd -o name | grep -i istio-operator | xargs kubectl delete
+kubectl get crd -o name | grep -i istio | xargs kubectl delete
 ```
 
 
@@ -33,6 +33,7 @@ kubectl get crd -o name | grep -i istio-operator | xargs kubectl delete
 
 ```bash
 kubectl -n ${RELEASE_NAMESPACE} get po
+kubectl -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 
 # CREATING ISTIO EXAMPLE APP
 export TEST_NAMESPACE=my-example-istio

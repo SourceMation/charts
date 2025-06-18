@@ -81,6 +81,7 @@ ${CHART_NAME} --repo https://charts.sourcemation.com/ \
 
 ```bash
 kubectl -n ${RELEASE_NAMESPACE} get po
+kubectl -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```
 
 ## CLI removing

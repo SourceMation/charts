@@ -32,13 +32,11 @@ description: Istio is an open source service mesh that layers transparently onto
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
-  # dodać nazwy komponentów oraz nazwę kategorii
   - security
   - monitoring
   - istio
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
-  # podaj swoje dane
   - email: radoslaw.kolba@linuxpolska.com
     name: radkolba
 name: istio-operator
