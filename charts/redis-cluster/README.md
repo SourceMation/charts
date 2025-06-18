@@ -48,7 +48,7 @@
 ```bash
 
 export CHART_NAMESPACE=redis
-export CHART_VERSION=0.1.0
+export CHART_VERSION=0.1.1
 
 kubectl create ns ${CHART_NAMESPACE}
 
@@ -77,7 +77,7 @@ redis-cluster \
 ```bash
 
 kubectl -n ${CHART_NAMESPACE} get po
-
+helm -n ${CHART_NAMESPACE} test redis-cluster
 ```
 
 ## CLI removing
