@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ .Release.Name }}-test-connection"
+  name: "{{ include "common.names.shortname" $ }}-test-connection"
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
@@ -13,5 +13,5 @@ spec:
         - sh
         - -c
         - |
-          kubectl get pods | grep -E '{{ .Release.Name }}' | grep -v 'Running' && exit 1 || exit 0
+          kubectl get pods | grep -E '{{ include "common.names.shortname" $ }}' | grep -v 'Running' && exit 1 || exit 0
   restartPolicy: Never

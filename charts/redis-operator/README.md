@@ -48,7 +48,7 @@
 
 ```bash
 export CHART_NAMESPACE=lp-system
-export CHART_VERSION=0.1.0
+export CHART_VERSION=0.2.1
 
 kubectl create ns ${CHART_NAMESPACE}
 kubectl config set-context --current --namespace ${CHART_NAMESPACE}

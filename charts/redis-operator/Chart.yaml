@@ -16,18 +16,15 @@ dependencies:
     name: redis-operator
     version: 0.20.1
     repository: https://ot-container-kit.github.io/helm-charts
-description: Provides easy redis setup definitions for Kubernetes. Install only once on kubernetes. Database in-memory
+description: Provides easy redis setup definitions for Kubernetes. Install only once on kubernetes. Database in-memory.
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
-  # dodać nazwy komponentów oraz nazwę kategorii
   - database in-memory
   - in memory
   - redis
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
-#kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
-  # podaj swoje dane
   - email: radoslaw.klewin@linuxpolska.com
     name: rklewin
 name: redis-operator
