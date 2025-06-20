@@ -3,6 +3,8 @@ global:
 #  istioNamespace: istio-system
   istioOperatorCrd:
     enabled: true
+  elasticApmIntegration:
+    enabled: false
 
 istiod:
   profile: ambient

@@ -1,17 +1,19 @@
-# For developers / Dla deweloperow 
- 
-## Installing from repo / Instalacja z repo 
- 
-```bash 
-git clone git@github.com:SourceMation/charts.git
-cd charts/elastic-operator/
+# For developers / Dla deweloperow
 
-export CHART_NAMESPACE=lp-system 
- 
-helm -n ${CHART_NAMESPACE} upgrade --install \
+## Installing from repo / Instalacja z repo
+
+```bash
+export RELEASE_NAME=elk-operator
+export CHART_NAME=elastic-operator
+export RELEASE_NAMESPACE=lp-system
+
+git clone git@github.com:SourceMation/charts.git
+cd charts/charts/${CHART_NAME}
+
+helm -n ${RELEASE_NAMESPACE} upgrade --install \
 --create-namespace \ 
-elastic-operator .  
-``` 
+${RELEASE_NAME} .
+```
 
 #kubectl get crd -o name | grep -i istio | xargs kubectl delete
 #kubectl get crd -o name | grep -i jaeger | xargs kubectl delete

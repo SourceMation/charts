@@ -2,7 +2,7 @@
  
 ## Installing from repo
  
-```bash 
+```bash
 export RELEASE_NAME=redis-ope
 export CHART_NAME=redis-operator
 export RELEASE_NAMESPACE=lp-system
@@ -19,7 +19,6 @@ ${RELEASE_NAME} .
 ```bash
 helm uninstall -n ${RELEASE_NAMESPACE} ${RELEASE_NAME}
 ```
-
 
 # Testing
 

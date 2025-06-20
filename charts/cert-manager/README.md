@@ -51,19 +51,20 @@
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=cert-manager
+export RELEASE_NAME=default-issuer
+export CHART_NAME=cert-manager
+export RELEASE_NAMESPACE=cert-manager
 export CHART_VERSION=1.1.0
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-helm -n ${CHART_NAMESPACE} upgrade --install default-issuer \ 
---repo https://charts.sourcemation.com/ \
-cert-manager \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 --version ${CHART_VERSION}
 ```
 
@@ -76,5 +77,5 @@ kubectl get clusterissuer,issuer,clusteradcsissuer,adcsissuer,cert,crp -A
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall default-issuer
+helm -n ${RELEASE_NAMESPACE} uninstall default-issuer
 ```

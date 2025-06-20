@@ -35,26 +35,27 @@ lack of known issues
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=lp-system
+export RELEASE_NAME=elk-operator
+export CHART_NAME=elastic-operator
+export RELEASE_NAMESPACE=lp-system
 export CHART_VERSION=1.5.0
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
-``` bash
-helm -n ${CHART_NAMESPACE} upgrade --install elastic-operator \
---repo https://charts.sourcemation.com/ \
-elastic-operator \
+```bash
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 --version ${CHART_VERSION}
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall elastic-operator
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 kubectl get validatingwebhookconfiguration -o name | grep -i open | xargs kubectl delete
 kubectl get mutatingwebhookconfiguration -o name | grep -i open | xargs kubectl delete
 
