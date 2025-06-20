@@ -50,7 +50,7 @@
 export RELEASE_NAME=redis-ope
 export CHART_NAME=redis-operator
 export RELEASE_NAMESPACE=lp-system
-export CHART_VERSION=0.1.0
+export CHART_VERSION=0.2.1
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
@@ -61,7 +61,6 @@ kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ``` bash
 helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
 ${CHART_NAME} --repo https://charts.sourcemation.com/ \
--f /tmp/values.yaml \
 --version ${CHART_VERSION}
 ```
 
