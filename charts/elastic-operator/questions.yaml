@@ -4,6 +4,11 @@ namespace: lp-system
 questions:
 - variable: global.elasticCrd.enabled
   default: "true"
-  label: Deploy Elastic Operator
+  label: deploy elastic operator
   type: boolean
-  group: "Components"
+  group: "components"
+- variable: global.elasticOperator.enabled
+  default: "true"
+  label: deploy elastic operator
+  type: boolean
+  group: "components"
