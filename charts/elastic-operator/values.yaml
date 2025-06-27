@@ -1,81 +1,72 @@
 global:
   elasticCrd:
     enabled: true
-#  istioCrd:
-#    enabled: true
-#  certManagerCrd:
-#    enabled: false
-#  openTelemetryCrd:
-#    enabled: false
-
-
-
+  elasticOperator:
+    enabled: true
 
 eck-operator:
-  installCRDs: false
+  # nameOverride is the short name for the deployment. Leave empty to let Helm generate a name using chart values.
+  nameOverride: "elastic-operator"
+  
+  # fullnameOverride is the full name for the deployment. Leave empty to let Helm generate a name using chart values.
+  fullnameOverride: "elastic-operator"
+  
+  # managedNamespaces is the set of namespaces that the operator manages. Leave empty to manage all namespaces.
+  managedNamespaces: []
+  
+  # installCRDs determines whether Custom Resource Definitions (CRD) are installed by the chart.
+  # Note that CRDs are global resources and require cluster admin privileges to install.
+  # If you are sharing a cluster with other users who may want to install ECK on their own namespaces, setting this to true can have unintended consequences.
+  # 1. Upgrades will overwrite the global CRDs and could disrupt the other users of ECK who may be running a different version.
+  # 2. Uninstalling the chart will delete the CRDs and potentially cause Elastic resources deployed by other users to be removed as well.
+  installCRDs: false # CRDs are installed from *crds chart
+  
+  # replicaCount is the number of operator pods to run.
+  replicaCount: 1
+  
+  image:
+    # repository is the container image prefixed by the registry name.
+    repository: docker.elastic.co/eck/eck-operator
+    # pullPolicy is the container image pull policy.
+    pullPolicy: IfNotPresent
+    # tag is the container image tag. If not defined, defaults to chart appVersion.
+    tag: null
+    # fips specifies whether the operator will use a FIPS compliant container image for its own StatefulSet image.
+    # This setting does not apply to Elastic Stack applications images.
+    # Can be combined with config.ubiOnly.
+    fips: false
+  
+  # imagePullSecrets defines the secrets to use when pulling the operator container image.
+  imagePullSecrets: []
+  
+  # resources define the container resource limits for the operator.
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 150Mi
+  
+  # createClusterScopedResources determines whether cluster-scoped resources (ClusterRoles, ClusterRoleBindings) should be created.
   createClusterScopedResources: true
-  webhook:
+  
+  tracing:
+    # enabled specifies whether APM tracing is enabled for the operator.
     enabled: false
-  config:
-    validateStorageClass: false
+    # config is a map of APM Server configuration variables that should be set in the environment.
+    config:
+      ELASTIC_APM_SERVER_URL: http://localhost:8200
+      ELASTIC_APM_SERVER_TIMEOUT: 30s
+  
+  webhook:
+    # enabled determines whether the webhook is installed.
+    enabled: false
 
-#base:
-#  defaults:
-#    global:
-#      istioNamespace: lp-system
-#    defaultRevision: default
-#
-#istiod:
-#  defaults:
-#    global:
-#      istioNamespace: lp-system
-#      logAsJson: true
-#    meshConfig:
-#      enableTracing: true
-##      defaultConfig:
-##        tracing:
-##          sampling: 99
-##          zipkin:
-##            address: istiod-jaeger-collector.lp-system.svc:9411
-#      extensionProviders:
-#      - name: zipkin-tracing
-#        zipkin:
-#          service: "istiod-zipkin.lp-system.svc"
-#          port: 9411
-#          
-##      - name: otel-tracing
-##        opentelemetry:
-##          port: 4317
-##          service: elastic-operatorntelemetry-collector.elastic-eck.svc.cluster.local
-##          resource_detectors:
-##            environment: {}
-#
-#jaeger:
-#  fullnameOverride: istiod
-#  query:
-#    basePath: /jaeger
-#    service:
-#      port: 16686
-#    ingress:
-#      enabled: true
-#      host: jeager.apps.dev0.lab.linuxpolska.pl
-#
-#cert-manager:
-#  namespace: lp-system
-#  crds:
-#    enabled: true
-#  prometheus:
-#    enabled: false
-#  webhook:
-#    timeoutSeconds: 4
-#
-#opentelemetry-operator:
-#  manager:
-#    collectorImage:
-#      repository: otel/opentelemetry-collector-k8s
-#  admissionWebhooks:
-#    certManager:
-#      enabled: false
-#    autoGenerateCert:
-#      enabled: true
-#
+  # config values for the operator.
+  config:
+    # validateStorageClass specifies whether storage classes volume expansion support should be verified.
+    # Can be disabled if cluster-wide storage class RBAC access is not available.
+    validateStorageClass: false
+  serviceMonitor:
+    enabled: true
