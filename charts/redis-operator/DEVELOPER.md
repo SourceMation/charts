@@ -18,6 +18,7 @@ ${RELEASE_NAME} .
 
 ```bash
 helm uninstall -n ${RELEASE_NAMESPACE} ${RELEASE_NAME}
+kubectl get crd -o name |grep 'redis.opstreelabs.in' |xargs kubectl delete
 ```
 
 # Testing

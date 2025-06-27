@@ -50,7 +50,7 @@
 export RELEASE_NAME=redis-ope
 export CHART_NAME=redis-operator
 export RELEASE_NAMESPACE=lp-system
-export CHART_VERSION=0.2.1
+export CHART_VERSION=0.2.2
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
@@ -74,4 +74,5 @@ kubectl -n ${RELEASE_NAMESPACE} get po
 
 ```bash
 helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
+kubectl get crd -o name |grep 'redis.opstreelabs.in' |xargs kubectl delete
 ```

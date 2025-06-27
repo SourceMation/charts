@@ -13,5 +13,5 @@ spec:
         - sh
         - -c
         - |
-          kubectl get pods | grep -E '{{ include "common.names.shortname" $ }}' | grep -v 'Running' && exit 1 || exit 0
+          kubectl get pods | grep -E '{{ include "common.names.shortname" $ }}' | egrep -v 'Running|test-connection' && exit 1 || exit 0
   restartPolicy: Never
