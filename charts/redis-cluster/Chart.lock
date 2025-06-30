@@ -4,6 +4,6 @@ dependencies:
   version: 0.1.1
 - name: redis-cluster
   repository: https://ot-container-kit.github.io/helm-charts
-  version: 0.16.4
-digest: sha256:f71917dcf5bbbeb4783f0bb006ad555fb0653390d1504d9ebb3777316f996682
-generated: "2025-04-03T09:29:01.782423389+02:00"
+  version: 0.16.5
+digest: sha256:a9397dc99af842c8a5bf52d0575109e23d5ef7aa3c57a86f5e0f5fde927815fc
+generated: "2025-04-29T01:59:28.839907586+02:00"

@@ -1,10 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ .Release.Name }}-test-connection"
+  name: "{{ include "common.names.shortname" $ }}-test-connection"
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   containers:
     - name: redis-cli
@@ -13,7 +15,7 @@ spec:
         - sh
         - "-c"
         - |
-          RESPONSE=$(redis-cli -h redis-cluster-leader -a P@ssword1 ping) &&
+          RESPONSE=$(redis-cli -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} ping) &&
           if [ "$RESPONSE" = "PONG" ]; then
             echo "Connection successful: $RESPONSE"
           else

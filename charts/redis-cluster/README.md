@@ -49,7 +49,7 @@
 export RELEASE_NAME=redis-cluster
 export CHART_NAME=redis-cluster
 export RELEASE_NAMESPACE=redis
-export CHART_VERSION=0.1.0
+export CHART_VERSION=0.1.1
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
@@ -68,6 +68,7 @@ ${CHART_NAME} --repo https://charts.sourcemation.com/ \
 
 ```bash
 kubectl -n ${RELEASE_NAMESPACE} get po
+helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```
 
 ## CLI removing
