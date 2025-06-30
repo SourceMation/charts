@@ -1,56 +1,15 @@
 categories:
 - cicd
+- automation
 questions:
 
 # Components
-- variable: jenkins.customImage
-  default: false
-  label: Change Jenkins image
-  group: "Components"
-  type: boolean
-  show_subquestion_if: true
-  subquestions:
-  - variable: jenkins.controller.image.registry
-    label: Jenkins image registry
-    description: "Jenkins image registry"
-    group: "Components"
-    type: string
-  - variable: jenkins.controller.image.repository
-    label: Jenkins image repository
-    description: "Jenkins image repository"
-    group: "Components"
-    type: string
-  - variable: jenkins.controller.image.tag
-    label: Jenkins image tag
-    description: "Jenkins image tag"
-    group: "Components"
-    type: string
-  - variable: jenkins.controller.image.tagLabel
-    label: Jenkins image tag label
-    description: "Jenkins image tag label"
-    group: "Components"
-    type: string
-  - variable: jenkins.controller.imagePullSecretName
-    label: Jenkins image PullSecrets
-    description: "Jenkins image PullSecrets"
-    group: "Components"
-    type: secret
-  - variable: jenkins.controller.image.pullPolicy
-    default: "IfNotPresent"
-    label: Jenkins image pullPolicy
-    description: "Jenkins image pullPolicy"
-    group: "Components"
-    type: enum
-    options:
-    - "Always"
-    - "IfNotPresent"
-    - "Never"
 
 # Integrations
 - variable: jenkins.controller.prometheus.enabled
   default: "true"
-  label: Jenkins metrics
-  description: "Jenkins metrics"
+  label: Integrate Jenkins with Promehteus
+  description: "Integrate Jenkins with Promehteus"
   group: "Integrations"
   type: boolean
 
@@ -127,6 +86,48 @@ questions:
   label: Disable 'Remember Me' checkbox on Jenkins web-ui
   group: "Workloads"
   type: boolean
+- variable: jenkins.customImage
+  default: false
+  label: Change Jenkins image
+  group: "Workloads"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: jenkins.controller.image.registry
+    label: Jenkins image registry
+    description: "Jenkins image registry"
+    group: "Workloads"
+    type: string
+  - variable: jenkins.controller.image.repository
+    label: Jenkins image repository
+    description: "Jenkins image repository"
+    group: "Workloads"
+    type: string
+  - variable: jenkins.controller.image.tag
+    label: Jenkins image tag
+    description: "Jenkins image tag"
+    group: "Workloads"
+    type: string
+  - variable: jenkins.controller.image.tagLabel
+    label: Jenkins image tag label
+    description: "Jenkins image tag label"
+    group: "Workloads"
+    type: string
+  - variable: jenkins.controller.imagePullSecretName
+    label: Jenkins image PullSecrets
+    description: "Jenkins image PullSecrets"
+    group: "Workloads"
+    type: secret
+  - variable: jenkins.controller.image.pullPolicy
+    default: "IfNotPresent"
+    label: Jenkins image pullPolicy
+    description: "Jenkins image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
 - variable: jenkins.customResources
   default: false
   label: Modify Jenkins resource consumption

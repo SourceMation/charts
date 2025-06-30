@@ -3,6 +3,7 @@ global:
     enabled: true
 
 strimzi-kafka-operator:
+  watchAnyNamespace: true
   defaultImageRegistry: "quay.io"
   defaultImageRepository: strimzi
   #defaultImageTag: 0.45.0

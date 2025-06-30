@@ -1,0 +1,72 @@
+global:
+  elasticCrd:
+    enabled: true
+  elasticOperator:
+    enabled: true
+
+eck-operator:
+  # nameOverride is the short name for the deployment. Leave empty to let Helm generate a name using chart values.
+  nameOverride: "elastic-operator"
+  
+  # fullnameOverride is the full name for the deployment. Leave empty to let Helm generate a name using chart values.
+  fullnameOverride: "elastic-operator"
+  
+  # managedNamespaces is the set of namespaces that the operator manages. Leave empty to manage all namespaces.
+  managedNamespaces: []
+  
+  # installCRDs determines whether Custom Resource Definitions (CRD) are installed by the chart.
+  # Note that CRDs are global resources and require cluster admin privileges to install.
+  # If you are sharing a cluster with other users who may want to install ECK on their own namespaces, setting this to true can have unintended consequences.
+  # 1. Upgrades will overwrite the global CRDs and could disrupt the other users of ECK who may be running a different version.
+  # 2. Uninstalling the chart will delete the CRDs and potentially cause Elastic resources deployed by other users to be removed as well.
+  installCRDs: false # CRDs are installed from *crds chart
+  
+  # replicaCount is the number of operator pods to run.
+  replicaCount: 1
+  
+  image:
+    # repository is the container image prefixed by the registry name.
+    repository: docker.elastic.co/eck/eck-operator
+    # pullPolicy is the container image pull policy.
+    pullPolicy: IfNotPresent
+    # tag is the container image tag. If not defined, defaults to chart appVersion.
+    tag: null
+    # fips specifies whether the operator will use a FIPS compliant container image for its own StatefulSet image.
+    # This setting does not apply to Elastic Stack applications images.
+    # Can be combined with config.ubiOnly.
+    fips: false
+  
+  # imagePullSecrets defines the secrets to use when pulling the operator container image.
+  imagePullSecrets: []
+  
+  # resources define the container resource limits for the operator.
+  resources:
+    limits:
+      cpu: 1
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 150Mi
+  
+  # createClusterScopedResources determines whether cluster-scoped resources (ClusterRoles, ClusterRoleBindings) should be created.
+  createClusterScopedResources: true
+  
+  tracing:
+    # enabled specifies whether APM tracing is enabled for the operator.
+    enabled: false
+    # config is a map of APM Server configuration variables that should be set in the environment.
+    config:
+      ELASTIC_APM_SERVER_URL: http://localhost:8200
+      ELASTIC_APM_SERVER_TIMEOUT: 30s
+  
+  webhook:
+    # enabled determines whether the webhook is installed.
+    enabled: false
+
+  # config values for the operator.
+  config:
+    # validateStorageClass specifies whether storage classes volume expansion support should be verified.
+    # Can be disabled if cluster-wide storage class RBAC access is not available.
+    validateStorageClass: false
+  serviceMonitor:
+    enabled: true

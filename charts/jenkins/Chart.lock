@@ -1,9 +1,9 @@
 dependencies:
 - name: common
-  repository: https://sourcemation.github.io/charts/
+  repository: https://charts.sourcemation.com/
   version: 0.1.1
 - name: jenkins
   repository: https://charts.jenkins.io
-  version: 5.8.37
-digest: sha256:06bd3c9f804769a16cbe190bc71c18c412bf86b684866867ef862f098a760bac
-generated: "2025-04-25T01:59:28.939538489+02:00"
+  version: 5.8.62
+digest: sha256:efcbeb63d11f3868035dda70de59e3016466218d0d151572fbdcf59cf4ad1cc2
+generated: "2025-06-28T23:59:36.154413926Z"

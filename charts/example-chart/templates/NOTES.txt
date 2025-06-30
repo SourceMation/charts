@@ -8,6 +8,3 @@
 by Linux Polska
 
 # Generate text name https://www.asciiart.eu/text-to-ascii-art (Font ANSI Shadow),
-
-
-# 

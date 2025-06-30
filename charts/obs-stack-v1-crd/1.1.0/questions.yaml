@@ -1,9 +1,0 @@
-categories:
-- monitoring
-namespace: lp-system
-questions:
-- variable: global.elasticCrd.enabled
-  default: "true"
-  label: Deploy Elastic Operator
-  type: boolean
-  group: "Components"

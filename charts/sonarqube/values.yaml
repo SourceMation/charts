@@ -1,0 +1,132 @@
+global:
+  sonarqubeApp:
+    enabled: true
+    cert-manager:
+      enabled: true
+  cnpg:
+    enabled: true
+
+sonarqube:
+  #affinity: {}
+  #nodeSelector: {}
+  #seccompProfile: {}
+  #securityContext:
+  #  fsGroup: 0
+  #account:
+  #  adminPassword: "P@ssword1234"
+  setAdminPassword:
+    newPassword: "P@ssword1234"
+    currentPassword: admin
+  #caCerts:
+  #  enabled: false
+  community:
+    enabled: true
+  #  buildNumber: "25.1.0.102122"
+  #image:
+  #  repository: "sonarqube"
+  #  tag: ""
+  #  pullPolicy: "IfNotPresent"
+  #  pullSecrets: []
+  initSysctl:
+    enabled: false
+  initFs:
+    enabled: false
+  httproute:
+    enabled: false
+  ingress-nginx:
+    enabled: false
+  ingress:
+    enabled: true
+    hosts:
+    - name: "sonarqube.apps.example.com"
+    tls: 
+    - secretName: "sonarqube-tls-cert"
+      hosts:
+        - "sonarqube.apps.example.com"
+    cert:
+      issuerKind: "ClusterIssuer"
+      issuerName: "default-selfsigned-ca"
+  #networkPolicy:
+  #  enabled: false
+  persistence:
+    enabled: true
+    size: "10Gi"
+    storageClass: ""
+    accessMode: "ReadWriteOnce"
+  #plugins:
+  # Define the list of plugins to install. Example:
+  # install:
+  #   - https://example.com/plugin/ver1.0/plugin.jar"
+  #  install: []
+  prometheusMonitoring:
+    podMonitor:
+      enabled: false
+  monitoringPasscode: "P@ssword1234"
+  resources:
+    limits:
+      cpu: "1000m"
+      memory: "6144Mi"
+      ephemeral-storage: "50Gi"
+    requests:
+      cpu: "400m"
+      memory: "2048Mi"
+      ephemeral-storage: "512Mi"
+  #service:
+  #  type: "ClusterIP"
+  #  externalPort: 9000
+  #  internalPort: 9000
+  #serviceAccount:
+  #  create: false
+  #deploymentStrategy:
+  #  type: Recreate
+
+  jdbcOverwrite:
+    enabled: true
+    jdbcUrl: "jdbc:postgresql://sonarqube-cnpg-cluster-rw/sonar"
+    jdbcUsername: "sonar"
+    jdbcSecretName: sonarqube-cnpg-cluster-user
+    jdbcSecretPasswordKey: password
+
+  postgresql:
+    enabled: false
+    
+  #tests:
+  #  image: ""
+  #  enabled: true
+  #  resources:
+  #    requests:
+  #      cpu: 500m
+  #      memory: 200M
+  #      ephemeral-storage: 100M
+  #    limits:
+  #      cpu: 500m
+  #      memory: 200M
+  #      ephemeral-storage: 1000M
+
+
+cnpg:
+  cluster:
+    metadata:
+      name: "cnpg-cluster"
+    auth:
+      #username: "sonar"
+      password: "P@ssword1234"
+      database: "sonar"
+      suUsername: "postgres"
+      suPassword: "P@ssword1234"
+    metrics:
+      enablePodMonitor: false
+    spec:
+      instances: 2
+      resources:
+        requests:
+          memory: "200Mi"
+          cpu: "100m"
+        limits:
+          memory: "2Gi"
+          cpu: "2000m"
+      storage:
+        accessModes:
+          - "ReadWriteOnce"
+        size: "10Gi"
+        storageClass: ""

@@ -3,26 +3,24 @@
 ## Installing from repo
  
 ```bash 
- 
-export CHART_VERSION=1.0.0
-export CHART_NAMESPACE=example-chart
- 
-cd charts/charts/example-chart/${CHART_VERSION} 
+git clone git@github.com:SourceMation/charts.git
+cd charts/charts/example-chart/
 
+export RELEASE_NAMESPACE=example-chart
  
-helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \ 
-example-chart .  
- 
+helm upgrade --install -n ${RELEASE_NAMESPACE} \
+--create-namespace \ 
+example-chart .
 ``` 
-# Cleaning
+
+## Cleaning
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} example-chart
-
+helm uninstall -n ${RELEASE_NAMESPACE} example-chart
 ```
 
 
-# Testing
+## Testing
 
 ```bash
 
