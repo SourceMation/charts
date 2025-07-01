@@ -20,7 +20,7 @@ icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
 - common
 
-kubeVersion: '>=1.19.0-0'
+#kubeVersion: '>=1.19.0-0'
 
 type: library
 

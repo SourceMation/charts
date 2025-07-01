@@ -2,8 +2,8 @@ annotations:
   catalog.cattle.io/display-name: Redis Sentinel (2/2) - App
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
-  #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
-  #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+#  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+#  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: redis-sentinel
 #  catalog.cattle.io/namespace: redis
 apiVersion: v2
@@ -22,7 +22,6 @@ keywords:
   - database in-memory
   - in memory
   - redis
-#kubeVersion: '>=1.26.0-0 <1.31.0-0'
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
   - email: radoslaw.kolba@linuxpolska.com
