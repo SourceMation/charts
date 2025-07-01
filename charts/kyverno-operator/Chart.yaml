@@ -2,8 +2,8 @@ annotations:
   catalog.cattle.io/display-name: Kyverno (1/1) - Operator
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
-  #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
-  #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+#  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+#  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: kyverno-operator
 apiVersion: v2
 appVersion: 3.4.2
@@ -20,7 +20,6 @@ icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
   - security
   - kyverno
-kubeVersion: '>=1.26.0-0 <1.31.0-0'
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
   - email: radoslaw.kolba@linuxpolska.com
