@@ -39,7 +39,7 @@ https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 export RELEASE_NAME=argo
 export CHART_NAME=argo-cd
 export CHART_VERSION=0.1.0
-export RELEASE_NAMESPACE=lp-system
+export RELEASE_NAMESPACE=argocd
 
 export CHART_URL=argo-cd.apps.example.com
 export CERT_ISSUER_NAME=default-selfsigned-ca
