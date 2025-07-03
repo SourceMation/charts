@@ -85,4 +85,7 @@ helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 
 ```bash
 helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
+kubectl get crd -o name|grep 'cnpg.io'|xargs kubectl delete
+kubectl delete MutatingWebhookConfiguration/cnpg-mutating-webhook-configuration
+kubectl delete ValidatingWebhookConfiguration/cnpg-validating-webhook-configuration
 ```
