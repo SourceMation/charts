@@ -59,7 +59,7 @@ helm uninstall bbbb -n lp-system
 export RELEASE_NAME=cnpg-operator
 export CHART_NAME=cnpg-operator
 export RELEASE_NAMESPACE=lp-system
-export CHART_VERSION=0.2.2
+export CHART_VERSION=0.2.3
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
@@ -85,4 +85,7 @@ helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 
 ```bash
 helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
+kubectl get crd -o name|grep 'cnpg.io'|xargs kubectl delete
+kubectl delete MutatingWebhookConfiguration/cnpg-mutating-webhook-configuration
+kubectl delete ValidatingWebhookConfiguration/cnpg-validating-webhook-configuration
 ```
