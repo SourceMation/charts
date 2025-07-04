@@ -1,10 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ .Release.Name }}-test-list"
+  name: "{{ include "common.names.shortname" $ }}-test-list"
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   containers:
     - name: redis-cli
@@ -13,16 +15,16 @@ spec:
         - sh
         - "-c"
         - |
-          redis-cli -c -h redis-cluster-leader -a P@ssword1 DEL mylist &&
+          redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} DEL mylist &&
           echo "List cleared"
 
-          redis-cli -c -h redis-cluster-leader -a P@ssword1 LPUSH mylist "value1" "value2" "value3" &&
+          redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} LPUSH mylist "value1" "value2" "value3" &&
           echo "List created with values: value3, value2, value1"
 
-          LIST=$(redis-cli -c -h redis-cluster-leader -a P@ssword1 LRANGE mylist 0 -1 | tr -d '\n') &&
+          LIST=$(redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} LRANGE mylist 0 -1 | tr -d '\n') &&
           echo "Current list values: $LIST"
 
-          redis-cli -c -h redis-cluster-leader -a P@ssword1 DEL mylist &&
+          redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} DEL mylist &&
           echo "List cleared"
 
           if [ "$LIST" = "value3value2value1" ]; then

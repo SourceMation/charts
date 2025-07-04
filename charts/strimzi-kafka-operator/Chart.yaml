@@ -25,7 +25,6 @@ keywords:
 - kafka
 - strimzi
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
-#kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
 - email: kamil.kwiatkowski@linuxpolska.com
   name: Qwiatu

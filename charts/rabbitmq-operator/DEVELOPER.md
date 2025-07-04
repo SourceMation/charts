@@ -3,25 +3,26 @@
 ## Installing from repo
  
 ```bash
-git clone git@github.com:SourceMation/charts.git
-cd charts/charts/rabbitmq-cluster-operator
-
+export RELEASE_NAME=rabbitmq-ope
 export CHART_NAME=rabbitmq-operator
-export CHART_NAMESPACE=lp-system
+export RELEASE_NAMESPACE=lp-system
 
-helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \ 
-${CHART_NAME} .
-``` 
+git clone git@github.com:SourceMation/charts.git
+cd charts/charts/${CHART_NAME}
+
+helm -n ${RELEASE_NAMESPACE} upgrade --install --create-namespace \ 
+${RELEASE_NAME} .
+```
+
 # Cleaning
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} ${CHART_NAME}
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 kubectl get crd -o name | grep 'rabbitmq.com' | xargs kubectl delete
 ```
-
 
 # Testing
 
 ```bash
-helm test -n ${CHART_NAMESPACE} ${CHART_NAME}
+helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```

@@ -1,0 +1,60 @@
+{{- if and .Values.global.cnpg.enabled .Values.sonarqube.jdbcOverwrite.enabled }}
+---
+apiVersion: v1
+data:
+  password: {{ .Values.cnpg.cluster.auth.password | b64enc}}
+  username: {{ .Values.sonarqube.jdbcOverwrite.jdbcUsername | b64enc}}
+kind: Secret
+metadata:
+  name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}-user
+type: kubernetes.io/basic-auth
+
+---
+apiVersion: v1
+data:
+  password: {{ .Values.cnpg.cluster.auth.suPassword | b64enc}}
+  username: {{ .Values.cnpg.cluster.auth.suUsername | b64enc}}
+kind: Secret
+metadata:
+  name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}-superuser
+type: kubernetes.io/basic-auth
+
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}
+spec:
+  instances: {{ .Values.cnpg.cluster.spec.instances }}
+
+  bootstrap:
+    initdb:
+      database: {{ .Values.cnpg.cluster.auth.database }}
+      owner: {{ .Values.cnpg.cluster.auth.username }}
+      secret:
+        name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}-user
+
+  superuserSecret:
+    name: {{ include "common.names.shortname" . }}-{{ .Values.cnpg.cluster.metadata.name }}-superuser
+
+  resources:
+    requests:
+      memory: {{ .Values.cnpg.cluster.spec.resources.requests.memory }}
+      cpu: {{ .Values.cnpg.cluster.spec.resources.requests.cpu }}
+    limits:
+      memory: {{ .Values.cnpg.cluster.spec.resources.limits.memory }}
+      cpu: {{ .Values.cnpg.cluster.spec.resources.limits.cpu }}
+
+  storage:
+    size: {{ .Values.cnpg.cluster.spec.storage.size }}
+    pvcTemplate:
+      accessModes: {{- .Values.cnpg.cluster.spec.storage.accessModes | toYaml | nindent 8 }}
+      resources:
+        requests:
+          storage: {{ .Values.cnpg.cluster.spec.storage.size }}
+      storageClassName: {{ .Values.cnpg.cluster.spec.storage.storageClass }}
+      #volumeMode: Filesystem
+
+  monitoring:
+    enablePodMonitor: {{ .Values.cnpg.cluster.metrics.enablePodMonitor }}
+{{- end }}

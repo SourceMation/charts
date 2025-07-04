@@ -9,10 +9,8 @@
 
 ## Before Installation
 
-
 > **Note:**
 > no action required
-
 
 ## After Installation
 
@@ -29,66 +27,65 @@
 > **Note:**
 > no action required
 
-
 ## Tips and Tricks
 
 > **Note:**
 > no tips and tricks
 
-
 ## Known Issues
+#### Error: Unable to continue with install: ConfigMap "cnpg-controller-manager-config" in namespace "lp-system" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "aaaa": current value is "bbbb"
 
-> **Note:**
-> Notify us: https://github.com/SourceMation/charts/issues
+Reason: Helm is trying to install a release named 'aaaa', but there’s already a resource (ConfigMap cnpg-controller-manager-config) in the lp-system namespace that belongs to another Helm release called 'bbbb'.
 
+Soloution:
 
+1. Use the same release name as before (bbbb)
+
+```bash
+helm upgrade --install bbbb -n lp-system ...
+```
+
+2. Delete the old Helm release (if you don’t need it)
+
+```bash
+helm uninstall bbbb -n lp-system
+```
 
 ## CLI installation
 
 ### Preparation
 
 ```bash
+export RELEASE_NAME=cnpg-operator
+export CHART_NAME=cnpg-operator
+export RELEASE_NAMESPACE=lp-system
+export CHART_VERSION=0.2.3
 
-export CHART_NAMESPACE=lp-system
-export CHART_VERSION=0.1.0
-
-kubectl create ns ${CHART_NAMESPACE}
-
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
-
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
-helm -n ${CHART_NAMESPACE} upgrade --install cnpg-operator \
---repo https://charts.sourcemation.com/ \
-cnpg-operator \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
-
 ```
 
 ### Validation and Testing
 
 ```bash
-
-kubectl -n ${CHART_NAMESPACE} get po
-helm -n ${CHART_NAMESPACE} test cnpg-operator
-
+kubectl -n ${RELEASE_NAMESPACE} get po
+helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```
 
 ## CLI removing
 
 ```bash
-
-helm -n ${CHART_NAMESPACE} uninstall cnpg-operator
-
-
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
+kubectl get crd -o name|grep 'cnpg.io'|xargs kubectl delete
+kubectl delete MutatingWebhookConfiguration/cnpg-mutating-webhook-configuration
+kubectl delete ValidatingWebhookConfiguration/cnpg-validating-webhook-configuration
 ```
-

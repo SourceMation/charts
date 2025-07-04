@@ -40,32 +40,33 @@
 ### Preparation
 
 ```bash
+export RELEASE_NAME=rabbitmq-ope
 export CHART_NAME=rabbitmq-operator
-export CHART_VERSION=0.1.0
-export CHART_NAMESPACE=lp-system
+export CHART_VERSION=0.1.10
+export RELEASE_NAMESPACE=lp-system
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ```bash
-helm -n ${CHART_NAMESPACE} upgrade --install ${CHART_NAME} \
---repo https://charts.sourcemation.com/  ${CHART_NAME} \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 --version ${CHART_VERSION}
 ```
 
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get all
-helm -n ${CHART_NAMESPACE} test ${CHART_NAME}
+kubectl -n ${RELEASE_NAMESPACE} get all
+helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall ${CHART_NAME}
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 kubectl get crd -o name | grep 'rabbitmq.com' | xargs kubectl delete
 ```

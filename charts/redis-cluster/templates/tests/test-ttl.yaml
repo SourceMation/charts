@@ -1,10 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ .Release.Name }}-test-ttl"
+  name: "{{ include "common.names.shortname" $ }}-test-ttl"
   annotations:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+  labels:
+    {{- include "common.labels.labels" $ | nindent 4 }}
 spec:
   containers:
     - name: redis-cli
@@ -13,10 +15,10 @@ spec:
         - sh
         - "-c"
         - |
-          redis-cli -c -h redis-cluster-leader -a P@ssword1 SET tempkey tempvalue EX 5 &&
+          redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} SET tempkey tempvalue EX 5 &&
           echo "Temporary key set: tempkey=tempvalue with TTL 5 seconds"
 
-          VALUE=$(redis-cli -c -h redis-cluster-leader -a P@ssword1 GET tempkey) &&
+          VALUE=$(redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} GET tempkey) &&
           if [ "$VALUE" = "tempvalue" ]; then
             echo "Key exists: $VALUE"
           else
@@ -25,7 +27,7 @@ spec:
 
           sleep 6
 
-          VALUE=$(redis-cli -c -h redis-cluster-leader -a P@ssword1 GET tempkey) &&
+          VALUE=$(redis-cli -c -h {{ include "common.names.shortname" $ }}-leader -a {{ .Values.global.password }} GET tempkey) &&
           if [ -z "$VALUE" ]; then
             echo "Key successfully expired after TTL"
           else

@@ -47,24 +47,20 @@
 ### Preparation
 
 ```bash
-export CHART_NAMESPACE=neuvector
+export RELEASE_NAME=neuvector
+export CHART_NAME=neuvector
+export RELEASE_NAMESPACE=neuvector
 export CHART_VERSION=0.1.0
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
-helm -n ${CHART_NAMESPACE} upgrade --install neuvector \
---repo https://charts.sourcemation.com/ \
-neuvector \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
 ```
@@ -72,12 +68,12 @@ neuvector \
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
-helm -n ${CHART_NAMESPACE} test neuvector
+kubectl -n ${RELEASE_NAMESPACE} get po
+helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall neuvector
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 ```

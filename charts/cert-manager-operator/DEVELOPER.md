@@ -2,17 +2,18 @@
  
 ## Installing from repo / Instalacja z repo 
  
-```bash 
-export CHART_VERSION=1.1.0
-export CHART_NAMESPACE=cert-manager
+```bash
+export RELEASE_NAME=cert-manager-operator
+export CHART_NAME=cert-manager-operator
+export RELEASE_NAMESPACE=cert-manager
 
-cd charts/charts/cert-manager-operator/${CHART_VERSION} 
+cd charts/charts/${CHART_NAME}
  
-helm upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
-cert-manager .  
+helm upgrade --install -n ${RELEASE_NAMESPACE} --create-namespace \
+${RELEASE_NAME} .  
 ``` 
 ## Removing
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} cert-manager
+helm uninstall -n ${RELEASE_NAMESPACE} ${RELEASE_NAME}
 ```

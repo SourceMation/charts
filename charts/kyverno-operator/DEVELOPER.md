@@ -3,21 +3,22 @@
 ## Installing from repo
  
 ```bash
+export RELEASE_NAME=kyverno
+export CHART_NAME=kyverno-operator
+export RELEASE_NAMESPACE=kyverno-operator
+
 git clone git@github.com:SourceMation/charts.git
-cd charts/charts/kyverno-operator/
+cd charts/charts/${CHART_NAME}
 
-export CHART_NAMESPACE=kyverno-operator
-
-helm  upgrade --install -n ${CHART_NAMESPACE} --create-namespace \
-kyverno-operator .
+helm -n ${RELEASE_NAMESPACE} upgrade --install --create-namespace \
+${RELEASE_NAME} .
 ``` 
 
 # Cleaning
 
 ```bash
-helm uninstall -n ${CHART_NAMESPACE} kyverno-operator
+helm uninstall -n ${RELEASE_NAMESPACE} ${RELEASE_NAME}
 ```
-
 
 # Testing
 

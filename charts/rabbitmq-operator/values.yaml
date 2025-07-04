@@ -19,7 +19,7 @@ rke2rabbitmqope:
   rabbitmqImage:
     registry: docker.io
     repository: sourcemation/rabbitmq-4
-    tag: "4.1.0-20250505-amd64"
+    tag: "4.1.1-20250605"
     digest: ""
     pullSecrets: []
   #credentialUpdaterImage:
@@ -55,7 +55,7 @@ rke2rabbitmqope:
     image:
       registry: docker.io
       repository: sourcemation/rabbitmq-cluster-operator
-      tag: "2.12.1-20250506-amd64"
+      tag: "2.14.0-20250608"
       digest: ""
       pullPolicy: IfNotPresent
       pullSecrets: []

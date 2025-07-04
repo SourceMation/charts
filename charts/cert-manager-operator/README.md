@@ -68,35 +68,35 @@ Solution:
 ### Preparation
 
 ```bash
-
-export CHART_NAMESPACE=cert-manager
+export RELEASE_NAME=cert-manager-operator
+export CHART_NAME=cert-manager-operator
+export RELEASE_NAMESPACE=cert-manager
 export CHART_VERSION=1.1.0
 
-kubectl create ns ${CHART_NAMESPACE}
-kubectl config set-context --current --namespace ${CHART_NAMESPACE}
+kubectl create ns ${RELEASE_NAMESPACE}
+kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 ```
 
 ### Go go helm
 
 ``` bash
-helm -n ${CHART_NAMESPACE} upgrade --install cert-manager \
---repo https://charts.sourcemation.com/ \
-cert-manager-operator \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 --version ${CHART_VERSION}
 ```
 
 ### Validation and Testing
 
 ```bash
-kubectl -n ${CHART_NAMESPACE} get po
+kubectl -n ${RELEASE_NAMESPACE} get po
 kubectl get issuers,clusterissuers,certificates,certificaterequests,orders,challenges -A
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${CHART_NAMESPACE} uninstall cert-manager-operator
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
 kubectl delete apiservice v1beta1.webhook.cert-manager.io
 kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
-kubectl -n ${CHART_NAMESPACE} delete secret/trust-manager-tls
+kubectl -n ${RELEASE_NAMESPACE} delete secret/trust-manager-tls
 ```
