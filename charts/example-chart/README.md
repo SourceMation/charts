@@ -2,25 +2,21 @@
 
 ### Are you looking for more information?
 
-1. Based on: https://github.com/cert-manager/cert-manager.git
-2. Documentation: https://cert-manager.io/docs/
+1. Based on: https://github.com/example-chart/example-chart.git
+2. Documentation: https://example-app.io/docs/
 3. Chart Source: https://github.com/SourceMation/charts.git
 
 
 ## Before Installation
 
-
 > **Note:**
 > no action required
 
 OR
-1. Install following charts
 
-```bash 
-
-helm upgrade install ...
-
-```
+The installation of cert-manager is required according to the instructions
+provided in the README file of the latest version:
+https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 
 ## After Installation
 
@@ -51,44 +47,45 @@ helm upgrade install ...
 
   OR
 
-#### Error: Unable to continue with install: CustomResourceDefinition "*.cert-manager.io" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "": current value is ""
+#### Error: Unable to continue with install: CustomResourceDefinition "*.example-chart.io" in namespace "" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key "meta.helm.sh/release-name" must equal "": current value is ""
 
-Reason: cert-manager is installed in another namespace
+Reason: example-chart is installed in another namespace
 
 Soloution:
 
-1. Skip the operator's depthyment or if do not have cert-manager installed, just clean resources
+Skip the operator's deployment or if do not have example-manager installed, just clean resources
 
 ```bash 
-kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
+kubectl get crd -o name | grep -i example-chart | xargs kubectl delete
 ```
-
 
 ## CLI installation
 
 ### Preparation
 
 ```bash
+export RELEASE_NAME=example-app
+export RELEASE_NAMESPACE=example-namespace
+export CHART_NAME=example-chart
+export CHART_VERSION=0.1.0
 
-export RELEASE_NAMESPACE=cert-manager
-export CHART_VERSION=1.0.0
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
 
+cat << EOF > /tmp/values.yaml
+example-app:
+  ingress:
+    host: 
+    - url: app.example.com
+EOF
 ```
 
 ### Go go helm
 
 ``` bash
-cat << EOF > /tmp/values.yaml
-
-EOF 
-
-
-helm -n ${RELEASE_NAMESPACE} upgrade --install example-chart \
---repo https://charts.sourcemation.com/ \
-example-chart \
+helm -n ${RELEASE_NAMESPACE} upgrade --install ${RELEASE_NAME} \
+${CHART_NAME} --repo https://charts.sourcemation.com/ \
 -f /tmp/values.yaml \
 --version ${CHART_VERSION}
 ```
@@ -97,12 +94,18 @@ example-chart \
 
 ```bash
 kubectl -n ${RELEASE_NAMESPACE} get po
+helm -n ${RELEASE_NAMESPACE} test ${RELEASE_NAME}
 ```
 
 ## CLI removing
 
 ```bash
-helm -n ${RELEASE_NAMESPACE} uninstall cert-manager-operator
-kubectl delete apiservice v1beta1.webhook.cert-manager.io
-kubectl get crd -o name | grep -i cert-manager | xargs kubectl delete
+helm -n ${RELEASE_NAMESPACE} uninstall ${RELEASE_NAME}
+```
+
+## After remove
+
+```bash
+kubectl delete apiservice v1beta1.webhook.example-chart.io
+kubectl get crd -o name | grep -i example-chart | xargs kubectl delete
 ```

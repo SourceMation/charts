@@ -5,30 +5,34 @@ annotations:
 #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
 #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: example-chart
-  catalog.cattle.io/namespace: example-namespace
+#  catalog.cattle.io/namespace: example-namespace
 apiVersion: v2
-appVersion: 1.0.0
+appVersion: 1.15.1
 dependencies:
 - name: common
   repository: https://charts.sourcemation.com/
   version: 0.1.x
+- condition: global.exampleCrd.enabled
+  name: example-chart
+  version: v1.15.1
+  repository: https://example-charts/
 #- condition: global.appCrd.enabled
-#  name: cert-manager
+#  name: example-chart
 #  version: v1.15.1
-#  repository: https://charts.jetstack.io
-#- condition: global.appCrd.enabled
-#  name: cert-manager
-#  version: v1.15.1
-#  repository: file://../charts/cert-manager
-
+#  repository: file://../charts/example-chart
+- condition: global.exampleChart.enabled
+  name: example-chart
+  version: v2.16.2
+  repository: https://example.charts/
+  alias: example-app
 description: SHORT-DESCRIPTION. Install only once on kubernetes / Install many times on kubernetes. Security/Monitoring/CICD Classic.
 home: https://linuxpolska.com
 icon: https://linuxpolska.com/logo/LinuxPolska-icon.png
 keywords:
 # dodać nazwy komponentów oraz nazwę kategorii
-- security
-- cert manager
-- cert-manager
+- example-category
+- example chart
+- example-chart
 #kubeVersion: '>=1.26.0-0 <1.31.0-0'
 maintainers:
 # podaj swoje dane
@@ -38,4 +42,4 @@ name: example-chart
 sources:
 - https://github.com/SourceMation/charts.git
 type: application
-version: 1.0.0
+version: 0.1.0
