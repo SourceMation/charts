@@ -1,750 +1,500 @@
 categories:
 - security
 - monitoring
-namespace: example-namespace
+#namespace: example-namespace
 questions:
 
-####################
-## start example values section
-####################
+##################################
+## start example values section ##
+##################################
 
 - variable: questionsSpec.reference.radio
+  default: "false"
   type: radio
-  tooltip: "No help available."
   label: label radio
   description: 'desc radio'
-  default: "false"
   group: "Vars Reference"
   options:
     custom1: Custom one
     custom2: Custom two
-  show_if: "true&&true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.boolean
+  default: "false"
   type: boolean
-  tooltip: "No help available."
   label: boolean labels
   description: 'Integrate App1 with App2'
-  default: "false"
   group: "Vars Reference"
-  options: []
-  show_if: "true&&true"
   show_subquestions_if: "true" 
   subquestions:
   - variable: questionsSpec.reference.subquectionHostname.0.myHost
+    default: ""
     type: hostname
-    tooltip: "No help available."
     label: label hostnameSubquestion
     description: 'desc hostnameSubquestion'
     min_length: 6
-    default: ""
-#    group: "Vars Reference"
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.string
+  default: ""
   type: string
-  tooltip: "No help available."
   label: label string
   description: 'Default username'
   required: true
-  default: ""
-  tooltip: "No help available."
 #  valid_chars: "^[a-z]+$"
 #  invalid_chars: "[0-9]"
-  min_length: 1
+#  min_length: 3
 #  max_length: 9
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.password
+  default: "P@ssword1"
   type: password
-  tooltip: "No help available."
   label: label password
   description: 'Default password: P@ssword1'
-  default: "P@ssword1"
   min_length: 6
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.int
+  default: "2"
   type: int
-  tooltip: "No help available."
   label: label int
   description: 'desc int'
-  default: "2"
   min: 1
   max: 10
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.enumName
+  default: "ClusterIP"
   type: enum
-  tooltip: "No help available."
   label: label enum
   description: 'desc enum'
-  default: "ClusterIP"
   group: "Vars Reference"
   options:
   - "ClusterIP"
   - "LoadBalancer"
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.enumSingle
+  default: "ClusterIP"
   type: enum
-  tooltip: "No help available."
   label: label enum
   description: 'desc enum'
-  default: "ClusterIP"
   group: "Vars Reference"
   options:
     ClusterIP: Cluster IP
     LoadBalancer: Load Balancer
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.enumMultiple
+  default: "ClusterIP"
   type: enum
-  tooltip: "No help available."
   label: label enum
   description: 'desc enum'
-  default: "ClusterIP"
   group: "Vars Reference"
   options:
     ClusterIP: Cluster IP
     LoadBalancer: Load Balancer
-  show_if: "true"
-  show_subquestions_if: "true" 
   multiple: true
 
 - variable: questionsSpec.reference.storageclass
-  tooltip: "No help available."
+  default: ""
+  type: storageclass
   label: label storageclass
   description: 'Use default storageclass if empty'
-  type: storageclass
-  default: ""
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.hostname
+  default: "hostnamedef"
   type: hostname
-  tooltip: "No help available."
   label: label hostname
   description: 'desc hostname'
-  default: "hostnamedef"
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.cloudcredential
+  default: "cloudcredentialdef"
   type: cloudcredential
-  tooltip: "No help available."
   label: label cloudcredential
   description: 'desc cloudcredential'
-  default: "cloudcredentialdef"
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.referenceServiceName
+  default: "default-reference"
   type: reference[service]
-  tooltip: "No help available."
   label: label referenceservice
   description: 'desc referenceservice'
-  default: "default-reference"
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.referenceConfigMap
+  default: "default-reference"
   type: reference[configmap]
-  tooltip: "No help available."
   label: label referenceconfigmap
   description: 'desc referenceconfigmap'
-  default: "default-reference"
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.referenceSecret
+  default: "default-reference"
   type: reference[secret]
-  tooltip: "No help available."
   label: label referencesecret
   description: 'desc referencesecret'
-  default: "default-reference"
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.secret
+  default: "secretdef"
   type: secret
-  tooltip: "No help available."
   label: label secret
   description: 'desc secret'
-  default: "secretdef"
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.referencePvc
+  default: "default-reference"
   type: reference[persistentvolumeclaim]
-  tooltip: "No help available."
   label: label referencepvc
   description: 'desc referencepvc'
-  default: "default-reference"
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.pvc
+  default: "pvcdef"
   type: pvc
-  tooltip: "No help available."
   label: label pvc
   description: 'desc pvc'
-  default: "pvcdef"
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
+
 - variable: questionsSpec.reference.mapString
   type: map[string]
-  tooltip: "No help available."
   label: label mapString
   description: 'desc mapString'
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
 
 - variable: questionsSpec.reference.arrayString
   type: array[string]
-  tooltip: "No help available."
   label: label arrayString
   description: 'desc arrayString'
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
 
 - variable: questionsSpec.reference.yaml
+# default: defaultOneLine
   type: yaml
-  tooltip: "No help available."
   label: label yaml
   description: 'desc yaml'
-# default: defaultOneLine
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
 
 - variable: questionsSpec.reference.multiline
-  type: multiline
-  tooltip: "No help available."
-  label: label multiline
-  description: 'desc multiline'
   default: |
     exampleLineOne
     exampleLineTwo
+  type: multiline
+  label: label multiline
+  description: 'desc multiline'
   group: "Vars Reference"
-  options: []
-  show_if: "true"
-  show_subquestions_if: "true" 
 
-####################
-## end example values section
-####################
-
-
+################################
+## end example values section ##
+################################
 
 # Components
-- variable: questionsSpec.kibanaApp.enabled
-  default: "true"
-  label: "Deploy Kibana"
+## CRD
+- variable: global.exampleCrd.enabled
+  default: true
   type: boolean
+  label: "Deploy example-app CRD"
   group: "Components"
 
-
-# Integrations 
-
-
-- variable: questionsSpec.k8sPlatform
-  type: enum
-  tooltip: "No help available."
-  label: Kubernetes Platform
-  description: 'Kubernetes Platform'
-  default: "rke2"
-  group: "Integrations"
-  options:
-    rke2: RKE2
-  show_if: "true"
-  show_subquestions_if: "true" 
-
-- variable: questionsSpec.kibanaApp.integrations.otel.enabled
-  label: Integrate Kibana with OTEL
-  description: ''
+## APP
+- variable: global.exampleChart.enabled
+  default: true
   type: boolean
-  default: "false"
+  label: "Deploy example-app"
+  group: "Components"
+
+# Integrations
+
+## metrics
+- variable: example-app.metrics.enabled
+  default: false
+  type: boolean
+  label: Integrate example-app with Promehteus
+  description: "Integrate example-app with Promehteus"
   group: "Integrations"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
+  show_if: "global.exampleChart.enabled=true"
+
+## otel
+- variable: example-app.otel.enabled
+  default: false
+  type: boolean
+  label: Integrate example-app with OTEL
+  description: 'Integrate example-app with OTEL'
+  group: "Integrations"
+  show_if: "global.exampleChart.enabled=true"
+  show_subquestions_if: "true"
   subquestions:
-  - variable: questionsSpec.kibanaApp.integrations.otel.serviceName
+  - variable: example-app.otel.serviceName
+    default: "otel.kube-system.svc:4444"
     type: string
-    tooltip: "No help available."
     label: Service Name OTEL
     description: 'Service Name OTEL'
-    required: false
-    default: "otel.kube-system.svc:4444"
-    tooltip: "No help available."
   #  valid_chars: "^[a-z]+$"
   #  invalid_chars: "[0-9]"
     min_length: 1
   #  max_length: 9
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.integrations.otel.username
+  - variable: example-app.otel.username
+    default: "admin"
     type: string
-    tooltip: "No help available."
     label: Username OTEL
     description: 'Username OTEL'
-    required: false
-    default: "admin"
-    tooltip: "No help available."
   #  valid_chars: "^[a-z]+$"
   #  invalid_chars: "[0-9]"
     min_length: 1
   #  max_length: 9
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.integrations.otel.password
+  - variable: example-app.otel.password
+    default: "P@ssword1"
     type: password
-    tooltip: "No help available."
     label: Password / Token OTEL
     description: 'Default Password / Token: P@ssword1'
-    default: "P@ssword1"
-    min_length: 5
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-
-- variable: questionsSpec.kibanaApp.integrations.prometheus.enabled
-  label: Integrate Kibana with Prometheus
-  description: ''
-  type: boolean
-  default: "false"
-  group: "Integrations"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
-  subquestions:
-
-
-# Service Discovery
-## Service Discovery - Kibana
-
-- variable: questionsSpec.kibanaApp.ingress.enabled
-  label: Enable Ingress URL for Kibana
-  description: 'Enable Ingress URL for Kibana'
-  type: boolean
-  default: "false"
-  group: "Service Discovery"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.kibanaApp.ingress.host.0.url
-    type: hostname
-    tooltip: "No help available."
-    label: Ingress URL Kibana
-    description: 'Ingress URL Kibana'
+    tooltip: "Use command: openssl rand -base64 12"
     min_length: 6
-    default: ""
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.ingress.ingressClass
-    type: string
-    tooltip: "No help available."
-    label: Ingress Class Kibana
-    description: 'Ingress Class Kibana'
-    required: false
-    default: ""
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.ingress.annotations
-    type: map[string]
-    tooltip: "No help available."
-    label: Ingress Annotation Kibana
-    description: 'Ingress Annotation Kibana'
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
 
-
-
-- variable: questionsSpec.kibanaApp.service.enabled
-  label: Custom Service for Kibana
-  description: ''
+## cert-manager
+- variable: questionsSpec.cert-manager.enabled
+  default: true
   type: boolean
-  default: "false"
-  group: "Service Discovery"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
-  show_subquestions_if: "true" 
-  subquestions:
-  - variable: questionsSpec.kibanaApp.service.type
-    type: enum
-    tooltip: "No help available."
-    label: Service Type Kibana
-    description: 'Service Type Kibana'
-    default: "ClusterIP"
-    options:
-      ClusterIP: Cluster IP
-      LoadBalancer: Load Balancer
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.service.annotations
-    type: map[string]
-    tooltip: "No help available."
-    label: Service Annotation Kibana
-    description: 'Ingress Annotation Kibana'
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
+  label: Integrate example-app with Cert-Manager
+  description: "Integrate example-app with Cert-Manager"
+  group: "Integrations"
+  show_if: "global.exampleChart.enabled=true"
+
+## k8s platform
+#- variable: questionsSpec.k8sPlatform
+#  default: "rke2"
+#  type: enum
+#  label: Kubernetes Platform
+#  description: 'Kubernetes Platform'
+#  group: "Integrations"
+#  options:
+#    rke2: RKE2
 
 
 # Storage
 
-- variable: questionsSpec.kibanaApp.storage.enabled
-  label: Custom Storage for Kibana
-  description: ''
-  type: boolean
+- variable: questionsSpec.example-app.storage.enabled
   default: "false"
+  type: boolean
+  label: Custom Storage for example-app
+  description: ''
   group: "Storage"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
+  show_if: "questionsSpec.example-app.enabled=true"
   show_subquestions_if: "true" 
   subquestions:
-  - variable: questionsSpec.kibanaApp.storage.createMode
-    type: enum
-    tooltip: "No help available."
-    label: PVC Create Mode Kibana
-    description: 'PVC or Object Create Mode Kibana'
+  - variable: questionsSpec.example-app.storage.createMode
     default: "create"
+    type: enum
+    label: PVC Create Mode example-app
+    description: 'PVC or Object Create Mode example-app'
     options:
       create: Create
       existing: Existing
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.type
-    type: enum
-    tooltip: "No help available."
-    label: Storage Type Kibana
-    description: 'Storage Type Kibana'
+  - variable: questionsSpec.example-app.storage.type
     default: "pvc"
+    type: enum
+    label: Storage Type example-app
+    description: 'Storage Type example-app'
     options:
       pvc: PVC
       s3: S3 Object Storage
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.size
+  - variable: questionsSpec.example-app.storage.size
+    default: "2"
     type: int
-    tooltip: "No help available."
-    label: Storage Size Kibana
+    label: Storage Size example-app
     description: 'GiB'
-#    default: "2"
 #    min: 1
 #    max: 10
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=pvc"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.accessMode
-    type: enum
-    tooltip: "No help available."
-    label: PVC Access Mode Kibana
-    description: 'PVC Access Mode Kibana'
+    show_if: "questionsSpec.example-app.storage.createMode=create&&questionsSpec.example-app.storage.type=pvc"
+  - variable: questionsSpec.example-app.storage.accessMode
     default: "ReadWriteOnce"
+    type: enum
+    label: PVC Access Mode example-app
+    description: 'PVC Access Mode example-app'
     options:
       ReadWriteOnce: ReadWriteOnce
       ReadOnlyMany: ReadOnlyMany
       ReadWriteMany: ReadWriteMany
       ReadWriteOncePod: ReadWriteOncePod
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=pvc"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.storageClass
-    tooltip: "No help available."
-    label: PVC Storage Class Kibana
-    description: 'PVC Storage Class Kibana'
+    show_if: "questionsSpec.example-app.storage.createMode=create&&questionsSpec.example-app.storage.type=pvc"
+  - variable: questionsSpec.example-app.storage.storageClass
+    default: ""
     type: storageclass
-#    default: ""
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=pvc"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.existingPvcName
+    label: PVC Storage Class example-app
+    description: 'PVC Storage Class example-app'
+    show_if: "questionsSpec.example-app.storage.createMode=create&&questionsSpec.example-app.storage.type=pvc"
+  - variable: questionsSpec.example-app.storage.existingPvcName
+#    default: "default-reference"
     type: reference[persistentvolumeclaim]
-    tooltip: "No help available."
-    label: PVC Existing Name Kibana
-    description: 'PVC Existing Name Kibana'
-#    default: "default-reference"
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=existing&&questionsSpec.kibanaApp.storage.type=pvc"
-    show_subquestions_if: "true" 
-
-
-  - variable: questionsSpec.kibanaApp.storage.object.url
-    type: string
-    tooltip: "No help available."
-    label: OBJECT URL Kibana
-    description: 'OBJECT URL Kibana'
-    required: true
+    label: PVC Existing Name example-app
+    description: 'PVC Existing Name example-app'
+    show_if: "questionsSpec.example-app.storage.createMode=existing&&questionsSpec.example-app.storage.type=pvc"
+  - variable: questionsSpec.example-app.storage.object.url
     default: "https://s3.example.com:443"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.accessKey
     type: string
-    tooltip: "No help available."
-    label: OBJECT Access Key Kibana
-    description: 'OBJECT Access Key Kibana / Login'
-    required: false
-    default: "minioadmin"
-    tooltip: "No help available."
+    label: OBJECT URL example-app
+    description: 'OBJECT URL example-app'
+    required: true
   #  valid_chars: "^[a-z]+$"
   #  invalid_chars: "[0-9]"
     min_length: 1
   #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.secretKey
+    show_if: "questionsSpec.example-app.storage.createMode=create&&questionsSpec.example-app.storage.type=s3"
+  - variable: questionsSpec.example-app.storage.object.accessKey
+    default: "minioadmin"
+    type: string
+    label: OBJECT Access Key example-app
+    description: 'OBJECT Access Key example-app / Login'
+    required: false
+  #  valid_chars: "^[a-z]+$"
+  #  invalid_chars: "[0-9]"
+    min_length: 1
+  #  max_length: 9
+    show_if: "questionsSpec.example-app.storage.createMode=create&&questionsSpec.example-app.storage.type=s3"
+  - variable: questionsSpec.example-app.storage.object.secretKey
+    default: "minioadmin"
     type: password
-    tooltip: "No help available."
-    label: OBJECT Secret Key Kibana
+    label: OBJECT Secret Key example-app
     description: 'Default password: minioadmin'
-    default: "minioadmin"
     min_length: 5
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.bucket
+    show_if: "questionsSpec.example-app.storage.createMode=create&&questionsSpec.example-app.storage.type=s3"
+  - variable: questionsSpec.example-app.storage.object.bucket
+#    default: "default-bucket"
     type: string
-    tooltip: "No help available."
-    label: OBJECT Bucket Kibana
-    description: 'OBJECT Bucket Kibana'
+    label: OBJECT Bucket example-app
+    description: 'OBJECT Bucket example-app'
     required: false
-#    default: ""
-    tooltip: "No help available."
   #  valid_chars: "^[a-z]+$"
   #  invalid_chars: "[0-9]"
     min_length: 1
   #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.path
-    type: string
-    tooltip: "No help available."
-    label: OBJECT Path Kibana
-    description: 'OBJECT Path Kibana'
-    required: false
+    show_if: "questionsSpec.example-app.storage.createMode=create&&questionsSpec.example-app.storage.type=s3"
+  - variable: questionsSpec.example-app.storage.object.path
     default: "/directory"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.class
     type: string
-    tooltip: "No help available."
-    label: OBJECT Class Kibana
-    description: 'OBJECT Class Kibana'
+    label: OBJECT Path example-app
+    description: 'OBJECT Path example-app'
     required: false
-    default: "STANDARD"
-    tooltip: "No help available."
   #  valid_chars: "^[a-z]+$"
   #  invalid_chars: "[0-9]"
     min_length: 1
   #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=create&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.storage.object.existingSecretName
-    type: reference[secret]
-    tooltip: "No help available."
-    label: PVC Existing Name Kibana
-    description: 'PVC Existing Name Kibana'
+    show_if: "questionsSpec.example-app.storage.createMode=create&&questionsSpec.example-app.storage.type=s3"
+  - variable: questionsSpec.example-app.storage.object.class
+    default: "STANDARD"
+    type: string
+    label: OBJECT Class example-app
+    description: 'OBJECT Class example-app'
+    required: false
+  #  valid_chars: "^[a-z]+$"
+  #  invalid_chars: "[0-9]"
+    min_length: 1
+  #  max_length: 9
+    show_if: "questionsSpec.example-app.storage.createMode=create&&questionsSpec.example-app.storage.type=s3"
+  - variable: questionsSpec.example-app.storage.object.existingSecretName
 #    default: "default-reference"
-    options: []
-    show_if: "questionsSpec.kibanaApp.storage.createMode=existing&&questionsSpec.kibanaApp.storage.type=s3"
-    show_subquestions_if: "true" 
-
+    type: reference[pvc]
+    label: PVC Existing Name example-app
+    description: 'PVC Existing Name example-app'
+    show_if: "questionsSpec.example-app.storage.createMode=existing&&questionsSpec.example-app.storage.type=s3"
 
 # Workloads
 
-## Custom Default Credentials for Kibana
-
-- variable: questionsSpec.kibanaApp.workloads.enabled
-  label: Custom Default Credentials for Kibana
-  description: ''
-  type: boolean
+- variable: questionsSpec.example-app.workloads.enabled
   default: "true"
+  type: boolean
+  label: Custom Default Credentials for example-app
+  description: ''
   group: "Workloads"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
+  show_if: "questionsSpec.example-app.enabled=true"
   show_subquestions_if: "true" 
   subquestions:
-  - variable: questionsSpec.kibanaApp.workloads.authCreateMode
-    type: enum
-    tooltip: "No help available."
-    label: Credentials Create Mode Kibana
-    description: 'Credentials Create Mode Kibana'
+  - variable: questionsSpec.example-app.workloads.authCreateMode
     default: "create"
+    type: enum
+    label: Credentials Create Mode example-app
+    description: 'Credentials Create Mode example-app'
     options:
       create: Create
       generate: Generate
       existing: Existing
-    show_if: "true"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.workloads.authUsername
-    type: string
-    tooltip: "No help available."
-    label: Username Kibana
-    description: 'Login / Username Kibana'
-    required: false
+  - variable: questionsSpec.example-app.workloads.authUsername
     default: "admin"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "questionsSpec.kibanaApp.workloads.authCreateMode=create"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.workloads.authPassword
-    type: password
-    tooltip: "No help available."
-    label: Password Kibana
-    description: 'Default password: P@ssword1'
+    type: string
+    label: Username example-app
+    description: 'Login / Username example-app'
+    #valid_chars: "^[a-z]+$"
+    #invalid_chars: "[0-9]"
+    #min_length: 1
+    #max_length: 9
+    show_if: "questionsSpec.example-app.workloads.authCreateMode=create"
+  - variable: questionsSpec.example-app.workloads.authPassword
     default: "P@ssword1"
+    type: password
+    label: Password example-app
+    description: 'Default password: P@ssword1'
     min_length: 5
-    options: []
-    show_if: "questionsSpec.kibanaApp.workloads.authCreateMode=create"
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.workloads.authExisitingSecret
+    show_if: "questionsSpec.example-app.workloads.authCreateMode=create"
+  - variable: questionsSpec.example-app.workloads.authExisitingSecret
+    #default: "default-secret-name"
     type: reference[secret]
-    tooltip: "No help available."
-    label: Existing Secret Name Kibana
-    description: 'Existing Secret Name Kibana'
-#    default: "default-reference"
-    options: []
-    show_if: "questionsSpec.kibanaApp.workloads.authCreateMode=existing"
-    show_subquestions_if: "true" 
+    label: Existing Secret Name example-app
+    description: 'Existing Secret Name example-app'
+    show_if: "questionsSpec.example-app.workloads.authCreateMode=existing"
 
-## Custom resource consumption for Kibana
-
-- variable: questionsSpec.kibanaApp.workloads.limits.enabled
-  label: Custom resource consumption for Kibana
-  description: ''
-  type: boolean
+- variable: questionsSpec.example-app.workloads.limits.enabled
   default: "false"
+  type: boolean
+  label: Custom resource consumption for example-app
+  description: ''
   group: "Workloads"
-  options: []
-  show_if: "questionsSpec.kibanaApp.enabled=true"
+  show_if: "questionsSpec.example-app.enabled=true"
   show_subquestions_if: "true" 
   subquestions:
-  - variable: questionsSpec.kibanaApp.workloads.limits.cpu
+  - variable: questionsSpec.example-app.workloads.limits.cpu
     type: int
-    tooltip: "No help available."
-    label: Limit Milicores Kibana (1000 = 1vCPU)
-    description: 'Limit Milicores Kibana (1000 = 1vCPU)'
-    required: false
-#    default: "500"
+    label: Limit Milicores example-app (1000 = 1vCPU)
+    description: 'Limit Milicores example-app (1000 = 1vCPU)'
     tooltip: "1000 = 1vCPU"
-    options: []
-    show_subquestions_if: "true" 
-  - variable: questionsSpec.kibanaApp.workloads.limits.memory
+  - variable: questionsSpec.example-app.workloads.limits.memory
     type: int
-    tooltip: "No help available."
-    label: Limit RAM Kibana (MiB)
-    description: 'Limit RAM Kibana (MiB)'
-    required: false
-#    default: "500"
-    tooltip: "No help available."
-    options: []
-    show_subquestions_if: "true" 
+    label: Limit RAM example-app (MiB)
+    description: 'Limit RAM example-app (MiB)'
 
+# Others
 
 - variable: questionsSpec.others.overwriteNamespace.enabled
+  default: "false"
+  type: boolean
   label: Set Custom Namespace for Application
   description: ''
-  type: boolean
-  default: "false"
   group: "Others"
-  options: []
-  show_if: "true"
   show_subquestions_if: "true" 
   subquestions:
   - variable: questionsSpec.others.overwriteNamespace.name
     type: string
-    tooltip: "No help available."
     label: Overwrite Chart Namespac
     description: 'Overwrite Chart Namespace'
-    required: false
-#    default: "admin"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
+    #valid_chars: "^[a-z]+$"
+    #invalid_chars: "[0-9]"
+    #min_length: 1
+    #max_length: 9
 
 - variable: questionsSpec.others.overwriteName.enabled
+  default: "false"
+  type: boolean
   label: Set Custom Release Name for Application
   description: ''
-  type: boolean
-  default: "false"
   group: "Others"
-  options: []
-  show_if: "true"
   show_subquestions_if: "true" 
   subquestions:
   - variable: questionsSpec.others.overwriteName.release
     type: string
-    tooltip: "No help available."
     label: Overwrite Chart Release Name
     description: 'Overwrite Chart Release Name'
-    required: false
-#    default: "admin"
-    tooltip: "No help available."
-  #  valid_chars: "^[a-z]+$"
-  #  invalid_chars: "[0-9]"
-    min_length: 1
-  #  max_length: 9
-    options: []
-    show_if: "true"
-    show_subquestions_if: "true" 
+    #valid_chars: "^[a-z]+$"
+    #invalid_chars: "[0-9]"
+    #min_length: 3
+    #max_length: 9
 
-
-
+# Check the official Rancher guide
+# https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/helm-charts-in-rancher/create-apps

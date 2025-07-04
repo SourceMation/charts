@@ -1,11 +1,28 @@
-questionsSpec:
-  kibanaApp:
-    ingress:
-      host: 
-      - url: kibana.example.com
-    service:
-      annotations:
-        kube-vip.io/loadbalancerIPs: 172.0.0.1
+global:
+  exampleCrd:
+    enabled: true
+  exampleChart:
+    enabled: true
+
+example-chart:
+  installCrd: true
+
+example-app:
+  metrics:
+    enabled: false
+  
+  otel:
+    enabled: false
+    serviceName: "otel.kube-system.svc:4444"
+    username: "admin"
+    password: "P@ssword1"
+
+  ingress:
+    host: 
+    - url: app.example.com
+  service:
+    annotations:
+      kube-vip.io/loadbalancerIPs: 172.0.0.1
 
   reference:
     subquectionHostname:
