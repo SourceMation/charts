@@ -50,7 +50,7 @@
 export RELEASE_NAME=neuvector
 export CHART_NAME=neuvector
 export RELEASE_NAMESPACE=neuvector
-export CHART_VERSION=0.1.0
+export CHART_VERSION=0.1.3
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
