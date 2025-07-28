@@ -16,4 +16,23 @@ questions:
   show_if: "true"
   show_subquestions_if: "true" 
 
-
+# Service Discovery
+- variable: core.manager.ingress.enabled
+  label: "Enable NeuVector Ingress"
+  description: "Enable NeuVector Ingress"
+  group: "Service Discovery"
+  type: boolean
+  show_subquestion_if: true
+  subquestions:
+  - variable: core.manager.ingress.ingressClassName
+    label: NeuVector Ingress Class Name
+    description: "NeuVector Ingress Class Name"
+    group: "Service Discovery"
+    type: string
+  - variable: core.manager.ingress.host
+    default: "neuvector.apps.example.com"
+    label: "URL"
+    description: "Configure NeuVector Ingress URL"
+    group: "Service Discovery"
+    type: hostname
+    min: 6

@@ -50,7 +50,7 @@ core:
       enabled: false
     ingress:
       enabled: true
-      host: neuvector.example.com
+      host: neuvector.apps.example.com
       ingressClassName: ""
       path: "/"
       annotations:
