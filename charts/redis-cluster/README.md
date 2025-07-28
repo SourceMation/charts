@@ -49,7 +49,7 @@
 export RELEASE_NAME=redis-cluster
 export CHART_NAME=redis-cluster
 export RELEASE_NAMESPACE=redis
-export CHART_VERSION=0.1.1
+export CHART_VERSION=0.2.0
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
