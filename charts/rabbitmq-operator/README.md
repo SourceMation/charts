@@ -42,7 +42,7 @@
 ```bash
 export RELEASE_NAME=rabbitmq-ope
 export CHART_NAME=rabbitmq-operator
-export CHART_VERSION=0.1.11
+export CHART_VERSION=0.1.12
 export RELEASE_NAMESPACE=lp-system
 
 kubectl create ns ${RELEASE_NAMESPACE}
