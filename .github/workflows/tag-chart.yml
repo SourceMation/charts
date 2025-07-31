@@ -28,9 +28,8 @@ jobs:
           echo "Source branch: $SOURCE_BRANCH"
           
           if [[ $SOURCE_BRANCH =~ ^automated/([^-]+)-(.+)$ ]]; then
-            CHART_NAME="${BASH_REMATCH[1]}"
-            VERSION="${BASH_REMATCH[2]}"
-            
+            CHART_NAME=$(echo $SOURCE_BRANCH | sed 's/automated\///' | sed 's/-[0-9]\+\.[0-9]\+\.[0-9]\+$//')
+            VERSION=$(echo $SOURCE_BRANCH | awk -F'-' '{print $NF}')
             TAG_NAME="${CHART_NAME}/${VERSION}"
             echo "Creating tag: $TAG_NAME"
             
