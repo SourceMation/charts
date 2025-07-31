@@ -1,0 +1,82 @@
+name: 'Tag chart on PR merge'
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - 'main'
+
+jobs:
+  tag-chart:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract version from source branch and create tag
+        id: push-tag
+        run: |
+          SOURCE_BRANCH="${{ github.event.pull_request.head.ref }}"
+          echo "Source branch: $SOURCE_BRANCH"
+          
+          if [[ $SOURCE_BRANCH =~ ^automated/([^-]+)-(.+)$ ]]; then
+            CHART_NAME=$(echo $SOURCE_BRANCH | sed 's/automated\///' | sed 's/-[0-9]\+\.[0-9]\+\.[0-9]\+$//')
+            VERSION=$(echo $SOURCE_BRANCH | awk -F'-' '{print $NF}')
+            TAG_NAME="${CHART_NAME}/${VERSION}"
+            echo "Creating tag: $TAG_NAME"
+            
+            MERGE_COMMIT="${{ github.sha }}"
+            echo "Merge commit: $MERGE_COMMIT"
+            
+            git config user.name "bot-lp"
+            git config user.email "bot@linuxpolska.pl"
+            
+            git tag -a "$TAG_NAME" "$MERGE_COMMIT" -m "[sourcemation/${CHART_NAME}] Release ${VERSION}"
+            git push origin "$TAG_NAME"
+            
+            echo "Successfully created tag: $TAG_NAME"
+            echo "tag_created=true" >> $GITHUB_OUTPUT
+            echo "tag_name=$TAG_NAME" >> $GITHUB_OUTPUT
+          else
+            echo "Branch name '$SOURCE_BRANCH' doesn't match expected pattern 'automated/{chart_name}-{version}'"
+            echo "Skipping tag creation"
+            echo "tag_created=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment on PR
+        if: steps.push-tag.outputs.tag_created == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.payload.pull_request.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🏷️ Auto-tagged as \`${{ steps.push-tag.outputs.tag_name }}\` from merge commit ${{ github.sha }}`
+            })
+
+      - name: Trigger index-update workflow
+        if: steps.push-tag.outputs.tag_created == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const response = await github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'index-update.yml',
+              ref: 'main',
+              inputs: {
+                tag_name: '${{ steps.push-tag.outputs.tag_name }}',
+                chart_name: '${{ steps.push-tag.outputs.tag_name }}'.split('/')[0],
+                version: '${{ steps.push-tag.outputs.tag_name }}'.split('/')[1]
+              }
+            });
+            console.log('Triggered workflow:', response.status);

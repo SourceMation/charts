@@ -3,6 +3,21 @@ on:
   push:
     tags:
       - '*/*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name (e.g., jenkins/1.2.3)'
+        required: true
+        type: string
+      chart_name:
+        description: 'Chart name (e.g., jenkins)'
+        required: true
+        type: string
+      version:
+        description: 'Chart version (e.g., 1.2.3)'
+        required: true
+        type: string
+
 
 jobs:
   update-index:
@@ -20,15 +35,26 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract chart name and version from tag
+      - name: Extract chart name and version
         id: extract-info
         run: |
-          TAG_NAME=${GITHUB_REF#refs/tags/}
-          CHART_NAME=${TAG_NAME%%/*}
-          CHART_VERSION=${TAG_NAME#*/}
-          echo "chart_name=$CHART_NAME" >> $GITHUB_OUTPUT
-          echo "chart_version=$CHART_VERSION" >> $GITHUB_OUTPUT
-          echo "Processing chart: $CHART_NAME, version: $CHART_VERSION"
+          if [[ -n "${{ inputs.tag_name }}" ]]; then
+            TAG_NAME=${{ inputs.tag_name }}
+            CHART_NAME=${{ inputs.chart_name }}
+            CHART_VERSION=${{ inputs.version }}
+
+            echo "chart_name=$CHART_NAME" >> $GITHUB_OUTPUT
+            echo "chart_version=$CHART_VERSION" >> $GITHUB_OUTPUT
+            echo "Processing chart: $CHART_NAME, version: $CHART_VERSION"
+          else
+            TAG_NAME=${GITHUB_REF#refs/tags/}
+            CHART_NAME=${TAG_NAME%%/*}
+            CHART_VERSION=${TAG_NAME#*/}
+            
+            echo "chart_name=$CHART_NAME" >> $GITHUB_OUTPUT
+            echo "chart_version=$CHART_VERSION" >> $GITHUB_OUTPUT
+            echo "Processing chart: $CHART_NAME, version: $CHART_VERSION"
+          fi
       
       - name: Checkout main branch for the chart source
         uses: actions/checkout@v3
@@ -60,8 +86,12 @@ jobs:
       - name: Package Helm chart
         if: steps.check-version.outputs.chart_version_matches == 'true'
         run: |
-          mkdir -p charts/${{ steps.extract-info.outputs.chart_name }}
-          helm package chart-source/charts/${{ steps.extract-info.outputs.chart_name }} -d charts/${{ steps.extract-info.outputs.chart_name }}
+          if [ "$(yq .version chart-source/charts/${{ steps.extract-info.outputs.chart_name }}/Chart.yaml)" == "${{ steps.extract-info.outputs.chart_version }}" ]; then
+            mkdir -p charts/${{ steps.extract-info.outputs.chart_name }}
+            helm package chart-source/charts/${{ steps.extract-info.outputs.chart_name }} -d charts/${{ steps.extract-info.outputs.chart_name }}
+          else
+            echo "The chart version is incorrect!"
+          fi
       
       - name: Checkout index branch for index.yaml
         if: steps.check-version.outputs.chart_version_matches == 'true'
