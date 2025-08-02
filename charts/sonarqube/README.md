@@ -42,7 +42,7 @@
 ```bash
 export RELEASE_NAME=sonarqube
 export CHART_NAME=sonarqube
-export CHART_VERSION=0.3.1
+export CHART_VERSION=0.4.0
 export RELEASE_NAMESPACE=sonarqube
 export CHART_URL=sonarqube.apps.example.com
 export CERT_SECRET_NAME=sonarqube-tls-cert
