@@ -59,7 +59,7 @@ helm uninstall bbbb -n lp-system
 export RELEASE_NAME=cnpg-operator
 export CHART_NAME=cnpg-operator
 export RELEASE_NAMESPACE=lp-system
-export CHART_VERSION=0.4.0
+export CHART_VERSION=0.5.0
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
