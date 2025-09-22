@@ -2,17 +2,17 @@ annotations:
   catalog.cattle.io/display-name: Redis Cluster (2/2) - App
   catalog.cattle.io/os: linux
   catalog.cattle.io/permits-os: linux
-#  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
-#  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
+  #  catalog.cattle.io/kube-version: '>=1.26.0-0 < 1.31.0-0'
+  #  catalog.cattle.io/rancher-version: '>= 2.8.0-0 < 2.10.0-0'
   catalog.cattle.io/release-name: redis-cluster
 apiVersion: v2
-appVersion: 0.17.0
+appVersion: 0.17.1
 dependencies:
   - name: common
     repository: https://sourcemation.github.io/charts/
     version: 0.1.x
   - name: redis-cluster
-    version: 0.17.0
+    version: 0.17.1
     repository: https://ot-container-kit.github.io/helm-charts
 description: Provides easy redis-cluster setup definitions for Kubernetes. Install many times on kubernetes. Database in-memory
 home: https://linuxpolska.com
@@ -29,4 +29,4 @@ name: redis-cluster
 sources:
   - https://github.com/SourceMation/charts.git
 type: application
-version: 0.2.0
+version: 0.2.1
