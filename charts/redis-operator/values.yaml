@@ -5,10 +5,10 @@ global:
 redis-operator:
   redisOperator:
     name: redis-operator
-#    imageName: ghcr.io/ot-container-kit/redis-operator/redis-operator
-#    imageTag: ""
-#    imagePullPolicy: Always
-#    imagePullSecrets: []
+    imageName: docker.io/sourcemation/redis-operator
+    imageTag: "0.22.0-20250905"
+    imagePullPolicy: Always
+    imagePullSecrets: []
   
 #    podAnnotations: {}
 #    podLabels: {}
