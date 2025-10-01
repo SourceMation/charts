@@ -106,5 +106,81 @@ rke2rabbitmqope:
 
   msgTopologyOperator:
     enabled: false
+    replicaCount: 2
+    image:
+      registry: docker.io
+      repository: sourcemation/rabbitmq-messaging-topology-operator
+      tag: "1.17.4-20250930"
+      digest: ""
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    watchAllNamespaces: true
+  #  watchNamespaces: []
+  #  hostNetwork: "false"
+  #  dnsPolicy: "ClusterFirst"
+  #  skipCreateAdmissionWebhookConfig: false
+  #  existingWebhookCertSecret: ""
+  #  existingWebhookCertCABundle: ""
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "150m"
+        memory: "192Mi"
+    pdb:
+      create: true
+      minAvailable: "1"
+  #  containerSecurityContext:
+  #    enabled: true
+  #    seLinuxOptions: {}
+  #    runAsUser: 1001
+  #    runAsGroup: 1001
+  #    runAsNonRoot: true
+  #    privileged: false
+  #    readOnlyRootFilesystem: true
+  #    allowPrivilegeEscalation: false
+  #    capabilities:
+  #      drop: ["ALL"]
+  #    seccompProfile:
+  #      type: "RuntimeDefault"
+  #  containerPorts:
+  #    metrics: 8080
+  #  affinity: {}
+  #  podAffinityPreset: ""
+  #  podAntiAffinityPreset: soft
+  #  nodeSelector: {}
+    service:
+      type: ClusterIP
+  #    ports:
+  #      webhook: 443
+  #  metrics:
+  #    service:
+  #      enabled: false
+  #      type: ClusterIP
+  #      ports:
+  #        http: 80
+  #      externalTrafficPolicy: Cluster
+  #    serviceMonitor:
+  #      enabled: false
+  #    podMonitor:
+  #      enabled: true
+  #      interval: 30s
+  #      scrapeTimeout: 30s
+    networkPolicy:
+      enabled: true
+  #    kubeAPIServerPorts: [443, 6443, 8443]
+  #    allowExternal: true
+  #    allowExternalEgress: true
+      extraIngress:
+      - ports:
+        - port: 8080
+          protocol: TCP
+  #  serviceAccount:
+  #    create: true
+  #  rbac:
+  #    create: true
+    updateStrategy:
+      type: RollingUpdate
 
   useCertManager: false
