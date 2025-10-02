@@ -9,14 +9,29 @@ questions:
   label: "Deploy RabbitMQ Operator"
   type: boolean
   group: "Components"
+- variable: rke2rabbitmqope.msgTopologyOperator.enabled
+  default: false
+  label: "Deploy RabbitMQ Messaging Topology Operator"
+  type: boolean
+  group: "Components"
+  show_if: "global.rabbitmqOperator.enabled=true"
+
 
 # Integrations
 - variable: rke2rabbitmqope.clusterOperator.metrics.podMonitor.enabled
   default: false
-  label: Integrate RabbtiMQ Operator with Promehteus
+  label: Integrate RabbitMQ Operator with Promehteus
   description: "Integrate RabbtiMQ Operator with Promehteus"
   group: "Integrations"
   type: boolean
+- variable: rke2rabbitmqope.msgTopologyOperator.metrics.podMonitor.enabled
+  default: false
+  label: Integrate RabbitMQ Messaging Topology Operator with Promehteus
+  description: "Integrate RabbitMQ Messaging Topology Operator with Promehteus"
+  group: "Integrations"
+  type: boolean
+  show_if: "global.rabbitmqOperator.enabled=true&&rke2rabbitmqope.msgTopologyOperator.enabled=true"
+
 
 # Workloads
 - variable: rke2rabbitmqope.customOperatorImage
@@ -83,6 +98,44 @@ questions:
     description: "RabbitMQ image PullSecrets"
     group: "Workloads"
     type: secret
+- variable: rke2rabbitmqope.customMessagingTopologyOperatorImage
+  default: false
+  label: Change RabbitMQ Messaging Topology Operator image
+  group: "Workloads"
+  type: boolean
+  show_if: "global.rabbitmqOperator.enabled=true&&rke2rabbitmqope.msgTopologyOperator.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: rke2rabbitmqope.msgTopologyOperator.image.registry
+    label: RabbitMQ Messaging Topology Operator image registry
+    description: "RabbitMQ Messaging Topology Operator image registry"
+    group: "Workloads"
+    type: string
+  - variable: rke2rabbitmqope.msgTopologyOperator.image.repository
+    label: RabbitMQ Messaging Topology Operator image repository
+    description: "RabbitMQ Messaging Topology Operator image repository"
+    group: "Workloads"
+    type: string
+  - variable: rke2rabbitmqope.msgTopologyOperator.image.tag
+    label: RabbitMQ Messaging Topology Operator image tag
+    description: "RabbitMQ Messaging Topology Operator image tag"
+    group: "Workloads"
+    type: string
+  - variable: rke2rabbitmqope.msgTopologyOperator.image.pullSecrets
+    label: RabbitMQ Messaging Topology Operator image PullSecrets
+    description: "RabbitMQ Messaging Topology Operator image PullSecrets"
+    group: "Workloads"
+    type: secret
+  - variable: rke2rabbitmqope.msgTopologyOperator.image.pullPolicy
+    default: "IfNotPresent"
+    label: RRabbitMQ Messaging Topology Operator image pullPolicy
+    description: "RabbitMQ Messaging Topology Operator image pullPolicy"
+    group: "Workloads"
+    type: enum
+    options:
+    - "Always"
+    - "IfNotPresent"
+    - "Never"
 
 - variable: rke2rabbitmqope.clusterOperator.customResources
   default: false
@@ -111,6 +164,37 @@ questions:
     description: "Memory request, value must be <= memory limit"
     group: "Workloads"
     type: string
+
+- variable: rke2rabbitmqope.msgTopologyOperator.customResources
+  default: false
+  label: Custom resource consumption for RabbitMQ Messaging Topology Operator
+  group: "Workloads"
+  type: boolean
+  show_if: "global.rabbitmqOperator.enabled=true&&rke2rabbitmqope.msgTopologyOperator.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: rke2rabbitmqope.msgTopologyOperator.resources.limits.cpu
+    label: "Milicore limit for a RabbitMQ Messaging Topology Operator instance"
+    description: "1000m(milicores) = 1vCPU"
+    group: "Workloads"
+    type: string
+  - variable: rke2rabbitmqope.msgTopologyOperator.resources.requests.cpu
+    label: "Milicore request for a RabbitMQ Messaging Topology Operator instance"
+    description: "1000m(milicores) = 1vCPU, value must be <= milicore limit"
+    group: "Workloads"
+    type: string
+  - variable: rke2rabbitmqope.msgTopologyOperator.resources.limits.memory
+    label: "Memory limit for a RabbitMQ Messaging Topology Operator instance"
+    description: "Memory limit for a Jenkins instance"
+    group: "Workloads"
+    type: string
+  - variable: rke2rabbitmqope.msgTopologyOperator.resources.requests.memory
+    label: "Memory request for a RabbitMQ Messaging Topology Operator instance"
+    description: "Memory request, value must be <= memory limit"
+    group: "Workloads"
+    type: string
+
+
 - variable: rke2rabbitmqope.clusterOperator.updateStrategy.type
   default: "RollingUpdate"
   label: RabbitMQ Cluster Operator update strategy
@@ -120,3 +204,14 @@ questions:
   options:
   - "RollingUpdate"
   - "Recreate"
+
+- variable: rke2rabbitmqope.msgTopologyOperator.updateStrategy.type
+  default: "RollingUpdate"
+  label: RabbitMQ Messaging Topology Operator update strategy
+  description: "RabbitMQ Messaging Topology Operator update strategy"
+  group: "Workloads"
+  type: enum
+  options:
+  - "RollingUpdate"
+  - "Recreate"
+  show_if: "global.rabbitmqOperator.enabled=true&&rke2rabbitmqope.msgTopologyOperator.enabled=true"
