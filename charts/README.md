@@ -1,5 +1,5 @@
 <h1 align="center" style="border-bottom: none">
-    <a href="https://sourcemation.com/" target="_blank"><img alt="Sourcemation" width="200px" src="https://sourcemation.com/assets/logo_poziom_linia.svg"></a>
+    <a href="https://sourcemation.com/" target="_blank"><img alt="Sourcemation" width="200px" src="https://raw.githubusercontent.com/SourceMation/sourcemation/refs/heads/main/images/sm-logo.svg"></a>
 </h1>
 
 
