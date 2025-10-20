@@ -1,5 +1,5 @@
 <p align="center">
-    <img width="300px" height=auto src="https://sourcemation.com/assets/logo_poziom_linia.svg" />
+    <img width="300px" height=auto src="https://raw.githubusercontent.com/SourceMation/sourcemation/refs/heads/main/images/sm-logo.svg" />
 </p>
 
 
