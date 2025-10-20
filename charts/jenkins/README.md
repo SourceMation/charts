@@ -43,7 +43,7 @@ https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 ```bash
 export RELEASE_NAME=jenkins
 export CHART_NAME=jenkins
-export CHART_VERSION=0.2.80
+export CHART_VERSION=0.2.81
 export RELEASE_NAMESPACE=jenkins
 
 export CHART_URL=jenkins.apps.example.com
