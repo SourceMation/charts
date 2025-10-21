@@ -6,8 +6,7 @@
 ## List services that can be installed using helm (to access readme with instruction please choose desired version)
 
 ## Table of content
-
-- [argocd](https://github.com/sourcemation/charts/tree/main/charts/argocd/README.md)
+- [agro-cd](https://github.com/sourcemation/charts/tree/main/charts/argo-cd/README.md)
 - [cert-manager](https://github.com/sourcemation/charts/tree/main/charts/cert-manager/README.md)
 - [cert-manager-add-ons](https://github.com/sourcemation/charts/tree/main/charts/cert-manager-add-ons/README.md)
 - [cert-manager-operator](https://github.com/sourcemation/charts/tree/main/charts/cert-manager-operator/README.md)
