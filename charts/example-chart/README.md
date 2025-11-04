@@ -4,7 +4,7 @@
 
 1. Based on: https://github.com/example-chart/example-chart.git
 2. Documentation: https://example-app.io/docs/
-3. Chart Source: https://github.com/SourceMation/charts.git
+3. Chart Source: https://github.com/Sourcemation/charts.git
 
 
 ## Before Installation
@@ -16,7 +16,7 @@ OR
 
 The installation of cert-manager is required according to the instructions
 provided in the README file of the latest version:
-https://github.com/SourceMation/charts/tree/main/charts/cert-manager
+https://github.com/Sourcemation/charts/tree/main/charts/cert-manager
 
 ## After Installation
 
@@ -43,7 +43,7 @@ https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 ## Known Issues
 
 > **Note:**
-> Notify us: https://github.com/SourceMation/charts/issues
+> Notify us: https://github.com/Sourcemation/charts/issues
 
   OR
 

@@ -27,6 +27,6 @@ maintainers:
     name: jmmaro
 name: jenkins
 sources:
-  - https://github.com/SourceMation/charts.git
+  - https://github.com/Sourcemation/charts.git
 type: application
 version: 0.2.80

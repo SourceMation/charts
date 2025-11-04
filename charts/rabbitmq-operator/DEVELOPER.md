@@ -7,7 +7,7 @@ export RELEASE_NAME=rabbitmq-ope
 export CHART_NAME=rabbitmq-operator
 export RELEASE_NAMESPACE=lp-system
 
-git clone git@github.com:SourceMation/charts.git
+git clone git@github.com:Sourcemation/charts.git
 cd charts/charts/${CHART_NAME}
 
 helm -n ${RELEASE_NAMESPACE} upgrade --install --create-namespace \ 

@@ -14,7 +14,7 @@ export APM_URL=apm-tst.apps.example.com
 export FLEET_URL=fleet-tst.apps.example.com
 export ENT_URL=esearch-tst.apps.example.com                         
 
-git clone git@github.com:SourceMation/charts.git
+git clone git@github.com:Sourcemation/charts.git
 cd charts/charts/${CHART_NAME}
 
 kubectl create ns ${RELEASE_NAMESPACE}

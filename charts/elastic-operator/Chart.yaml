@@ -38,6 +38,6 @@ maintainers:
   name: Linux Polska
 name: elastic-operator
 sources:
-- https://github.com/SourceMation/charts.git
+- https://github.com/Sourcemation/charts.git
 type: application
 version: 1.5.1

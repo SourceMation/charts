@@ -4,14 +4,14 @@
 
 1. Based on: https://github.com/SonarSource/sonarqube.git
 2. Documentation: https://docs.sonarsource.com/sonarqube/latest/
-3. Chart Source: https://github.com/SourceMation/charts.git
+3. Chart Source: https://github.com/Sourcemation/charts.git
 
 
 ## Before Installation
 
-* The installation of cert-manager is required according to the instructions provided in the README file of the latest version: https://github.com/SourceMation/charts/tree/main/charts/cert-manager
+* The installation of cert-manager is required according to the instructions provided in the README file of the latest version: https://github.com/Sourcemation/charts/tree/main/charts/cert-manager
 
-* The installation of cloudnative-pg operator is required according to the instructions provided in the README file of the latest version: https://github.com/SourceMation/charts/tree/main/charts/cnpg-operator
+* The installation of cloudnative-pg operator is required according to the instructions provided in the README file of the latest version: https://github.com/Sourcemation/charts/tree/main/charts/cnpg-operator
 
 * An ingress controller must be installed within the cluster.
 
@@ -34,7 +34,7 @@
 ## Known Issues
 
 > **Note:**
-> Notify us: https://github.com/SourceMation/charts/issues
+> Notify us: https://github.com/Sourcemation/charts/issues
 ## CLI installation
 
 ### Preparation

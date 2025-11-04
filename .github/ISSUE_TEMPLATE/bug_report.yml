@@ -6,7 +6,7 @@ body:
     attributes:
       value: |
         Thank you for reporting an issue. Before you open the bug report, please check the README of the appropriate helm chart:
-          - [README](https://github.com/SourceMation/charts/blob/main/charts/README.md)
+          - [README](https://github.com/Sourcemation/charts/blob/main/charts/README.md)
 
         Please fill in as much information as you can.
   - type: textarea

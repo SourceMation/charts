@@ -4,7 +4,7 @@
 
 1. Based on: https://github.com/kyverno/kyverno.git
 2. Documentation: https://kyverno.io/docs/
-3. Chart Source: https://github.com/SourceMation/charts.git
+3. Chart Source: https://github.com/Sourcemation/charts.git
 
 ## Before Installation
 
@@ -36,7 +36,7 @@
 ## Known Issues
 
 > **Note:**
-> Notify us: https://github.com/SourceMation/charts/issues
+> Notify us: https://github.com/Sourcemation/charts/issues
 
 
 ## CLI installation

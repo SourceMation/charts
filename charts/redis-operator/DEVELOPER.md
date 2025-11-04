@@ -7,7 +7,7 @@ export RELEASE_NAME=redis-ope
 export CHART_NAME=redis-operator
 export RELEASE_NAMESPACE=lp-system
 
-git clone git@github.com:SourceMation/charts.git
+git clone git@github.com:Sourcemation/charts.git
 cd charts/charts/${CHART_NAME}
 
 helm upgrade --install -n ${RELEASE_NAMESPACE} --create-namespace \

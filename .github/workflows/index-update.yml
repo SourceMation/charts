@@ -21,7 +21,7 @@ on:
 
 jobs:
   update-index:
-    name: Update SourceMation Repo
+    name: Update Sourcemation Repo
     runs-on: ubuntu-latest
     permissions:
       contents: write

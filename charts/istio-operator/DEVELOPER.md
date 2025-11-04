@@ -7,7 +7,7 @@ export RELEASE_NAME=istio
 export CHART_NAME=istio-operator
 export RELEASE_NAMESPACE=istio-system
 
-git clone git@github.com:SourceMation/charts.git
+git clone git@github.com:Sourcemation/charts.git
 cd charts/charts/${CHART_NAME}
 
 cat << EOF > /tmp/values.yaml

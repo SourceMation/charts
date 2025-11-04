@@ -4,14 +4,14 @@
 
 
 <p align="center">
-    <a href="https://github.com/SourceMation/charts"><img src="https://badgen.net/github/stars/SourceMation/charts?icon=github"/></a>
-    <a href="https://github.com/SourceMation/charts"><img src="https://badgen.net/github/forks/SourceMation/charts?icon=github"/></a>
-    <a href="https://github.com/SourceMation/charts"><img src="https://badgen.net/github/watchers/SourceMation/charts?icon=github"/></a>
+    <a href="https://github.com/Sourcemation/charts"><img src="https://badgen.net/github/stars/Sourcemation/charts?icon=github"/></a>
+    <a href="https://github.com/Sourcemation/charts"><img src="https://badgen.net/github/forks/Sourcemation/charts?icon=github"/></a>
+    <a href="https://github.com/Sourcemation/charts"><img src="https://badgen.net/github/watchers/Sourcemation/charts?icon=github"/></a>
     <a href="https://sourcemation.com"><img src="https://badgen.net/static/https/sourcemation.com/yellow"/></a>
 </p>
 
 
-# The SourceMation Charts for Kubernetes
+# The Sourcemation Charts for Kubernetes
 
 
 Our repository contains set of helm charts which allow you to install desired services on Kubernetes using [Helm](https://github.com/helm/helm).
