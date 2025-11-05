@@ -7,7 +7,7 @@ export RELEASE_NAME=kyverno
 export CHART_NAME=kyverno-operator
 export RELEASE_NAMESPACE=kyverno-operator
 
-git clone git@github.com:SourceMation/charts.git
+git clone git@github.com:Sourcemation/charts.git
 cd charts/charts/${CHART_NAME}
 
 helm -n ${RELEASE_NAMESPACE} upgrade --install --create-namespace \

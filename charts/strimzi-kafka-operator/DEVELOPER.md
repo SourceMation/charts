@@ -14,7 +14,7 @@ export CHART_NAME=strimzi-kafka-operator
 export RELEASE_NAMESPACE=lp-system
 export CHART_VERSION=0.1.2
 
-git clone git@github.com:SourceMation/charts.git
+git clone git@github.com:Sourcemation/charts.git
 cd charts/charts/${CHART_NAME}
 
 helm -n ${RELEASE_NAMESPACE} upgrade --install --create-namespace \

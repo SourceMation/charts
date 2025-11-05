@@ -4,7 +4,7 @@
 
 1. Based on: https://github.com/cert-manager/cert-manager.git
 2. Documentation: https://cert-manager.io/docs/
-3. Chart Source: https://github.com/SourceMation/charts.git
+3. Chart Source: https://github.com/Sourcemation/charts.git
 
 
 ## Before Installation

@@ -31,6 +31,6 @@ maintainers:
     name: jmmaro
 name: rabbitmq-operator
 sources:
-  - https://github.com/SourceMation/charts.git
+  - https://github.com/Sourcemation/charts.git
 type: application
 version: 0.1.18

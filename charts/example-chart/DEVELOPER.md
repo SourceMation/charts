@@ -7,7 +7,7 @@ export RELEASE_NAME=example-app
 export CHART_NAME=example-chart
 export RELEASE_NAMESPACE=example-namespace
 
-git clone git@github.com:SourceMation/charts.git
+git clone git@github.com:Sourcemation/charts.git
 cd charts/charts/${CHART_NAME}/
 
 

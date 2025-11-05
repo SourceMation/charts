@@ -29,6 +29,6 @@ maintainers:
     name: rklewin
 name: redis-operator
 sources:
-  - https://github.com/SourceMation/charts.git
+  - https://github.com/Sourcemation/charts.git
 type: application
 version: 0.4.0

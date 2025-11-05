@@ -11,7 +11,7 @@ export CERT_ISSUER_NAME=default-selfsigned-ca
 export CERT_ISSUER_KIND=ClusterIssuer
 export CERT_SECRET_NAME=jenkins-tls-cert 
 
-git clone git@github.com:SourceMation/charts.git
+git clone git@github.com:Sourcemation/charts.git
 cd charts/charts/${CHART_NAME}/
 
 kubectl create ns ${RELEASE_NAMESPACE}

@@ -7,7 +7,7 @@ export RELEASE_NAME=neuvector
 export CHART_NAME=neuvector
 export RELEASE_NAMESPACE=neuvector
 
-git clone git@github.com:SourceMation/charts.git
+git clone git@github.com:Sourcemation/charts.git
 cd charts/charts/${CHART_NAME}
 
 helm -n ${RELEASE_NAMESPACE} upgrade --install --create-namespace \ 

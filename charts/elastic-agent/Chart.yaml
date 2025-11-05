@@ -35,6 +35,6 @@ maintainers:
   name: Linux Polska
 name: elastic-agent
 sources:
-- https://github.com/SourceMation/charts.git
+- https://github.com/Sourcemation/charts.git
 type: application
 version: 1.4.0

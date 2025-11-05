@@ -3,13 +3,13 @@
 ### Are you looking for more information?
 
 1. Documentation: https://charts.jenkins.io
-2. Chart Source: https://github.com/SourceMation/charts.git
+2. Chart Source: https://github.com/Sourcemation/charts.git
 
 ## Before Installation
 
 The installation of cert-manager is required according to the instructions
 provided in the README file of the latest version:
-https://github.com/SourceMation/charts/tree/main/charts/cert-manager
+https://github.com/Sourcemation/charts/tree/main/charts/cert-manager
 
 ## After Installation
 
@@ -34,7 +34,7 @@ https://github.com/SourceMation/charts/tree/main/charts/cert-manager
 ## Known Issues
 
 > **Note:**
-> Notify us: https://github.com/SourceMation/charts/issues
+> Notify us: https://github.com/Sourcemation/charts/issues
 
 ## CLI installation
 

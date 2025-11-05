@@ -7,7 +7,7 @@ export RELEASE_NAME=elk-agent
 export CHART_NAME=elastic-agent
 export RELEASE_NAMESPACE=kube-system
 
-git clone git@github.com:SourceMation/charts.git
+git clone git@github.com:Sourcemation/charts.git
 cd charts/charts/${CHART_NAME}
 
 kubectl create ns ${RELEASE_NAMESPACE} 

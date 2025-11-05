@@ -38,7 +38,7 @@
 ## Known Issues
 
 > **Note:**
-> Notify us: https://github.com/SourceMation/charts/issues
+> Notify us: https://github.com/Sourcemation/charts/issues
 
 
 ## CLI installation
