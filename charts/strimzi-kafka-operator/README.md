@@ -50,7 +50,7 @@
 export RELEASE_NAME=kafka
 export CHART_NAME=strimzi-kafka-operator
 export RELEASE_NAMESPACE=lp-system
-export CHART_VERSION=0.1.2
+export CHART_VERSION=0.1.4
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}
