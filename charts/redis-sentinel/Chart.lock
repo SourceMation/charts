@@ -4,6 +4,6 @@ dependencies:
   version: 0.1.1
 - name: redis-sentinel
   repository: https://ot-container-kit.github.io/helm-charts
-  version: 0.16.10
-digest: sha256:6c98396c44a5d0a90ead2c8bfd7eaee1097063acc3a62ffeb22ab19c56b0ea7a
-generated: "2025-09-21T00:00:09.999817202Z"
+  version: 0.16.11
+digest: sha256:102df3d75458861a8e5168d3344a2e817858341bbe759fc17ac845f723bd386d
+generated: "2025-10-31T01:00:20.131404812Z"

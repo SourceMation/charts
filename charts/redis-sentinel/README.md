@@ -49,7 +49,7 @@
 export RELEASE_NAME=redis-sentinel
 export CHART_NAME=redis-sentinel
 export RELEASE_NAMESPACE=redis
-export CHART_VERSION=0.1.2
+export CHART_VERSION=0.1.3
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace ${RELEASE_NAMESPACE}

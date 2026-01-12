@@ -7,13 +7,13 @@ annotations:
   catalog.cattle.io/release-name: redis-sentinel
 #  catalog.cattle.io/namespace: redis
 apiVersion: v2
-appVersion: 0.16.10
+appVersion: 0.16.11
 dependencies:
   - name: common
     repository: https://charts.sourcemation.com/
     version: 0.1.x
   - name: redis-sentinel
-    version: 0.16.10
+    version: 0.16.11
     repository: https://ot-container-kit.github.io/helm-charts
 description: Provides easy redis-sentinel setup definitions for Kubernetes. Install many times on kubernetes. Database in-memory
 home: https://linuxpolska.com
@@ -30,4 +30,4 @@ name: redis-sentinel
 sources:
   - https://github.com/Sourcemation/charts.git
 type: application
-version: 0.1.2
+version: 0.1.3
