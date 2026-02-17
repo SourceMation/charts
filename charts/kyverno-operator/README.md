@@ -47,7 +47,7 @@
 export RELEASE_NAME=kyverno
 export CHART_NAME=kyverno-operator
 export RELEASE_NAMESPACE=kyverno-operator
-export CHART_VERSION=0.1.3
+export CHART_VERSION=0.1.4
 
 kubectl create ns ${RELEASE_NAMESPACE}
 kubectl config set-context --current --namespace=${RELEASE_NAMESPACE}
